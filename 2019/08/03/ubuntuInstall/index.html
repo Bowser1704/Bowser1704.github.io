@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>记录一次重装系统 | Bowser&#39;s blog | 一切像你，一切像我</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="Linux">
+    <meta name="description" content="作为一个手贱的人，总是乱动系统，这次重装系统有几点收获">
+<meta name="keywords" content="Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="记录一次重装系统">
+<meta property="og:url" content="/2019/08/03/ubuntuInstall/index.html">
+<meta property="og:site_name" content="Bowser&#39;s blog">
+<meta property="og:description" content="作为一个手贱的人，总是乱动系统，这次重装系统有几点收获">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-08-03T12:31:07.233Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="记录一次重装系统">
+<meta name="twitter:description" content="作为一个手贱的人，总是乱动系统，这次重装系统有几点收获">
+    
+        <link rel="alternate" type="application/atom+xml" title="Bowser&#39;s blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="https://avatars2.githubusercontent.com/u/43539191?s=460&v=4" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpeg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Bowser</h5>
+          <a href="mailto:yuqlang@163.com" title="yuqlang@163.com" class="mail">yuqlang@163.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/Bowser1704" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/Bowser1704" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://www.douban.com/people/153160581/"  >
+                <i class="icon icon-lg icon-link"></i>
+                豆瓣
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">记录一次重装系统</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">记录一次重装系统</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-08-03T11:43:52.000Z" itemprop="datePublished" class="page-time">
+  2019-08-03
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-UbuntuInstallScript"><span class="post-toc-number">1.</span> <span class="post-toc-text">1. UbuntuInstallScript</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-Hexo写github托管的blog"><span class="post-toc-number">2.</span> <span class="post-toc-text">2. Hexo写github托管的blog</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#利用分支保存blog"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">利用分支保存blog</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-关于系统备份问题"><span class="post-toc-number">3.</span> <span class="post-toc-text">3. 关于系统备份问题</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-ubuntuInstall"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">记录一次重装系统</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-08-03 19:43:52" datetime="2019-08-03T11:43:52.000Z"  itemprop="datePublished">2019-08-03</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>作为一个手贱的人，总是乱动系统，这次重装系统有几点收获</p>
+<a id="more"></a>
+
+<h3 id="1-UbuntuInstallScript"><a href="#1-UbuntuInstallScript" class="headerlink" title="1. UbuntuInstallScript"></a>1. UbuntuInstallScript</h3><p>写了一个脚本，能够安装一些软件之类的，简单配置。</p>
+<p><a href="https://github.com/Bowser1704/Markdown/tree/master/linux/UbuntuInstallSricpt" target="_blank" rel="noopener">UbuntuInstallScript-github</a></p>
+<h3 id="2-Hexo写github托管的blog"><a href="#2-Hexo写github托管的blog" class="headerlink" title="2. Hexo写github托管的blog"></a>2. Hexo写github托管的blog</h3><p>Hexo是一个blog框架，基本上就是给一个架子，什么都帮你写好了，连部署都直接配置好的，可以直接链接到github.io，真要感叹封装的强大。</p>
+<p>不懂hexo，可以去看ZMC的<a href="https://shadowmaple.github.io/2019/04/16/Hexo搭建github博客/" target="_blank" rel="noopener">hexo’s blog</a></p>
+<p>讲一下链接github.io的概念，hexo是一个前端框架，前端仓库工程文件每次编译运行之后，生成css，js，html文件，然后我们选择推送到github上，利用github自带的page info服务，直接生成博客。</p>
+<p><strong>所以这里就有两个repo，一个是&lt;yourname.github.io&gt;，另一个是hexo工程文件</strong></p>
+<p>那么我们如何将工程文件保存下来呢？</p>
+<ol>
+<li>建立两个repo一个用来放blog，一个用来放hexo工程文件。</li>
+<li>利用git的branch，master存放blog文件，hexo放hexo工程文件。</li>
+</ol>
+<p>第一种方法没什么好讲的，最简单的想法，讲一下第二种</p>
+<h4 id="利用分支保存blog"><a href="#利用分支保存blog" class="headerlink" title="利用分支保存blog"></a>利用分支保存blog</h4><ul>
+<li><p>第一次创建blog</p>
+<ol>
+<li><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#确保安装了hexo</span></span><br><span class="line">mkdir blog	<span class="comment">#建立一个空floder</span></span><br><span class="line"><span class="built_in">cd</span> blog</span><br><span class="line">hexo init	<span class="comment">#初始化hexo, 必须要空的floder才可以hexo init`</span></span><br><span class="line">npm install</span><br><span class="line">npm install hexo-deployer-git	<span class="comment">#推送插件</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#建立new branch</span></span><br><span class="line"><span class="comment">#建立github上仓库，例如Bowser1704.github.io</span></span><br><span class="line"><span class="comment">#创建新分支hexo，并且将hexo设为默认分支	PS：在github-&gt;repo-&gt;setting里面</span></span><br><span class="line">git <span class="built_in">clone</span> ...	<span class="comment">#到本地</span></span><br><span class="line">git checkout hexo</span><br><span class="line"><span class="comment">#现在github.io已经是hexo分支</span></span><br><span class="line">cp -r blog/* Bowser1704.github.io	</span><br><span class="line"><span class="comment">#要删除几个文件，.deploy_git，theme下面的.git，因为github不允许.git循环嵌套</span></span><br></pre></td></tr></table></figure>
+
+<p>文件差不多就这些，<strong>注意配置hexo时候选择master分支</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">.DS_Store</span><br><span class="line">Thumbs.db</span><br><span class="line">db.json</span><br><span class="line">*.<span class="built_in">log</span></span><br><span class="line">node_modules/</span><br><span class="line">public/</span><br><span class="line">.deploy*/</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ol>
+</li>
+</ul>
+<ol start="3">
+<li><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#现在就是两个branch</span></span><br><span class="line"><span class="comment">#hexo用来写blog，每次写完的时候，可以push上去，保存下来</span></span><br><span class="line"><span class="comment">#github.io在你每次执行hexo d 命令的时候，会自动更新</span></span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<ul>
+<li><p>后面使用</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#直接git clone仓库下来。</span></span><br><span class="line"><span class="comment">#不需要hexo init</span></span><br><span class="line"><span class="comment">#已经是hexo仓库了</span></span><br><span class="line">npm install</span><br><span class="line">npm install hexo-deployer-git --save</span><br><span class="line">hexo g</span><br><span class="line">hexo s</span><br><span class="line"><span class="comment">#OK</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="3-关于系统备份问题"><a href="#3-关于系统备份问题" class="headerlink" title="3. 关于系统备份问题"></a>3. 关于系统备份问题</h3><p>Jzc <a href="https://www.jianshu.com/p/7821027cc455" target="_blank" rel="noopener">文章</a></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2019-08-03T12:31:07.233Z" itemprop="dateUpdated">2019-08-03 20:31:07</time>
+</span><br>
+
+
+        
+        <a href="/2019/08/03/ubuntuInstall/" target="_blank" rel="external">/2019/08/03/ubuntuInstall/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="">
+            <img src="/img/avatar.jpeg" alt="Bowser">
+            Bowser
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=/2019/08/03/ubuntuInstall/&title=《记录一次重装系统》 — Bowser's blog&pic=/img/avatar.jpeg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=/2019/08/03/ubuntuInstall/&title=《记录一次重装系统》 — Bowser's blog&source=作为一个手贱的人，总是乱动系统，这次重装系统有几点收获" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=/2019/08/03/ubuntuInstall/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《记录一次重装系统》 — Bowser's blog&url=/2019/08/03/ubuntuInstall/&via=" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=/2019/08/03/ubuntuInstall/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2019/08/03/unixIO/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">unix中一些io基础</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Bowser &copy; 2019</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=/2019/08/03/ubuntuInstall/&title=《记录一次重装系统》 — Bowser's blog&pic=/img/avatar.jpeg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=/2019/08/03/ubuntuInstall/&title=《记录一次重装系统》 — Bowser's blog&source=作为一个手贱的人，总是乱动系统，这次重装系统有几点收获" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=/2019/08/03/ubuntuInstall/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《记录一次重装系统》 — Bowser's blog&url=/2019/08/03/ubuntuInstall/&via=" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=/2019/08/03/ubuntuInstall/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=/2019/08/03/ubuntuInstall/" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '死鬼去哪里了！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>
