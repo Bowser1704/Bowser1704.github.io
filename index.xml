@@ -1,285 +1,32 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Bowser&#39;s blog</title>
-    <link>http://localhost:1313/</link>
-    <description>Recent content on Bowser&#39;s blog</description>
+    <title>Bowser&#39;s Blog</title>
+    <link>https://bowser1704.github.io/</link>
+    <description>Recent content on Bowser&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
+    <language>en-us</language>
     <lastBuildDate>Sun, 28 Jul 2019 00:00:00 +0000</lastBuildDate>
     
-        <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://bowser1704.github.io/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>About</title>
-      <link>http://localhost:1313/about/</link>
-      <pubDate>Sun, 20 Aug 2017 21:38:52 +0800</pubDate>
-      
-      <guid>http://localhost:1313/about/</guid>
-      
-        <description>&lt;p&gt;Bowser&amp;rsquo;s blog&lt;/p&gt;
-
-&lt;p&gt;Learn more and contribute on &lt;a href=&#34;https://github.com/Bowser1704&#34;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
-</description>
-      
-    </item>
     
     <item>
       <title>Linux io</title>
-      <link>http://localhost:1313/post/unixio/</link>
+      <link>https://bowser1704.github.io/posts/unixio/</link>
       <pubDate>Sun, 28 Jul 2019 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/post/unixio/</guid>
-      
-        <description>&lt;p&gt;Linux文件描述符相关&lt;/p&gt;
-
-&lt;h3 id=&#34;文件描述符&#34;&gt;文件描述符&lt;/h3&gt;
-
-&lt;p&gt;在Linux通用I/O模型中，I/O操作系列函数(系统调用)都是围绕一个叫做文件描述符的整数展开。这不禁让人产生疑问：这个整数代表什么？一个数值代表一个文件吗？随便传一个整数进去调用可以吗？&lt;/p&gt;
-
-&lt;h4 id=&#34;1-维基百科概要&#34;&gt;1.维基百科概要&lt;/h4&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;文件描述符在形式上是一个非负整数。实际上，它是一个索引值，指向内核为每一个进程所维护的该进程打开文件的记录表。当程序打开一个现有文件或者创建一个新文件时，内核向进程返回一个文件描述符。在程序设计中，一些涉及底层的程序编写往往会围绕着文件描述符展开。但是文件描述符这一概念往往只适用于UNIX、Linux这样的操作系统。&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h4 id=&#34;2-文件描述符&#34;&gt;2.文件描述符&lt;/h4&gt;
-
-&lt;h5 id=&#34;ps&#34;&gt;PS:&lt;/h5&gt;
-
-&lt;ul&gt;
-&lt;li&gt;每个文件描述符对应一个文件,单向对应.&lt;/li&gt;
-&lt;li&gt;不同文件描述符可能指向同一个文件.&lt;/li&gt;
-&lt;li&gt;相同的文件可以在不同的进程中打开,也可以在一个进程中重复打开.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h5 id=&#34;三张表&#34;&gt;三张表&lt;/h5&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;进程级文件描述符表(file descriptor table)&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;系统级打开文件表(open file table)&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;文件系统i-node/v-node表(i-node table)&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;i-node与v-node&lt;/strong&gt;&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;传统的Unix中既有v-node,也有i-node,v-node数据结构中包含了i-node的信息,但在Linux中没有使用v-node，而使用了通用i-node。“实现虽不同，但在概念上是一样的。” v-node (“virtual node”)仅在文件打开的时候，才出现的；而i-node定位文件在磁盘的位置，它的信息本身是存储在磁盘等上的，当打开文件的时候从磁盘上读入内存。&lt;/p&gt;
-
-&lt;p&gt;很简单区分,其实还有很多区别.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;&lt;a href=&#34;http://www.ruanyifeng.com/blog/2011/12/inode.html&#34;&gt;阮一峰理解inode&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://bowserblog.oss-cn-hangzhou.aliyuncs.com/113418861-593aafc8a9744_articlex.png&#34; alt=&#34;三张表&#34; /&gt;&lt;/p&gt;
-
-&lt;h5 id=&#34;三张表的联系&#34;&gt;三张表的联系&lt;/h5&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://bowserblog.oss-cn-hangzhou.aliyuncs.com/2974023913-593aafdfac773_articlex.png&#34; alt=&#34;img&#34; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;进程A中文件描述符1和30指向同一个打开的文件23, 这可能是同一个进程对于多个文件同时打开的结果&lt;/li&gt;
-&lt;li&gt;进程A中文件描述符和进程B中的文件描述符2都指向文件73,有几种可能
-
-&lt;ul&gt;
-&lt;li&gt;进程A与进程B是父子关系&lt;/li&gt;
-&lt;li&gt;进程A和进程B打开了同一个文件,刚好是同一个文件描述符&lt;/li&gt;
-&lt;li&gt;进程A或进程B通过socket将文件描述符传递了&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h5 id=&#34;通过命令限制文件描述符&#34;&gt;通过命令限制文件描述符&lt;/h5&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;ulimit&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;code&gt;ulimit&lt;/code&gt;命令用来限制系统用户对shell资源的访问。&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;假设有这样一种情况，当一台 Linux 主机上同时登陆了 10 个人，在系统资源无限制的情况下，这 10 个用户同时打开了 500 个文档，而假设每个文档的大小有 &lt;code&gt;10M&lt;/code&gt;，这时系统的内存资源就会受到巨大的挑战。&lt;/p&gt;
-
-&lt;p&gt;而实际应用的环境要比这种假设复杂的多，例如在一个嵌入式开发环境中，各方面的资源都是非常紧缺的，对于开启文件描述符的数量，分配堆栈的大 小，CPU 时间，虚拟内存大小，等等，都有非常严格的要求。资源的合理限制和分配，不仅仅是保证系统可用性的必要条件，也与系统上软件运行的性能有着密不可分的联 系。这时，&lt;code&gt;ulimit&lt;/code&gt; 可以起到很大的作用，它是一种简单并且有效的实现资源限制的方式。&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;&lt;code&gt;ulimit&lt;/code&gt; 用于限制 shell 启动进程所占用的资源，支持以下各种类型的限制：所创建的内核文件的大小、进程数据块的大小、Shell 进程创建文件的大小、内存锁住的大小、常驻内存集的大小、&lt;code&gt;打开文件描述符的数量&lt;/code&gt;、分配堆栈的最大大小、CPU 时间、单个用户的最大线程数、Shell 进程所能使用的最大虚拟内存。同时，它支持硬资源和软资源的限制。&lt;/p&gt;
-
-&lt;p&gt;作为临时限制，&lt;code&gt;ulimit&lt;/code&gt; 可以作用于通过使用其命令登录的 shell 会话，在会话终止时便结束限制，并不影响于其他 shell 会话。而对于长期的固定限制，&lt;code&gt;ulimit&lt;/code&gt; 命令语句又可以被添加到由登录 shell 读取的文件中，作用于特定的 shell 用户。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;  ulimit(选项)			#语法-a：显示目前资源限制的设定；-c &amp;lt;core文件上限&amp;gt;：设定core文件的最大值，单位为区块；-d &amp;lt;数据节区大小&amp;gt;：程序数据节区的最大值，单位为KB；-f &amp;lt;文件大小&amp;gt;：shell所能建立的最大文件，单位为区块；-H：设定资源的硬性限制，也就是管理员所设下的限制；-m &amp;lt;内存大小&amp;gt;：指定可使用内存的上限，单位为KB；-n &amp;lt;文件数目&amp;gt;：指定同一时间最多可开启的文件数；-p &amp;lt;缓冲区大小&amp;gt;：指定管道缓冲区的大小，单位512字节；-s &amp;lt;堆叠大小&amp;gt;：指定堆叠的上限，单位为KB；-S：设定资源的弹性限制；-t &amp;lt;CPU时间&amp;gt;：指定CPU使用时间的上限，单位为秒；-u &amp;lt;程序数目&amp;gt;：用户最多可开启的程序数目；-v &amp;lt;虚拟内存大小&amp;gt;：指定可使用的虚拟内存上限，单位为KB。
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code&gt;  [root@localhost ~]# ulimit -acore file size          		(blocks, -c) 0           #core文件的最大值为100 blocks。data seg size           	(kbytes, -d) unlimited   #进程的数据段可以任意大。scheduling priority             (-e) 0file size               			(blocks, -f) unlimited   #文件可以任意大。pending signals                 (-i) 98304       #最多有98304个待处理的信号。max locked memory       (kbytes, -l) 32          #一个任务锁住的物理内存的最大值为32KB。max memory size         (kbytes, -m) unlimited   #一个任务的常驻物理内存的最大值。open files                      (-n) 1024        #一个任务最多可以同时打开1024的文件。pipe size            (512 bytes, -p) 8           #管道的最大空间为4096字节。POSIX message queues     (bytes, -q) 819200      #POSIX的消息队列的最大值为819200字节。real-time priority              (-r) 0stack size              (kbytes, -s) 10240       #进程的栈的最大值为10240字节。cpu time               (seconds, -t) unlimited   #进程使用的CPU时间。max user processes              (-u) 98304       #当前用户同时打开的进程（包括线程）的最大个数为98304。virtual memory          (kbytes, -v) unlimited   #没有限制进程的最大地址空间。file locks                      (-x) unlimited   #所能锁住的文件的最大个数没有限制。
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;sysctl&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;code&gt;sysctl&lt;/code&gt;命令被用于在内核运行时动态地修改内核的运行参数，可用的内核参数在目录&lt;code&gt;/proc/sys&lt;/code&gt;中。它包含一些&lt;code&gt;TCP/ip&lt;/code&gt;堆栈和虚拟内存系统的高级选项， 这可以让有经验的管理员提高引人注目的系统性能。用&lt;code&gt;sysctl&lt;/code&gt;可以读取设置超过五百个系统变量。&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;  #语法#sysctl(选项)(参数)#选项-n：打印值时不打印关键字；-e：忽略未知关键字错误；-N：仅打印名称；-w：当改变sysctl设置时使用此项；-p：从配置文件“/etc/sysctl.conf”加载内核参数设置；-a：打印当前所有可用的内核参数变量和值；-A：以表格方式打印当前所有可用的内核参数变量和值。#命令sysctl kern.maxfiles=5000	#直接改变kern.maxfiles: 2088 -&amp;gt; 5000
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;a href=&#34;http://man.linuxde.net/sysctl&#34;&gt;sysctl&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://bowserblog.oss-cn-hangzhou.aliyuncs.com/2289371477-593aaff35bc21_articlex.png&#34; alt=&#34;img&#34; /&gt;&lt;/p&gt;
-
-&lt;h4 id=&#34;3-查看某个进程的文件描述符&#34;&gt;3.查看某个进程的文件描述符&lt;/h4&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;找到要查看的进程的&lt;code&gt;pid&lt;/code&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;ps -aux | grep mysql
-&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;查看limits&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;cat /proc/&amp;lt;pid&amp;gt;/limits	#pid自己填入
-&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;&lt;img src=&#34;https://bowserblog.oss-cn-hangzhou.aliyuncs.com/2019-07-22%2014-43-26%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE.png&#34; alt=&#34;img&#34; /&gt;&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;其实就是在&lt;code&gt;/proc/&lt;/code&gt;目录下每个进程都有自己的文件信息.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h4 id=&#34;4-使用场景&#34;&gt;4. 使用场景&lt;/h4&gt;
-
-&lt;p&gt;运行程序过程中，如果没有记得使用完后关闭文件，就像ｃ中忘记free一样危险, 可能会出现“Too many open files”,导致程序崩溃,一定要记住, &lt;strong&gt;无论什么资源, 申请调用后一定要还回去(释放)&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;h3 id=&#34;i-o重定向&#34;&gt;I/O重定向&lt;/h3&gt;
-
-&lt;p&gt;Unix中为每一个新建立的进程会自动创建三个文件描述符(file descriptor)&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;http://cs.ucla.edu/classes/fall08/cs111/scribe/4/FDT_diagram.JPG&#34; alt=&#34;img&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;所谓的IO重定向也就是让已知的/已创建的FD指向其他文件,例如下面对1(standard input)重定向到一个文件&lt;code&gt;testfile.txt&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;before&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;http://academic.udayton.edu/SaverioPerugini/courses/cps346/lecture_notes/images/beforeredir.png&#34; alt=&#34;img&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;after&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;http://academic.udayton.edu/SaverioPerugini/courses/cps346/lecture_notes/images/afterredir.png&#34; alt=&#34;img&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;在IO重定向中,FD 0/1/2文件描述符标志是不变的,但是我们可以改变的是文件指针所指向的位置.例如由&lt;code&gt;STDOUT&lt;/code&gt;指向&lt;code&gt;testfile.txt&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;程序关心的也只是文件描述符, 一般标准IO函数指向的都是FD 0/1/2, 但是不管他重定向到了哪里.&lt;/p&gt;
-
-&lt;h4 id=&#34;dup2&#34;&gt;&lt;code&gt;dup2()&lt;/code&gt;&lt;/h4&gt;
-
-&lt;pre&gt;&lt;code&gt;#include &amp;lt;unistd.h&amp;gt;int dup2(int oldfd, int newfd);
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;code&gt;dup2()&lt;/code&gt;是一个系统级函数，用来重定向．&lt;/p&gt;</description>
-      
+      <guid>https://bowser1704.github.io/posts/unixio/</guid>
+      <description>&lt;p&gt;Linux文件描述符相关&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>记录一次重装系统</title>
-      <link>http://localhost:1313/post/ubuntuinstall/</link>
+      <link>https://bowser1704.github.io/posts/ubuntuinstall/</link>
       <pubDate>Sun, 28 Jul 2019 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/post/ubuntuinstall/</guid>
-      
-        <description>&lt;p&gt;作为一个手贱的人，总是乱动系统，这次重装系统有几点收获&lt;/p&gt;
-
-&lt;h3 id=&#34;1-ubuntuinstallscript&#34;&gt;1. UbuntuInstallScript&lt;/h3&gt;
-
-&lt;p&gt;写了一个脚本，能够安装一些软件之类的，简单配置。&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;https://github.com/Bowser1704/Markdown/tree/master/linux/UbuntuInstallSricpt&#34;&gt;UbuntuInstallScript-github&lt;/a&gt;&lt;/p&gt;
-
-&lt;h3 id=&#34;2-hexo写github托管的blog&#34;&gt;2. Hexo写github托管的blog&lt;/h3&gt;
-
-&lt;p&gt;Hexo是一个blog框架，基本上就是给一个架子，什么都帮你写好了，连部署都直接配置好的，可以直接链接到github.io，真要感叹封装的强大。&lt;/p&gt;
-
-&lt;p&gt;不懂hexo，可以去看ZMC的&lt;a href=&#34;https://shadowmaple.github.io/2019/04/16/Hexo搭建github博客/&#34;&gt;hexo’s blog&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;讲一下链接github.io的概念，hexo是一个前端框架，前端仓库工程文件每次编译运行之后，生成css，js，html文件，然后我们选择推送到github上，利用github自带的page info服务，直接生成博客。&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;所以这里就有两个repo，一个是&lt;yourname.github.io&gt;，另一个是hexo工程文件&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;那么我们如何将工程文件保存下来呢？&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;建立两个repo一个用来放blog，一个用来放hexo工程文件。&lt;/li&gt;
-&lt;li&gt;利用git的branch，master存放blog文件，hexo放hexo工程文件。&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;第一种方法没什么好讲的，最简单的想法，讲一下第二种&lt;/p&gt;
-
-&lt;h4 id=&#34;利用分支保存blog&#34;&gt;利用分支保存blog&lt;/h4&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;第一次创建blog&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;#确保安装了hexo
-mkdir blog #建立一个空floder
-cd blog
-hexo init  #初始化hexo, 必须要空的floder才可以hexo init`
-npm install
-npm install hexo-deployer-git  #推送插件
-&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;#建立new branch
-#建立github上仓库，例如Bowser1704.github.io
-#创建新分支hexo，并且将hexo设为默认分支   PS：在github-&amp;gt;repo-&amp;gt;setting里面
-git clone ...  #到本地
-git checkout hexo
-#现在github.io已经是hexo分支
-cp -r blog/* Bowser1704.github.io  
-#要删除几个文件，.deploy_git，theme下面的.git，因为github不允许.git循环嵌套
-&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;文件差不多就这些，&lt;strong&gt;注意配置hexo时候选择master分支&lt;/strong&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt; .DS_Store
- Thumbs.db
- db.json
- *.log
- node_modules/
- public/
- .deploy*/
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;#现在就是两个branch
-#hexo用来写blog，每次写完的时候，可以push上去，保存下来
-#github.io在你每次执行hexo d 命令的时候，会自动更新
-hexo d
-&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;ul&gt;
-&lt;li&gt;后面使用
-
-```bash&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;#直接git clone仓库下来。
-  #不需要hexo init
-  #已经是hexo仓库了
-  npm install
-  npm install hexo-deployer-git &amp;ndash;save
-  hexo g
-  hexo s
-  #OK
-  ```&lt;/p&gt;
-
-&lt;h3 id=&#34;3-关于系统备份问题&#34;&gt;3. 关于系统备份问题&lt;/h3&gt;
-
-&lt;p&gt;Jzc &lt;a href=&#34;https://www.jianshu.com/p/7821027cc455&#34;&gt;文章&lt;/a&gt;&lt;/p&gt;</description>
-      
+      <guid>https://bowser1704.github.io/posts/ubuntuinstall/</guid>
+      <description>&lt;p&gt;作为一个手贱的人，总是乱动系统，这次重装系统有几点收获&lt;/p&gt;</description>
     </item>
     
   </channel>

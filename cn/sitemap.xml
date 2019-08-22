@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <url>
+    <loc>https://bowser1704.github.io/</loc>
+    <lastmod>2019-07-28T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://bowser1704.github.io/en/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="cn"
+                href="https://bowser1704.github.io/"
+                />
+  </url>
+  
+  <url>
+    <loc>https://bowser1704.github.io/categories/</loc>
+    <lastmod>2019-07-28T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://bowser1704.github.io/en/categories/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="cn"
+                href="https://bowser1704.github.io/categories/"
+                />
+  </url>
+  
+  <url>
+    <loc>https://bowser1704.github.io/tags/linux/</loc>
+    <lastmod>2019-07-28T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://bowser1704.github.io/categories/linux/</loc>
+    <lastmod>2019-07-28T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://bowser1704.github.io/posts/unixio/</loc>
+    <lastmod>2019-07-28T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://bowser1704.github.io/posts/</loc>
+    <lastmod>2019-07-28T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://bowser1704.github.io/tags/</loc>
+    <lastmod>2019-07-28T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://bowser1704.github.io/en/tags/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="cn"
+                href="https://bowser1704.github.io/tags/"
+                />
+  </url>
+  
+  <url>
+    <loc>https://bowser1704.github.io/posts/ubuntuinstall/</loc>
+    <lastmod>2019-07-28T00:00:00+00:00</lastmod>
+  </url>
+  
+</urlset>
