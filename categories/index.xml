@@ -1,14 +1,127 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Categories on Bowser&#39;s blog</title>
-    <link>https://bowser1704.github.io/categories/</link>
-    <description>Recent content in Categories on Bowser&#39;s blog</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>ZH-cn</language>
-    
-	<atom:link href="https://bowser1704.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-  </channel>
-</rss>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Categories on Bowser</title><link>https://bowser1704.github.io/categories/</link><description>Recent content in Categories on Bowser</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><atom:link href="https://bowser1704.github.io/categories/index.xml" rel="self" type="application/rss+xml"/><item><title>关于</title><link>https://bowser1704.github.io/about/</link><pubDate>Thu, 31 Oct 2019 16:34:45 +0800</pubDate><guid>https://bowser1704.github.io/about/</guid><description>
+&lt;h1 id=&#34;我是谁&#34;&gt;我是谁&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;一个还在读本科的垃圾cser。&lt;/p&gt;
+&lt;h1 id=&#34;写作原则&#34;&gt;写作原则&lt;/h1&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;不抄袭，不复制粘贴，不炒冷饭，不写已经有很好的文章的东西。&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;尽量避免废话，精简。😈&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;</description></item><item><title>谈谈系统启动发生了什么</title><link>https://bowser1704.github.io/blog/2019/08/22/%E8%B0%88%E8%B0%88%E7%B3%BB%E7%BB%9F%E5%90%AF%E5%8A%A8%E5%8F%91%E7%94%9F%E4%BA%86%E4%BB%80%E4%B9%88/</link><pubDate>Thu, 22 Aug 2019 16:23:18 +0800</pubDate><guid>https://bowser1704.github.io/blog/2019/08/22/%E8%B0%88%E8%B0%88%E7%B3%BB%E7%BB%9F%E5%90%AF%E5%8A%A8%E5%8F%91%E7%94%9F%E4%BA%86%E4%BB%80%E4%B9%88/</guid><description>&lt;p&gt;系统启动实际上东西比较多，这里只是讲一讲，系统引导方面的东西。&lt;/p&gt;
+&lt;h3 id=&#34;0-杂谈&#34;&gt;0. 杂谈&lt;/h3&gt;
+&lt;p&gt;首先我们知道在系统中启动叫做&lt;code&gt;boot&lt;/code&gt;，取自Bootstrap，这里有个小故事&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Bootstrap不是鞋带的意思，应该是“鞋子背带”的意思（&lt;a href=&#34;http://en.wiktionary.org/wiki/bootstrap）&#34;&gt;http://en.wiktionary.org/wiki/bootstrap）&lt;/a&gt;
+在这里隐喻表示一种不需要外部帮助自己能够处理事情的情形。“pull oneself up by one&amp;rsquo;s bootstraps”最初来自于《The Surprising Adventures of Baron Munchausen》这本书里的一个故事：主人公Baron Munchausen不小心掉进了一片沼泽，他通过自己的bootstraps将自己拉了出来（当然有童话神奇的色彩）。事实上在19世纪初美国就有&amp;rdquo;pull oneself over a fence by one&amp;rsquo;s bootstraps&amp;rdquo;的语言，意思是“做荒谬不可能完成的事情”。
+参考：&lt;a href=&#34;http://en.wikipedia.org/wiki/Bootstrapping&#34;&gt;http://en.wikipedia.org/wiki/Bootstrapping&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;为什么说这个故事呢，我们要启动系统，就要启动程序对吧，但是启动程序又要系统，这不就是一个死循环了吗？所以&lt;code&gt;一种不需要外部帮助自己能够处理事情的情形&lt;/code&gt;，在当时ROM（Read only memory）的发展下，人们刚开始发明了BIOS（Basic Input/Output System），后来又出现了&lt;code&gt;UEFI&lt;/code&gt;全称“统一的可扩展固件接口”(Unified Extensible Firmware Interface)。&lt;/p&gt;
+&lt;h3 id=&#34;1-最开始是如何加载系统的&#34;&gt;1. 最开始是如何加载系统的&lt;/h3&gt;
+&lt;h4 id=&#34;1-1-老一代的legacy-bios-mbr&#34;&gt;1.1 老一代的Legacy BIOS + &lt;code&gt;MBR&lt;/code&gt;&lt;/h4&gt;
+&lt;p&gt;最初的启动就是按下电源键之后，电脑读取写入ROM的BIOS。BIOS开始下面几个步骤。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;硬件自检（Power-On Self-Test）简称为 POST，如果有问题计算机会发出不同含义的蜂鸣声。（有没有很傻屌）&lt;/li&gt;
+&lt;li&gt;选择启动顺序，现在BIOS开始要运行的权利给下一个device了，但是你电脑可能有多个硬盘，也可能你会插入U盘，所以可能需要你选择一个设备。
+&lt;ul&gt;
+&lt;li&gt;计算机开始读取设备的第一个扇区，也就是512字节，就叫做&amp;rdquo;主引导记录&amp;rdquo;（Master boot record，缩写为&lt;code&gt;MBR&lt;/code&gt;）。&lt;/li&gt;
+&lt;li&gt;但是&lt;code&gt;MBR&lt;/code&gt;有一些问题，所以现在基本不用了。&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;从硬盘启动，加载系统内核相关的东西。
+&lt;ul&gt;
+&lt;li&gt;这里因为&lt;code&gt;MBR&lt;/code&gt;，所以系统启动读取的是&lt;code&gt;MBR&lt;/code&gt;内的启动程序，但是如果你一个硬盘，装了很多的系统，每次装新的系统，后面的启动代码就会覆盖前者的。&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;总结的话&lt;code&gt;BIOS&lt;/code&gt;不认识设备，直接硬的来，你的&lt;code&gt;MBR&lt;/code&gt;内写了什么，他就是什么。&lt;/p&gt;
+&lt;h4 id=&#34;1-2-进入linux系统之后initd&#34;&gt;1.2 进入Linux系统之后initd&lt;/h4&gt;
+&lt;ol&gt;
+&lt;li&gt;加载内核，进入&lt;code&gt;/boot&lt;/code&gt;下找到内核文件，加载。&lt;/li&gt;
+&lt;li&gt;开始运行初始化文件&lt;code&gt;/sbin/init&lt;/code&gt;，他的作用是初始化系统环境，&lt;code&gt;init&lt;/code&gt;就是第一个进程，&lt;code&gt;pid&lt;/code&gt;=1&lt;/li&gt;
+&lt;li&gt;确定运行级别&lt;/li&gt;
+&lt;li&gt;加载开机启动程序&lt;/li&gt;
+&lt;li&gt;用户登录&lt;/li&gt;
+&lt;li&gt;进入login shell&lt;/li&gt;
+&lt;li&gt;打开 non-login shell&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;这里初略讲，详情看阮一峰的文章。&lt;/p&gt;
+&lt;p&gt;阮一峰写了两篇文章对于以前的启动方式很好的讲解了&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://www.ruanyifeng.com/blog/2013/02/booting.html&#34;&gt;http://www.ruanyifeng.com/blog/2013/02/booting.html&lt;/a&gt; 参考文章，作者阮一峰，对于&lt;code&gt;MBR&lt;/code&gt;的详细解释&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html&#34;&gt;http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html&lt;/a&gt; 参考文章，作者阮一峰，对于&lt;code&gt;Linux&lt;/code&gt;内核启动的解释。&lt;/p&gt;
+&lt;h3 id=&#34;2-今天我们怎么加载系统&#34;&gt;2. 今天我们怎么加载系统&lt;/h3&gt;
+&lt;h4 id=&#34;2-1-新时代的-uefi-bios-gpt&#34;&gt;2.1 新时代的&lt;code&gt;UEFI BIOS&lt;/code&gt;+&lt;code&gt;GPT&lt;/code&gt;&lt;/h4&gt;
+&lt;p&gt;&lt;code&gt;UEFI&lt;/code&gt;不同于legacy BIOS的是，他认识设备，他会在&lt;code&gt;/boot/efi&lt;/code&gt;寻找以&lt;code&gt;.efi&lt;/code&gt;为后缀的文件，里面有一个目录&lt;code&gt;EFI&lt;/code&gt;，放了各种系统的&lt;code&gt;efi&lt;/code&gt;启动程序。&lt;/p&gt;
+&lt;p&gt;例如（不同厂商的驱动放在不同厂家的文件夹下面）&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;启动windows 进入Microsoft/Boot/*.efi&lt;/p&gt;
+&lt;p&gt;启动&lt;code&gt;ubuntu&lt;/code&gt; 进入ubuntu/*.efi&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&#34;https://upload-images.jianshu.io/upload_images/4072641-4b58e0e13c209d14.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/345/format/webp&#34; alt=&#34;efi&#34; /&gt;&lt;/p&gt;
+&lt;h5 id=&#34;流程&#34;&gt;流程&lt;/h5&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;POST，硬件自检&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;UEFI&lt;/code&gt;固件加载，一系列初始化。&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;按照设置里面的顺序，读取&lt;code&gt;efi&lt;/code&gt;启动项，加载硬件驱动，解析其中的分区表（GPT和MBR）。&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;启动项分为两种&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;文件启动项，即&lt;code&gt;UEFI&lt;/code&gt;已经记录了启动项的地址，某个磁盘-&amp;gt;某个分区-&amp;gt;/&lt;code&gt;EFI/Boot/*.efi&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;设备启动项，就是磁盘，会直接去磁盘里面寻找&lt;code&gt;ESP&lt;/code&gt;分区下的&lt;code&gt;/EFI/Boot/*.efi&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;随着Windows8.x，以及UEFI标准2.x，win推出了一个叫做SecureBoot的功能。开了SecureBoot之后，主板会验证即将加载的efi文件的签名，如果开发者不是受信任的开发者，就会拒绝加载。
+比如CloverX64.efi就好像没有签名。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;所以在装Linux的时候我们会关闭SecureBoot，防止不被授权，无法加载efi&lt;/p&gt;
+&lt;h5 id=&#34;磁盘分区-文件系统&#34;&gt;磁盘分区，文件系统&lt;/h5&gt;
+&lt;p&gt;磁盘就是我们用的硬盘，U盘之类的，我们要对磁盘进行分区，其实不分区可以理解为只分一个区，然后每个区要进行格式化，并且选择文件系统。不同类型磁盘有不同类型的设备驱动，不同系统有不同的文件系统驱动。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;磁盘驱动
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;win8/10&lt;/code&gt;含有&lt;code&gt;IDE/SATA/NVME&lt;/code&gt;三种驱动&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;macos&lt;/code&gt;含有&lt;code&gt;/SATA/NVME&lt;/code&gt;驱动，但是10.13之前是苹果专用&lt;code&gt;NVME&lt;/code&gt;驱动&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;文件系统驱动
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;win10&lt;/code&gt;含有FAT32、NTFS、exFAT、ReFS几种&lt;/li&gt;
+&lt;li&gt;Linux含有ext2、ext3、ext4、FAT32等&lt;/li&gt;
+&lt;li&gt;macOS含有FAT32、HFS+、APFS、exFAT，NTFS只读&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;驱动是可以后期安装的，Paragon这个公司推出了NTFS for Mac、HFS for Windows、ExtFS for……等一套文件系统驱动。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h5 id=&#34;总结&#34;&gt;总结&lt;/h5&gt;
+&lt;p&gt;UEFI规范里，在GPT分区表的基础上，规定了一个EFI系统分区（EFI System Partition，ESP），ESP要格式化成FAT32，EFI启动文件要放在“/EFI&amp;lt;厂商&amp;gt;”文件夹下面。&lt;strong&gt;但是Apple比较特殊&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;作为UEFI标准里，钦定的文件系统，FAT32.efi是每个主板都会带的。所有UEFI的主板都认识FAT32分区。这就是为啥非得是FAT32的。&lt;/p&gt;
+&lt;p&gt;至于GPT（GUID Partition Table，缩写：GPT），可以理解为新时代的&lt;code&gt;MBR&lt;/code&gt;，分区表。&lt;/p&gt;
+&lt;p&gt;所以说&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;装系统可以不用制作启动盘了，将iso文件压缩到一个FAT32分区内，&lt;del&gt;然后在将该分区下的&lt;code&gt;EFI/Boot/BOOTx64&lt;/code&gt;添加到UEFI文件启动项&lt;/del&gt;，直接进入UEFI引导，就可以选择这一项启动。&lt;/p&gt;
+&lt;p&gt;另外UEFI为了兼容MBR，是可以用的，但是Lgacy不支持GPT&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;2-2-systemd启动系统&#34;&gt;2.2 Systemd启动系统&lt;/h4&gt;
+&lt;p&gt;init启动系统有几点不好&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;串行启动，启动时间长&lt;/li&gt;
+&lt;li&gt;启动脚本复杂&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Systemd是用来替代init启动而生的，读作 System daemon（系统，守护进程）。&lt;/p&gt;
+&lt;p&gt;Systemd是一组命令，涉及到系统管理的方方面面，本来我们启动系统是用initd初始化一个pid=1的进程，然后所有进程都是他的子进程，但是现在的话我们不需要，直接启动Systemd，用它来管理系统。&lt;/p&gt;
+&lt;p&gt;这个时候就和上面类似了。但是我们要重点关注&lt;code&gt;systemd&lt;/code&gt;命令组。这里就会体现Linux下一切皆文件的思想。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://ccnupp.oss-cn-shanghai.aliyuncs.com/%E6%9C%AA%E5%91%BD%E5%90%8D%E6%96%87%E4%BB%B6.svg&#34; alt=&#34;未命名文件&#34; /&gt;&lt;/p&gt;
+&lt;h4 id=&#34;这里还要提一点-系统进入之后&#34;&gt;这里还要提一点，系统进入之后&lt;/h4&gt;
+&lt;p&gt;首先我们会进入login shell，这个时候会读取一些配置文件。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;c1&#34;&gt;#命令行登录&lt;/span&gt;
+~/.bash_profile
+~/.bash_login
+~/.profile &lt;span class=&#34;c1&#34;&gt;#这里有语句会同时执行.bashrc&lt;/span&gt;
+&lt;span class=&#34;c1&#34;&gt;#只要读取了上面一个，就不会再读取后面的了，按上述顺序读取。&lt;/span&gt;
+&lt;span class=&#34;c1&#34;&gt;#图形界面登录的话,只会读取下面两个，不管是否有.bash_profile存在&lt;/span&gt;
+etc/ptofile &lt;span class=&#34;c1&#34;&gt;#这个是对于所有用户的配置文件，~/.bashrc是对于当前用户的。&lt;/span&gt;
+~/.profile&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;然后我们手动开启的shell叫做non login shell，他就会读取.bashrc&lt;/p&gt;
+&lt;h3 id=&#34;参考文章&#34;&gt;参考文章&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.ibm.com/developerworks/cn/linux/l-lpic1-101-2/index.html&#34;&gt;https://www.ibm.com/developerworks/cn/linux/l-lpic1-101-2/index.html&lt;/a&gt; IBM，引导系统&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://www.ruanyifeng.com/blog/2013/02/booting.html&#34;&gt;http://www.ruanyifeng.com/blog/2013/02/booting.html&lt;/a&gt; 参考文章，作者阮一峰，对于MBR的详细解释&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html&#34;&gt;http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html&lt;/a&gt; 参考文章，作者阮一峰，对于Linux内核启动的解释。&lt;/p&gt;
+&lt;p&gt;关于systemd使用，这里有几篇文章。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://www.ruanyifeng.com/blog/2016/03/systemd-tutorial-commands.html&#34;&gt;http://www.ruanyifeng.com/blog/2016/03/systemd-tutorial-commands.html&lt;/a&gt; 作者：阮一峰&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://www.ruanyifeng.com/blog/2016/03/systemd-tutorial-part-two.html&#34;&gt;http://www.ruanyifeng.com/blog/2016/03/systemd-tutorial-part-two.html&lt;/a&gt; 作者：阮一峰&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://wiki.archlinux.org/index.php/Systemd_(简体中文)&#34;&gt;https://wiki.archlinux.org/index.php/Systemd_&lt;/a&gt; 来源Archwiki&lt;/p&gt;</description></item></channel></rss>
