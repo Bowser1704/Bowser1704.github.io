@@ -1,4 +1,39 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Blogs on Bowser</title><link>https://bowser1704.github.io/blog/</link><description>Recent content in Blogs on Bowser</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 31 Oct 2019 23:57:33 +0800</lastBuildDate><atom:link href="https://bowser1704.github.io/blog/index.xml" rel="self" type="application/rss+xml"/><item><title>短链接的实现</title><link>https://bowser1704.github.io/blog/2019/10/31/%E7%9F%AD%E9%93%BE%E6%8E%A5%E7%9A%84%E5%AE%9E%E7%8E%B0/</link><pubDate>Thu, 31 Oct 2019 23:57:33 +0800</pubDate><guid>https://bowser1704.github.io/blog/2019/10/31/%E7%9F%AD%E9%93%BE%E6%8E%A5%E7%9A%84%E5%AE%9E%E7%8E%B0/</guid><description>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Blogs on Bowser</title><link>https://bowser1704.github.io/blog/</link><description>Recent content in Blogs on Bowser</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 31 Oct 2019 23:57:33 +0800</lastBuildDate><atom:link href="https://bowser1704.github.io/blog/index.xml" rel="self" type="application/rss+xml"/><item><title>利用systemd管理nginx.service</title><link>https://bowser1704.github.io/note/2019/11/01/%E5%88%A9%E7%94%A8systemd%E7%AE%A1%E7%90%86nginx.service/</link><pubDate>Fri, 01 Nov 2019 14:50:23 +0800</pubDate><guid>https://bowser1704.github.io/note/2019/11/01/%E5%88%A9%E7%94%A8systemd%E7%AE%A1%E7%90%86nginx.service/</guid><description>
+&lt;h2 id=&#34;systemd是什么&#34;&gt;systemd是什么&lt;/h2&gt;
+&lt;p&gt;以前的Linux系统启动，首先会启动一个init.d，然后其他所有的进程都是这个进程的子进程，但是现在的改进，启用systemd来启动管理daemon进程，不过据说有一堆的bug、&lt;/p&gt;
+&lt;p&gt;systemd具有一系列的命令，但是我只讲systemctl。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;systemctl start nginx.service
+systemctl stop nginx.service
+systemctl restart nginx.service&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;字面意思。&lt;/p&gt;
+&lt;h2 id=&#34;如何让systemd托管我们的service&#34;&gt;如何让systemd托管我们的service&lt;/h2&gt;
+&lt;p&gt;linux下一切皆文件，systemd也是靠读取一些指定的文件来管理的，我的系统service文件在&lt;code&gt;lib/systemd/system&lt;/code&gt;下面，你可以自己去找一下，locate命令就可以。&lt;/p&gt;
+&lt;p&gt;而service长什么样子呢？以nginx.service为例子&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;Unit&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;nv&#34;&gt;Description&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;nginx - high performance web server.
+&lt;span class=&#34;nv&#34;&gt;Documentation&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;http://nginx.org/en/docs/
+&lt;span class=&#34;nv&#34;&gt;After&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;network.target remote-fs.target nss-lookup.target
+&lt;span class=&#34;c1&#34;&gt;# 这里是一些描述信息，不是特别重要&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;Service&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;nv&#34;&gt;Type&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;forking
+&lt;span class=&#34;nv&#34;&gt;PIDFile&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;/run/nginx.pid &lt;span class=&#34;c1&#34;&gt;#pid文件的位置&lt;/span&gt;
+&lt;span class=&#34;nv&#34;&gt;ExecStartPre&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;/usr/local/nginx/sbin/nginx -t -c /usr/local/nginx/conf/nginx.conf &lt;span class=&#34;c1&#34;&gt;#启动前的命令一般都是test，其实就是nginx的命令&lt;/span&gt;
+&lt;span class=&#34;nv&#34;&gt;ExecStart&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;/usr/local/nginx/sbin/nginx -c /usr/local/nginx/conf/nginx.conf &lt;span class=&#34;c1&#34;&gt;#启动命令，使用绝对路劲。&lt;/span&gt;
+&lt;span class=&#34;nv&#34;&gt;ExecReload&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;/usr/local/nginx/sbin/nginx -s reopen
+&lt;span class=&#34;nv&#34;&gt;ExecStop&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;/usr/local/nginx/sbin/nginx -s stop
+&lt;span class=&#34;nv&#34;&gt;PrivateTmp&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;true&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;Install&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;nv&#34;&gt;WantedBy&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;multi-user.target
+&lt;span class=&#34;c1&#34;&gt;# 放入multi-user.target目录下面&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2 id=&#34;nginx配置&#34;&gt;nginx配置&lt;/h2&gt;
+&lt;p&gt;我们在安装nginx的时候，如果是默认包管理器安装的话，会自动加入systemd，但是我们自己安装就会有一堆问题。所以conf配置添加一句。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;pid /run/nginx.pid
+&lt;span class=&#34;c1&#34;&gt;# pid /var/run/nginx.pid&lt;/span&gt;
+&lt;span class=&#34;c1&#34;&gt;# /var/run其实是一个指向/run的软连接。&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&#34;可能会遇到的问题&#34;&gt;可能会遇到的问题&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;nginx 找不到nginx.pid，那你就自己去创建一个nginx.pid。&lt;/li&gt;
+&lt;/ol&gt;</description></item><item><title>短链接的实现</title><link>https://bowser1704.github.io/blog/2019/10/31/%E7%9F%AD%E9%93%BE%E6%8E%A5%E7%9A%84%E5%AE%9E%E7%8E%B0/</link><pubDate>Thu, 31 Oct 2019 23:57:33 +0800</pubDate><guid>https://bowser1704.github.io/blog/2019/10/31/%E7%9F%AD%E9%93%BE%E6%8E%A5%E7%9A%84%E5%AE%9E%E7%8E%B0/</guid><description>
 &lt;h2 id=&#34;什么是短链接&#34;&gt;什么是短链接&lt;/h2&gt;
 &lt;p&gt;就是你经常在手机短信，或者微博上看到的URL，都是很短的并且像t.cn这种开头的，限制字数，短信发送按字数收费，微博限制回复长度等等。&lt;/p&gt;
 &lt;h2 id=&#34;首先大概的实现思路&#34;&gt;首先大概的实现思路&lt;/h2&gt;
