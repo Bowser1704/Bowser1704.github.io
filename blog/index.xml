@@ -1,4 +1,94 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Blogs on Bowser</title><link>https://bowser1704.github.io/blog/</link><description>Recent content in Blogs on Bowser</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Sat, 02 Nov 2019 20:30:51 +0800</lastBuildDate><atom:link href="https://bowser1704.github.io/blog/index.xml" rel="self" type="application/rss+xml"/><item><title>《天气之子》反映的人生观</title><link>https://bowser1704.github.io/blog/2019/11/02/%E5%A4%A9%E6%B0%94%E4%B9%8B%E5%AD%90%E5%8F%8D%E6%98%A0%E7%9A%84%E4%BA%BA%E7%94%9F%E8%A7%82/</link><pubDate>Sat, 02 Nov 2019 20:30:51 +0800</pubDate><guid>https://bowser1704.github.io/blog/2019/11/02/%E5%A4%A9%E6%B0%94%E4%B9%8B%E5%AD%90%E5%8F%8D%E6%98%A0%E7%9A%84%E4%BA%BA%E7%94%9F%E8%A7%82/</guid><description>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Blogs on Bowser</title><link>https://bowser1704.github.io/blog/</link><description>Recent content in Blogs on Bowser</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Sat, 02 Nov 2019 20:30:51 +0800</lastBuildDate><atom:link href="https://bowser1704.github.io/blog/index.xml" rel="self" type="application/rss+xml"/><item><title>csapp UnixIO</title><link>https://bowser1704.github.io/note/2019/11/12/csapp-unixio/</link><pubDate>Tue, 12 Nov 2019 22:05:45 +0800</pubDate><guid>https://bowser1704.github.io/note/2019/11/12/csapp-unixio/</guid><description>
+&lt;h2 id=&#34;基本概念&#34;&gt;基本概念&lt;/h2&gt;
+&lt;p&gt;首先要有一个思维，Linux上面基本上所有外部设备都是文件，都是通过IO来读取，写入的，包括键盘，网络，终端&amp;hellip;..&lt;/p&gt;
+&lt;p&gt;P.S.：为什么终端是呢，想象一下以前大型计算机，只有一台主机，不同人使用，就是有多个终端(物理设备)来操作系统，只不过现在我们用的微机就是一台主机了。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://pic.superbed.cn/item/5dcabfbd8e0e2e3ee9b257f5.jpg&#34; alt=&#34;上一张图&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;看这张图片，可以看到：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;外设都是走I/O总线，从而与系统交互。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;那怎么使用文件呢&#34;&gt;那怎么使用文件呢&lt;/h3&gt;
+&lt;p&gt;一句话：系统打开文件时会生成两个结构一个是在系统表上，一个是在v-node表上。前者存储的是某个进程对文件读取的偏移量，后者储存的是文件的固有属性，文件大小，文件权限。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;文件读取的偏移量：你打开一个文件会进行读取，不可能一次读完，也不可能每次读都从头开始，而是记录你上次读到哪里了，这就是偏移量。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;对于某个进程来说：一个进程会打开多个文件，怎么管理呢？有一张表，叫做描述符表，每个打开的文件都有一个ID，也叫作描述符，你打开文件后，描述符就代表你的文件了。看下面的图&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://pic.superbed.cn/item/5dcac3bc8e0e2e3ee9b6fc15.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;子进程继承父进程的文件，有自己的描述符，但是指向相同的文件表。&lt;/li&gt;
+&lt;li&gt;一个进程打开两次同一个文件，会有两个描述符，但是同一个文件表结构。&lt;/li&gt;
+&lt;li&gt;文件表结构只有refcnt=0才会关闭，也就是引用他的文件描述符为0，才会关闭。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;P.S.：每个进程会默认打开三个文件，有三个描述符 0=标准输入(Stdin)，1=标准输出(Stdout)，2=标准错误(Stderr)&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th align=&#34;center&#34;&gt;整数值&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;名称&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;unistd.h符号常量[&lt;a href=&#34;https://zh.wikipedia.org/wiki/文件描述符#cite_note-1&#34;&gt;1]&lt;/a&gt;&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;stdio.h文件流[&lt;a href=&#34;https://zh.wikipedia.org/wiki/文件描述符#cite_note-2&#34;&gt;2]&lt;/a&gt;&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td align=&#34;center&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;&lt;a href=&#34;https://zh.wikipedia.org/wiki/Stdin&#34;&gt;Standard input&lt;/a&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;STDIN_FILENO&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;stdin&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&#34;center&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;&lt;a href=&#34;https://zh.wikipedia.org/wiki/Stdout&#34;&gt;Standard output&lt;/a&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;STDOUT_FILENO&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;stdout&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align=&#34;center&#34;&gt;2&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;&lt;a href=&#34;https://zh.wikipedia.org/wiki/Stderr&#34;&gt;Standard error&lt;/a&gt;&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;STDERR_FILENO&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;stderr&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id=&#34;unix-io&#34;&gt;Unix IO&lt;/h2&gt;
+&lt;p&gt;打开文件用到了open函数返回的是文件描述符，注意两个参数&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;open&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;char&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;filename&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;flags&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;mode_t&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;mode&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;span class=&#34;c1&#34;&gt;//flags是进程如何访问这个文件，只读还是只写，或者不存在时新建
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;//mode是创建文件时指定权限，就是正常的文件权限，读写执行，这里有一个umask，
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;//每个进程都有一个umask，通过umask函数执行，真正的mode为 mode &amp;amp; ~umask
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;//出错返回-1 否则返回文件描述符
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ssize_t&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;read&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;fd&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;buf&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;size_t&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;n&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;ssize_t&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;write&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;fd&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;buf&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;size_t&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;n&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;读和写文件，Unix IO读写文件都是无缓冲的，也就是说读文件，陷入内核态，按照指定的字节大小读取放到给定的字符指针内，如果遇到EOF就返回0，否则返回读取字节大小，出错返回-1，write就是过来。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;ssize_t与size_t，前者是signed，因为可能返回-1，后者是unsigned，读取字节数&amp;gt;=0。&lt;/li&gt;
+&lt;li&gt;EOF，指的是当当前文件位置指向文件的最后，也就是文件偏移量等于文件长度时候，引发的end-of-file。并不实际存在这个东西。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;rio与标准库io&#34;&gt;RIO与标准库IO&lt;/h2&gt;
+&lt;p&gt;这些函数都是有缓冲的，怎么实现的呢，就是新建一个缓冲结构，每次调用Unix IO时尽可能的读取足够多的字节(等于缓冲区大小)，陷入内核态费时间，这样的话，如果下次再读，直接去缓冲区拿(空间换时间)。&lt;/p&gt;
+&lt;p&gt;RIO是对带缓冲io函数的实现，标准库io也是，还有格式化，但是也有很多问题，不适合在网络编程上使用，&lt;/p&gt;
+&lt;p&gt;这里就是一些函数，去看书，看具体实现。&lt;/p&gt;
+&lt;h2 id=&#34;重定向&#34;&gt;重定向&lt;/h2&gt;
+&lt;p&gt;Linux shell中的 &lt;code&gt;&amp;gt;&lt;/code&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span class=&#34;nv&#34;&gt;$bowser&lt;/span&gt;&amp;gt; ls &amp;gt; foo.txt&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;dup2函数&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;dup2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;oldfd&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;newfd&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;span class=&#34;c1&#34;&gt;//如果newfd已经打开，会先关闭它。
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;//一句话：把newtd指向oldfd的文件表项
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;dup&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;span class=&#34;c1&#34;&gt;//标准输入重定向到描述符5指向的文件表
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;//&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;会继承&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;5&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;打开文件的文件偏移量。因为指向的是同一个文件表。&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2 id=&#34;疑问&#34;&gt;疑问&lt;/h2&gt;
+&lt;p&gt;明确几点：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;带缓冲函数，就是新建立一个结构，储存了fd(文件描述符)，还有缓冲的字节数组，等等东西，代替fd来使用。&lt;/li&gt;
+&lt;li&gt;文件偏移量，也就是移动位置是放在文件表结构上的，这里有一个问题，似乎不能多个进程同时打开一个文件。&lt;/li&gt;
+&lt;li&gt;文件元数据(metadata)，文件大小，文件类型放在v-node表上。
+&lt;ul&gt;
+&lt;li&gt;文件类型，文件中有一个type结构指定，例如文本文件，二进制文件，sockets文件。&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;标准库IO是设计为读取文本文件的，所以其他类型文件不合适。&lt;/li&gt;
+&lt;/ol&gt;</description></item><item><title>《天气之子》反映的人生观</title><link>https://bowser1704.github.io/blog/2019/11/02/%E5%A4%A9%E6%B0%94%E4%B9%8B%E5%AD%90%E5%8F%8D%E6%98%A0%E7%9A%84%E4%BA%BA%E7%94%9F%E8%A7%82/</link><pubDate>Sat, 02 Nov 2019 20:30:51 +0800</pubDate><guid>https://bowser1704.github.io/blog/2019/11/02/%E5%A4%A9%E6%B0%94%E4%B9%8B%E5%AD%90%E5%8F%8D%E6%98%A0%E7%9A%84%E4%BA%BA%E7%94%9F%E8%A7%82/</guid><description>
 &lt;h2 id=&#34;电影中不断出现的-麦田里的守望者&#34;&gt;电影中不断出现的《麦田里的守望者》&lt;/h2&gt;
 &lt;p&gt;开头就是一个麦田里的守望者的&lt;code&gt;特写镜头&lt;/code&gt;，就像霍尔顿一样，帆高也是离家出走，十分敏感，胆小，软弱，但是就是不愿意在家中待着，有一堆的理由，首先我认为这就是一个很感性的做法，这带来的后果很大，没有理性的去思考所做的事情会发生什么后果。&lt;/p&gt;
 &lt;h3 id=&#34;小资情调的忧伤&#34;&gt;小资情调的忧伤&lt;/h3&gt;
