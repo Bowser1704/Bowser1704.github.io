@@ -1,4 +1,54 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>随笔 on Bowser</title><link>https://bowser1704.github.io/tags/%E9%9A%8F%E7%AC%94/</link><description>Recent content in 随笔 on Bowser</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Sat, 02 Nov 2019 20:30:51 +0800</lastBuildDate><atom:link href="https://bowser1704.github.io/tags/%E9%9A%8F%E7%AC%94/index.xml" rel="self" type="application/rss+xml"/><item><title>csapp UnixIO</title><link>https://bowser1704.github.io/note/2019/11/12/csapp-unixio/</link><pubDate>Tue, 12 Nov 2019 22:05:45 +0800</pubDate><guid>https://bowser1704.github.io/note/2019/11/12/csapp-unixio/</guid><description>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>随笔 on Bowser</title><link>https://bowser1704.github.io/tags/%E9%9A%8F%E7%AC%94/</link><description>Recent content in 随笔 on Bowser</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Sat, 02 Nov 2019 20:30:51 +0800</lastBuildDate><atom:link href="https://bowser1704.github.io/tags/%E9%9A%8F%E7%AC%94/index.xml" rel="self" type="application/rss+xml"/><item><title>csapp Chapter11 网络编程</title><link>https://bowser1704.github.io/note/2019/11/13/csapp-chapter11-%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/</link><pubDate>Wed, 13 Nov 2019 21:30:14 +0800</pubDate><guid>https://bowser1704.github.io/note/2019/11/13/csapp-chapter11-%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/</guid><description>
+&lt;p&gt;主要记录一下socket相关内容，网络协议不多做描述。&lt;/p&gt;
+&lt;p&gt;下图是基本的步骤图&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://pic.superbed.cn/item/5dcd2bb58e0e2e3ee9164936.jpg&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
+&lt;h2 id=&#34;getaddrinfo&#34;&gt;getaddrinfo&lt;/h2&gt;
+&lt;p&gt;一句话：获取套接字地址，从url，也就是dns获取真正的ip地址，返回的结构中是一个链表，有多个sockaddr(也就是dns会给我们返回多个ip地址)，我们通过遍历来确定哪一个可用，如果都没有用，就error了。&lt;/p&gt;
+&lt;p&gt;注意点：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;sockaddr是socket地址结构，16个字节，前两个字节标明协议簇，后面的字节其实可以变动。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;因为IPV4与IPV6一个32位(4个字节)，一个128位(16个字节)，所以sockaddr装不下IPV6，就有sockaddr_in 16个字节，sockaddr_in6 28个字节。但是其实都是可以转化为sockaddr使用，也就是我们使用的就是sockaddr，为什么呢，因为我们每次传参传的是sockaddr指针，并且还有一个sockaddr_len，既然有了长度，结构体底层不一样也没事了，需要的是指针+长度，就可以得到完整数据。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;返回的是addrinfo链表，里面除了sockaddr指针外，还存放了，数据协议，一些可选参数，balabala的。&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;利用它是直接返回addrinfo，我们在socket等函数中可以直接使用这些属性作为参数。&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;P.S.：csapp中有些函数讲的是全小写，使用时首字母却大写了，例如getaddrinfo，使用时却是Getaddrinfo，其实是做了一个封装。例如&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;Getaddrinfo&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;char&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;node&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;char&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;service&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+&lt;span class=&#34;k&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;struct&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;addrinfo&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;hints&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;struct&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;addrinfo&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;**&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;res&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;rc&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;span class=&#34;c1&#34;&gt;//加了一个错误处理，其他都差不多
+&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;((&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rc&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;getaddrinfo&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;node&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;service&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;hints&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;res&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;!=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;gai_error&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rc&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;Getaddrinfo error&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2 id=&#34;client创建&#34;&gt;client创建&lt;/h2&gt;
+&lt;p&gt;getaddrinfo -&amp;gt; socket -&amp;gt; connect == open_clientfd&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;getaddrinfo 不多做解释&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;socket 得到一个clientfd，这个时候还没有网络什么事，仅仅是自己创建一个socket fd，内核会动态分配一个port。&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;connect 这个时候开始有网络了，connect里面要填server的sockaddr，记住还有addrlen，这是sockaddr可以适用于不同协议的关键。&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;open_clientfd是用来替换上面几个步骤的。&lt;/p&gt;
+&lt;h2 id=&#34;server创建&#34;&gt;server创建&lt;/h2&gt;
+&lt;p&gt;getaddrinfo -&amp;gt; socket -&amp;gt; bind -&amp;gt; listen -&amp;gt; accept&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;socket+bind+listen 用来创建一个listenfd，== open_listenfd&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;socket 创建一个socket fd，暂时没什么用，参数有协议和一些可选参数。&lt;/li&gt;
+&lt;li&gt;bind 这个时候bind地址，也就是传入sockaddr和sockaddr_len，确定这个socket绑定什么socket地址，与client不同，前者是动态分配的。&lt;/li&gt;
+&lt;li&gt;listen 确认这个socket fd 是 listenfd 区分于 connfd(connecting fd)。&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;open_listenfd就是把上面四个步骤整合了，但是还是要手写accept。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;accept 创建一个connfd，这是真正与client通信的socket，listenfd是用来监听的。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;注意几点&#34;&gt;注意几点&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;编译代码时，要加上-lpthread，gcc不再使用老的线程库pthread。&lt;/li&gt;
+&lt;li&gt;CGI是标准&lt;/li&gt;
+&lt;/ul&gt;</description></item><item><title>csapp Chapter10 UnixIO</title><link>https://bowser1704.github.io/note/2019/11/12/csapp-chapter10-unixio/</link><pubDate>Tue, 12 Nov 2019 22:05:45 +0800</pubDate><guid>https://bowser1704.github.io/note/2019/11/12/csapp-chapter10-unixio/</guid><description>
 &lt;h2 id=&#34;基本概念&#34;&gt;基本概念&lt;/h2&gt;
 &lt;p&gt;首先要有一个思维，Linux上面基本上所有外部设备都是文件，都是通过IO来读取，写入的，包括键盘，网络，终端&amp;hellip;..&lt;/p&gt;
 &lt;p&gt;P.S.：为什么终端是呢，想象一下以前大型计算机，只有一台主机，不同人使用，就是有多个终端(物理设备)来操作系统，只不过现在我们用的微机就是一台主机了。&lt;/p&gt;
@@ -59,7 +109,7 @@
 &lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;//出错返回-1 否则返回文件描述符
 &lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ssize_t&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;read&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;fd&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;buf&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;size_t&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;n&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
 &lt;span class=&#34;n&#34;&gt;ssize_t&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;write&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;fd&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;buf&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;size_t&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;n&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;读和写文件，Unix IO读写文件都是无缓冲的，也就是说读文件，陷入内核态，按照指定的字节大小读取放到给定的字符指针内，如果遇到EOF就返回0，否则返回读取字节大小，出错返回-1，write就是过来。&lt;/p&gt;
+&lt;p&gt;读和写文件，Unix IO读写文件都是无缓冲的，也就是说每次读文件，都要陷入内核态，按照指定的字节大小读取放到给定的字符指针内，如果遇到EOF就返回0，否则返回读取字节大小，出错返回-1。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;ssize_t与size_t，前者是signed，因为可能返回-1，后者是unsigned，读取字节数&amp;gt;=0。&lt;/li&gt;
 &lt;li&gt;EOF，指的是当当前文件位置指向文件的最后，也就是文件偏移量等于文件长度时候，引发的end-of-file。并不实际存在这个东西。&lt;/li&gt;
@@ -71,7 +121,7 @@
 &lt;h2 id=&#34;重定向&#34;&gt;重定向&lt;/h2&gt;
 &lt;p&gt;Linux shell中的 &lt;code&gt;&amp;gt;&lt;/code&gt;&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span class=&#34;nv&#34;&gt;$bowser&lt;/span&gt;&amp;gt; ls &amp;gt; foo.txt&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;dup2函数&lt;/p&gt;
+&lt;p&gt;dup2函数，cgi编程会利用此函数，将std_out重定向到client_sockfd&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;dup2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;oldfd&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;newfd&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
 &lt;span class=&#34;c1&#34;&gt;//如果newfd已经打开，会先关闭它。
 &lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;//一句话：把newtd指向oldfd的文件表项
