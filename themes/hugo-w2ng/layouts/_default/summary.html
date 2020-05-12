@@ -1,0 +1,15 @@
+<article itemscope itemtype="http://schema.org/Article" class="flex flex-col mt-6 mb-12">
+    {{- partial "taxonomy.html" . -}}
+    <h2 itemprop="name" class="text-3xl"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+    <p itemprop="datePublished" content="{{ .Date.Format "2006-01-02" }}" class="">{{ .Date.Format "2006/01/02" }}
+    </p>
+    <div class="py-2">
+        {{ if .Description }}
+        {{ .Description | markdownify }}
+        {{ else }}
+        {{ if .Truncated }}
+        {{ .Summary | truncate 150 | markdownify }}...
+        {{ end }}
+        {{ end }}
+    </div>
+</article>

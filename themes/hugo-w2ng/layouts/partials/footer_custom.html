@@ -1,0 +1,15 @@
+{{ if .HasShortcode "cryptedmail" }}
+<style>
+  .cryptedmail:after {
+    content: attr(data-name) "@"attr(data-domain) "."attr(data-tld);
+  }
+</style>
+{{ end }}
+
+{{- if (and .IsPage .Params.comment | default .Page.Site.Params.comments.enable ) -}}
+<style>
+  div#isso-thread .avatar>svg[data-hash="643810579f0b"] {
+    border-radius: 50%
+  }
+</style>
+{{ end }}

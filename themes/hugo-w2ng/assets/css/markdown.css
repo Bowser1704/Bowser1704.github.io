@@ -1,0 +1,73 @@
+/* purgecss start ignore */
+.markdown {
+  @apply text-lg;
+}
+.markdown h1 {
+  @apply text-4xl my-12;
+}
+.markdown h2 {
+  @apply text-3xl my-8;
+}
+.markdown h3 {
+  @apply text-xl my-4;
+}
+.markdown h4 {
+  @apply my-2;
+}
+.markdown h1,
+.markdown h2,
+.markdown h3,
+.markdown h4 {
+  @apply leading-loose;
+}
+.markdown p {
+  @apply my-4;
+}
+.markdown a {
+  @apply border-b border-black;
+}
+.markdown blockquote {
+  @apply px-3 py-1 mx-3 border-l-2 border-black;
+}
+
+/* table */
+.markdown table {
+  @apply m-auto border-t border-b border-gray-800 border-solid whitespace-normal;
+}
+.markdown table thead th {
+  @apply border-b border-solid border-gray-700;
+}
+.markdown th,
+.markdown td {
+  @apply p-1;
+}
+
+/* code */
+.markdown pre {
+  @apply overflow-x-auto p-4 border border-solid border-black my-4;
+}
+.markdown code {
+  @apply border-dashed border-b border-black px-1 font-mono text-lg;
+}
+.markdown pre code {
+  font-size: 16px;
+  @apply px-0 border-none;
+}
+
+/* misc */
+.markdown ul {
+  @apply pl-8 list-disc;
+}
+.markdown ol {
+  @apply pl-8 list-decimal;
+}
+
+.markdown hr {
+  @apply block my-6 mx-auto max-w-md h-px border-t border-black;
+}
+
+.markdown a.footnote-backref,
+a.footnote-ref {
+  @apply border-none;
+}
+/* purgecss end ignore */

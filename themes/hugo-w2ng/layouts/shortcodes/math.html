@@ -1,0 +1,5 @@
+{{ if ( ( eq ( .Get 0 ) "inline")) }}
+<span class="math inline">\({{- .Inner -}}\)</span>
+{{ else }}
+<span class="math display">\[{{- .Inner -}}\]</span>
+{{ end }}

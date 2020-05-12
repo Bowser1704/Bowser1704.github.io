@@ -1,0 +1,68 @@
+baseURL = "https://bowser1704.github.io"
+languageCode = "zh-CN"
+title = "Bowser"
+theme = "hugo-w2ng"
+pygmentsStyle="github"
+hasCJKLanguage = true
+enableEmoji = true
+copyright = "This work is licensed under a CC BY-NC 4.0(署名-非商业性使用 4.0 国际) License."
+
+[author]
+    name = "Bowser"
+
+disableKinds = ["taxonomyTerm"]
+
+[params]
+  description = "Bowser's blog"
+  slogan = "null"
+  Footer = "© 2018-2020 Bowser - **[CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/)** - power by hugo**"
+  HomeDesc = "**[博客](/blog/) 和 [笔记](/note/)中还有很多文章✨**"
+  AuthorName = "Bowser"
+  Favicon = "/favicon.jpg"
+  fontsLink = "https://fonts.googleapis.com/css?family=Noto+Serif+SC:400,700&display=swap&subset=chinese-simplified"
+
+[permalinks]
+blog = "/blog/:year:month:day-:title/"
+flight-rules = "/note/:year:month:day-:title/"
+
+[params.CDN]
+enable = false
+# Host must NOT end with `/`
+
+[params.comments]
+enable = false
+
+[params.comments.isso]
+# Host = "https://c.jinxiapu.cn/"
+
+[[menu.main]]
+    name = "博客"
+    url = "/blog/"
+    weight = 1
+[[menu.main]]
+    name = "笔记"
+    url = "/note/"
+    weight = 2
+[[menu.main]]
+    name = "关于"
+    url = "/about/"
+    weight = 3
+
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.extensions]
+      definitionList = true
+      footnote = true
+      linkify = true
+      strikethrough = true
+      table = true
+      taskList = true
+      typographer = true
+    [markup.goldmark.parser]
+      attribute = true
+      autoHeadingID = true
+    [markup.goldmark.renderer]
+      hardWraps = false
+      unsafe = true
+      xHTML = false

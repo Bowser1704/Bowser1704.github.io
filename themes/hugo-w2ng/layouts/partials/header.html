@@ -1,0 +1,26 @@
+{{ if not .Params.single }}
+<header
+    class="flex flex-col relative border-black border-b-4 md:border-b-0 md:border-r-2 pb-6 mx-4 md:mx-0 md:w-1/5 md:text-right md:pr-8 bg-white md:text-center">
+    <div>
+        <h1 id="header_logo" class="text-3xl md:my-12 mt-4 md:mb-12"><a href="/">{{ .Site.Title }}</a></h1>
+        <p class="font-thin italic">{{ .Site.Params.slogan }}</p>
+    </div>
+    <input id="menu-check" type="checkbox" class="hidden" />
+    <label id="menu-label" for="menu-check"
+        class="absolute right-0 text-right md:hidden  inline-block py-4 h-12 cursor-pointer mt-10 text-xl text-gray-900">
+        <span class="icon close-icon">✕</span>
+        <span class="icon open-icon">☰</span>
+        <span class="text">MENU</span>
+    </label>
+    <nav id="menu" class="my-2 w-full md:flex-row-reverse hidden md:block">
+        <ul class="list-none pl-0 mx-auto justify-center  max-w-xs">
+            {{ $currentPage := . }}
+            {{ range .Site.Menus.main }}
+            <li class="my-4 border-black text-center md:text-right border-b-2 md:border-none pb-1">
+                <a class="py-4 md:border-black md:border-b-2 {{ if eq $currentPage.RelPermalink .URL }} font-bold {{ end }} md:pb-1" href="{{ .URL }}">{{ .Name }}</a>
+            </li>
+            {{ end }}
+        </ul>
+    </nav>
+</header>
+{{ end }}

@@ -1,0 +1,44 @@
+<meta charset="utf-8">
+<meta name="HandheldFriendly" content="True">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="renderer" content="webkit">
+<meta name="force-rendering" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta name="format-detection" content="telephone=no,email=no,address=no">
+{{ hugo.Generator }}
+
+{{ if eq .RelPermalink "/" }}
+<title>{{ .Site.Title }}</title>
+{{ else }}
+<title>{{- .Title -}}{{- with .Params.subtitle -}} - {{- . -}} {{- end }} - {{ .Site.Title -}}</title>
+{{ end }}
+
+
+{{ if .Site.IsServer }}
+    {{ $style := resources.Get "css/styles.css" | postCSS (dict "config" "./assets/css/dev/postcss.config.js") }}
+    <link rel="stylesheet" href="{{ $style.RelPermalink }}">
+{{ else }}
+    {{ $style := resources.Get "css/styles.css" | postCSS (dict "config" "./assets/css/postcss.config.js") | minify | fingerprint }}
+    {{ if .Site.Params.CDN.enable }}
+    <link rel="stylesheet" href="{{ .Site.Params.CDN.HOST }}{{ $style.RelPermalink }}" integrity="{{ $style.Data.Integrity }}" crossorigin="anonymous">
+    {{ else }}
+    <link rel="stylesheet" href="{{ $style.RelPermalink }}" integrity="{{ $style.Data.Integrity }}">
+    {{ end }}
+{{ end }}
+
+<!-- Fonts -->
+{{- with .Site.Params.fontsLink -}}
+{{ printf `<link href="%s" rel="stylesheet" />` . | safeHTML }}
+{{- end }}
+<link rel="canonical" href="{{ .Permalink }}">
+
+{{ if (and .Site.Params.CDN.enable (not .Site.IsServer)) }}
+<link rel="shortcut icon" href="{{ .Site.Params.CDN.HOST }}{{ .Site.Params.Favicon }}">
+{{ else }}
+<link rel="shortcut icon" href="{{ .Site.Params.Favicon }}">
+{{ end }}
+
+{{ template "_internal/schema.html" . }}
+{{ template "_internal/opengraph.html" . }}
+{{ template "_internal/twitter_cards.html" . -}}

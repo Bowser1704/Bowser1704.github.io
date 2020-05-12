@@ -1,0 +1,29 @@
+{{ define "main" }}
+<article itemscope itemtype="http://schema.org/Article" class="max-w-3xl mx-auto leading-relaxed">
+    <header class="flex flex-col meta">
+        {{- partial "taxonomy.html" . -}}
+        <h1 itemprop="name" class="text-center text-4xl my-4 md:my-6">{{ .Title }}</h1>
+        {{ if not .Params.disableMeta }}
+        <h3 class="text-center text-2xl">
+            {{ with $.Site.Params.AuthorName }}
+            <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+                <span itemprop="name">{{ . }}</span>
+                {{ end }}
+                {{ if .Params.date }}
+                {{ if $.Site.Params.AuthorName }} / {{ end }}
+                <span itemprop="datePublished"
+                    content="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</span>
+                {{ end }}
+        </h3>
+        {{ end }}
+    </header>
+    <hr class="block my-10 mx-auto max-w-xs h-px border-t border-black">
+    <div itemprop="articleBody" class="content markdown">
+        {{ .Content }}
+    </div>
+    {{- if (and .IsPage .Params.comment | default .Page.Site.Params.comments.enable ) -}}
+    <hr class="block my-10 mx-auto max-w-xs h-px border-t border-black">
+    <div id="isso-thread" data-title="{{ .Title }}" data-isso-id="{{ .RelPermalink }}"></div>
+    {{ end }}
+</article>
+{{ end }}

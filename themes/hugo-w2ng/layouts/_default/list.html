@@ -1,0 +1,15 @@
+{{ define "main" }}
+<div class="max-w-3xl mx-auto leading-relaxed my-6">
+    <div class="markdown mb-12">
+        {{ .Content }}
+    </div>
+
+    {{- $pctx := . -}}
+    {{ range .RegularPages }}
+        {{ if (eq $pctx.Kind "taxonomy") }}
+        {{ .Scratch.Set "taxonomy" (add $pctx.Type $pctx.Title) }}
+        {{ end }}
+        {{ .Render "summary"}}
+    {{ end }}
+</div>
+{{ end }}

@@ -1,0 +1,13 @@
+{{- $img_destination := .Destination }}
+{{ if (and .Page.Site.Params.CDN.enable (not .Page.Site.IsServer)) }}
+    {{ $img_destination = (print .Page.Site.Params.CDN.HOST (path.Join .Page.RelPermalink .Destination)) }}
+{{ end }}
+
+{{ if .Title -}}
+<figure class="max-w-2xl mx-auto overflow-hidden">
+    <img alt="{{ $.Text }}" src="{{ $img_destination | safeURL }}" />
+    <figcaption class="p-2 text-center">{{ with $.Title | safeHTML }}{{ . }}{{ end }}</figcaption>
+</figure>
+{{- else }}
+    <img class="mx-auto" alt="{{ $.Text }}" src="{{ $img_destination | safeURL }}" />
+{{ end -}}
