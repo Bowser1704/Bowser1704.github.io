@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>notes on Bowser</title>
+    <link>https://bowser1704.github.io/note/</link>
+    <description>Recent content in notes on Bowser</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <copyright>This work is licensed under a CC BY-NC 4.0(署名-非商业性使用 4.0 国际) License.</copyright>
+    <lastBuildDate>Sun, 17 Nov 2019 11:23:47 +0800</lastBuildDate>
+    
+	<atom:link href="https://bowser1704.github.io/note/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>return与exit的不同</title>
+      <link>https://bowser1704.github.io/note/exec/</link>
+      <pubDate>Sun, 17 Nov 2019 11:23:47 +0800</pubDate>
+      
+      <guid>https://bowser1704.github.io/note/exec/</guid>
+      <description>首先问题就是有时候我们返回用return，有时候是exit是什么区别呢？ 首先明确函数执行 我们直接运行某些脚本，或者是``sh x.sh`，这背</description>
+    </item>
+    
+    <item>
+      <title>csapp Chapter12 并发编程</title>
+      <link>https://bowser1704.github.io/note/csappchapter12/</link>
+      <pubDate>Thu, 14 Nov 2019 23:43:14 +0800</pubDate>
+      
+      <guid>https://bowser1704.github.io/note/csappchapter12/</guid>
+      <description>基于进程的并发编程 就像我们最初写的echo服务一样，listen来了一个请求，创建一个connfd，一个子进程去处理，写入coonfd。如下</description>
+    </item>
+    
+    <item>
+      <title>csapp Chapter11 网络编程</title>
+      <link>https://bowser1704.github.io/note/csappchapter11/</link>
+      <pubDate>Wed, 13 Nov 2019 21:30:14 +0800</pubDate>
+      
+      <guid>https://bowser1704.github.io/note/csappchapter11/</guid>
+      <description>主要记录一下socket相关内容，网络协议不多做描述。 下图是基本的步骤图 getaddrinfo 一句话：获取套接字地址，从url，也就是dns获取真正的ip地址，</description>
+    </item>
+    
+    <item>
+      <title>csapp Chapter10 UnixIO</title>
+      <link>https://bowser1704.github.io/note/csappchapter10/</link>
+      <pubDate>Tue, 12 Nov 2019 22:05:45 +0800</pubDate>
+      
+      <guid>https://bowser1704.github.io/note/csappchapter10/</guid>
+      <description>基本概念 首先要有一个思维，Linux上面基本上所有外部设备都是文件，都是通过IO来读取，写入的，包括键盘，网络，终端&amp;hellip;.. P.</description>
+    </item>
+    
+    <item>
+      <title>利用systemd管理nginx.service</title>
+      <link>https://bowser1704.github.io/note/systemctlservice/</link>
+      <pubDate>Fri, 01 Nov 2019 14:50:23 +0800</pubDate>
+      
+      <guid>https://bowser1704.github.io/note/systemctlservice/</guid>
+      <description>systemd是什么 以前的Linux系统启动，首先会启动一个init.d，然后其他所有的进程都是这个进程的子进程，但是现在的改进，启用sys</description>
+    </item>
+    
+  </channel>
+</rss>

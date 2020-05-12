@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><meta charset="utf-8">
+<meta name="HandheldFriendly" content="True">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="renderer" content="webkit">
+<meta name="force-rendering" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta name="format-detection" content="telephone=no,email=no,address=no">
+<meta name="generator" content="Hugo 0.70.0" />
+
+
+<title>短链接的实现 - Bowser</title>
+
+
+
+
+    
+    
+    <link rel="stylesheet" href="/css/styles.min.c6b7d8857766555f700f21654ec85cef78aeb17a31dfc0cf50c851e0f7063fd1.css" integrity="sha256-xrfYhXdmVV9wDyFlTshc73iusXox38DPUMhR4PcGP9E=">
+    
+
+
+<link href="https://fonts.googleapis.com/css?family=Noto+Serif+SC:400,700&display=swap&subset=chinese-simplified" rel="stylesheet" />
+<link rel="canonical" href="https://bowser1704.github.io/blog/20191031-%E7%9F%AD%E9%93%BE%E6%8E%A5%E7%9A%84%E5%AE%9E%E7%8E%B0/">
+
+
+<link rel="shortcut icon" href="/favicon.jpg">
+
+
+<meta itemprop="name" content="短链接的实现">
+<meta itemprop="description" content="短链接服务是怎么实现的...">
+<meta itemprop="datePublished" content="2019-10-31T23:57:33&#43;08:00" />
+<meta itemprop="dateModified" content="2019-10-31T23:57:33&#43;08:00" />
+<meta itemprop="wordCount" content="649">
+
+
+
+<meta itemprop="keywords" content="tools," />
+<meta property="og:title" content="短链接的实现" />
+<meta property="og:description" content="短链接服务是怎么实现的..." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://bowser1704.github.io/blog/20191031-%E7%9F%AD%E9%93%BE%E6%8E%A5%E7%9A%84%E5%AE%9E%E7%8E%B0/" />
+<meta property="article:published_time" content="2019-10-31T23:57:33+08:00" />
+<meta property="article:modified_time" content="2019-10-31T23:57:33+08:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="短链接的实现"/>
+<meta name="twitter:description" content="短链接服务是怎么实现的..."/>
+<body class="font-sans">
+    <div class="flex flex-col md:flex-row md:w-4/5 mx-auto py-5 min-h-screen">
+<header
+    class="flex flex-col relative border-black border-b-4 md:border-b-0 md:border-r-2 pb-6 mx-4 md:mx-0 md:w-1/5 md:text-right md:pr-8 bg-white md:text-center">
+    <div>
+        <h1 id="header_logo" class="text-3xl md:my-12 mt-4 md:mb-12"><a href="/">Bowser</a></h1>
+        <p class="font-thin italic">null</p>
+    </div>
+    <input id="menu-check" type="checkbox" class="hidden" />
+    <label id="menu-label" for="menu-check"
+        class="absolute right-0 text-right md:hidden  inline-block py-4 h-12 cursor-pointer mt-10 text-xl text-gray-900">
+        <span class="icon close-icon">✕</span>
+        <span class="icon open-icon">☰</span>
+        <span class="text">MENU</span>
+    </label>
+    <nav id="menu" class="my-2 w-full md:flex-row-reverse hidden md:block">
+        <ul class="list-none pl-0 mx-auto justify-center  max-w-xs">
+            
+            
+            <li class="my-4 border-black text-center md:text-right border-b-2 md:border-none pb-1">
+                <a class="py-4 md:border-black md:border-b-2  md:pb-1" href="/blog/">博客</a>
+            </li>
+            
+            <li class="my-4 border-black text-center md:text-right border-b-2 md:border-none pb-1">
+                <a class="py-4 md:border-black md:border-b-2  md:pb-1" href="/note/">笔记</a>
+            </li>
+            
+            <li class="my-4 border-black text-center md:text-right border-b-2 md:border-none pb-1">
+                <a class="py-4 md:border-black md:border-b-2  md:pb-1" href="/about/">关于</a>
+            </li>
+            
+        </ul>
+    </nav>
+</header>
+<main class="flex-1 p-4 ">
+<article itemscope itemtype="http://schema.org/Article" class="max-w-3xl mx-auto leading-relaxed">
+    <header class="flex flex-col meta">
+<div class="flex flex-col md:flex-row justify-between ">
+    
+    <ul class="flex justify-end text-gray-800" itemprop="articleSection">
+        
+        <li class="pl-2 pr-0 md:pl-0 md:pr-2">
+            <a href="/categories/cs" rel="category">cs</a>
+        </li>
+        
+    </ul>
+    
+    
+    <ul class="flex justify-end text-gray-700">
+        
+        <li itemprop="keywords" class="pl-2 md:pl-4">
+            <a href="https://bowser1704.github.io/tags/tools/">#tools</a>
+        </li>
+        
+    </ul>
+    
+</div>
+<h1 itemprop="name" class="text-center text-4xl my-4 md:my-6">短链接的实现</h1>
+        
+        <h3 class="text-center text-2xl">
+            
+            <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+                <span itemprop="name">Bowser</span>
+                
+                
+                 / 
+                <span itemprop="datePublished"
+                    content="2019-10-31">2019-10-31</span>
+                
+        </h3>
+        
+    </header>
+    <hr class="block my-10 mx-auto max-w-xs h-px border-t border-black">
+    <div itemprop="articleBody" class="content markdown">
+        <h2 id="什么是短链接">什么是短链接</h2>
+<p>就是你经常在手机短信，或者微博上看到的URL，都是很短的并且像t.cn这种开头的，限制字数，短信发送按字数收费，微博限制回复长度等等。</p>
+<h2 id="首先大概的实现思路">首先大概的实现思路</h2>
+<p>知乎上有很多回答，典型的错误回答有</p>
+<ul>
+<li>用MD5等hash直接得出定长字符，没有考虑冲突的情况，在这种情况下冲突是很严重的，不可以忍受的。</li>
+<li>自己</li>
+</ul>
+<p>正确的实现方法是，利用进制转化，也就是低进制转换为高进制，数的长度会变得很小，例如1000(2) = 8(10)，一下子就去掉了三位。</p>
+<p>所以给每个长url一个自增10进制id，然后用10进制id转换为62进制，为什么62进制呢？因为10个阿拉伯数字+26×2个英文字母，共62位，这样的话，6位62进制数字也就有了500多亿个，也够用了。</p>
+<h2 id="长链每次返回的都是同一个短链怎么实现的呢">长链每次返回的都是同一个短链怎么实现的呢？</h2>
+<p>比较好的方法，建立一个hash-table，存在redis里面很好，长链作为key，短链作为value，并且设置一个过期时间，如果有人再次同一长链转为短链，则返回原来短链，并且把过期时间变长等等。</p>
+<h2 id="使用短链接过程">使用短链接过程</h2>
+<ol>
+<li>向dns请求短链服务的ip，并访问。</li>
+<li>短链接直接返回302/301 重定向到你自己的url</li>
+</ol>
+<blockquote>
+<p>PS：302/301都为重定向</p>
+<p>301 redirect: 301 代表永久性转移(Permanently Moved)
+302 redirect: 302 代表暂时性转移(Temporarily Moved )</p>
+<p>我认为这里我们是要返回301的也就是永久重定向，因为我们不会再回去访问短链服务了</p>
+<p>但是301的话无法统计这个短链接被访问的时候次数，也就是不能看到这个数据，但其实还是很有用的。所以很多情况还是使用302的。</p>
+</blockquote>
+
+    </div>
+</article>
+
+        </main>
+    </div><footer class="flex justify-center">
+    <div class="copyright mx-auto my-8">
+        <p>
+            © 2018-2020 Bowser - <strong><a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a></strong> - power by hugo**
+        </p>
+        
+    </div>
+</footer>
+
+
+
+
+
+<script type="text/javascript" src="/js/instant.page.218f375afe49ca7960b6fc5ffe921ddae1fb2332f46ee5c292587dc370164cc857f533677b4fb60dc2341ca95096a5f3ed3d1615d5411144a034f9260082cdad.js" integrity="sha512-IY83Wv5Jynlgtvxf/pId2uH7IzL0buXCklh9w3AWTMhX9TNne0&#43;2DcI0HKlQlqXz7T0WFdVBEUSgNPkmAILNrQ=="></script>
+</body>
+
+</html>

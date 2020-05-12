@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>文学 on Bowser</title>
+    <link>https://bowser1704.github.io/categories/%E6%96%87%E5%AD%A6/</link>
+    <description>Recent content in 文学 on Bowser</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <copyright>This work is licensed under a CC BY-NC 4.0(署名-非商业性使用 4.0 国际) License.</copyright>
+    <lastBuildDate>Thu, 05 Dec 2019 01:04:48 +0800</lastBuildDate>
+    
+	<atom:link href="https://bowser1704.github.io/categories/%E6%96%87%E5%AD%A6/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>读卡夫卡《变形计》</title>
+      <link>https://bowser1704.github.io/blog/20191205-%E8%AF%BB%E5%8D%A1%E5%A4%AB%E5%8D%A1%E5%8F%98%E5%BD%A2%E8%AE%A1/</link>
+      <pubDate>Thu, 05 Dec 2019 01:04:48 +0800</pubDate>
+      
+      <guid>https://bowser1704.github.io/blog/20191205-%E8%AF%BB%E5%8D%A1%E5%A4%AB%E5%8D%A1%E5%8F%98%E5%BD%A2%E8%AE%A1/</guid>
+      <description>小说的开头，“一天早晨, 格里高尔·萨姆沙从不安的睡梦中醒来, 却发现自己躺在床上变成了一只巨大的甲虫。”，看上去难以置信，是荒谬的，但是当我们</description>
+    </item>
+    
+  </channel>
+</rss>
