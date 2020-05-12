@@ -1,6 +1,6 @@
 baseURL = "https://bowser1704.github.io"
 languageCode = "zh-CN"
-title = "Bowser"
+title = "Bowser1704"
 theme = "hugo-w2ng"
 pygmentsStyle="github"
 hasCJKLanguage = true
@@ -15,7 +15,7 @@ disableKinds = ["taxonomyTerm"]
 [params]
   description = "Bowser's blog"
   slogan = "null"
-  Footer = "© 2018-2020 Bowser - **[CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/)** - **Power By Hugo | Theme By hugo-w2ng**"
+  Footer = "© 2018-2020 [Bowser1704](https://github.com/Bowser1704) - **[CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/)** - **Power By Hugo | Theme By hugo-w2ng**"
   HomeDesc = "**[博客](/blog/) 和 [笔记](/note/)中还有很多文章✨**"
   AuthorName = "Bowser"
   Favicon = "/favicon.jpg"
