@@ -1,1 +1,43 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Categories on</title><link>/categories/</link><description>Recent content in Categories on</description><generator>Hugo -- gohugo.io</generator><atom:link href="/categories/index.xml" rel="self" type="application/rss+xml"/></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Categories on Bowser</title>
+    <link>https://bowser1704.github.io/categories/</link>
+    <description>Recent content in Categories on Bowser</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <copyright>This work is licensed under a CC BY-NC 4.0(署名-非商业性使用 4.0 国际) License.</copyright>
+    <lastBuildDate>Thu, 05 Dec 2019 01:04:48 +0800</lastBuildDate>
+    
+	<atom:link href="https://bowser1704.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>文学</title>
+      <link>https://bowser1704.github.io/categories/%E6%96%87%E5%AD%A6/</link>
+      <pubDate>Thu, 05 Dec 2019 01:04:48 +0800</pubDate>
+      
+      <guid>https://bowser1704.github.io/categories/%E6%96%87%E5%AD%A6/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>cs</title>
+      <link>https://bowser1704.github.io/categories/cs/</link>
+      <pubDate>Sun, 17 Nov 2019 11:23:47 +0800</pubDate>
+      
+      <guid>https://bowser1704.github.io/categories/cs/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>film</title>
+      <link>https://bowser1704.github.io/categories/film/</link>
+      <pubDate>Sat, 02 Nov 2019 20:30:51 +0800</pubDate>
+      
+      <guid>https://bowser1704.github.io/categories/film/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
