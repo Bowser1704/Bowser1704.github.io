@@ -1,5 +1,7 @@
 #!/bin/sh
 
+git add . && git commit -m "Publish md doc" && git push origin hugo
+
 if [[ $(git status -s) ]]
 then
     echo "The working directory is dirty. Please commit any pending changes."
