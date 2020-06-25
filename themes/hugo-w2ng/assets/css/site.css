@@ -1,4 +1,3 @@
-/* purgecss start ignore */
 /* menu */
 @media (max-width: 768px) {
   #menu-check ~ label .close-icon {
@@ -47,8 +46,3 @@ span.math span {
 .book-expand input[type="checkbox"]:checked + .book-expand-content {
   @apply block;
 }
-
-.isso-comment-footer {
-  display: flex;
-}
-/* purgecss end ignore */

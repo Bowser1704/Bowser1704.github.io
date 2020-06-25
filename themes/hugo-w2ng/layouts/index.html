@@ -1,12 +1,7 @@
 {{ define "main" }}
 <div class="max-w-3xl mx-auto leading-relaxed my-6">
     <a class="block float-right " href="/about/">
-        {{ if (and .Site.Params.CDN.enable (not .Site.IsServer)) }}
-        <img src="{{ .Site.Params.CDN.HOST }}{{ .Site.Params.Favicon }}" class="rounded-full" width=150 height=150
-            alt="favicon" />
-        {{ else }}
-        <img src="{{ .Site.Params.Favicon }}" class="rounded-full" width=150 height=150 alt="favicon" />
-        {{ end }}
+        <img src="/favicon.jpg" class="rounded-full" width=150 height=150 alt="favicon"/>
     </a>
 
     <div class="markdown">
@@ -19,17 +14,19 @@
             {{ if .Params.spotlight }}
             <li>
                 <span class="inline-block mr-3 font-mono">{{ .Date.Format "2006/01/02" }}</span>
-                <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+                <a href="{{ .Permalink }}">{{ .Title }}</a>
             </li>
             {{ end }}
             {{ end }}
         </ul>
+
+
         <p>{{ "**分类：**" | markdownify }}</p>
         <p class="pl-4">
             {{ range  $tagName, $taxonomy := .Site.Taxonomies.categories  }}
             {{ with $.Site.GetPage (printf "%s/%s" "categories" $tagName) }}
             <span class="inline-block mr-3">
-                <a href="{{ .RelPermalink }}">{{ $tagName }}</a>({{ len $taxonomy }})
+                <a href="{{ .Permalink }}">{{ $tagName }}</a>({{ len $taxonomy }})
             </span>
             {{ end }}
             {{ end }}

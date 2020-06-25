@@ -18,7 +18,11 @@ module.exports = {
         require('tailwindcss')(themeDir + 'assets/css/tailwind.config.js'),   
         require('@fullhuman/postcss-purgecss')({
             content: [themeDir + 'layouts/**/*.html'],
-            defaultExtractor: content => content.match(/[\w-/:]+(?<!:)/g) || [], 
+            extractors: [
+            {
+                extractor: TailwindExtractor,
+                extensions: ['html']
+            }], 
             fontFace: false
         }),    
         require('autoprefixer')({

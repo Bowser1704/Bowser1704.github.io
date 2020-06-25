@@ -23,7 +23,7 @@
     </div>
     {{- if (and .IsPage .Params.comment | default .Page.Site.Params.comments.enable ) -}}
     <hr class="block my-10 mx-auto max-w-xs h-px border-t border-black">
-    <div id="isso-thread" data-title="{{ .Title }}" data-isso-id="{{ .RelPermalink }}"></div>
+    <div id="isso-thread"></div>
     {{ end }}
 </article>
 {{ end }}

@@ -1,5 +1,0 @@
-<a href="#" class="cryptedmail"
-   {{ with .Get "name" }}data-name="{{.}}"{{ end }}
-   {{ with .Get "domain" }}data-domain="{{.}}"{{ end }}
-   {{ with .Get "tld" }}data-tld="{{.}}"{{ end }}
-   onclick="window.location.href = 'mailto:' + this.dataset.name + '@' + this.dataset.domain + '.' + this.dataset.tld; return false;"></a>

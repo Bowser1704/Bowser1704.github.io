@@ -1,6 +1,6 @@
 {{- $img_destination := .Destination }}
-{{ if (and .Page.Site.Params.CDN.enable (not .Page.Site.IsServer)) }}
-    {{ $img_destination = (print .Page.Site.Params.CDN.HOST (path.Join .Page.RelPermalink .Destination)) }}
+{{ if .Page.Site.Params.CDN.enable }}
+    {{ $img_destination = (print .Page.Site.Params.CDN.HOST .Page.File.Dir "/" .Destination) }}
 {{ end }}
 
 {{ if .Title -}}

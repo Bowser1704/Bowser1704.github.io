@@ -1,0 +1,24 @@
+{
+  "name": "hugo-w2ng",
+  "version": "1.0.0",
+  "description": "a hugo theme for wrong.wang",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "@fullhuman/postcss-purgecss": "^1.3.0",
+    "cssnano": "^4.1.10",
+    "postcss-import": "^12.0.1",
+    "postcss-reporter": "^6.0.1",
+    "tailwindcss": "^1.1.4"
+  },
+  "scripts": {
+    "build:css": "postcss assets/css/styles.css -o static/css/style.css --config ./assets/css/",
+    "dev:css": "postcss assets/css/styles.css -o static/css/style.css --config ./assets/css/dev/"
+  },
+  "keywords": [
+    "theme",
+    "tailwind"
+  ],
+  "author": "Wrong Wang",
+  "license": "MIT"
+}

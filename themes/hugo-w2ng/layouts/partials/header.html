@@ -1,8 +1,11 @@
 {{ if not .Params.single }}
 <header
     class="flex flex-col relative border-black border-b-4 md:border-b-0 md:border-r-2 pb-6 mx-4 md:mx-0 md:w-1/5 md:text-right md:pr-8 bg-white md:text-center">
+    <link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
     <div>
-        <h1 id="header_logo" class="text-3xl md:my-12 mt-4 md:mb-12"><a href="/">{{ .Site.Title }}</a></h1>
+        <h1 id="header_logo" class="text-3xl md:my-12 mt-4 md:mb-12"><a href="{{ .Site.BaseURL }}">{{ .Site.Title }}</a></h1>
         <p class="font-thin italic">{{ .Site.Params.slogan }}</p>
     </div>
     <input id="menu-check" type="checkbox" class="hidden" />
