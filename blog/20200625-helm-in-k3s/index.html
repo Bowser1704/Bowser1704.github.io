@@ -24,7 +24,7 @@
 <meta itemprop="description" content="“国内环境在 k3s 内使用 Helm&rdquo;">
 <meta itemprop="datePublished" content="2020-06-25T10:11:19&#43;08:00" />
 <meta itemprop="dateModified" content="2020-06-25T10:11:19&#43;08:00" />
-<meta itemprop="wordCount" content="421">
+<meta itemprop="wordCount" content="450">
 
 
 
@@ -120,14 +120,15 @@
 <h3 id="1-国内访问问题">1. 国内访问问题</h3>
 <p><a href="https://helm.sh/">Helm</a> 可以类似理解为 ”K8s OS“ 的包管理工具，再以前没有这个工具我们要手动写 yaml/json 文件来自动化部署应用，但是 Helm 就类似于 Homebrew 一样，有人帮我们写好了配置文件（Chart），我们只需要一个命令，加自定义的参数就行了。</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">helm install stable/mysql --generate-name
-</code></pre></div><p>Helm 官方提供了一个 Chart 仓库，<a href="https://hub.helm.sh/">Helm Hub</a>，但是众说周知的问题，无法访问。阿里云原生团队提供了镜像服务，同步所有 Charts 并且将其中的 <code>gcr.io</code> 等镜像地址全部替换为国内可以访问的镜像。</p>
+</code></pre></div><p>Helm 官方提供了一个 Chart 仓库，<a href="https://hub.helm.sh/">Helm Hub</a>，但是众说周知的原因，无法访问。阿里云原生团队提供了镜像服务，同步所有 Charts 并且将其中的 <code>gcr.io</code> 等镜像地址全部替换为国内可以访问的镜像。</p>
 <p><a href="https://github.com/cloudnativeapp/charts">AppHub</a></p>
 <blockquote>
 <p>AppHub 的主要职责之一，是把所有 Helm 官方 Hub 托管的应用，都自动同步到国内，并自动将 Charts 文件中的 gcr.io 等有网络访问问题的 URL 替换成为稳定的国内镜像 URL。</p>
 </blockquote>
-<h3 id="2-k3s-提供的内建-operatorcrd">2. k3s 提供的内建 Operator/CRD</h3>
-<p>k3s 内建了一个 Operator/CRD 并且也内置了 Helm V3 &amp; V2， 从而使得 Helm 的使用可以使用另一种方式。</p>
+<h3 id="2-k3s-提供的内建-crd">2. k3s 提供的内建 CRD</h3>
+<p>k3s 内建了一个 CRD 并且也内置了 Helm V3 &amp; V2， 从而使得 Helm 的使用可以使用另一种方式。</p>
 <blockquote>
+<p>什么是 <a href="https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/">CRD</a>，Custom Controllers，参考 k8s 官方介绍。</p>
 <p>什么是 <a href="https://coreos.com/operators/">Operator</a>，参考 CoreOS 的官方介绍。</p>
 </blockquote>
 <p>下面是 k3s 中内建 Helm Operator 的资源类型。</p>
@@ -144,7 +145,7 @@ helmcharts                helm.cattle.io   true         HelmChart
   <span style="color:#66d9ef">chart</span>: test-helmchart
   <span style="color:#66d9ef">targetNamespace</span>: test-namespace
   <span style="color:#66d9ef">version</span>: <span style="color:#ae81ff">0.0.1</span> 
-  <span style="color:#66d9ef">repo</span>: https://apphub.aliyuncs.com   // for 3rd repo
+  <span style="color:#66d9ef">repo</span>: https://apphub.aliyuncs.com
 </code></pre></div><hr>
 <p>参考文献。</p>
 <ol>
