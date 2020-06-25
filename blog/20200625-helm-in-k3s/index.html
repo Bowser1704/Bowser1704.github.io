@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><meta charset="utf-8">
+<meta name="HandheldFriendly" content="True">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="referrer" content="no-referrer">
+<meta name="renderer" content="webkit">
+<meta name="force-rendering" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta name="format-detection" content="telephone=no,email=no,address=no">
+<meta name="generator" content="Hugo 0.70.0" />
+
+
+<title>Helm in k3s - Bowser</title>
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+<link href="https://fonts.googleapis.com/css?family=Noto+Serif+SC:400,700&display=swap&subset=chinese-simplified" rel="stylesheet" />
+<link rel="canonical" href="https://bowser1704.github.io/blog/20200625-helm-in-k3s/">
+<link rel="shortcut icon" href="/favicon.jpg">
+
+<meta itemprop="name" content="Helm in k3s">
+<meta itemprop="description" content="“国内环境在 k3s 内使用 Helm&rdquo;">
+<meta itemprop="datePublished" content="2020-06-25T10:11:19&#43;08:00" />
+<meta itemprop="dateModified" content="2020-06-25T10:11:19&#43;08:00" />
+<meta itemprop="wordCount" content="421">
+
+
+
+<meta itemprop="keywords" content="cs," />
+<meta property="og:title" content="Helm in k3s" />
+<meta property="og:description" content="“国内环境在 k3s 内使用 Helm&rdquo;" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://bowser1704.github.io/blog/20200625-helm-in-k3s/" />
+<meta property="article:published_time" content="2020-06-25T10:11:19+08:00" />
+<meta property="article:modified_time" content="2020-06-25T10:11:19+08:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Helm in k3s"/>
+<meta name="twitter:description" content="“国内环境在 k3s 内使用 Helm&rdquo;"/>
+<body class="font-sans">
+    <div class="flex flex-col md:flex-row md:w-4/5 mx-auto py-5 min-h-screen">
+<header
+    class="flex flex-col relative border-black border-b-4 md:border-b-0 md:border-r-2 pb-6 mx-4 md:mx-0 md:w-1/5 md:text-right md:pr-8 bg-white md:text-center">
+    <link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
+    <div>
+        <h1 id="header_logo" class="text-3xl md:my-12 mt-4 md:mb-12"><a href="https://bowser1704.github.io">Bowser</a></h1>
+        <p class="font-thin italic">null</p>
+    </div>
+    <input id="menu-check" type="checkbox" class="hidden" />
+    <label id="menu-label" for="menu-check"
+        class="absolute right-0 text-right md:hidden  inline-block py-4 h-12 cursor-pointer mt-10 text-xl text-gray-900">
+        <span class="icon close-icon">✕</span>
+        <span class="icon open-icon">☰</span>
+        <span class="text">MENU</span>
+    </label>
+    <nav id="menu" class="my-2 w-full md:flex-row-reverse hidden md:block">
+        <ul class="list-none pl-0 mx-auto justify-center  max-w-xs">
+            
+            
+            <li class="my-4 border-black text-center md:text-right border-b-2 md:border-none pb-1">
+                <a class="py-4 md:border-black md:border-b-2  md:pb-1" href="/blog/">博客</a>
+            </li>
+            
+            <li class="my-4 border-black text-center md:text-right border-b-2 md:border-none pb-1">
+                <a class="py-4 md:border-black md:border-b-2  md:pb-1" href="/note/">笔记</a>
+            </li>
+            
+            <li class="my-4 border-black text-center md:text-right border-b-2 md:border-none pb-1">
+                <a class="py-4 md:border-black md:border-b-2  md:pb-1" href="/about/">关于</a>
+            </li>
+            
+        </ul>
+    </nav>
+</header>
+<main class="flex-1 p-4 ">
+<article itemscope itemtype="http://schema.org/Article" class="max-w-3xl mx-auto leading-relaxed">
+    <header class="flex flex-col meta">
+<div class="flex flex-col md:flex-row justify-between ">
+    
+    <ul class="flex justify-end text-gray-800" itemprop="articleSection">
+        
+        <li class="pl-2 pr-0 md:pl-0 md:pr-2">
+            <a href="/categories/cloud-native" rel="category">cloud-native</a>
+        </li>
+        
+    </ul>
+    
+    
+    <ul class="flex justify-end text-gray-700">
+        
+        <li itemprop="keywords" class="pl-2 md:pl-4">
+            <a href="https://bowser1704.github.io/tags/cs/">#cs</a>
+        </li>
+        
+    </ul>
+    
+</div>
+<h1 itemprop="name" class="text-center text-4xl my-4 md:my-6">Helm in k3s</h1>
+        
+        <h3 class="text-center text-2xl">
+            
+            <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+                <span itemprop="name">Bowser</span>
+                
+                
+                 / 
+                <span itemprop="datePublished"
+                    content="2020-06-25">2020-06-25</span>
+                
+        </h3>
+        
+    </header>
+    <hr class="block my-10 mx-auto max-w-xs h-px border-t border-black">
+    <div itemprop="articleBody" class="content markdown">
+        <h2 id="在-k3s-内使用-helm国内">在 k3s 内使用 Helm（国内）</h2>
+<h3 id="1-国内访问问题">1. 国内访问问题</h3>
+<p><a href="https://helm.sh/">Helm</a> 可以类似理解为 ”K8s OS“ 的包管理工具，再以前没有这个工具我们要手动写 yaml/json 文件来自动化部署应用，但是 Helm 就类似于 Homebrew 一样，有人帮我们写好了配置文件（Chart），我们只需要一个命令，加自定义的参数就行了。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">helm install stable/mysql --generate-name
+</code></pre></div><p>Helm 官方提供了一个 Chart 仓库，<a href="https://hub.helm.sh/">Helm Hub</a>，但是众说周知的问题，无法访问。阿里云原生团队提供了镜像服务，同步所有 Charts 并且将其中的 <code>gcr.io</code> 等镜像地址全部替换为国内可以访问的镜像。</p>
+<p><a href="https://github.com/cloudnativeapp/charts">AppHub</a></p>
+<blockquote>
+<p>AppHub 的主要职责之一，是把所有 Helm 官方 Hub 托管的应用，都自动同步到国内，并自动将 Charts 文件中的 gcr.io 等有网络访问问题的 URL 替换成为稳定的国内镜像 URL。</p>
+</blockquote>
+<h3 id="2-k3s-提供的内建-operatorcrd">2. k3s 提供的内建 Operator/CRD</h3>
+<p>k3s 内建了一个 Operator/CRD 并且也内置了 Helm V3 &amp; V2， 从而使得 Helm 的使用可以使用另一种方式。</p>
+<blockquote>
+<p>什么是 <a href="https://coreos.com/operators/">Operator</a>，参考 CoreOS 的官方介绍。</p>
+</blockquote>
+<p>下面是 k3s 中内建 Helm Operator 的资源类型。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@bowser1704 ~<span style="color:#f92672">]</span><span style="color:#75715e"># kubectl api-resources --api-group=helm.cattle.io</span>
+NAME         SHORTNAMES   APIGROUP         NAMESPACED   KIND
+helmcharts                helm.cattle.io   true         HelmChart
+</code></pre></div><p>那么在这个 CRD 里面怎么使用国内镜像呢？</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">apiVersion</span>: helm.cattle.io/v1
+<span style="color:#66d9ef">kind</span>: HelmChart
+<span style="color:#66d9ef">metadata</span>:
+  <span style="color:#66d9ef">name</span>: example-helmchart
+  <span style="color:#66d9ef">namespace</span>: kube-system
+<span style="color:#66d9ef">spec</span>:
+  <span style="color:#66d9ef">chart</span>: test-helmchart
+  <span style="color:#66d9ef">targetNamespace</span>: test-namespace
+  <span style="color:#66d9ef">version</span>: <span style="color:#ae81ff">0.0.1</span> 
+  <span style="color:#66d9ef">repo</span>: https://apphub.aliyuncs.com   // for 3rd repo
+</code></pre></div><hr>
+<p>参考文献。</p>
+<ol>
+<li><a href="https://octetz.com/docs/2019/2019-10-13-controllers-and-operators/">Operator 与 Controller 的区别</a></li>
+</ol>
+
+    </div>
+</article>
+
+        </main>
+    </div><footer class="flex justify-center">
+    <div class="copyright mx-auto my-8">
+        <p>
+            © 2018-2020 <a href="https://github.com/Bowser1704">Bowser1704</a> - <strong><a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a></strong> - <strong>Power By Hugo | Theme By hugo-w2ng</strong>
+        </p>
+        
+    </div>
+</footer>
+
+
+
+<script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script></body>
+
+</html>

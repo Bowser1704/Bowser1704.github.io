@@ -2,6 +2,7 @@
 <html lang="zh-CN"><meta charset="utf-8">
 <meta name="HandheldFriendly" content="True">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="referrer" content="no-referrer">
 <meta name="renderer" content="webkit">
 <meta name="force-rendering" content="webkit">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,23 +11,14 @@
 <meta name="generator" content="Hugo 0.70.0" />
 
 
-<title>csapp Chapter10 UnixIO - Bowser1704</title>
+<title>csapp Chapter10 UnixIO - Bowser</title>
 
 
-
-
-    
-    
-    <link rel="stylesheet" href="/css/styles.min.c6b7d8857766555f700f21654ec85cef78aeb17a31dfc0cf50c851e0f7063fd1.css" integrity="sha256-xrfYhXdmVV9wDyFlTshc73iusXox38DPUMhR4PcGP9E=">
-    
-
+<link rel="stylesheet" href="/css/style.css">
 
 <link href="https://fonts.googleapis.com/css?family=Noto+Serif+SC:400,700&display=swap&subset=chinese-simplified" rel="stylesheet" />
-<link rel="canonical" href="https://bowser1704.github.io/note/csappchapter10/">
-
-
+<link rel="canonical" href="https://bowser1704.github.io/note/20191112-csapp-chapter10-unixio/">
 <link rel="shortcut icon" href="/favicon.jpg">
-
 
 <meta itemprop="name" content="csapp Chapter10 UnixIO">
 <meta itemprop="description" content="csapp第十章的笔记">
@@ -40,7 +32,7 @@
 <meta property="og:title" content="csapp Chapter10 UnixIO" />
 <meta property="og:description" content="csapp第十章的笔记" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://bowser1704.github.io/note/csappchapter10/" />
+<meta property="og:url" content="https://bowser1704.github.io/note/20191112-csapp-chapter10-unixio/" />
 <meta property="article:published_time" content="2019-11-12T22:05:45+08:00" />
 <meta property="article:modified_time" content="2019-11-12T22:05:45+08:00" />
 
@@ -51,8 +43,11 @@
     <div class="flex flex-col md:flex-row md:w-4/5 mx-auto py-5 min-h-screen">
 <header
     class="flex flex-col relative border-black border-b-4 md:border-b-0 md:border-r-2 pb-6 mx-4 md:mx-0 md:w-1/5 md:text-right md:pr-8 bg-white md:text-center">
+    <link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
     <div>
-        <h1 id="header_logo" class="text-3xl md:my-12 mt-4 md:mb-12"><a href="/">Bowser1704</a></h1>
+        <h1 id="header_logo" class="text-3xl md:my-12 mt-4 md:mb-12"><a href="https://bowser1704.github.io">Bowser</a></h1>
         <p class="font-thin italic">null</p>
     </div>
     <input id="menu-check" type="checkbox" class="hidden" />
@@ -184,13 +179,13 @@
 </table>
 <h2 id="unix-io">Unix IO</h2>
 <p>打开文件用到了open函数返回的是文件描述符，注意两个参数</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#458;font-weight:bold">int</span> <span style="color:#900;font-weight:bold">open</span>(<span style="color:#458;font-weight:bold">char</span> <span style="color:#000;font-weight:bold">*</span>filename, <span style="color:#458;font-weight:bold">int</span> flags, mode_t mode);
-<span style="color:#998;font-style:italic">//flags是进程如何访问这个文件，只读还是只写，或者不存在时新建
-</span><span style="color:#998;font-style:italic">//mode是创建文件时指定权限，就是正常的文件权限，读写执行，这里有一个umask，
-</span><span style="color:#998;font-style:italic">//每个进程都有一个umask，通过umask函数执行，真正的mode为 mode &amp; ~umask
-</span><span style="color:#998;font-style:italic">//出错返回-1 否则返回文件描述符
-</span><span style="color:#998;font-style:italic"></span>ssize_t <span style="color:#900;font-weight:bold">read</span>(<span style="color:#458;font-weight:bold">int</span> fd, <span style="color:#458;font-weight:bold">void</span> <span style="color:#000;font-weight:bold">*</span>buf, size_t n);
-ssize_t <span style="color:#900;font-weight:bold">write</span>(<span style="color:#458;font-weight:bold">int</span> fd, <span style="color:#000;font-weight:bold">const</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#000;font-weight:bold">*</span>buf, size_t n);
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">open</span>(<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>filename, <span style="color:#66d9ef">int</span> flags, mode_t mode);
+<span style="color:#75715e">//flags是进程如何访问这个文件，只读还是只写，或者不存在时新建
+</span><span style="color:#75715e">//mode是创建文件时指定权限，就是正常的文件权限，读写执行，这里有一个umask，
+</span><span style="color:#75715e">//每个进程都有一个umask，通过umask函数执行，真正的mode为 mode &amp; ~umask
+</span><span style="color:#75715e">//出错返回-1 否则返回文件描述符
+</span><span style="color:#75715e"></span>ssize_t <span style="color:#a6e22e">read</span>(<span style="color:#66d9ef">int</span> fd, <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>buf, size_t n);
+ssize_t <span style="color:#a6e22e">write</span>(<span style="color:#66d9ef">int</span> fd, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>buf, size_t n);
 </code></pre></div><p>读和写文件，Unix IO读写文件都是无缓冲的，也就是说每次读文件，都要陷入内核态，按照指定的字节大小读取放到给定的字符指针内，如果遇到EOF就返回0，否则返回读取字节大小，出错返回-1。</p>
 <ul>
 <li>ssize_t与size_t，前者是signed，因为可能返回-1，后者是unsigned，读取字节数&gt;=0。</li>
@@ -204,13 +199,13 @@ ssize_t <span style="color:#900;font-weight:bold">write</span>(<span style="colo
 <ol>
 <li>
 <p>rio read函数分为两批，参数不同，rio_t作为参数要先rio_init。R大写只不过是封装函数。</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#998;font-style:italic">//用rio_t作为参数的，有缓冲的。
-</span><span style="color:#998;font-style:italic"></span>rio_readinitb(rio_t <span style="color:#000;font-weight:bold">*</span>rp, <span style="color:#458;font-weight:bold">int</span> fd);
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">//用rio_t作为参数的，有缓冲的。
+</span><span style="color:#75715e"></span>rio_readinitb(rio_t <span style="color:#f92672">*</span>rp, <span style="color:#66d9ef">int</span> fd);
 rio_read();
-rio_readnb();<span style="color:#998;font-style:italic">//与下面的readline函数可以混合使用
-</span><span style="color:#998;font-style:italic"></span>rio_readlineb();
-<span style="color:#998;font-style:italic">//用fd作为参数的，无缓冲的。
-</span><span style="color:#998;font-style:italic"></span>rio_readn();
+rio_readnb();<span style="color:#75715e">//与下面的readline函数可以混合使用
+</span><span style="color:#75715e"></span>rio_readlineb();
+<span style="color:#75715e">//用fd作为参数的，无缓冲的。
+</span><span style="color:#75715e"></span>rio_readn();
 </code></pre></div><p>write函数都只需要fd。</p>
 </li>
 <li>
@@ -219,20 +214,20 @@ rio_readnb();<span style="color:#998;font-style:italic">//与下面的readline�
 </li>
 <li>
 <p>我们文件都会有一些元数据(metadata)，例如创建时间，文件类型balabala的，有两个函数可一度去这些数据。</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#458;font-weight:bold">int</span> <span style="color:#900;font-weight:bold">stat</span>(<span style="color:#000;font-weight:bold">const</span> <span style="color:#458;font-weight:bold">char</span><span style="color:#000;font-weight:bold">*</span> filename, <span style="color:#000;font-weight:bold">struct</span> stat <span style="color:#000;font-weight:bold">*</span>buf);
-<span style="color:#458;font-weight:bold">int</span> <span style="color:#900;font-weight:bold">fstat</span>(<span style="color:#458;font-weight:bold">int</span> fd, <span style="color:#000;font-weight:bold">struct</span> stat <span style="color:#000;font-weight:bold">*</span>buf);
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">stat</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span><span style="color:#f92672">*</span> filename, <span style="color:#66d9ef">struct</span> stat <span style="color:#f92672">*</span>buf);
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">fstat</span>(<span style="color:#66d9ef">int</span> fd, <span style="color:#66d9ef">struct</span> stat <span style="color:#f92672">*</span>buf);
 </code></pre></div></li>
 </ol>
 <h2 id="重定向">重定向</h2>
 <p>Linux shell中的 <code>&gt;</code></p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh"><span style="color:#008080">$bowser</span>&gt; ls &gt; foo.txt
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">$bowser&gt; ls &gt; foo.txt
 </code></pre></div><p>dup2函数，cgi编程会利用此函数，将std_out重定向到client_sockfd</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#458;font-weight:bold">int</span> <span style="color:#900;font-weight:bold">dup2</span>(<span style="color:#458;font-weight:bold">int</span> oldfd, <span style="color:#458;font-weight:bold">int</span> newfd);
-<span style="color:#998;font-style:italic">//如果newfd已经打开，会先关闭它。
-</span><span style="color:#998;font-style:italic">//一句话：把newtd指向oldfd的文件表项
-</span><span style="color:#998;font-style:italic"></span>dup(<span style="color:#099">5</span>, <span style="color:#099">0</span>);
-<span style="color:#998;font-style:italic">//标准输入重定向到描述符5指向的文件表
-</span><span style="color:#998;font-style:italic">//会继承5打开文件的文件偏移量。因为指向的是同一个文件表。
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">dup2</span>(<span style="color:#66d9ef">int</span> oldfd, <span style="color:#66d9ef">int</span> newfd);
+<span style="color:#75715e">//如果newfd已经打开，会先关闭它。
+</span><span style="color:#75715e">//一句话：把newtd指向oldfd的文件表项
+</span><span style="color:#75715e"></span>dup(<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">0</span>);
+<span style="color:#75715e">//标准输入重定向到描述符5指向的文件表
+</span><span style="color:#75715e">//会继承5打开文件的文件偏移量。因为指向的是同一个文件表。
 </span></code></pre></div><h2 id="疑问">疑问</h2>
 <p>明确几点：</p>
 <ol>
@@ -261,9 +256,6 @@ rio_readnb();<span style="color:#998;font-style:italic">//与下面的readline�
 
 
 
-
-
-<script type="text/javascript" src="/js/instant.page.218f375afe49ca7960b6fc5ffe921ddae1fb2332f46ee5c292587dc370164cc857f533677b4fb60dc2341ca95096a5f3ed3d1615d5411144a034f9260082cdad.js" integrity="sha512-IY83Wv5Jynlgtvxf/pId2uH7IzL0buXCklh9w3AWTMhX9TNne0&#43;2DcI0HKlQlqXz7T0WFdVBEUSgNPkmAILNrQ=="></script>
-</body>
+<script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script></body>
 
 </html>

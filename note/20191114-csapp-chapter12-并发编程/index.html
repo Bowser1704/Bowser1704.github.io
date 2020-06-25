@@ -2,6 +2,7 @@
 <html lang="zh-CN"><meta charset="utf-8">
 <meta name="HandheldFriendly" content="True">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="referrer" content="no-referrer">
 <meta name="renderer" content="webkit">
 <meta name="force-rendering" content="webkit">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,23 +11,14 @@
 <meta name="generator" content="Hugo 0.70.0" />
 
 
-<title>csapp Chapter12 并发编程 - Bowser1704</title>
+<title>csapp Chapter12 并发编程 - Bowser</title>
 
 
-
-
-    
-    
-    <link rel="stylesheet" href="/css/styles.min.c6b7d8857766555f700f21654ec85cef78aeb17a31dfc0cf50c851e0f7063fd1.css" integrity="sha256-xrfYhXdmVV9wDyFlTshc73iusXox38DPUMhR4PcGP9E=">
-    
-
+<link rel="stylesheet" href="/css/style.css">
 
 <link href="https://fonts.googleapis.com/css?family=Noto+Serif+SC:400,700&display=swap&subset=chinese-simplified" rel="stylesheet" />
-<link rel="canonical" href="https://bowser1704.github.io/note/csappchapter12/">
-
-
+<link rel="canonical" href="https://bowser1704.github.io/note/20191114-csapp-chapter12-%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/">
 <link rel="shortcut icon" href="/favicon.jpg">
-
 
 <meta itemprop="name" content="csapp Chapter12 并发编程">
 <meta itemprop="description" content="12章笔记，并发编程">
@@ -40,7 +32,7 @@
 <meta property="og:title" content="csapp Chapter12 并发编程" />
 <meta property="og:description" content="12章笔记，并发编程" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://bowser1704.github.io/note/csappchapter12/" />
+<meta property="og:url" content="https://bowser1704.github.io/note/20191114-csapp-chapter12-%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" />
 <meta property="article:published_time" content="2019-11-14T23:43:14+08:00" />
 <meta property="article:modified_time" content="2019-11-14T23:43:14+08:00" />
 
@@ -51,8 +43,11 @@
     <div class="flex flex-col md:flex-row md:w-4/5 mx-auto py-5 min-h-screen">
 <header
     class="flex flex-col relative border-black border-b-4 md:border-b-0 md:border-r-2 pb-6 mx-4 md:mx-0 md:w-1/5 md:text-right md:pr-8 bg-white md:text-center">
+    <link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
     <div>
-        <h1 id="header_logo" class="text-3xl md:my-12 mt-4 md:mb-12"><a href="/">Bowser1704</a></h1>
+        <h1 id="header_logo" class="text-3xl md:my-12 mt-4 md:mb-12"><a href="https://bowser1704.github.io">Bowser</a></h1>
         <p class="font-thin italic">null</p>
     </div>
     <input id="menu-check" type="checkbox" class="hidden" />
@@ -123,34 +118,34 @@
     <div itemprop="articleBody" class="content markdown">
         <h2 id="基于进程的并发编程">基于进程的并发编程</h2>
 <p>就像我们最初写的echo服务一样，listen来了一个请求，创建一个connfd，一个子进程去处理，写入coonfd。如下</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">listenfd <span style="color:#000;font-weight:bold">=</span> Open_listenfd(argv[<span style="color:#099">1</span>]);
-<span style="color:#000;font-weight:bold">while</span> (<span style="color:#099">1</span>) {
-    clientlen <span style="color:#000;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">sizeof</span>(<span style="color:#000;font-weight:bold">struct</span> sockaddr_storage); 
-    connfd <span style="color:#000;font-weight:bold">=</span> Accept(listenfd, (SA <span style="color:#000;font-weight:bold">*</span>) <span style="color:#000;font-weight:bold">&amp;</span>clientaddr, <span style="color:#000;font-weight:bold">&amp;</span>clientlen);
-    <span style="color:#998;font-style:italic">//accept请求，创建connfd，准备写入
-</span><span style="color:#998;font-style:italic"></span>    <span style="color:#000;font-weight:bold">if</span> (Fork() <span style="color:#000;font-weight:bold">==</span> <span style="color:#099">0</span>) { 
-        <span style="color:#998;font-style:italic">//子进程的操作
-</span><span style="color:#998;font-style:italic"></span>        Close(listenfd); <span style="color:#998;font-style:italic">//子进程会继承父进程的所有数据，包括listenfd，但是我们用不上，并且我们要关闭它。但是不关闭，从没有内存泄露的角度来说还是正确的，理由如关闭connfd所示。
-</span><span style="color:#998;font-style:italic"></span>        echo(connfd);    <span style="color:#998;font-style:italic">//写入数据。
-</span><span style="color:#998;font-style:italic"></span>        Close(connfd);   <span style="color:#998;font-style:italic">//如果不手动关闭的话，进程退出时，也是会自动关闭的。
-</span><span style="color:#998;font-style:italic"></span>        exit(<span style="color:#099">0</span>);         
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">listenfd <span style="color:#f92672">=</span> Open_listenfd(argv[<span style="color:#ae81ff">1</span>]);
+<span style="color:#66d9ef">while</span> (<span style="color:#ae81ff">1</span>) {
+    clientlen <span style="color:#f92672">=</span> <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">struct</span> sockaddr_storage); 
+    connfd <span style="color:#f92672">=</span> Accept(listenfd, (SA <span style="color:#f92672">*</span>) <span style="color:#f92672">&amp;</span>clientaddr, <span style="color:#f92672">&amp;</span>clientlen);
+    <span style="color:#75715e">//accept请求，创建connfd，准备写入
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> (Fork() <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>) { 
+        <span style="color:#75715e">//子进程的操作
+</span><span style="color:#75715e"></span>        Close(listenfd); <span style="color:#75715e">//子进程会继承父进程的所有数据，包括listenfd，但是我们用不上，并且我们要关闭它。但是不关闭，从没有内存泄露的角度来说还是正确的，理由如关闭connfd所示。
+</span><span style="color:#75715e"></span>        echo(connfd);    <span style="color:#75715e">//写入数据。
+</span><span style="color:#75715e"></span>        Close(connfd);   <span style="color:#75715e">//如果不手动关闭的话，进程退出时，也是会自动关闭的。
+</span><span style="color:#75715e"></span>        exit(<span style="color:#ae81ff">0</span>);         
     }
-    <span style="color:#998;font-style:italic">//必须关闭两次，文件表引用才会显示为0，才会释放资源。
-</span><span style="color:#998;font-style:italic"></span>    Close(connfd);  
+    <span style="color:#75715e">//必须关闭两次，文件表引用才会显示为0，才会释放资源。
+</span><span style="color:#75715e"></span>    Close(connfd);  
 }
 
 </code></pre></div><h2 id="基于io多路复用的并发编程">基于IO多路复用的并发编程</h2>
 <h3 id="select函数">select函数</h3>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#998;font-style:italic">//select函数原型
-</span><span style="color:#998;font-style:italic"></span><span style="color:#458;font-weight:bold">int</span> <span style="color:#900;font-weight:bold">select</span>(<span style="color:#458;font-weight:bold">int</span> nfds, fd_set <span style="color:#000;font-weight:bold">*</span>readfds, fd_set <span style="color:#000;font-weight:bold">*</span>writefds,
-                  fd_set <span style="color:#000;font-weight:bold">*</span>exceptfds, <span style="color:#000;font-weight:bold">struct</span> timeval <span style="color:#000;font-weight:bold">*</span>timeout);
-<span style="color:#998;font-style:italic">//三个fd_set分别为，read，write，except，select拿到了准备可读的描述符，就往下进去读。但是其实io操作还是同步的。
-</span><span style="color:#998;font-style:italic">//timeout是一个结构体有两个属性 seconds and microseconds
-</span><span style="color:#998;font-style:italic">//四个宏对fd_set操作，放入拿出...
-</span><span style="color:#998;font-style:italic"></span><span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">FD_CLR</span>(<span style="color:#458;font-weight:bold">int</span> fd, fd_set <span style="color:#000;font-weight:bold">*</span>set);
-<span style="color:#458;font-weight:bold">int</span>  <span style="color:#900;font-weight:bold">FD_ISSET</span>(<span style="color:#458;font-weight:bold">int</span> fd, fd_set <span style="color:#000;font-weight:bold">*</span>set);
-<span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">FD_SET</span>(<span style="color:#458;font-weight:bold">int</span> fd, fd_set <span style="color:#000;font-weight:bold">*</span>set);
-<span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">FD_ZERO</span>(fd_set <span style="color:#000;font-weight:bold">*</span>set);
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">//select函数原型
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">select</span>(<span style="color:#66d9ef">int</span> nfds, fd_set <span style="color:#f92672">*</span>readfds, fd_set <span style="color:#f92672">*</span>writefds,
+                  fd_set <span style="color:#f92672">*</span>exceptfds, <span style="color:#66d9ef">struct</span> timeval <span style="color:#f92672">*</span>timeout);
+<span style="color:#75715e">//三个fd_set分别为，read，write，except，select拿到了准备可读的描述符，就往下进去读。但是其实io操作还是同步的。
+</span><span style="color:#75715e">//timeout是一个结构体有两个属性 seconds and microseconds
+</span><span style="color:#75715e">//四个宏对fd_set操作，放入拿出...
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">FD_CLR</span>(<span style="color:#66d9ef">int</span> fd, fd_set <span style="color:#f92672">*</span>set);
+<span style="color:#66d9ef">int</span>  <span style="color:#a6e22e">FD_ISSET</span>(<span style="color:#66d9ef">int</span> fd, fd_set <span style="color:#f92672">*</span>set);
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">FD_SET</span>(<span style="color:#66d9ef">int</span> fd, fd_set <span style="color:#f92672">*</span>set);
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">FD_ZERO</span>(fd_set <span style="color:#f92672">*</span>set);
 </code></pre></div><p>调用select函数之后，会对传入的参数修改，包括三个fd_set，所以如果循环检查我们要每次重新初始化fd_set，如果超时，select返回0，三个fd_set会被清空。</p>
 <p>但是有点限制：</p>
 <blockquote>
@@ -208,9 +203,6 @@
 
 
 
-
-
-<script type="text/javascript" src="/js/instant.page.218f375afe49ca7960b6fc5ffe921ddae1fb2332f46ee5c292587dc370164cc857f533677b4fb60dc2341ca95096a5f3ed3d1615d5411144a034f9260082cdad.js" integrity="sha512-IY83Wv5Jynlgtvxf/pId2uH7IzL0buXCklh9w3AWTMhX9TNne0&#43;2DcI0HKlQlqXz7T0WFdVBEUSgNPkmAILNrQ=="></script>
-</body>
+<script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script></body>
 
 </html>

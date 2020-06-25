@@ -1,16 +1,25 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Categories on Bowser1704</title>
+    <title>Categories on Bowser</title>
     <link>https://bowser1704.github.io/categories/</link>
-    <description>Recent content in Categories on Bowser1704</description>
+    <description>Recent content in Categories on Bowser</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
     <copyright>This work is licensed under a CC BY-NC 4.0(署名-非商业性使用 4.0 国际) License.</copyright>
-    <lastBuildDate>Thu, 05 Dec 2019 01:04:48 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 25 Jun 2020 10:11:19 +0800</lastBuildDate>
     
 	<atom:link href="https://bowser1704.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>cloud-native</title>
+      <link>https://bowser1704.github.io/categories/cloud-native/</link>
+      <pubDate>Thu, 25 Jun 2020 10:11:19 +0800</pubDate>
+      
+      <guid>https://bowser1704.github.io/categories/cloud-native/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>文学</title>

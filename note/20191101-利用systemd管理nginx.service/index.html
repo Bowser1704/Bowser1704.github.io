@@ -2,6 +2,7 @@
 <html lang="zh-CN"><meta charset="utf-8">
 <meta name="HandheldFriendly" content="True">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="referrer" content="no-referrer">
 <meta name="renderer" content="webkit">
 <meta name="force-rendering" content="webkit">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,23 +11,14 @@
 <meta name="generator" content="Hugo 0.70.0" />
 
 
-<title>利用systemd管理nginx.service - Bowser1704</title>
+<title>利用systemd管理nginx.service - Bowser</title>
 
 
-
-
-    
-    
-    <link rel="stylesheet" href="/css/styles.min.c6b7d8857766555f700f21654ec85cef78aeb17a31dfc0cf50c851e0f7063fd1.css" integrity="sha256-xrfYhXdmVV9wDyFlTshc73iusXox38DPUMhR4PcGP9E=">
-    
-
+<link rel="stylesheet" href="/css/style.css">
 
 <link href="https://fonts.googleapis.com/css?family=Noto+Serif+SC:400,700&display=swap&subset=chinese-simplified" rel="stylesheet" />
-<link rel="canonical" href="https://bowser1704.github.io/note/systemctlservice/">
-
-
+<link rel="canonical" href="https://bowser1704.github.io/note/20191101-%E5%88%A9%E7%94%A8systemd%E7%AE%A1%E7%90%86nginx.service/">
 <link rel="shortcut icon" href="/favicon.jpg">
-
 
 <meta itemprop="name" content="利用systemd管理nginx.service">
 <meta itemprop="description" content="如何将一个nginx.service用systemctl托管">
@@ -40,7 +32,7 @@
 <meta property="og:title" content="利用systemd管理nginx.service" />
 <meta property="og:description" content="如何将一个nginx.service用systemctl托管" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://bowser1704.github.io/note/systemctlservice/" />
+<meta property="og:url" content="https://bowser1704.github.io/note/20191101-%E5%88%A9%E7%94%A8systemd%E7%AE%A1%E7%90%86nginx.service/" />
 <meta property="article:published_time" content="2019-11-01T14:50:23+08:00" />
 <meta property="article:modified_time" content="2019-11-01T14:50:23+08:00" />
 
@@ -51,8 +43,11 @@
     <div class="flex flex-col md:flex-row md:w-4/5 mx-auto py-5 min-h-screen">
 <header
     class="flex flex-col relative border-black border-b-4 md:border-b-0 md:border-r-2 pb-6 mx-4 md:mx-0 md:w-1/5 md:text-right md:pr-8 bg-white md:text-center">
+    <link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
     <div>
-        <h1 id="header_logo" class="text-3xl md:my-12 mt-4 md:mb-12"><a href="/">Bowser1704</a></h1>
+        <h1 id="header_logo" class="text-3xl md:my-12 mt-4 md:mb-12"><a href="https://bowser1704.github.io">Bowser</a></h1>
         <p class="font-thin italic">null</p>
     </div>
     <input id="menu-check" type="checkbox" class="hidden" />
@@ -124,35 +119,35 @@
         <h2 id="systemd是什么">systemd是什么</h2>
 <p>以前的Linux系统启动，首先会启动一个init.d，然后其他所有的进程都是这个进程的子进程，但是现在的改进，启用systemd来启动管理daemon进程，不过据说有一堆的bug、</p>
 <p>systemd具有一系列的命令，但是我只讲systemctl。</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">systemctl start nginx.service
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">systemctl start nginx.service
 systemctl stop nginx.service
 systemctl restart nginx.service
 </code></pre></div><p>字面意思。</p>
 <h2 id="如何让systemd托管我们的service">如何让systemd托管我们的service</h2>
 <p>linux下一切皆文件，systemd也是靠读取一些指定的文件来管理的，我的系统service文件在<code>lib/systemd/system</code>下面，你可以自己去找一下，locate命令就可以。</p>
 <p>而service长什么样子呢？以nginx.service为例子</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#000;font-weight:bold">[</span>Unit<span style="color:#000;font-weight:bold">]</span>
-<span style="color:#008080">Description</span><span style="color:#000;font-weight:bold">=</span>nginx - high performance web server.
-<span style="color:#008080">Documentation</span><span style="color:#000;font-weight:bold">=</span>http://nginx.org/en/docs/
-<span style="color:#008080">After</span><span style="color:#000;font-weight:bold">=</span>network.target remote-fs.target nss-lookup.target
-<span style="color:#998;font-style:italic"># 这里是一些描述信息，不是特别重要</span>
-<span style="color:#000;font-weight:bold">[</span>Service<span style="color:#000;font-weight:bold">]</span>
-<span style="color:#008080">Type</span><span style="color:#000;font-weight:bold">=</span>forking
-<span style="color:#008080">PIDFile</span><span style="color:#000;font-weight:bold">=</span>/run/nginx.pid	<span style="color:#998;font-style:italic">#pid文件的位置</span>
-<span style="color:#008080">ExecStartPre</span><span style="color:#000;font-weight:bold">=</span>/usr/local/nginx/sbin/nginx -t -c /usr/local/nginx/conf/nginx.conf <span style="color:#998;font-style:italic">#启动前的命令一般都是test，其实就是nginx的命令</span>
-<span style="color:#008080">ExecStart</span><span style="color:#000;font-weight:bold">=</span>/usr/local/nginx/sbin/nginx -c /usr/local/nginx/conf/nginx.conf	<span style="color:#998;font-style:italic">#启动命令，使用绝对路劲。</span>
-<span style="color:#008080">ExecReload</span><span style="color:#000;font-weight:bold">=</span>/usr/local/nginx/sbin/nginx -s reopen
-<span style="color:#008080">ExecStop</span><span style="color:#000;font-weight:bold">=</span>/usr/local/nginx/sbin/nginx -s stop
-<span style="color:#008080">PrivateTmp</span><span style="color:#000;font-weight:bold">=</span><span style="color:#0086b3">true</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>Unit<span style="color:#f92672">]</span>
+Description<span style="color:#f92672">=</span>nginx - high performance web server.
+Documentation<span style="color:#f92672">=</span>http://nginx.org/en/docs/
+After<span style="color:#f92672">=</span>network.target remote-fs.target nss-lookup.target
+<span style="color:#75715e"># 这里是一些描述信息，不是特别重要</span>
+<span style="color:#f92672">[</span>Service<span style="color:#f92672">]</span>
+Type<span style="color:#f92672">=</span>forking
+PIDFile<span style="color:#f92672">=</span>/run/nginx.pid	<span style="color:#75715e">#pid文件的位置</span>
+ExecStartPre<span style="color:#f92672">=</span>/usr/local/nginx/sbin/nginx -t -c /usr/local/nginx/conf/nginx.conf <span style="color:#75715e">#启动前的命令一般都是test，其实就是nginx的命令</span>
+ExecStart<span style="color:#f92672">=</span>/usr/local/nginx/sbin/nginx -c /usr/local/nginx/conf/nginx.conf	<span style="color:#75715e">#启动命令，使用绝对路劲。</span>
+ExecReload<span style="color:#f92672">=</span>/usr/local/nginx/sbin/nginx -s reopen
+ExecStop<span style="color:#f92672">=</span>/usr/local/nginx/sbin/nginx -s stop
+PrivateTmp<span style="color:#f92672">=</span>true
   
-<span style="color:#000;font-weight:bold">[</span>Install<span style="color:#000;font-weight:bold">]</span>
-<span style="color:#008080">WantedBy</span><span style="color:#000;font-weight:bold">=</span>multi-user.target
-<span style="color:#998;font-style:italic"># 放入multi-user.target目录下面</span>
+<span style="color:#f92672">[</span>Install<span style="color:#f92672">]</span>
+WantedBy<span style="color:#f92672">=</span>multi-user.target
+<span style="color:#75715e"># 放入multi-user.target目录下面</span>
 </code></pre></div><h2 id="nginx配置">nginx配置</h2>
 <p>我们在安装nginx的时候，如果是默认包管理器安装的话，会自动加入systemd，但是我们自己安装就会有一堆问题。所以conf配置添加一句。</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">pid /run/nginx.pid
-<span style="color:#998;font-style:italic"># pid /var/run/nginx.pid</span>
-<span style="color:#998;font-style:italic"># /var/run其实是一个指向/run的软连接。</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">pid /run/nginx.pid
+<span style="color:#75715e"># pid /var/run/nginx.pid</span>
+<span style="color:#75715e"># /var/run其实是一个指向/run的软连接。</span>
 </code></pre></div><h3 id="可能会遇到的问题">可能会遇到的问题</h3>
 <ol>
 <li>nginx 找不到nginx.pid，那你就自己去创建一个nginx.pid。</li>
@@ -173,9 +168,6 @@ systemctl restart nginx.service
 
 
 
-
-
-<script type="text/javascript" src="/js/instant.page.218f375afe49ca7960b6fc5ffe921ddae1fb2332f46ee5c292587dc370164cc857f533677b4fb60dc2341ca95096a5f3ed3d1615d5411144a034f9260082cdad.js" integrity="sha512-IY83Wv5Jynlgtvxf/pId2uH7IzL0buXCklh9w3AWTMhX9TNne0&#43;2DcI0HKlQlqXz7T0WFdVBEUSgNPkmAILNrQ=="></script>
-</body>
+<script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script></body>
 
 </html>
