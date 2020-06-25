@@ -74,7 +74,9 @@ metadata:
   name: letsencrypt-prod
 spec:
   acme:
-    server: https://acme-v02.api.letsencrypt.org/directory
+    # server: https://acme-v02.api.letsencrypt.org/directory
+    # 建议先使用 测试 API，区别参考 https://letsencrypt.org/zh-cn/docs/staging-environment/
+    server: https://acme-staging-v02.api.letsencrypt.org/directory
     email: 896379346@qq.com
     privateKeySecretRef:
       name: letsencrypt-prod
@@ -103,6 +105,8 @@ Error from server (InternalError): error when creating "cluster-issuer.yaml": In
   猜想是 flannel 的后端 VXLAN 的问题。issue 中暂时解决的办法是重启 k3s 更换 后端。
 
 - https://github.com/coreos/flannel/issues/1243
+
+  https://github.com/rancher/k3s/issues/1613
 
   上次其他服务碰到过一次这个问题，也就是说，也是 flannel 的问题。
 
