@@ -2,7 +2,7 @@
 title: 在 k3s 内使用 cert-manager 管理证书
 summary: “云原生使用 acme.sh 有一些无法很好解决的问题，所以使用 cert-manager 管理证书"
 tags: [cs]
-categories: [cloudnative]
+categories: [cloud-native]
 spotlight: true
 date: 2020-06-25T19:30:20+08:00
 ---
