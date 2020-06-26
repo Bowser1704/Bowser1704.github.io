@@ -14,7 +14,7 @@ date: 2020-06-25T19:30:20+08:00
 
 ![High level overview diagram explaining cert-manager architecture](https://cert-manager.io/images/high-level-overview.svg)
 
-简单讲一下 cert-manager 的原理，普通 acme.sh 客户端交付给我们的是证书，附带的功能也是更新证书，但是 cert-manager 交付给我们的是 一个 CRD Issuer/ClusterIssuer 这个对象可以用来签发  另一个 CRD [Certificate](https://cert-manager.io/docs/concepts/certificate/) 会自动生成 tls secret 并且管理更新。
+简单讲一下 cert-manager 的原理，普通 acme.sh 客户端交付给我们的是证书，附带的功能也是更新证书，但是 cert-manager 交付给我们的是 一个 CRD Issuer/ClusterIssuer 这个对象可以用来签发  另一个 CRD [Certificate](https://cert-manager.io/docs/concepts/certificate/) 会自动生成 tls secret 并且管理更新。Certificate 就是真正的证书，由他来生产 secret。
 
 ## 使用 cert-manager
 
@@ -66,7 +66,7 @@ spec:
 
 ### 安装完成之后配置
 
-使用 ClusterIssuer，作用于整个集群。
+1. 使用 ClusterIssuer，作用于整个集群。
 
 ```yaml
 apiVersion: cert-manager.io/v1alpha2
@@ -78,7 +78,7 @@ spec:
     # server: https://acme-v02.api.letsencrypt.org/directory
     # 建议先使用 测试 API，区别参考 https://letsencrypt.org/zh-cn/docs/staging-environment/
     server: https://acme-staging-v02.api.letsencrypt.org/directory
-    email: 896379346@qq.com
+    email: name@user.com
     privateKeySecretRef:
       name: letsencrypt-prod
     solvers:
@@ -90,6 +90,53 @@ spec:
 可以使用两种检测方式，一种为 `HTTP-01`、一种为 `DNS-01`，区别参考[Let’s Encrypt 验证方式](https://letsencrypt.org/zh-cn/docs/challenge-types/)。
 
 如果使用 `DNS-01` 方式，因为原生不支持 AliDNS，所以可以使用 Alidns-[webhook](https://github.com/pragkent/alidns-webhook)。
+
+2. ClusterIssuer 创建成功之后，创建 Certificate，针对于特定命名空间的。
+
+   ```yaml
+   apiVersion: cert-manager.io/v1alpha2
+   kind: Certificate
+   metadata:
+     name: food
+     namespace: food
+   spec:
+     secretName: food-secret
+     dnsNames:
+     - food.test.muxixyz.com
+     issuerRef:
+       name: letsencrypt-prod
+       kind: ClusterIssuer
+   ```
+
+3. ingress 设置
+
+   ```yaml
+   apiVersion: extensions/v1beta1
+   kind: Ingress
+   metadata:
+     name: food
+     namespace: food
+     annotations:
+       kubernetes.io/ingress.class: traefik
+       # 添加一个 annotations
+       cert-manager.io/issuer-name: letsencrypt-prod
+   spec:
+     rules:
+     - host: food.test.muxixyz.com
+       http:
+         paths:
+         - path: /
+           backend:
+             serviceName: food-backend
+             servicePort: http
+     tls:
+     - hosts:
+       - food.test.muxixyz.com
+       # certificate 里面的 secret-name
+       secretName: food-secret
+   ```
+
+   大功告成！以后就不会发生证书过期的事情了。
 
 -----
 
@@ -119,3 +166,106 @@ Error from server (InternalError): error when creating "cluster-issuer.yaml": In
 
   可以通过修改 k3s.service 然后使用 `systemctl daemon-reload` restart k3s。
 
+debug
+
+1. 检查 svc 和 endpoint。
+
+   ```bash
+   # svc ip 
+   [root@bowser1704 ~]# httpstat -k 10.43.247.15:443
+   ^C
+   
+   # endpoint or pod ip
+   [root@bowser1704 ~]# httpstat -k 10.42.1.28:10250
+   
+   Connected to 10.42.1.28:10250
+   
+   HTTP/1.1 404 Not Found
+   Content-Length: 19
+   Content-Type: text/plain; charset=utf-8
+   Date: Fri, 26 Jun 2020 07:08:51 GMT
+   X-Content-Type-Options: nosniff
+   
+   Body discarded
+   
+     DNS Lookup   TCP Connection   TLS Handshake   Server Processing   Content Transfer
+   [      0ms  |           0ms  |         44ms  |              0ms  |             0ms  ]
+               |                |               |                   |                  |
+      namelookup:0ms            |               |                   |                  |
+                          connect:0ms           |                   |                  |
+                                      pretransfer:45ms              |                  |
+                                                        starttransfer:45ms             |
+                                                                                   total:45ms
+   ```
+
+   定位到是 svc 的问题。发现所有的 svc 都访问不到。
+
+2. 检查 iptables
+
+   ```bash
+   [root@bowser1704 ~]# iptables-save | grep 10.43.247.15
+   -A KUBE-SERVICES ! -s 10.42.0.0/16 -d 10.43.247.15/32 -p tcp -m comment --comment "cert-manager/cert-manager-webhook:https cluster IP" -m tcp --dport 443 -j KUBE-MARK-MASQ
+   -A KUBE-SERVICES -d 10.43.247.15/32 -p tcp -m comment --comment "cert-manager/cert-manager-webhook:https cluster IP" -m tcp --dport 443 -j KUBE-SVC-ZUD4L6KQKCHD52W4
+   
+   [root@bowser1704 ~]# iptables-save | grep KUBE-SVC-ZUD4L6KQKCHD52W4
+   :KUBE-SVC-ZUD4L6KQKCHD52W4 - [0:0]
+   -A KUBE-SERVICES -d 10.43.247.15/32 -p tcp -m comment --comment "cert-manager/cert-manager-webhook:https cluster IP" -m tcp --dport 443 -j KUBE-SVC-ZUD4L6KQKCHD52W4
+   -A KUBE-SVC-ZUD4L6KQKCHD52W4 -j KUBE-SEP-MM5Y2SAJQYJV572E
+   
+   [root@bowser1704 ~]# iptables-save | grep KUBE-SEP-MM5Y2SAJQYJV572E
+   :KUBE-SEP-MM5Y2SAJQYJV572E - [0:0]
+   -A KUBE-SEP-MM5Y2SAJQYJV572E -s 10.42.1.28/32 -j KUBE-MARK-MASQ
+   -A KUBE-SEP-MM5Y2SAJQYJV572E -p tcp -m tcp -j DNAT --to-destination 10.42.1.28:10250
+   -A KUBE-SVC-ZUD4L6KQKCHD52W4 -j KUBE-SEP-MM5Y2SAJQYJV572E
+   
+   # 下面是 KUBE-MARK-MASQ 的作用。
+   -A KUBE-MARK-MASQ -j MARK --set-xmark 0x4000/0x4000
+   ```
+
+   发现规则都在，没有问题。但是 svc 都访问不到。IPVS 可能有帮助？？？
+
+3. 但是发现在 pod 的那个 node 上可以访问到 svc。使用 nodeSelector 转移到 master node. 也可以访问到了。
+
+   ```bash
+   [root@bowser1704 cert-manager]# kubectl get svc -n cert-manager
+   NAME                   TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
+   cert-manager           ClusterIP   10.43.157.248   <none>        9402/TCP   20h
+   cert-manager-webhook   ClusterIP   10.43.247.15    <none>        443/TCP    20h
+   
+   # can't access
+   [root@bowser1704 cert-manager]# curl -k https://10.43.247.15:443
+   ^C
+   
+   # check node
+   [root@iZuf6dq9lezw045stckkhsZ cert-manager]# kubectl describe pods cert-manager-webhook-7c6c464d7b-vp44p -n cert-manage
+   
+    ...
+   Node:         foo1/172.19.145.208
+   ...
+   ```
+
+   使用 nodeSelector 将 pod 迁移到 master node.
+
+   ```bash
+   # edit pod yaml
+   nodeSelector:
+    k3s.io/internal-ip: 172.16.219.51
+      
+   [root@iZuf6dq9lezw045stckkhsZ cert-manager]# kubectl describe pods cert-manager-webhook-7c6c464d7b-vp44p -n cert-manage
+   
+   ...
+   Node:         bowser1704/172.19.145.188
+   ...
+      
+   # accessing in master node
+   [root@bowser1704 cert-manager]# curl -k https://10.43.247.15:443
+   404 page not found
+   ```
+
+   4. 提 [issue](https://github.com/rancher/k3s/issues/1958) 
+
+----------------------
+
+参考链接
+
+1. https://community.hetzner.com/tutorials/howto-k8s-traefik-certmanager
