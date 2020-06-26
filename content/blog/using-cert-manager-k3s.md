@@ -68,28 +68,27 @@ spec:
 
 1. 使用 ClusterIssuer，作用于整个集群。
 
-```yaml
-apiVersion: cert-manager.io/v1alpha2
-kind: ClusterIssuer
-metadata:
-  name: letsencrypt-prod
-spec:
-  acme:
-    # server: https://acme-v02.api.letsencrypt.org/directory
-    # 建议先使用 测试 API，区别参考 https://letsencrypt.org/zh-cn/docs/staging-environment/
-    server: https://acme-staging-v02.api.letsencrypt.org/directory
-    email: name@user.com
-    privateKeySecretRef:
+    ```yaml
+    apiVersion: cert-manager.io/v1alpha2
+    kind: ClusterIssuer
+    metadata:
       name: letsencrypt-prod
-    solvers:
-    - http01:
-       ingress:
-         class: traefik
-```
+    spec:
+      acme:
+        # server: https://acme-v02.api.letsencrypt.org/directory
+        # 建议先使用 测试 API，区别参考 https://letsencrypt.org/zh-cn/docs/staging-environment/
+        server: https://acme-staging-v02.api.letsencrypt.org/directory
+        email: name@user.com
+        privateKeySecretRef:
+          name: letsencrypt-prod
+        solvers:
+        - http01:
+           ingress:
+             class: traefik
+    ```
+    可以使用两种检测方式，一种为 `HTTP-01`、一种为 `DNS-01`，区别参考[Let’s Encrypt 验证方式](https://letsencrypt.org/zh-cn/docs/challenge-types/)。
 
-可以使用两种检测方式，一种为 `HTTP-01`、一种为 `DNS-01`，区别参考[Let’s Encrypt 验证方式](https://letsencrypt.org/zh-cn/docs/challenge-types/)。
-
-如果使用 `DNS-01` 方式，因为原生不支持 AliDNS，所以可以使用 Alidns-[webhook](https://github.com/pragkent/alidns-webhook)。
+    如果使用 `DNS-01` 方式，因为原生不支持 AliDNS，所以可以使用 Alidns-[webhook](https://github.com/pragkent/alidns-webhook)。
 
 2. ClusterIssuer 创建成功之后，创建 Certificate，针对于特定命名空间的。
 
@@ -106,6 +105,14 @@ spec:
      issuerRef:
        name: letsencrypt-prod
        kind: ClusterIssuer
+   ```
+
+   配置成功之后查看一下 certificate 的状态
+
+   ```bash
+   [root@bowser1704 food]# kubectl get certificate -n food
+   NAME   READY   SECRET        AGE
+   food   True    food-secret   3h27m
    ```
 
 3. ingress 设置
@@ -237,7 +244,7 @@ debug
    ^C
    
    # check node
-   [root@iZuf6dq9lezw045stckkhsZ cert-manager]# kubectl describe pods cert-manager-webhook-7c6c464d7b-vp44p -n cert-manage
+   [root@bowser1704 cert-manager]# kubectl describe pods cert-manager-webhook-7c6c464d7b-vp44p -n cert-manage
    
     ...
    Node:         foo1/172.19.145.208
@@ -251,7 +258,7 @@ debug
    nodeSelector:
     k3s.io/internal-ip: 172.16.219.51
       
-   [root@iZuf6dq9lezw045stckkhsZ cert-manager]# kubectl describe pods cert-manager-webhook-7c6c464d7b-vp44p -n cert-manage
+   [root@bowser1704 cert-manager]# kubectl describe pods cert-manager-webhook-7c6c464d7b-vp44p -n cert-manage
    
    ...
    Node:         bowser1704/172.19.145.188
