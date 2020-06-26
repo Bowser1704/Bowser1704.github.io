@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
     <copyright>This work is licensed under a CC BY-NC 4.0(署名-非商业性使用 4.0 国际) License.</copyright>
-    <lastBuildDate>Thu, 25 Jun 2020 19:30:20 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 26 Jun 2020 11:12:15 +0800</lastBuildDate>
     
 	<atom:link href="https://bowser1704.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>tools</title>
+      <link>https://bowser1704.github.io/categories/tools/</link>
+      <pubDate>Fri, 26 Jun 2020 11:12:15 +0800</pubDate>
+      
+      <guid>https://bowser1704.github.io/categories/tools/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>cloud-native</title>
@@ -36,6 +45,15 @@
       <pubDate>Sun, 17 Nov 2019 11:23:47 +0800</pubDate>
       
       <guid>https://bowser1704.github.io/categories/cs/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>csapp</title>
+      <link>https://bowser1704.github.io/categories/csapp/</link>
+      <pubDate>Thu, 14 Nov 2019 23:43:14 +0800</pubDate>
+      
+      <guid>https://bowser1704.github.io/categories/csapp/</guid>
       <description></description>
     </item>
     

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>concurrency on Bowser</title>
+    <link>https://bowser1704.github.io/tags/concurrency/</link>
+    <description>Recent content in concurrency on Bowser</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <copyright>This work is licensed under a CC BY-NC 4.0(署名-非商业性使用 4.0 国际) License.</copyright>
+    <lastBuildDate>Thu, 14 Nov 2019 23:43:14 +0800</lastBuildDate>
+    
+	<atom:link href="https://bowser1704.github.io/tags/concurrency/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>csapp Chapter12 并发编程</title>
+      <link>https://bowser1704.github.io/note/20191114-csapp-chapter12-%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/</link>
+      <pubDate>Thu, 14 Nov 2019 23:43:14 +0800</pubDate>
+      
+      <guid>https://bowser1704.github.io/note/20191114-csapp-chapter12-%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/</guid>
+      <description>基于进程的并发编程 就像我们最初写的echo服务一样，listen来了一个请求，创建一个connfd，一个子进程去处理，写入coonfd。如下</description>
+    </item>
+    
+  </channel>
+</rss>

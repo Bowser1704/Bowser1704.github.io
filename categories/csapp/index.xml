@@ -2,14 +2,14 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>csapp on Bowser</title>
-    <link>https://bowser1704.github.io/tags/csapp/</link>
+    <link>https://bowser1704.github.io/categories/csapp/</link>
     <description>Recent content in csapp on Bowser</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
     <copyright>This work is licensed under a CC BY-NC 4.0(署名-非商业性使用 4.0 国际) License.</copyright>
     <lastBuildDate>Thu, 14 Nov 2019 23:43:14 +0800</lastBuildDate>
     
-	<atom:link href="https://bowser1704.github.io/tags/csapp/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://bowser1704.github.io/categories/csapp/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>

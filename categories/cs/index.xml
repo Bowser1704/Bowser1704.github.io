@@ -22,51 +22,6 @@
     </item>
     
     <item>
-      <title>csapp Chapter12 并发编程</title>
-      <link>https://bowser1704.github.io/note/20191114-csapp-chapter12-%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/</link>
-      <pubDate>Thu, 14 Nov 2019 23:43:14 +0800</pubDate>
-      
-      <guid>https://bowser1704.github.io/note/20191114-csapp-chapter12-%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/</guid>
-      <description>基于进程的并发编程 就像我们最初写的echo服务一样，listen来了一个请求，创建一个connfd，一个子进程去处理，写入coonfd。如下</description>
-    </item>
-    
-    <item>
-      <title>csapp Chapter11 网络编程</title>
-      <link>https://bowser1704.github.io/note/20191113-csapp-chapter11-%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/</link>
-      <pubDate>Wed, 13 Nov 2019 21:30:14 +0800</pubDate>
-      
-      <guid>https://bowser1704.github.io/note/20191113-csapp-chapter11-%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/</guid>
-      <description>主要记录一下socket相关内容，网络协议不多做描述。 下图是基本的步骤图 getaddrinfo 一句话：获取套接字地址，从url，也就是dns获取真正的ip地址，</description>
-    </item>
-    
-    <item>
-      <title>csapp Chapter10 UnixIO</title>
-      <link>https://bowser1704.github.io/note/20191112-csapp-chapter10-unixio/</link>
-      <pubDate>Tue, 12 Nov 2019 22:05:45 +0800</pubDate>
-      
-      <guid>https://bowser1704.github.io/note/20191112-csapp-chapter10-unixio/</guid>
-      <description>基本概念 首先要有一个思维，Linux上面基本上所有外部设备都是文件，都是通过IO来读取，写入的，包括键盘，网络，终端&amp;hellip;.. P.</description>
-    </item>
-    
-    <item>
-      <title>利用systemd管理nginx.service</title>
-      <link>https://bowser1704.github.io/note/20191101-%E5%88%A9%E7%94%A8systemd%E7%AE%A1%E7%90%86nginx.service/</link>
-      <pubDate>Fri, 01 Nov 2019 14:50:23 +0800</pubDate>
-      
-      <guid>https://bowser1704.github.io/note/20191101-%E5%88%A9%E7%94%A8systemd%E7%AE%A1%E7%90%86nginx.service/</guid>
-      <description>systemd是什么 以前的Linux系统启动，首先会启动一个init.d，然后其他所有的进程都是这个进程的子进程，但是现在的改进，启用sys</description>
-    </item>
-    
-    <item>
-      <title>短链接的实现</title>
-      <link>https://bowser1704.github.io/blog/20191031-%E7%9F%AD%E9%93%BE%E6%8E%A5%E7%9A%84%E5%AE%9E%E7%8E%B0/</link>
-      <pubDate>Thu, 31 Oct 2019 23:57:33 +0800</pubDate>
-      
-      <guid>https://bowser1704.github.io/blog/20191031-%E7%9F%AD%E9%93%BE%E6%8E%A5%E7%9A%84%E5%AE%9E%E7%8E%B0/</guid>
-      <description>什么是短链接 就是你经常在手机短信，或者微博上看到的URL，都是很短的并且像t.cn这种开头的，限制字数，短信发送按字数收费，微博限制回复长度</description>
-    </item>
-    
-    <item>
       <title>谈谈系统启动发生了什么</title>
       <link>https://bowser1704.github.io/blog/20190822-%E8%B0%88%E8%B0%88%E7%B3%BB%E7%BB%9F%E5%90%AF%E5%8A%A8%E5%8F%91%E7%94%9F%E4%BA%86%E4%BB%80%E4%B9%88/</link>
       <pubDate>Thu, 22 Aug 2019 16:23:18 +0800</pubDate>

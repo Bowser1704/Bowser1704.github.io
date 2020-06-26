@@ -3,12 +3,47 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://bowser1704.github.io/categories/</loc>
+    <lastmod>2020-06-26T11:12:15+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://bowser1704.github.io/</loc>
+    <lastmod>2020-06-26T11:12:15+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://bowser1704.github.io/note/</loc>
+    <lastmod>2020-06-26T11:12:15+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://bowser1704.github.io/tags/</loc>
+    <lastmod>2020-06-26T11:12:15+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://bowser1704.github.io/categories/tools/</loc>
+    <lastmod>2020-06-26T11:12:15+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://bowser1704.github.io/tags/vim/</loc>
+    <lastmod>2020-06-26T11:12:15+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://bowser1704.github.io/note/20200626-%E4%BD%BF%E7%94%A8-coc.nvim/</loc>
+    <lastmod>2020-06-26T11:12:15+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://bowser1704.github.io/blog/</loc>
     <lastmod>2020-06-25T19:30:20+08:00</lastmod>
   </url>
   
   <url>
-    <loc>https://bowser1704.github.io/categories/</loc>
+    <loc>https://bowser1704.github.io/tags/cert-manager/</loc>
     <lastmod>2020-06-25T19:30:20+08:00</lastmod>
   </url>
   
@@ -18,17 +53,7 @@
   </url>
   
   <url>
-    <loc>https://bowser1704.github.io/tags/cs/</loc>
-    <lastmod>2020-06-25T19:30:20+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://bowser1704.github.io/</loc>
-    <lastmod>2020-06-25T19:30:20+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://bowser1704.github.io/tags/</loc>
+    <loc>https://bowser1704.github.io/tags/k3s/</loc>
     <lastmod>2020-06-25T19:30:20+08:00</lastmod>
   </url>
   
@@ -38,13 +63,13 @@
   </url>
   
   <url>
-    <loc>https://bowser1704.github.io/blog/20200625-helm-in-k3s/</loc>
+    <loc>https://bowser1704.github.io/tags/helm/</loc>
     <lastmod>2020-06-25T10:11:19+08:00</lastmod>
   </url>
   
   <url>
-    <loc>https://bowser1704.github.io/blog/20200524-alienation/</loc>
-    <lastmod>2020-05-24T19:17:46+08:00</lastmod>
+    <loc>https://bowser1704.github.io/blog/20200625-helm-in-k3s/</loc>
+    <lastmod>2020-06-25T10:11:19+08:00</lastmod>
   </url>
   
   <url>
@@ -73,17 +98,17 @@
   </url>
   
   <url>
-    <loc>https://bowser1704.github.io/note/</loc>
-    <lastmod>2019-11-17T11:23:47+08:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://bowser1704.github.io/note/20191117-return%E4%B8%8Eexit%E7%9A%84%E4%B8%8D%E5%90%8C/</loc>
     <lastmod>2019-11-17T11:23:47+08:00</lastmod>
   </url>
   
   <url>
-    <loc>https://bowser1704.github.io/tags/csapp/</loc>
+    <loc>https://bowser1704.github.io/tags/concurrency/</loc>
+    <lastmod>2019-11-14T23:43:14+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://bowser1704.github.io/categories/csapp/</loc>
     <lastmod>2019-11-14T23:43:14+08:00</lastmod>
   </url>
   
@@ -98,7 +123,22 @@
   </url>
   
   <url>
+    <loc>https://bowser1704.github.io/tags/network-programming/</loc>
+    <lastmod>2019-11-13T21:30:14+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://bowser1704.github.io/note/20191112-csapp-chapter10-unixio/</loc>
+    <lastmod>2019-11-12T22:05:45+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://bowser1704.github.io/tags/io/</loc>
+    <lastmod>2019-11-12T22:05:45+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://bowser1704.github.io/tags/unix/</loc>
     <lastmod>2019-11-12T22:05:45+08:00</lastmod>
   </url>
   
@@ -123,13 +163,18 @@
   </url>
   
   <url>
-    <loc>https://bowser1704.github.io/tags/tools/</loc>
+    <loc>https://bowser1704.github.io/tags/nginx/</loc>
     <lastmod>2019-11-01T14:50:23+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://bowser1704.github.io/note/20191101-%E5%88%A9%E7%94%A8systemd%E7%AE%A1%E7%90%86nginx.service/</loc>
     <lastmod>2019-11-01T14:50:23+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://bowser1704.github.io/tags/methods/</loc>
+    <lastmod>2019-10-31T23:57:33+08:00</lastmod>
   </url>
   
   <url>
