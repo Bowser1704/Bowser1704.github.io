@@ -3,7 +3,7 @@ title: 在 k3s 内使用 cert-manager 管理证书
 summary: “云原生使用 acme.sh 有一些无法很好解决的问题，所以使用 cert-manager 管理证书"
 tags: [k3s, cert-manager]
 categories: [cloud-native]
-spotlight: true`d
+spotlight: truegy
 date: 2020-06-25T19:30:20+08:00
 ---
 ## acme.sh vs cert-manager
@@ -14,13 +14,14 @@ date: 2020-06-25T19:30:20+08:00
 
 ![High level overview diagram explaining cert-manager architecture](https://cert-manager.io/images/high-level-overview.svg)
 
-简单讲一下 cert-manager 的原理，普通 acme.sh 客户端交付给我们的是证书，附带的功能也是更新证书，但是 cert-manager 交付给我们的是 一个 CRD Issuer/ClusterIssuer 这个对象可以用来签发  另一个 CRD [Certificate](https://cert-manager.io/docs/concepts/certificate/) 会自动生成 tls secret 并且管理更新。Certificate 就是真正的证书，由他来生产 secret。
+简单讲一下 cert-manager 的原理，普通 acme.sh 客户端交付给我们的是证书，附带的功能也是更新证书，但是 cert-manager 交付给我们的是 一个 CRD Issuer/ClusterIssuer 这个对象可以用来签发  另一个 CRD [Certificate](https://cert-manager.io/docs/concepts/certificate/) 。Certificate 会自动生成 tls secret 并且管理更新。并且 Certificate 就是真正的颁发机构签发的证书，cert-manager 用他来生产 secret。
 
 ## 使用 cert-manager
 
 普通使用 Helm 安装。
 ```bash
 # step1 添加仓库
+# 使用 HelmChart 不需要手动添加仓库
 $ helm repo add jetstack https://charts.jetstack.io && helm repo update
 
 # step2 创建 ns
@@ -49,7 +50,7 @@ $ helm install \
   # --set installCRDs=true
 ```
 
-使用 k3s 提供的 HelmChart 安装
+使用 k3s 提供的 HelmChart 安装 参考 [在 k3s 上使用 Helm](https://bowser1704.github.io/blog/20200625-helm-in-k3s/)
 ```yaml
 apiVersion: helm.cattle.io/v1
 kind: HelmChart
@@ -101,7 +102,7 @@ spec:
    spec:
      secretName: food-secret
      dnsNames:
-     - food.test.muxixyz.com
+     - food.test.domain.com
      issuerRef:
        name: letsencrypt-prod
        kind: ClusterIssuer
@@ -129,7 +130,7 @@ spec:
        cert-manager.io/issuer-name: letsencrypt-prod
    spec:
      rules:
-     - host: food.test.muxixyz.com
+     - host: food.test.domain.com
        http:
          paths:
          - path: /
@@ -138,7 +139,7 @@ spec:
              servicePort: http
      tls:
      - hosts:
-       - food.test.muxixyz.com
+       - food.test.domain.com
        # certificate 里面的 secret-name
        secretName: food-secret
    ```
