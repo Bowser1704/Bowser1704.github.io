@@ -24,7 +24,7 @@
 <meta itemprop="description" content="“云原生使用 acme.sh 有一些无法很好解决的问题，所以使用 cert-manager 管理证书&rdquo;">
 <meta itemprop="datePublished" content="2020-06-25T19:30:20&#43;08:00" />
 <meta itemprop="dateModified" content="2020-06-25T19:30:20&#43;08:00" />
-<meta itemprop="wordCount" content="721">
+<meta itemprop="wordCount" content="1286">
 
 
 
@@ -129,7 +129,7 @@
 
     <img class="mx-auto" alt="High level overview diagram explaining cert-manager architecture" src="https://cert-manager.io/images/high-level-overview.svg" />
 </p>
-<p>简单讲一下 cert-manager 的原理，普通 acme.sh 客户端交付给我们的是证书，附带的功能也是更新证书，但是 cert-manager 交付给我们的是 一个 CRD Issuer/ClusterIssuer 这个对象可以用来签发  另一个 CRD <a href="https://cert-manager.io/docs/concepts/certificate/">Certificate</a> 会自动生成 tls secret 并且管理更新。</p>
+<p>简单讲一下 cert-manager 的原理，普通 acme.sh 客户端交付给我们的是证书，附带的功能也是更新证书，但是 cert-manager 交付给我们的是 一个 CRD Issuer/ClusterIssuer 这个对象可以用来签发  另一个 CRD <a href="https://cert-manager.io/docs/concepts/certificate/">Certificate</a> 会自动生成 tls secret 并且管理更新。Certificate 就是真正的证书，由他来生产 secret。</p>
 <h2 id="使用-cert-manager">使用 cert-manager</h2>
 <p>普通使用 Helm 安装。</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># step1 添加仓库</span>
@@ -172,7 +172,9 @@ $ helm install <span style="color:#ae81ff">\
   <span style="color:#66d9ef">version</span>: v0<span style="color:#ae81ff">.15.1</span> 
   <span style="color:#66d9ef">repo</span>: https://charts.jetstack.io
 </code></pre></div><h3 id="安装完成之后配置">安装完成之后配置</h3>
-<p>使用 ClusterIssuer，作用于整个集群。</p>
+<ol>
+<li>使用 ClusterIssuer，作用于整个集群。</li>
+</ol>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">apiVersion</span>: cert-manager.io/v1alpha2
 <span style="color:#66d9ef">kind</span>: ClusterIssuer
 <span style="color:#66d9ef">metadata</span>:
@@ -182,7 +184,7 @@ $ helm install <span style="color:#ae81ff">\
     <span style="color:#75715e"># server: https://acme-v02.api.letsencrypt.org/directory</span>
     <span style="color:#75715e"># 建议先使用 测试 API，区别参考 https://letsencrypt.org/zh-cn/docs/staging-environment/</span>
     <span style="color:#66d9ef">server</span>: https://acme-staging-v02.api.letsencrypt.org/directory
-    <span style="color:#66d9ef">email</span>: <span style="color:#ae81ff">896379346</span>@qq.com
+    <span style="color:#66d9ef">email</span>: name@user.com
     <span style="color:#66d9ef">privateKeySecretRef</span>:
       <span style="color:#66d9ef">name</span>: letsencrypt-prod
     <span style="color:#66d9ef">solvers</span>:
@@ -191,6 +193,50 @@ $ helm install <span style="color:#ae81ff">\
          <span style="color:#66d9ef">class</span>: traefik
 </code></pre></div><p>可以使用两种检测方式，一种为 <code>HTTP-01</code>、一种为 <code>DNS-01</code>，区别参考<a href="https://letsencrypt.org/zh-cn/docs/challenge-types/">Let’s Encrypt 验证方式</a>。</p>
 <p>如果使用 <code>DNS-01</code> 方式，因为原生不支持 AliDNS，所以可以使用 Alidns-<a href="https://github.com/pragkent/alidns-webhook">webhook</a>。</p>
+<ol start="2">
+<li>
+<p>ClusterIssuer 创建成功之后，创建 Certificate，针对于特定命名空间的。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">apiVersion</span>: cert-manager.io/v1alpha2
+<span style="color:#66d9ef">kind</span>: Certificate
+<span style="color:#66d9ef">metadata</span>:
+  <span style="color:#66d9ef">name</span>: food
+  <span style="color:#66d9ef">namespace</span>: food
+<span style="color:#66d9ef">spec</span>:
+  <span style="color:#66d9ef">secretName</span>: food-secret
+  <span style="color:#66d9ef">dnsNames</span>:
+  - food.test.muxixyz.com
+  <span style="color:#66d9ef">issuerRef</span>:
+    <span style="color:#66d9ef">name</span>: letsencrypt-prod
+    <span style="color:#66d9ef">kind</span>: ClusterIssuer
+</code></pre></div></li>
+<li>
+<p>ingress 设置</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">apiVersion</span>: extensions/v1beta1
+<span style="color:#66d9ef">kind</span>: Ingress
+<span style="color:#66d9ef">metadata</span>:
+  <span style="color:#66d9ef">name</span>: food
+  <span style="color:#66d9ef">namespace</span>: food
+  <span style="color:#66d9ef">annotations</span>:
+    <span style="color:#66d9ef">kubernetes.io/ingress.class</span>: traefik
+    <span style="color:#75715e"># 添加一个 annotations</span>
+    <span style="color:#66d9ef">cert-manager.io/issuer-name</span>: letsencrypt-prod
+<span style="color:#66d9ef">spec</span>:
+  <span style="color:#66d9ef">rules</span>:
+  - <span style="color:#66d9ef">host</span>: food.test.muxixyz.com
+    <span style="color:#66d9ef">http</span>:
+      <span style="color:#66d9ef">paths</span>:
+      - <span style="color:#66d9ef">path</span>: /
+        <span style="color:#66d9ef">backend</span>:
+          <span style="color:#66d9ef">serviceName</span>: food-backend
+          <span style="color:#66d9ef">servicePort</span>: http
+  <span style="color:#66d9ef">tls</span>:
+  - <span style="color:#66d9ef">hosts</span>:
+    - food.test.muxixyz.com
+    <span style="color:#75715e"># certificate 里面的 secret-name</span>
+    <span style="color:#66d9ef">secretName</span>: food-secret
+</code></pre></div><p>大功告成！以后就不会发生证书过期的事情了。</p>
+</li>
+</ol>
 <hr>
 <p>出现错误</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">Error from server <span style="color:#f92672">(</span>InternalError<span style="color:#f92672">)</span>: error when creating <span style="color:#e6db74">&#34;cluster-issuer.yaml&#34;</span>: Internal error occurred: failed calling webhook <span style="color:#e6db74">&#34;webhook.cert-manager.io&#34;</span>: Post https://cert-manager-webhook.cert-manager.svc:443/mutate?timeout<span style="color:#f92672">=</span>30s: dial tcp 10.43.247.15:443: i/o timeout
@@ -214,6 +260,99 @@ $ helm install <span style="color:#ae81ff">\
 <p>可以通过修改 k3s.service 然后使用 <code>systemctl daemon-reload</code> restart k3s。</p>
 </li>
 </ul>
+<p>debug</p>
+<ol>
+<li>
+<p>检查 svc 和 endpoint。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># svc ip</span> 
+<span style="color:#f92672">[</span>root@bowser1704 ~<span style="color:#f92672">]</span><span style="color:#75715e"># httpstat -k 10.43.247.15:443</span>
+^C
+   
+<span style="color:#75715e"># endpoint or pod ip</span>
+<span style="color:#f92672">[</span>root@bowser1704 ~<span style="color:#f92672">]</span><span style="color:#75715e"># httpstat -k 10.42.1.28:10250</span>
+   
+Connected to 10.42.1.28:10250
+   
+HTTP/1.1 <span style="color:#ae81ff">404</span> Not Found
+Content-Length: <span style="color:#ae81ff">19</span>
+Content-Type: text/plain; charset<span style="color:#f92672">=</span>utf-8
+Date: Fri, <span style="color:#ae81ff">26</span> Jun <span style="color:#ae81ff">2020</span> 07:08:51 GMT
+X-Content-Type-Options: nosniff
+   
+Body discarded
+   
+  DNS Lookup   TCP Connection   TLS Handshake   Server Processing   Content Transfer
+<span style="color:#f92672">[</span>      0ms  |           0ms  |         44ms  |              0ms  |             0ms  <span style="color:#f92672">]</span>
+            |                |               |                   |                  |
+   namelookup:0ms            |               |                   |                  |
+                       connect:0ms           |                   |                  |
+                                   pretransfer:45ms              |                  |
+                                                     starttransfer:45ms             |
+                                                                                total:45ms
+</code></pre></div><p>定位到是 svc 的问题。发现所有的 svc 都访问不到。</p>
+</li>
+<li>
+<p>检查 iptables</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@bowser1704 ~<span style="color:#f92672">]</span><span style="color:#75715e"># iptables-save | grep 10.43.247.15</span>
+-A KUBE-SERVICES ! -s 10.42.0.0/16 -d 10.43.247.15/32 -p tcp -m comment --comment <span style="color:#e6db74">&#34;cert-manager/cert-manager-webhook:https cluster IP&#34;</span> -m tcp --dport <span style="color:#ae81ff">443</span> -j KUBE-MARK-MASQ
+-A KUBE-SERVICES -d 10.43.247.15/32 -p tcp -m comment --comment <span style="color:#e6db74">&#34;cert-manager/cert-manager-webhook:https cluster IP&#34;</span> -m tcp --dport <span style="color:#ae81ff">443</span> -j KUBE-SVC-ZUD4L6KQKCHD52W4
+   
+<span style="color:#f92672">[</span>root@bowser1704 ~<span style="color:#f92672">]</span><span style="color:#75715e"># iptables-save | grep KUBE-SVC-ZUD4L6KQKCHD52W4</span>
+:KUBE-SVC-ZUD4L6KQKCHD52W4 - <span style="color:#f92672">[</span>0:0<span style="color:#f92672">]</span>
+-A KUBE-SERVICES -d 10.43.247.15/32 -p tcp -m comment --comment <span style="color:#e6db74">&#34;cert-manager/cert-manager-webhook:https cluster IP&#34;</span> -m tcp --dport <span style="color:#ae81ff">443</span> -j KUBE-SVC-ZUD4L6KQKCHD52W4
+-A KUBE-SVC-ZUD4L6KQKCHD52W4 -j KUBE-SEP-MM5Y2SAJQYJV572E
+   
+<span style="color:#f92672">[</span>root@bowser1704 ~<span style="color:#f92672">]</span><span style="color:#75715e"># iptables-save | grep KUBE-SEP-MM5Y2SAJQYJV572E</span>
+:KUBE-SEP-MM5Y2SAJQYJV572E - <span style="color:#f92672">[</span>0:0<span style="color:#f92672">]</span>
+-A KUBE-SEP-MM5Y2SAJQYJV572E -s 10.42.1.28/32 -j KUBE-MARK-MASQ
+-A KUBE-SEP-MM5Y2SAJQYJV572E -p tcp -m tcp -j DNAT --to-destination 10.42.1.28:10250
+-A KUBE-SVC-ZUD4L6KQKCHD52W4 -j KUBE-SEP-MM5Y2SAJQYJV572E
+   
+<span style="color:#75715e"># 下面是 KUBE-MARK-MASQ 的作用。</span>
+-A KUBE-MARK-MASQ -j MARK --set-xmark 0x4000/0x4000
+</code></pre></div><p>发现规则都在，没有问题。但是 svc 都访问不到。IPVS 可能有帮助？？？</p>
+</li>
+<li>
+<p>但是发现在 pod 的那个 node 上可以访问到 svc。使用 nodeSelector 转移到 master node. 也可以访问到了。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@bowser1704 cert-manager<span style="color:#f92672">]</span><span style="color:#75715e"># kubectl get svc -n cert-manager</span>
+NAME                   TYPE        CLUSTER-IP      EXTERNAL-IP   PORT<span style="color:#f92672">(</span>S<span style="color:#f92672">)</span>    AGE
+cert-manager           ClusterIP   10.43.157.248   &lt;none&gt;        9402/TCP   20h
+cert-manager-webhook   ClusterIP   10.43.247.15    &lt;none&gt;        443/TCP    20h
+   
+<span style="color:#75715e"># can&#39;t access</span>
+<span style="color:#f92672">[</span>root@bowser1704 cert-manager<span style="color:#f92672">]</span><span style="color:#75715e"># curl -k https://10.43.247.15:443</span>
+^C
+   
+<span style="color:#75715e"># check node</span>
+<span style="color:#f92672">[</span>root@iZuf6dq9lezw045stckkhsZ cert-manager<span style="color:#f92672">]</span><span style="color:#75715e"># kubectl describe pods cert-manager-webhook-7c6c464d7b-vp44p -n cert-manage</span>
+   
+ ...
+Node:         foo1/172.19.145.208
+...
+</code></pre></div><p>使用 nodeSelector 将 pod 迁移到 master node.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># edit pod yaml</span>
+nodeSelector:
+ k3s.io/internal-ip: 172.16.219.51
+      
+<span style="color:#f92672">[</span>root@iZuf6dq9lezw045stckkhsZ cert-manager<span style="color:#f92672">]</span><span style="color:#75715e"># kubectl describe pods cert-manager-webhook-7c6c464d7b-vp44p -n cert-manage</span>
+   
+...
+Node:         bowser1704/172.19.145.188
+...
+      
+<span style="color:#75715e"># accessing in master node</span>
+<span style="color:#f92672">[</span>root@bowser1704 cert-manager<span style="color:#f92672">]</span><span style="color:#75715e"># curl -k https://10.43.247.15:443</span>
+<span style="color:#ae81ff">404</span> page not found
+</code></pre></div><ol start="4">
+<li>提 <a href="https://github.com/rancher/k3s/issues/1958">issue</a></li>
+</ol>
+</li>
+</ol>
+<hr>
+<p>参考链接</p>
+<ol>
+<li><a href="https://community.hetzner.com/tutorials/howto-k8s-traefik-certmanager">https://community.hetzner.com/tutorials/howto-k8s-traefik-certmanager</a></li>
+</ol>
 
     </div>
 </article>
