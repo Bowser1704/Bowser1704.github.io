@@ -3,9 +3,9 @@ title: "Csapp Chapter08 异常控制流"
 date: 2019-11-17T16:14:23+08:00
 draft: true
 categories:
-- cs
-tags:
 - csapp
+tags:
+- exception
 description: 异常控制流，主要是进程之间通信，管理。
 ---
 

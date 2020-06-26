@@ -1,9 +1,9 @@
 ---
 title: 在 k3s 内使用 cert-manager 管理证书
 summary: “云原生使用 acme.sh 有一些无法很好解决的问题，所以使用 cert-manager 管理证书"
-tags: [cs]
+tags: [k3s, cert-manager]
 categories: [cloud-native]
-spotlight: true
+spotlight: true`d
 date: 2020-06-25T19:30:20+08:00
 ---
 ## acme.sh vs cert-manager
@@ -14,6 +14,7 @@ date: 2020-06-25T19:30:20+08:00
 
 ![High level overview diagram explaining cert-manager architecture](https://cert-manager.io/images/high-level-overview.svg)
 
+简单讲一下 cert-manager 的原理，普通 acme.sh 客户端交付给我们的是证书，附带的功能也是更新证书，但是 cert-manager 交付给我们的是 一个 CRD Issuer/ClusterIssuer 这个对象可以用来签发  另一个 CRD [Certificate](https://cert-manager.io/docs/concepts/certificate/) 会自动生成 tls secret 并且管理更新。
 
 ## 使用 cert-manager
 

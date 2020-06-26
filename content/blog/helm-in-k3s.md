@@ -1,7 +1,7 @@
 ---
 title: "Helm in k3s"
 summary: “国内环境在 k3s 内使用 Helm"
-tags: [cs]
+tags: [k3s, Helm]
 categories: [cloud-native]
 spotlight: true
 date: 2020-06-25T10:11:19+08:00

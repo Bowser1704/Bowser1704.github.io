@@ -4,9 +4,9 @@ date: 2019-11-01T14:50:23+08:00
 draft: false
 spotlight: true
 categories:
-- cs
-tags:
 - tools
+tags:
+- nginx
 description: 如何将一个nginx.service用systemctl托管
 ---
 

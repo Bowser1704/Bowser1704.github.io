@@ -4,9 +4,9 @@ date: 2019-10-31T23:57:33+08:00
 draft: false
 spotlight: true
 categories:
-- cs
-tags:
 - tools
+tags:
+- methods
 description: 短链接服务是怎么实现的...
 ---
 

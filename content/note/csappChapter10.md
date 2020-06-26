@@ -3,9 +3,10 @@ title: "csapp Chapter10 UnixIO"
 date: 2019-11-12T22:05:45+08:00
 draft: false
 categories:
-- cs
-tags:
 - csapp
+tags:
+- Unix
+- IO
 description: csapp第十章的笔记
 ---
 

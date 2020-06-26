@@ -3,9 +3,9 @@ title: "csapp Chapter12 并发编程"
 date: 2019-11-14T23:43:14+08:00
 draft: false
 categories:
-- cs
-tags:
 - csapp
+tags:
+- concurrency
 description: 12章笔记，并发编程
 ---
 
