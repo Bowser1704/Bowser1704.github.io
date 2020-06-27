@@ -7,10 +7,28 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
     <copyright>This work is licensed under a CC BY-NC 4.0(署名-非商业性使用 4.0 国际) License.</copyright>
-    <lastBuildDate>Fri, 26 Jun 2020 11:12:15 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 27 Jun 2020 15:37:05 +0800</lastBuildDate>
     
 	<atom:link href="https://bowser1704.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>hardware</title>
+      <link>https://bowser1704.github.io/categories/hardware/</link>
+      <pubDate>Sat, 27 Jun 2020 15:37:05 +0800</pubDate>
+      
+      <guid>https://bowser1704.github.io/categories/hardware/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>cloud-native</title>
+      <link>https://bowser1704.github.io/categories/cloud-native/</link>
+      <pubDate>Sat, 27 Jun 2020 13:21:45 +0800</pubDate>
+      
+      <guid>https://bowser1704.github.io/categories/cloud-native/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>tools</title>
@@ -18,15 +36,6 @@
       <pubDate>Fri, 26 Jun 2020 11:12:15 +0800</pubDate>
       
       <guid>https://bowser1704.github.io/categories/tools/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>cloud-native</title>
-      <link>https://bowser1704.github.io/categories/cloud-native/</link>
-      <pubDate>Thu, 25 Jun 2020 19:30:20 +0800</pubDate>
-      
-      <guid>https://bowser1704.github.io/categories/cloud-native/</guid>
       <description></description>
     </item>
     

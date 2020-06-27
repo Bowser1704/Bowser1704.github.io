@@ -7,10 +7,55 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
     <copyright>This work is licensed under a CC BY-NC 4.0(署名-非商业性使用 4.0 国际) License.</copyright>
-    <lastBuildDate>Fri, 26 Jun 2020 11:12:15 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 27 Jun 2020 15:37:05 +0800</lastBuildDate>
     
 	<atom:link href="https://bowser1704.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>nuc</title>
+      <link>https://bowser1704.github.io/tags/nuc/</link>
+      <pubDate>Sat, 27 Jun 2020 15:37:05 +0800</pubDate>
+      
+      <guid>https://bowser1704.github.io/tags/nuc/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>WI-FI</title>
+      <link>https://bowser1704.github.io/tags/wi-fi/</link>
+      <pubDate>Sat, 27 Jun 2020 15:37:05 +0800</pubDate>
+      
+      <guid>https://bowser1704.github.io/tags/wi-fi/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>flannel</title>
+      <link>https://bowser1704.github.io/tags/flannel/</link>
+      <pubDate>Sat, 27 Jun 2020 13:21:45 +0800</pubDate>
+      
+      <guid>https://bowser1704.github.io/tags/flannel/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>k3s</title>
+      <link>https://bowser1704.github.io/tags/k3s/</link>
+      <pubDate>Sat, 27 Jun 2020 13:21:45 +0800</pubDate>
+      
+      <guid>https://bowser1704.github.io/tags/k3s/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>vxlans</title>
+      <link>https://bowser1704.github.io/tags/vxlans/</link>
+      <pubDate>Sat, 27 Jun 2020 13:21:45 +0800</pubDate>
+      
+      <guid>https://bowser1704.github.io/tags/vxlans/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>vim</title>
@@ -27,15 +72,6 @@
       <pubDate>Thu, 25 Jun 2020 19:30:20 +0800</pubDate>
       
       <guid>https://bowser1704.github.io/tags/cert-manager/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>k3s</title>
-      <link>https://bowser1704.github.io/tags/k3s/</link>
-      <pubDate>Thu, 25 Jun 2020 19:30:20 +0800</pubDate>
-      
-      <guid>https://bowser1704.github.io/tags/k3s/</guid>
       <description></description>
     </item>
     
