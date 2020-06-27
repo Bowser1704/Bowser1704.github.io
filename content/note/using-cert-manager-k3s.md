@@ -272,6 +272,8 @@ debug
 
    4. 提 [issue](https://github.com/rancher/k3s/issues/1958) 
 
+定位到问题 为 flannel 后端 vxlan 的问题。解决方案参考 [记录一次 vxlan Bug](https://bowser1704.github.io/blog/20200627-%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1-vxlan-bug/)
+
 ----------------------
 
 参考链接
