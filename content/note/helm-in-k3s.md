@@ -59,3 +59,6 @@ spec:
 参考文献。
 
 1. [Operator 与 Controller 的区别](https://octetz.com/docs/2019/2019-10-13-controllers-and-operators/)
+
+2. [Exploring the HelmChart custom resource in k3s](https://dev.to/blakec/exploring-the-helmchart-custom-resource-in-k3s-2l52)
+
