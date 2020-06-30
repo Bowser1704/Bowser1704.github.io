@@ -183,7 +183,7 @@ curl 10.43.105.114:8080/sd/health
 
 ![img](https://tva1.sinaimg.cn/large/007S8ZIlgy1ggahwt6l8vj30go0960tb.jpg)
 
-> 当连接未建立成功，重试需要 1s + 2s + 4s+ 8s+ 16s + 32s = 63s，TCP 才会断开这个连接。
+> 当连接未建立成功，重传需要 1s + 2s + 4s+ 8s+ 16s + 32s = 63s。并且第六次重传输会取消 checksum，也就是 'no cksum' 。
 >
 
 -------------------
@@ -205,9 +205,11 @@ iptables 中的 KUBE-MARK-MASQ 用作标记要不要 SNAT，POSTROUING 会做一
 
 - flannel issue
 
-  https://github.com/coreos/flannel/pull/1282#issuecomment-635639567
+  [coreos/flannel#1282 (comment)](https://github.com/coreos/flannel/pull/1282#issuecomment-635639567)
 
-  https://github.com/coreos/flannel/pull/1282#issuecomment-635145841
+  [coreos/flannel#1282 (comment)](https://github.com/coreos/flannel/pull/1282#issuecomment-635145841)
+
+  [coreos/flannel#1282 (comment)](https://github.com/coreos/flannel/pull/1282#issuecomment-635145841)
 
   有人做了详细的测试，关于 --random-fully 参数，这个参数是用于选择 SNAT 的两种算法。是 iptables 的问题。
 
@@ -215,23 +217,37 @@ iptables 中的 KUBE-MARK-MASQ 用作标记要不要 SNAT，POSTROUING 会做一
 
 - k8s issue https://github.com/kubernetes/kubernetes/issues/88986#issuecomment-640929804
 
-  这个 issue 中的 comment 详细讲述的原因和如何去解决这个问题，不过因为版本原因，他是 1s。
+  这个 issue 中的 comment 详细讲述的原因和如何去解决这个问题。
 
-https://github.com/kubernetes/kubernetes/pull/92035#issuecomment-644502203
+上面这些原因是不是引起 incorrect checksum 的原因，无从确认。
 
-pr 中详细讲述了触发这个 bug 的几要素。
+----------------------------------
+
+checksum-offload 指定了内核不做校验和，交给网卡 / 硬件去做，但是使用 VXLAN 时，VETP 并不会做校验和，所以校验值是错的。因为 checksum 错误，所以会丢弃，TCP 不得不重传，然后因为 5 次重传耗时 63s「第六次重传取消 checksum」，所以结果是 63s delay。
+
+> Linux’ TCP stack will sometimes/always attempt to send packets with an incorrect checksum, or that are far too large for the network link, with the result that the packet is rejected and TCP has to re-transmit. This slows down network throughput enormously.
+
+如下图，本级 checksum 一直 incorrect。
+
+![image-20200701010831331](https://tva1.sinaimg.cn/large/007S8ZIlgy1ggatc17gefj31hc0i6n3x.jpg)
 
 解决办法
 
-1. 关闭 UDP checksum
+1. 关闭 Checksum Offloading
 
    `ethtool -K flannel.1 tx-checksum-ip-generic off`
 
-   [weaveworks/weave#1255 (comment)](https://github.com/weaveworks/weave/issues/1255#issuecomment-221820171) 关闭这个模块 4 年了，暂时没有什么大问题。
-
 ## 7. fix this bug
 
-https://github.com/kubernetes/kubernetes/pull/92035 fix this bug
+1. https://github.com/kubernetes/kubernetes/pull/92035#issuecomment-644502203
+
+   pr 中详细讲述了触发这个 bug 的几要素。
+
+   但是我感觉解决方案不太对，因为从关闭 Checksum Offloading 可以解决这个问题来看，这个是进 flannel 之后没有做校验和的锅。也或者这个解决的问题是 1s 的问题。
+
+2. 关闭 Checksum Offloading
+
+   因为是用的是 flannel 等虚拟网络硬件，不支持做 checksum 等操作，所以关闭其实还是最省心的。
 
 -------------
 
@@ -240,3 +256,4 @@ https://github.com/kubernetes/kubernetes/pull/92035 fix this bug
 - iptables https://www.digitalocean.com/community/tutorials/a-deep-dive-into-iptables-and-netfilter-architecture
 - explaination for the same bug https://tech.xing.com/a-reason-for-unexplained-connection-timeouts-on-kubernetes-docker-abd041cf7e02
 - linux bug https://github.com/torvalds/linux/blob/24de3d377539e384621c5b8f8f8d8d01852dddc8/net/netfilter/nf_nat_core.c#L290-L291
+- [weaveworks/weave#1255 (comment)](https://github.com/weaveworks/weave/issues/1255#issuecomment-221820171)
