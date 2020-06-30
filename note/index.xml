@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
     <copyright>This work is licensed under a CC BY-NC 4.0(署名-非商业性使用 4.0 国际) License.</copyright>
-    <lastBuildDate>Sat, 27 Jun 2020 15:37:05 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 29 Jun 2020 10:18:22 +0800</lastBuildDate>
     
 	<atom:link href="https://bowser1704.github.io/note/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>iptables 的一些学习总结。</title>
+      <link>https://bowser1704.github.io/note/20200629-iptables-%E7%9A%84%E4%B8%80%E4%BA%9B%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/</link>
+      <pubDate>Mon, 29 Jun 2020 10:18:22 +0800</pubDate>
+      
+      <guid>https://bowser1704.github.io/note/20200629-iptables-%E7%9A%84%E4%B8%80%E4%BA%9B%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/</guid>
+      <description>iptables 的一些学习笔记。 netfilter 有 几个hook，分别有不同的功能。 PREROUTING: Triggered by the NF_IP_PRE_ROUTING hook. INPUT: Triggered by the NF_IP_LOCAL_IN hook. FORWARD: Triggered by the NF_IP_FORWARD hook. OUTPUT: Triggered by the NF_IP_LOCAL_OUT hook. POSTROUTING: Triggered by the NF_IP_POST_ROUTING hook. Tables↓/Chain</description>
+    </item>
     
     <item>
       <title>豆子峡谷黑苹果 5GHz WI-FI 无法使用 80 MHz</title>
@@ -22,11 +31,11 @@
     </item>
     
     <item>
-      <title>记录一次 vxlan Bug</title>
-      <link>https://bowser1704.github.io/note/20200627-%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1-vxlan-bug/</link>
+      <title>k8s vxlan 作为 cni 后端引发的 63 秒延迟</title>
+      <link>https://bowser1704.github.io/note/20200627-k8s-vxlan-%E4%BD%9C%E4%B8%BA-cni-%E5%90%8E%E7%AB%AF%E5%BC%95%E5%8F%91%E7%9A%84-63-%E7%A7%92%E5%BB%B6%E8%BF%9F/</link>
       <pubDate>Sat, 27 Jun 2020 13:21:45 +0800</pubDate>
       
-      <guid>https://bowser1704.github.io/note/20200627-%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1-vxlan-bug/</guid>
+      <guid>https://bowser1704.github.io/note/20200627-k8s-vxlan-%E4%BD%9C%E4%B8%BA-cni-%E5%90%8E%E7%AB%AF%E5%BC%95%E5%8F%91%E7%9A%84-63-%E7%A7%92%E5%BB%B6%E8%BF%9F/</guid>
       <description>vxlan as the flannel backend</description>
     </item>
     
@@ -90,7 +99,7 @@
       <pubDate>Tue, 12 Nov 2019 22:05:45 +0800</pubDate>
       
       <guid>https://bowser1704.github.io/note/20191112-csapp-chapter10-unixio/</guid>
-      <description>基本概念 首先要有一个思维，Linux上面基本上所有外部设备都是文件，都是通过IO来读取，写入的，包括键盘，网络，终端&amp;hellip;.. P.</description>
+      <description>基本概念 首先要有一个思维，Linux 上面基本上所有外部设备都是文件，都是通过 IO 来读取，写入的，包括键盘，网络，终端&amp;hellip;.. P.S</description>
     </item>
     
     <item>

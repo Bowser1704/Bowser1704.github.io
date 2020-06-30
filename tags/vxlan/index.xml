@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>flannel on Bowser</title>
-    <link>https://bowser1704.github.io/tags/flannel/</link>
-    <description>Recent content in flannel on Bowser</description>
+    <title>vxlan on Bowser</title>
+    <link>https://bowser1704.github.io/tags/vxlan/</link>
+    <description>Recent content in vxlan on Bowser</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
     <copyright>This work is licensed under a CC BY-NC 4.0(署名-非商业性使用 4.0 国际) License.</copyright>
     <lastBuildDate>Sat, 27 Jun 2020 13:21:45 +0800</lastBuildDate>
     
-	<atom:link href="https://bowser1704.github.io/tags/flannel/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://bowser1704.github.io/tags/vxlan/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>

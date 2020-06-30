@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><meta charset="utf-8">
+<meta name="HandheldFriendly" content="True">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="referrer" content="no-referrer">
+<meta name="renderer" content="webkit">
+<meta name="force-rendering" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta name="format-detection" content="telephone=no,email=no,address=no">
+<meta name="generator" content="Hugo 0.70.0" />
+
+
+<title>k8s vxlan 作为 cni 后端引发的 63 秒延迟 - Bowser</title>
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+<link href="https://fonts.googleapis.com/css?family=Noto+Serif+SC:400,700&display=swap&subset=chinese-simplified" rel="stylesheet" />
+<link rel="canonical" href="https://bowser1704.github.io/note/20200627-k8s-vxlan-%E4%BD%9C%E4%B8%BA-cni-%E5%90%8E%E7%AB%AF%E5%BC%95%E5%8F%91%E7%9A%84-63-%E7%A7%92%E5%BB%B6%E8%BF%9F/">
+<link rel="shortcut icon" href="/favicon.jpg">
+
+<meta itemprop="name" content="k8s vxlan 作为 cni 后端引发的 63 秒延迟">
+<meta itemprop="description" content="vxlan as the flannel backend">
+<meta itemprop="datePublished" content="2020-06-27T13:21:45&#43;08:00" />
+<meta itemprop="dateModified" content="2020-06-27T13:21:45&#43;08:00" />
+<meta itemprop="wordCount" content="2059">
+
+
+
+<meta itemprop="keywords" content="k3s,flannel,vxlan," />
+<meta property="og:title" content="k8s vxlan 作为 cni 后端引发的 63 秒延迟" />
+<meta property="og:description" content="vxlan as the flannel backend" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://bowser1704.github.io/note/20200627-k8s-vxlan-%E4%BD%9C%E4%B8%BA-cni-%E5%90%8E%E7%AB%AF%E5%BC%95%E5%8F%91%E7%9A%84-63-%E7%A7%92%E5%BB%B6%E8%BF%9F/" />
+<meta property="article:published_time" content="2020-06-27T13:21:45+08:00" />
+<meta property="article:modified_time" content="2020-06-27T13:21:45+08:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="k8s vxlan 作为 cni 后端引发的 63 秒延迟"/>
+<meta name="twitter:description" content="vxlan as the flannel backend"/>
+<body class="font-sans">
+    <div class="flex flex-col md:flex-row md:w-4/5 mx-auto py-5 min-h-screen">
+<header
+    class="flex flex-col relative border-black border-b-4 md:border-b-0 md:border-r-2 pb-6 mx-4 md:mx-0 md:w-1/5 md:text-right md:pr-8 bg-white md:text-center">
+    <link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/vs.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
+    <div>
+        <h1 id="header_logo" class="text-3xl md:my-12 mt-4 md:mb-12"><a href="https://bowser1704.github.io">Bowser</a></h1>
+        <p class="font-thin italic">There is no dark side of the Moon. It&#39;s all dark, really.</p>
+    </div>
+    <input id="menu-check" type="checkbox" class="hidden" />
+    <label id="menu-label" for="menu-check"
+        class="absolute right-0 text-right md:hidden  inline-block py-4 h-12 cursor-pointer mt-10 text-xl text-gray-900">
+        <span class="icon close-icon">✕</span>
+        <span class="icon open-icon">☰</span>
+        <span class="text">MENU</span>
+    </label>
+    <nav id="menu" class="my-2 w-full md:flex-row-reverse hidden md:block">
+        <ul class="list-none pl-0 mx-auto justify-center  max-w-xs">
+            
+            
+            <li class="my-4 border-black text-center md:text-right border-b-2 md:border-none pb-1">
+                <a class="py-4 md:border-black md:border-b-2  md:pb-1" href="/blog/">博客</a>
+            </li>
+            
+            <li class="my-4 border-black text-center md:text-right border-b-2 md:border-none pb-1">
+                <a class="py-4 md:border-black md:border-b-2  md:pb-1" href="/note/">笔记</a>
+            </li>
+            
+            <li class="my-4 border-black text-center md:text-right border-b-2 md:border-none pb-1">
+                <a class="py-4 md:border-black md:border-b-2  md:pb-1" href="/about/">关于</a>
+            </li>
+            
+        </ul>
+    </nav>
+</header>
+<main class="flex-1 p-4 ">
+<article itemscope itemtype="http://schema.org/Article" class="max-w-3xl mx-auto leading-relaxed">
+    <header class="flex flex-col meta">
+<div class="flex flex-col md:flex-row justify-between ">
+    
+    <ul class="flex justify-end text-gray-800" itemprop="articleSection">
+        
+        <li class="pl-2 pr-0 md:pl-0 md:pr-2">
+            <a href="/categories/cloud-native" rel="category">cloud-native</a>
+        </li>
+        
+    </ul>
+    
+    
+    <ul class="flex justify-end text-gray-700">
+        
+        <li itemprop="keywords" class="pl-2 md:pl-4">
+            <a href="https://bowser1704.github.io/tags/k3s/">#k3s</a>
+        </li>
+        
+        <li itemprop="keywords" class="pl-2 md:pl-4">
+            <a href="https://bowser1704.github.io/tags/flannel/">#flannel</a>
+        </li>
+        
+        <li itemprop="keywords" class="pl-2 md:pl-4">
+            <a href="https://bowser1704.github.io/tags/vxlan/">#vxlan</a>
+        </li>
+        
+    </ul>
+    
+</div>
+<h1 itemprop="name" class="text-center text-4xl my-4 md:my-6">k8s vxlan 作为 cni 后端引发的 63 秒延迟</h1>
+        
+        <h3 class="text-center text-2xl">
+            
+            <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+                <span itemprop="name">Bowser</span>
+                
+                
+                 / 
+                <span itemprop="datePublished"
+                    content="2020-06-27">2020-06-27</span>
+                
+        </h3>
+        
+    </header>
+    <hr class="block my-10 mx-auto max-w-xs h-px border-t border-black">
+    <div itemprop="articleBody" class="content markdown">
+        <p>使用 flanne 作为 cni 插件，并且使用 vxlan 作为后端会有 bug，表现为</p>
+<ol>
+<li>
+<p>「 node 不能访问 pod 被调度到其他 node 的 service，但是可以通过 pod real IP/ endpoint 访问。」</p>
+</li>
+<li>
+<p>实际上是「node 通过 svc 访问 调度到其他  node 的 pod 会有延时， 63s」</p>
+</li>
+</ol>
+<blockquote>
+<p>Flatcar / newer Linux kernels  延迟为 1 s</p>
+</blockquote>
+<h2 id="1-引发原因使用-cert-manager">1. 引发原因：使用 cert-manager</h2>
+<p>首先是在使用 cert-manager 的时候</p>
+<blockquote>
+<p>cert-manager 的架构需要使用到一个 cert-manager-webhook 用来声明「创建一个 CR certificate」。但是如果 cert-manager-webhoook 被调度到所在的 node 之外的 node，就会出现 time-out。</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">Error from server <span style="color:#f92672">(</span>InternalError<span style="color:#f92672">)</span>: error when creating <span style="color:#e6db74">&#34;certificate.yaml&#34;</span>: Internal error occurred: failed calling webhook <span style="color:#e6db74">&#34;webhook.cert-manager.io&#34;</span>: Post https://cert-manager-webhook.cert-manager.svc:443/mutate?timeout<span style="color:#f92672">=</span>30s: dial tcp 10.43.18.211:443: i/o timeout
+</code></pre></div><p>如上，因为 cert-manager 设置了一个 timeout 所以结果肯定是失败的。</p>
+<ul>
+<li>涉及 issue <a href="https://github.com/jetstack/cert-manager/issues/2811">https://github.com/jetstack/cert-manager/issues/2811</a></li>
+</ul>
+<h2 id="2-探寻原因">2. 探寻原因</h2>
+<table>
+<thead>
+<tr>
+<th align="center">源</th>
+<th align="center">目标</th>
+<th align="center">结果</th>
+<th align="center">组别</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">nodeA</td>
+<td align="center">service(pod in nodeA)</td>
+<td align="center">success</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td align="center">nodeA</td>
+<td align="center">service(pod in nodeB)</td>
+<td align="center">failure/delay 63s</td>
+<td align="center">2</td>
+</tr>
+<tr>
+<td align="center">pod(in nodeA)</td>
+<td align="center">service(pod in nodeB)</td>
+<td align="center">success</td>
+<td align="center">3</td>
+</tr>
+</tbody>
+</table>
+<p>参考 <a href="https://github.com/jetstack/cert-manager/issues/2811">cert-manager#2811</a>，也许修改 flannel backend to host-gw 可能有用。</p>
+<blockquote>
+<p>I changed the flannel backend from vxlan to host-gw, but it doesn&rsquo;t seem to work.</p>
+</blockquote>
+<ul>
+<li>怎么修改 flannel backend</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vim /etc/systemd/system/k3s.service
+</code></pre></div><ul>
+<li>修改的部分</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ExecStart<span style="color:#f92672">=</span>/usr/local/bin/k3s server --flannel-backend host-gw
+</code></pre></div><ul>
+<li>restart k3s</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">systemctl daemon-reload
+systemctl restart k3s
+<span style="color:#75715e">#如果没重启的话是不会的，所以要重启所有 node 「包括 agent」。</span>
+</code></pre></div><ul>
+<li>check my k3s net-conf 这样只能看到 backed 的设置。</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">- 检查每个节点的 flannel backend type。
+
+​<span style="color:#e6db74">```</span>bash
+<span style="color:#f92672">[</span>root@iZuf6dq9lezw045stckkhsZ ~<span style="color:#f92672">]</span><span style="color:#75715e"># kubectl get node bowser1704 -o yaml | grep backend-type</span>
+    flannel.alpha.coreos.com/backend-type: host-gw
+</code></pre></div><p>所以对我来说 更换为 host-gw 似乎并没有作用。</p>
+<h2 id="3-着手-service检查-iptables-规则">3. 着手 service：检查 iptables 规则</h2>
+<p>众所周知，service cluster IP 并不是真实 IP，而是通过 iptables 或者 ipvs 修改内核 netfilter 规则，做一些 <a href="https://en.wikipedia.org/wiki/Network_address_translation#DNAT">DNAT</a>(Destination Network Address Translation)，将给定的协议 / 数据报转发到 endpoing 「实际上是 pod 的 real ip，建立在 overlay network 的」。</p>
+<p>
+
+
+
+    <img class="mx-auto" alt="FW-IDS-iptables-Flowchart-v2019-04-30-1" src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ggadttipz9j30u01270ya.jpg" />
+</p>
+<p>由上图可以知道数据包在 netfilter 内的走向。「需要有一定 iptables 知识」</p>
+<p>并且我们知道，svc cluster ip 需要的是 DNAT，所以是 NAT table 中的 PREROUTING 和 OUTPUT chain，我们检查 PREROUING chain 和 OUTPUT chain。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># check nat table PREROUTING chain</span>
+<span style="color:#f92672">[</span>root@bowser1704 be<span style="color:#f92672">]</span><span style="color:#75715e"># iptables -t nat -n -v -L PREROUTING/OUTPUT</span>
+Chain PREROUTING <span style="color:#f92672">(</span>policy ACCEPT <span style="color:#ae81ff">49</span> packets, <span style="color:#ae81ff">3398</span> bytes<span style="color:#f92672">)</span>
+ pkts bytes target     prot opt in     out     source               destination
+3193K  209M KUBE-SERVICES  all  --  *      *       0.0.0.0/0            0.0.0.0/0            /* kubernetes service portals */
+1944K  142M CNI-HOSTPORT-DNAT  all  --  *      *       0.0.0.0/0            0.0.0.0/0            ADDRTYPE match dst-type LOCAL
+
+<span style="color:#75715e"># check KUBE-SERIVCES chain / food is my service name</span>
+<span style="color:#f92672">[</span>root@iZuf6dq9lezw045stckkhsZ be<span style="color:#f92672">]</span><span style="color:#75715e"># iptables -t nat -n -v -L KUBE-SERVICES | grep food</span>
+    <span style="color:#ae81ff">2</span>   <span style="color:#ae81ff">120</span> KUBE-MARK-MASQ  tcp  --  *      *      !10.42.0.0/16         10.43.105.114        /* food/food-backend:http cluster IP */ tcp dpt:8080
+    <span style="color:#ae81ff">2</span>   <span style="color:#ae81ff">120</span> KUBE-SVC-J4YWF6HICEDZUWTC  tcp  --  *      *       0.0.0.0/0            10.43.105.114        /* food/food-backend:http cluster IP */ tcp dpt:8080
+    <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span> KUBE-MARK-MASQ  tcp  --  *      *      !10.42.0.0/16         10.43.105.118        /* food/redis: cluster IP */ tcp dpt:7388
+    <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span> KUBE-SVC-OXGTRCQ72XOGLTBD  tcp  --  *      *       0.0.0.0/0            10.43.105.118        /* food/redis: cluster IP */ tcp dpt:7388
+
+<span style="color:#75715e"># check food svc chain</span>
+<span style="color:#f92672">[</span>root@iZuf6dq9lezw045stckkhsZ be<span style="color:#f92672">]</span><span style="color:#75715e"># iptables -t nat -n -v -L  KUBE-SVC-J4YWF6HICEDZUWTC</span>
+Chain KUBE-SVC-J4YWF6HICEDZUWTC <span style="color:#f92672">(</span><span style="color:#ae81ff">1</span> references<span style="color:#f92672">)</span>
+ pkts bytes target     prot opt in     out     source               destination
+    <span style="color:#ae81ff">2</span>   <span style="color:#ae81ff">120</span> KUBE-SEP-Z45YJMXQTGNBLAMQ  all  --  *      *       0.0.0.0/0            0.0.0.0/0
+
+<span style="color:#75715e"># check kstack sep chain / sep is made for load balance</span>
+<span style="color:#f92672">[</span>root@iZuf6dq9lezw045stckkhsZ be<span style="color:#f92672">]</span><span style="color:#75715e"># iptables -t nat -n -v -L  KUBE-SEP-Z45YJMXQTGNBLAMQ</span>
+Chain KUBE-SEP-Z45YJMXQTGNBLAMQ <span style="color:#f92672">(</span><span style="color:#ae81ff">1</span> references<span style="color:#f92672">)</span>
+ pkts bytes target     prot opt in     out     source               destination
+    <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span> KUBE-MARK-MASQ  all  --  *      *       10.42.1.4            0.0.0.0/0
+    <span style="color:#ae81ff">2</span>   <span style="color:#ae81ff">120</span> DNAT       tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp to:10.42.1.4:8080
+
+<span style="color:#f92672">[</span>root@bowser1704 be<span style="color:#f92672">]</span><span style="color:#75715e"># iptables -t nat -n -v -L KUBE-MARK-MASQ</span>
+Chain KUBE-MARK-MASQ <span style="color:#f92672">(</span><span style="color:#ae81ff">56</span> references<span style="color:#f92672">)</span>
+ pkts bytes target     prot opt in     out     source               destination
+   <span style="color:#ae81ff">58</span>  <span style="color:#ae81ff">2400</span> MARK       all  --  *      *       0.0.0.0/0            0.0.0.0/0            MARK or 0x4000
+</code></pre></div><p>kubu-proxy 用来实现 DNAT 和 SNAT 「k3s 二进制文件内置了，没有单独起一个进程。」</p>
+<ul>
+<li>
+<p>实现 SNAT 是利用 masquerading rules 「与 SNAT rules 有一些区别，SNAT rules 转换的 IP 是给定的，但是这种方式是 动态获取当前 IP 的。」</p>
+<p>实现 SNAT 只针对于，pod（in k3s it’s 10.42.0.0/16） 之外的网段访问 svc，具体过程是先用 KUBE-MARK-MASQ 加一个 mark，POSTROUING 阶段检查，如果有这个 mark 就做 SNAT。</p>
+</li>
+<li>
+<p>实现 DNAT 是利用 DNAT rules。</p>
+</li>
+</ul>
+<hr>
+<p><strong>根据第二步中的对照组，</strong></p>
+<ul>
+<li>1 3 对照发现 node 和 pod in node 访问结果不一样，在这里区别是 node 做了 SNAT。所以 SNAT 可能有影响。</li>
+</ul>
+<h2 id="4-查看-dnat-之后的走向">4. 查看 DNAT 之后的走向</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@iZuf6dq9lezw045stckkhsZ ~<span style="color:#f92672">]</span><span style="color:#75715e"># route -n</span>
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+0.0.0.0         172.19.159.253  0.0.0.0         UG    <span style="color:#ae81ff">0</span>      <span style="color:#ae81ff">0</span>        <span style="color:#ae81ff">0</span> eth0
+10.42.0.0       0.0.0.0         255.255.255.0   U     <span style="color:#ae81ff">0</span>      <span style="color:#ae81ff">0</span>        <span style="color:#ae81ff">0</span> cni0
+10.42.1.0       10.42.1.0       255.255.255.0   UG    <span style="color:#ae81ff">0</span>      <span style="color:#ae81ff">0</span>        <span style="color:#ae81ff">0</span> flannel.1
+10.42.2.0       10.42.2.0       255.255.255.0   UG    <span style="color:#ae81ff">0</span>      <span style="color:#ae81ff">0</span>        <span style="color:#ae81ff">0</span> flannel.1
+</code></pre></div><hr>
+<p><strong>根据第二步中的对照组</strong></p>
+<p>1 2 对照可以发现，1 和 2 结果不一样。在这里不一样的原因是 1 中直接走 cni 了，但是 2 中会走 flannel。所以走 flannel 可能有影响，并且根据别人使用 host-gw 会有帮助，也许 vxlan 有问题。</p>
+<blockquote>
+<p>cni0 是容器网桥，flannel.1 是 cni 插件 flannel 网桥，走 flannel 意味着会有 vxlan。</p>
+</blockquote>
+<h2 id="5-追踪数据包-tcpdump-抓包">5. 追踪数据包 tcpdump 抓包</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># 监听 pod ip / endpoing</span>
+tcpdump -n -S -i any host 10.42.1.34
+
+<span style="color:#75715e"># 另一个 shell curl svc</span>
+curl 10.43.105.114:8080/sd/health
+
+<span style="color:#75715e"># P.S. 此时不能有其他人访问这个 pod。</span>
+</code></pre></div><p>发现有输出，说明监听到了，也就是 svc 转发到了对应的 pod。<strong>并且等了一分钟左右他居然是能连通的</strong>。</p>
+<p><strong>初次之外，建立 TCP 连接时，一直重发 SYN，第七次才真正传送到了。</strong></p>
+<p>明确两点：</p>
+<ul>
+<li>tcp 数据报是转发到了 pod IP 上的。</li>
+<li>63s 的延迟之后又可以了。</li>
+</ul>
+<p>
+
+
+
+    <img class="mx-auto" alt="image-20200630235158877" src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ggar4e5zmqj30q304n0te.jpg" />
+</p>
+<p>在 tcp 三次握手时：</p>
+<ol>
+<li>客户端首先要发送一个 SYN 给服务端</li>
+<li>服务端再发送一个 SYN-ACK 回复客户端</li>
+<li>客户端最后发送一个 ACK 给服务端，握手就成功了。</li>
+</ol>
+<p>
+
+
+
+    <img class="mx-auto" alt="img" src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ggahwt6l8vj30go0960tb.jpg" />
+</p>
+<blockquote>
+<p>当连接未建立成功，重试需要 1s + 2s + 4s+ 8s+ 16s + 32s = 63s，TCP 才会断开这个连接。</p>
+</blockquote>
+<hr>
+<p>根据 TCP 的原理以及前几步骤的确认，可以确认问题出现在 IP packet 进入 flannel 之后，并且做了 SNAT 以及 利用 vxlan。</p>
+<h2 id="6-追踪产生-bug-的原因">6. 追踪产生 bug 的原因</h2>
+<p>由第三步可以暂时认定是有 SNAT 的原因。并且做 SNAT 转出来还是自己的 IP。</p>
+<p>关于内核 SNAT 的步骤，参考 <a href="https://github.com/torvalds/linux/blob/24de3d377539e384621c5b8f8f8d8d01852dddc8/net/netfilter/nf_nat_core.c#L290-L301">Linux NAT core</a>。</p>
+<ol>
+<li>检查 source IP 是否为 IP pool 内的 IP，如果是的话直接返回。</li>
+<li>找到 IP pool 里面最少使用的 IP，将 IP packet 的 source IP 换成这个 IP。</li>
+<li>检查允许的端口，如果目前的端口，本来就空闲，就不变。之后再返回。</li>
+<li>找一个用于 SNAT 的端口 by calling <a href="https://github.com/torvalds/linux/blob/24de3d377539e384621c5b8f8f8d8d01852dddc8/net/netfilter/nf_nat_proto_common.c#L37-L85">nf_nat_l4proto_unique_tuple()</a>。</li>
+</ol>
+<p>iptables 中的 KUBE-MARK-MASQ 用作标记要不要 SNAT，POSTROUING 会做一次 SNAT，并且 vxlan 封装之后还会做一次 SNAT。所以做了双层 SNAT。不过这依旧是不必要的。P.S.: 已修复</p>
+<ul>
+<li>
+<p>flannel issue</p>
+<p><a href="https://github.com/coreos/flannel/pull/1282#issuecomment-635639567">https://github.com/coreos/flannel/pull/1282#issuecomment-635639567</a></p>
+<p><a href="https://github.com/coreos/flannel/pull/1282#issuecomment-635145841">https://github.com/coreos/flannel/pull/1282#issuecomment-635145841</a></p>
+<p>有人做了详细的测试，关于 &ndash;random-fully 参数，这个参数是用于选择 SNAT 的两种算法。是 iptables 的问题。</p>
+</li>
+</ul>
+<p>大意是 iptables 和 kube-proxy 对 &ndash;random-fully 支持的问题。</p>
+<ul>
+<li>
+<p>k8s issue <a href="https://github.com/kubernetes/kubernetes/issues/88986#issuecomment-640929804">https://github.com/kubernetes/kubernetes/issues/88986#issuecomment-640929804</a></p>
+<p>这个 issue 中的 comment 详细讲述的原因和如何去解决这个问题，不过因为版本原因，他是 1s。</p>
+</li>
+</ul>
+<p><a href="https://github.com/kubernetes/kubernetes/pull/92035#issuecomment-644502203">https://github.com/kubernetes/kubernetes/pull/92035#issuecomment-644502203</a></p>
+<p>pr 中详细讲述了触发这个 bug 的几要素。</p>
+<p>解决办法</p>
+<ol>
+<li>
+<p>关闭 UDP checksum</p>
+<p><code>ethtool -K flannel.1 tx-checksum-ip-generic off</code></p>
+<p><a href="https://github.com/weaveworks/weave/issues/1255#issuecomment-221820171">weaveworks/weave#1255 (comment)</a> 关闭这个模块 4 年了，暂时没有什么大问题。</p>
+</li>
+</ol>
+<h2 id="7-fix-this-bug">7. fix this bug</h2>
+<p><a href="https://github.com/kubernetes/kubernetes/pull/92035">https://github.com/kubernetes/kubernetes/pull/92035</a> fix this bug</p>
+<hr>
+<p>参考链接</p>
+<ul>
+<li>iptables <a href="https://www.digitalocean.com/community/tutorials/a-deep-dive-into-iptables-and-netfilter-architecture">https://www.digitalocean.com/community/tutorials/a-deep-dive-into-iptables-and-netfilter-architecture</a></li>
+<li>explaination for the same bug <a href="https://tech.xing.com/a-reason-for-unexplained-connection-timeouts-on-kubernetes-docker-abd041cf7e02">https://tech.xing.com/a-reason-for-unexplained-connection-timeouts-on-kubernetes-docker-abd041cf7e02</a></li>
+<li>linux bug <a href="https://github.com/torvalds/linux/blob/24de3d377539e384621c5b8f8f8d8d01852dddc8/net/netfilter/nf_nat_core.c#L290-L291">https://github.com/torvalds/linux/blob/24de3d377539e384621c5b8f8f8d8d01852dddc8/net/netfilter/nf_nat_core.c#L290-L291</a></li>
+</ul>
+
+    </div>
+</article>
+
+        </main>
+    </div><footer class="flex justify-center">
+    <div class="copyright mx-auto my-8">
+        <p>
+            © 2018-2020 <a href="https://github.com/Bowser1704">Bowser1704</a> - <strong><a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a></strong> - <strong>Power By Hugo | Theme By hugo-w2ng</strong>
+        </p>
+        
+    </div>
+</footer>
+
+
+
+<script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script></body>
+
+</html>

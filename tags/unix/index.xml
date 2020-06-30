@@ -18,7 +18,7 @@
       <pubDate>Tue, 12 Nov 2019 22:05:45 +0800</pubDate>
       
       <guid>https://bowser1704.github.io/note/20191112-csapp-chapter10-unixio/</guid>
-      <description>基本概念 首先要有一个思维，Linux上面基本上所有外部设备都是文件，都是通过IO来读取，写入的，包括键盘，网络，终端&amp;hellip;.. P.</description>
+      <description>基本概念 首先要有一个思维，Linux 上面基本上所有外部设备都是文件，都是通过 IO 来读取，写入的，包括键盘，网络，终端&amp;hellip;.. P.S</description>
     </item>
     
   </channel>

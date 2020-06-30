@@ -13,11 +13,11 @@
     
     
     <item>
-      <title>记录一次 vxlan Bug</title>
-      <link>https://bowser1704.github.io/note/20200627-%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1-vxlan-bug/</link>
+      <title>k8s vxlan 作为 cni 后端引发的 63 秒延迟</title>
+      <link>https://bowser1704.github.io/note/20200627-k8s-vxlan-%E4%BD%9C%E4%B8%BA-cni-%E5%90%8E%E7%AB%AF%E5%BC%95%E5%8F%91%E7%9A%84-63-%E7%A7%92%E5%BB%B6%E8%BF%9F/</link>
       <pubDate>Sat, 27 Jun 2020 13:21:45 +0800</pubDate>
       
-      <guid>https://bowser1704.github.io/note/20200627-%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1-vxlan-bug/</guid>
+      <guid>https://bowser1704.github.io/note/20200627-k8s-vxlan-%E4%BD%9C%E4%B8%BA-cni-%E5%90%8E%E7%AB%AF%E5%BC%95%E5%8F%91%E7%9A%84-63-%E7%A7%92%E5%BB%B6%E8%BF%9F/</guid>
       <description>vxlan as the flannel backend</description>
     </item>
     

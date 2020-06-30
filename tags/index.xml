@@ -7,10 +7,28 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
     <copyright>This work is licensed under a CC BY-NC 4.0(署名-非商业性使用 4.0 国际) License.</copyright>
-    <lastBuildDate>Sat, 27 Jun 2020 15:37:05 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 29 Jun 2020 10:18:22 +0800</lastBuildDate>
     
 	<atom:link href="https://bowser1704.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>iptables</title>
+      <link>https://bowser1704.github.io/tags/iptables/</link>
+      <pubDate>Mon, 29 Jun 2020 10:18:22 +0800</pubDate>
+      
+      <guid>https://bowser1704.github.io/tags/iptables/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Linux</title>
+      <link>https://bowser1704.github.io/tags/linux/</link>
+      <pubDate>Mon, 29 Jun 2020 10:18:22 +0800</pubDate>
+      
+      <guid>https://bowser1704.github.io/tags/linux/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>nuc</title>
@@ -49,11 +67,11 @@
     </item>
     
     <item>
-      <title>vxlans</title>
-      <link>https://bowser1704.github.io/tags/vxlans/</link>
+      <title>vxlan</title>
+      <link>https://bowser1704.github.io/tags/vxlan/</link>
       <pubDate>Sat, 27 Jun 2020 13:21:45 +0800</pubDate>
       
-      <guid>https://bowser1704.github.io/tags/vxlans/</guid>
+      <guid>https://bowser1704.github.io/tags/vxlan/</guid>
       <description></description>
     </item>
     
@@ -90,15 +108,6 @@
       <pubDate>Thu, 05 Dec 2019 01:04:48 +0800</pubDate>
       
       <guid>https://bowser1704.github.io/tags/kafka/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Linux</title>
-      <link>https://bowser1704.github.io/tags/linux/</link>
-      <pubDate>Sun, 17 Nov 2019 11:23:47 +0800</pubDate>
-      
-      <guid>https://bowser1704.github.io/tags/linux/</guid>
       <description></description>
     </item>
     
