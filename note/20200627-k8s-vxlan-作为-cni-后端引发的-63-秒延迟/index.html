@@ -24,7 +24,7 @@
 <meta itemprop="description" content="vxlan as the flannel backend">
 <meta itemprop="datePublished" content="2020-06-27T13:21:45&#43;08:00" />
 <meta itemprop="dateModified" content="2020-06-27T13:21:45&#43;08:00" />
-<meta itemprop="wordCount" content="2059">
+<meta itemprop="wordCount" content="2345">
 
 
 
@@ -308,7 +308,7 @@ curl 10.43.105.114:8080/sd/health
     <img class="mx-auto" alt="img" src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ggahwt6l8vj30go0960tb.jpg" />
 </p>
 <blockquote>
-<p>当连接未建立成功，重试需要 1s + 2s + 4s+ 8s+ 16s + 32s = 63s，TCP 才会断开这个连接。</p>
+<p>当连接未建立成功，重传需要 1s + 2s + 4s+ 8s+ 16s + 32s = 63s。并且第六次重传输会取消 checksum，也就是 &lsquo;no cksum&rsquo; 。</p>
 </blockquote>
 <hr>
 <p>根据 TCP 的原理以及前几步骤的确认，可以确认问题出现在 IP packet 进入 flannel 之后，并且做了 SNAT 以及 利用 vxlan。</p>
@@ -325,8 +325,9 @@ curl 10.43.105.114:8080/sd/health
 <ul>
 <li>
 <p>flannel issue</p>
-<p><a href="https://github.com/coreos/flannel/pull/1282#issuecomment-635639567">https://github.com/coreos/flannel/pull/1282#issuecomment-635639567</a></p>
-<p><a href="https://github.com/coreos/flannel/pull/1282#issuecomment-635145841">https://github.com/coreos/flannel/pull/1282#issuecomment-635145841</a></p>
+<p><a href="https://github.com/coreos/flannel/pull/1282#issuecomment-635639567">coreos/flannel#1282 (comment)</a></p>
+<p><a href="https://github.com/coreos/flannel/pull/1282#issuecomment-635145841">coreos/flannel#1282 (comment)</a></p>
+<p><a href="https://github.com/coreos/flannel/pull/1282#issuecomment-635145841">coreos/flannel#1282 (comment)</a></p>
 <p>有人做了详细的测试，关于 &ndash;random-fully 参数，这个参数是用于选择 SNAT 的两种算法。是 iptables 的问题。</p>
 </li>
 </ul>
@@ -334,27 +335,48 @@ curl 10.43.105.114:8080/sd/health
 <ul>
 <li>
 <p>k8s issue <a href="https://github.com/kubernetes/kubernetes/issues/88986#issuecomment-640929804">https://github.com/kubernetes/kubernetes/issues/88986#issuecomment-640929804</a></p>
-<p>这个 issue 中的 comment 详细讲述的原因和如何去解决这个问题，不过因为版本原因，他是 1s。</p>
+<p>这个 issue 中的 comment 详细讲述的原因和如何去解决这个问题。</p>
 </li>
 </ul>
-<p><a href="https://github.com/kubernetes/kubernetes/pull/92035#issuecomment-644502203">https://github.com/kubernetes/kubernetes/pull/92035#issuecomment-644502203</a></p>
-<p>pr 中详细讲述了触发这个 bug 的几要素。</p>
+<p>上面这些原因是不是引起 incorrect checksum 的原因，无从确认。</p>
+<hr>
+<p>checksum-offload 指定了内核不做校验和，交给网卡 / 硬件去做，但是使用 VXLAN 时，VETP 并不会做校验和，所以校验值是错的。因为 checksum 错误，所以会丢弃，TCP 不得不重传，然后因为 5 次重传耗时 63s「第六次重传取消 checksum」，所以结果是 63s delay。</p>
+<blockquote>
+<p>Linux’ TCP stack will sometimes/always attempt to send packets with an incorrect checksum, or that are far too large for the network link, with the result that the packet is rejected and TCP has to re-transmit. This slows down network throughput enormously.</p>
+</blockquote>
+<p>如下图，本级 checksum 一直 incorrect。</p>
+<p>
+
+
+
+    <img class="mx-auto" alt="image-20200701010831331" src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ggatc17gefj31hc0i6n3x.jpg" />
+</p>
 <p>解决办法</p>
 <ol>
 <li>
-<p>关闭 UDP checksum</p>
+<p>关闭 Checksum Offloading</p>
 <p><code>ethtool -K flannel.1 tx-checksum-ip-generic off</code></p>
-<p><a href="https://github.com/weaveworks/weave/issues/1255#issuecomment-221820171">weaveworks/weave#1255 (comment)</a> 关闭这个模块 4 年了，暂时没有什么大问题。</p>
 </li>
 </ol>
 <h2 id="7-fix-this-bug">7. fix this bug</h2>
-<p><a href="https://github.com/kubernetes/kubernetes/pull/92035">https://github.com/kubernetes/kubernetes/pull/92035</a> fix this bug</p>
+<ol>
+<li>
+<p><a href="https://github.com/kubernetes/kubernetes/pull/92035#issuecomment-644502203">https://github.com/kubernetes/kubernetes/pull/92035#issuecomment-644502203</a></p>
+<p>pr 中详细讲述了触发这个 bug 的几要素。</p>
+<p>但是我感觉解决方案不太对，因为从关闭 Checksum Offloading 可以解决这个问题来看，这个是进 flannel 之后没有做校验和的锅。也或者这个解决的问题是 1s 的问题。</p>
+</li>
+<li>
+<p>关闭 Checksum Offloading</p>
+<p>因为是用的是 flannel 等虚拟网络硬件，不支持做 checksum 等操作，所以关闭其实还是最省心的。</p>
+</li>
+</ol>
 <hr>
 <p>参考链接</p>
 <ul>
 <li>iptables <a href="https://www.digitalocean.com/community/tutorials/a-deep-dive-into-iptables-and-netfilter-architecture">https://www.digitalocean.com/community/tutorials/a-deep-dive-into-iptables-and-netfilter-architecture</a></li>
 <li>explaination for the same bug <a href="https://tech.xing.com/a-reason-for-unexplained-connection-timeouts-on-kubernetes-docker-abd041cf7e02">https://tech.xing.com/a-reason-for-unexplained-connection-timeouts-on-kubernetes-docker-abd041cf7e02</a></li>
 <li>linux bug <a href="https://github.com/torvalds/linux/blob/24de3d377539e384621c5b8f8f8d8d01852dddc8/net/netfilter/nf_nat_core.c#L290-L291">https://github.com/torvalds/linux/blob/24de3d377539e384621c5b8f8f8d8d01852dddc8/net/netfilter/nf_nat_core.c#L290-L291</a></li>
+<li><a href="https://github.com/weaveworks/weave/issues/1255#issuecomment-221820171">weaveworks/weave#1255 (comment)</a></li>
 </ul>
 
     </div>
