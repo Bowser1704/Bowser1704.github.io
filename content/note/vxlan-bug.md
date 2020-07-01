@@ -70,7 +70,9 @@ systemctl restart k3s
     flannel.alpha.coreos.com/backend-type: host-gw
 ```
 
-所以对我来说 更换为 host-gw 似乎并没有作用。
+~~所以对我来说 更换为 host-gw 似乎并没有作用。~~
+
+因为使用的是阿里云的云企业网，并且使用进度 vpc，属于跨 vpc，host-gw 不能使用。因为阿里云在中间做了一些拦截，把使用 node ip 作为路由下一跳的包全都拦了。
 
 
 ## 3. 着手 service：检查 iptables 规则
