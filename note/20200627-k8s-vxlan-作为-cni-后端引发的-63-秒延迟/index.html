@@ -24,7 +24,7 @@
 <meta itemprop="description" content="vxlan as the flannel backend">
 <meta itemprop="datePublished" content="2020-06-27T13:21:45&#43;08:00" />
 <meta itemprop="dateModified" content="2020-06-27T13:21:45&#43;08:00" />
-<meta itemprop="wordCount" content="2661">
+<meta itemprop="wordCount" content="2768">
 
 
 
@@ -204,7 +204,7 @@ systemctl restart k3s
 <span style="color:#f92672">[</span>root@iZuf6dq9lezw045stckkhsZ ~<span style="color:#f92672">]</span><span style="color:#75715e"># kubectl get node bowser1704 -o yaml | grep backend-type</span>
     flannel.alpha.coreos.com/backend-type: host-gw
 </code></pre></div><p><del>所以对我来说 更换为 host-gw 似乎并没有作用。</del></p>
-<p>因为使用的是阿里云的云企业网，并且使用进度 vpc，属于跨 vpc，host-gw 不能使用。因为阿里云在中间做了一些拦截，把使用 node ip 作为路由下一跳的包全都拦了。</p>
+<p>因为使用的是阿里云的云企业网，并且使用不同账号 vpc，属于跨 vpc，所以 host-gw 不能使用。因为阿里云在中间做了一些拦截，把使用 node ip 作为路由下一跳的包全都拦了。</p>
 <h2 id="3-着手-service检查-iptables-规则">3. 着手 service：检查 iptables 规则</h2>
 <p>众所周知，service cluster IP 并不是真实 IP，而是通过 iptables 或者 ipvs 修改内核 netfilter 规则，做一些 <a href="https://en.wikipedia.org/wiki/Network_address_translation#DNAT">DNAT</a>(Destination Network Address Translation)，将给定的协议 / 数据报转发到 endpoing 「实际上是 pod 的 real ip，建立在 overlay network 的」。</p>
 <p>
@@ -359,11 +359,15 @@ curl 10.43.105.114:8080/sd/health
 </li>
 </ul>
 <p>上面这些原因是引起使用 VXLAN/VETH 时 incorrect checksum 的原因，并且是一起触发的。</p>
-<blockquote>
 <ol>
-<li>由于 packet mark 的方式，当我们在第一次对 packet mark 0x4000/0x4000 并且进行 SNAT 之后，进入 VETH，经过 cni 插件出来之后，POSTROUTING 仍然会识别到这个包的 mark，并且进行二次 SNAT。</li>
+<li>
+<p>由于 packet mark 的方式，当我们在第一次对 packet mark 0x4000/0x4000 并且进行 SNAT 之后，进入 VETH，经过 cni 插件出来之后，POSTROUTING 仍然会识别到这个包的 mark，并且进行二次 SNAT。</p>
+</li>
+<li>
+<p>并且因为 &ndash;random-fully SNAT 方式，source port 会改变，并且因为 kernel bug 不会进行第二次 check sum，所以最后的 checksum is incorrect，解决方案可以是禁止 double SNAT 所以不会有 bad checksum 的情况，或者是升级内核使得他会进行第二次 checksum。</p>
+<p>kernel checksum bug <a href="https://tech.vijayp.ca/linux-kernel-bug-delivers-corrupt-tcp-ip-data-to-mesos-kubernetes-docker-containers-4986f88f7a19">参考链接</a></p>
+</li>
 </ol>
-</blockquote>
 <hr>
 <p>checksum-offload 指定了内核不做校验和，交给网卡 / 硬件去做，但是使用 VXLAN 时，由于上面某些原因校验值是错的。导致 checksum 错误，所以会丢弃，TCP 不得不重传，然后因为 5 次重传耗时 63s「第六次重传取消 checksum」，所以结果是 63s delay。</p>
 <blockquote>
