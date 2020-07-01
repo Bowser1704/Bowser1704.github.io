@@ -156,7 +156,7 @@ Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
 
 ```bash
 # 监听 pod ip / endpoing
-tcpdump -n -S -i any host 10.42.1.34
+tcpdump -i any -vv host 10.42.1.34
 
 # 另一个 shell curl svc
 curl 10.43.105.114:8080/sd/health
@@ -188,7 +188,7 @@ curl 10.43.105.114:8080/sd/health
 
 -------------------
 
-根据 TCP 的原理以及前几步骤的确认，可以确认问题出现在 IP packet 进入 flannel 之后，并且做了 SNAT 以及 利用 vxlan。
+根据 TCP 的原理以及前几步骤的确认，可以确认问题出现在 IP packet 进入 flannel 之后，并且做了 SNAT 以及 利用 VXLAN。
 
 ## 6. 追踪产生 bug 的原因
 
@@ -211,7 +211,7 @@ iptables 中的 KUBE-MARK-MASQ 用作标记要不要 SNAT，POSTROUING 会做一
 
   [coreos/flannel#1282 (comment)](https://github.com/coreos/flannel/pull/1282#issuecomment-635145841)
 
-  有人做了详细的测试，关于 --random-fully 参数，这个参数是用于选择 SNAT 的两种算法。是 iptables 的问题。
+  有人关于 --random-fully 参数做了详细的测试，这个参数是用于选择 SNAT 的两种算法。
 
 大意是 iptables 和 kube-proxy 对 --random-fully 支持的问题。
 
@@ -219,11 +219,15 @@ iptables 中的 KUBE-MARK-MASQ 用作标记要不要 SNAT，POSTROUING 会做一
 
   这个 issue 中的 comment 详细讲述的原因和如何去解决这个问题。
 
-上面这些原因是不是引起 incorrect checksum 的原因，无从确认。
+我猜想可能是因为
+
+上面这些原因是引起使用 VXLAN/VETH 时 incorrect checksum 的原因，并且是一起触发的。
+
+TO DO：捋一下为什么会校验错误。
 
 ----------------------------------
 
-checksum-offload 指定了内核不做校验和，交给网卡 / 硬件去做，但是使用 VXLAN 时，VETP 并不会做校验和，所以校验值是错的。因为 checksum 错误，所以会丢弃，TCP 不得不重传，然后因为 5 次重传耗时 63s「第六次重传取消 checksum」，所以结果是 63s delay。
+checksum-offload 指定了内核不做校验和，交给网卡 / 硬件去做，但是使用 VXLAN 时，由于上面某些原因校验值是错的。因为 checksum 错误，所以会丢弃，TCP 不得不重传，然后因为 5 次重传耗时 63s「第六次重传取消 checksum」，所以结果是 63s delay。
 
 > Linux’ TCP stack will sometimes/always attempt to send packets with an incorrect checksum, or that are far too large for the network link, with the result that the packet is rejected and TCP has to re-transmit. This slows down network throughput enormously.
 
@@ -241,13 +245,11 @@ checksum-offload 指定了内核不做校验和，交给网卡 / 硬件去做，
 
 1. https://github.com/kubernetes/kubernetes/pull/92035#issuecomment-644502203
 
-   pr 中详细讲述了触发这个 bug 的几要素。
-
-   但是我感觉解决方案不太对，因为从关闭 Checksum Offloading 可以解决这个问题来看，这个是进 flannel 之后没有做校验和的锅。也或者这个解决的问题是 1s 的问题。
+   pr 中详细讲述了触发这个 bug 的几要素。他的方法是使得走 flannel 后不会校验失败。
 
 2. 关闭 Checksum Offloading
 
-   因为是用的是 flannel 等虚拟网络硬件，不支持做 checksum 等操作，所以关闭其实还是最省心的。
+   因为是用的是 flannel 等虚拟网络硬件，做 checksum 等操作会 incorrect，所以关闭其实还是最省心的。
 
 -------------
 
@@ -257,3 +259,4 @@ checksum-offload 指定了内核不做校验和，交给网卡 / 硬件去做，
 - explaination for the same bug https://tech.xing.com/a-reason-for-unexplained-connection-timeouts-on-kubernetes-docker-abd041cf7e02
 - linux bug https://github.com/torvalds/linux/blob/24de3d377539e384621c5b8f8f8d8d01852dddc8/net/netfilter/nf_nat_core.c#L290-L291
 - [weaveworks/weave#1255 (comment)](https://github.com/weaveworks/weave/issues/1255#issuecomment-221820171)
+- VXLAN https://community.mellanox.com/s/article/vxlan-considerations-for-connectx-3-pro
