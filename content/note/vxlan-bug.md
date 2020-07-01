@@ -15,7 +15,7 @@ date: 2020-06-27T13:21:45+08:00
 
 > Flatcar / newer Linux kernels  延迟为 1 s
 
-## 1. 引发原因：使用 cert-manager
+## 1. 遇到 bug：使用 cert-manager
 
 首先是在使用 cert-manager 的时候
 
@@ -81,7 +81,7 @@ systemctl restart k3s
 
 由上图可以知道数据包在 netfilter 内的走向。「需要有一定 iptables 知识」
 
-并且我们知道，svc cluster ip 需要的是 DNAT，所以是 NAT table 中的 PREROUTING 和 OUTPUT chain，我们检查 PREROUING chain 和 OUTPUT chain。
+并且我们知道，svc cluster ip 需要的是 DNAT，所以是 NAT table 中的 PREROUTING 和 OUTPUT chain，我们检查 PREROUING chain 和 OUTPUT chain。「在我们的场景下，packet 只会走 OUTPUT 和 POSTROUTING chain」
 
 ```bash
 # check nat table PREROUTING chain
@@ -116,6 +116,30 @@ Chain KUBE-MARK-MASQ (56 references)
  pkts bytes target     prot opt in     out     source               destination
    58  2400 MARK       all  --  *      *       0.0.0.0/0            0.0.0.0/0            MARK or 0x4000
 ```
+
+而 POSTROUTING 做了什么呢？
+
+```bash
+[root@iZuf6dq9lezw045stckkhsZ ~]# iptables -t nat -n -v -L POSTROUTING
+Chain POSTROUTING (policy ACCEPT 5747 packets, 614K bytes)
+ pkts bytes target     prot opt in     out     source               destination
+4948K  362M CNI-HOSTPORT-MASQ  all  --  *      *       0.0.0.0/0            0.0.0.0/0            /* CNI portfwd requiring masquerade */
+4948K  362M KUBE-POSTROUTING  all  --  *      *       0.0.0.0/0            0.0.0.0/0            /* kubernetes postrouting rules */
+2346K  150M RETURN     all  --  *      *       10.42.0.0/16         10.42.0.0/16
+ 2608  198K MASQUERADE  all  --  *      *       10.42.0.0/16        !224.0.0.0/4
+15770  690K RETURN     all  --  *      *      !10.42.0.0/16         10.42.0.0/24
+    3   180 MASQUERADE  all  --  *      *      !10.42.0.0/16         10.42.0.0/16
+[root@iZuf6dq9lezw045stckkhsZ ~]# iptables -t nat -n -v -L CNI-HOSTPORT-MASQ
+Chain CNI-HOSTPORT-MASQ (1 references)
+ pkts bytes target     prot opt in     out     source               destination
+    0     0 MASQUERADE  all  --  *      *       0.0.0.0/0            0.0.0.0/0            mark match 0x2000/0x2000
+[root@iZuf6dq9lezw045stckkhsZ ~]# iptables -t nat -n -v -L KUBE-POSTROUTING
+Chain KUBE-POSTROUTING (1 references)
+ pkts bytes target     prot opt in     out     source               destination
+  448 18044 MASQUERADE  all  --  *      *       0.0.0.0/0            0.0.0.0/0            /* kubernetes service traffic requiring SNAT */ mark match 0x4000/0x4000
+```
+
+也就是匹配加了 mark 0x4000/0x4000 的 packet，并做一次 SNAT。
 
 kubu-proxy 用来实现 DNAT 和 SNAT 「k3s 二进制文件内置了，没有单独起一个进程。」
 
@@ -201,7 +225,7 @@ curl 10.43.105.114:8080/sd/health
 3. 检查允许的端口，如果目前的端口，本来就空闲，就不变。之后再返回。
 4. 找一个用于 SNAT 的端口 by calling [nf_nat_l4proto_unique_tuple()](https://github.com/torvalds/linux/blob/24de3d377539e384621c5b8f8f8d8d01852dddc8/net/netfilter/nf_nat_proto_common.c#L37-L85)。
 
-iptables 中的 KUBE-MARK-MASQ 用作标记要不要 SNAT，POSTROUING 会做一次 SNAT，并且 vxlan 封装之后还会做一次 SNAT。所以做了双层 SNAT。不过这依旧是不必要的。P.S.: 已修复
+iptables 中的 KUBE-MARK-MASQ 用作标记要不要 SNAT，POSTROUING 会做一次 SNAT，并且 VXLAN 封装之后还会做一次 SNAT。
 
 - flannel issue
 
@@ -219,16 +243,16 @@ iptables 中的 KUBE-MARK-MASQ 用作标记要不要 SNAT，POSTROUING 会做一
 
   这个 issue 中的 comment 详细讲述的原因和如何去解决这个问题。
 
-我猜想可能是因为
-
 上面这些原因是引起使用 VXLAN/VETH 时 incorrect checksum 的原因，并且是一起触发的。
 
-TO DO：捋一下为什么会校验错误。
+> 1. 由于 packet mark 的方式，当我们在第一次对 packet mark 0x4000/0x4000 并且进行 SNAT 之后，进入 VETH，经过 cni 插件出来之后，POSTROUTING 仍然会识别到这个包的 mark，并且进行二次 SNAT。
 
 ----------------------------------
 
-checksum-offload 指定了内核不做校验和，交给网卡 / 硬件去做，但是使用 VXLAN 时，由于上面某些原因校验值是错的。因为 checksum 错误，所以会丢弃，TCP 不得不重传，然后因为 5 次重传耗时 63s「第六次重传取消 checksum」，所以结果是 63s delay。
+checksum-offload 指定了内核不做校验和，交给网卡 / 硬件去做，但是使用 VXLAN 时，由于上面某些原因校验值是错的。导致 checksum 错误，所以会丢弃，TCP 不得不重传，然后因为 5 次重传耗时 63s「第六次重传取消 checksum」，所以结果是 63s delay。
 
+> https://github.com/projectcalico/calico/issues/3145
+>
 > Linux’ TCP stack will sometimes/always attempt to send packets with an incorrect checksum, or that are far too large for the network link, with the result that the packet is rejected and TCP has to re-transmit. This slows down network throughput enormously.
 
 如下图，本级 checksum 一直 incorrect。
@@ -257,6 +281,8 @@ checksum-offload 指定了内核不做校验和，交给网卡 / 硬件去做，
 
 - iptables https://www.digitalocean.com/community/tutorials/a-deep-dive-into-iptables-and-netfilter-architecture
 - explaination for the same bug https://tech.xing.com/a-reason-for-unexplained-connection-timeouts-on-kubernetes-docker-abd041cf7e02
-- linux bug https://github.com/torvalds/linux/blob/24de3d377539e384621c5b8f8f8d8d01852dddc8/net/netfilter/nf_nat_core.c#L290-L291
+- linux code https://github.com/torvalds/linux/blob/24de3d377539e384621c5b8f8f8d8d01852dddc8/net/netfilter/nf_nat_core.c#L290-L291
 - [weaveworks/weave#1255 (comment)](https://github.com/weaveworks/weave/issues/1255#issuecomment-221820171)
 - VXLAN https://community.mellanox.com/s/article/vxlan-considerations-for-connectx-3-pro
+- checksum-bug https://tech.vijayp.ca/linux-kernel-bug-delivers-corrupt-tcp-ip-data-to-mesos-kubernetes-docker-containers-4986f88f7a19
+- https://www.dynatrace.com/news/blog/detecting-network-errors-impact-on-services/
