@@ -24,7 +24,7 @@
 <meta itemprop="description" content="vxlan as the flannel backend">
 <meta itemprop="datePublished" content="2020-06-27T13:21:45&#43;08:00" />
 <meta itemprop="dateModified" content="2020-06-27T13:21:45&#43;08:00" />
-<meta itemprop="wordCount" content="2583">
+<meta itemprop="wordCount" content="2661">
 
 
 
@@ -203,7 +203,8 @@ systemctl restart k3s
 ​<span style="color:#e6db74">```</span>bash
 <span style="color:#f92672">[</span>root@iZuf6dq9lezw045stckkhsZ ~<span style="color:#f92672">]</span><span style="color:#75715e"># kubectl get node bowser1704 -o yaml | grep backend-type</span>
     flannel.alpha.coreos.com/backend-type: host-gw
-</code></pre></div><p>所以对我来说 更换为 host-gw 似乎并没有作用。</p>
+</code></pre></div><p><del>所以对我来说 更换为 host-gw 似乎并没有作用。</del></p>
+<p>因为使用的是阿里云的云企业网，并且使用进度 vpc，属于跨 vpc，host-gw 不能使用。因为阿里云在中间做了一些拦截，把使用 node ip 作为路由下一跳的包全都拦了。</p>
 <h2 id="3-着手-service检查-iptables-规则">3. 着手 service：检查 iptables 规则</h2>
 <p>众所周知，service cluster IP 并不是真实 IP，而是通过 iptables 或者 ipvs 修改内核 netfilter 规则，做一些 <a href="https://en.wikipedia.org/wiki/Network_address_translation#DNAT">DNAT</a>(Destination Network Address Translation)，将给定的协议 / 数据报转发到 endpoing 「实际上是 pod 的 real ip，建立在 overlay network 的」。</p>
 <p>
