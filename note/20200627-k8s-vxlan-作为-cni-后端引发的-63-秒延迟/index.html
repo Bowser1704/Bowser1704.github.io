@@ -24,7 +24,7 @@
 <meta itemprop="description" content="vxlan as the flannel backend">
 <meta itemprop="datePublished" content="2020-06-27T13:21:45&#43;08:00" />
 <meta itemprop="dateModified" content="2020-06-27T13:21:45&#43;08:00" />
-<meta itemprop="wordCount" content="2324">
+<meta itemprop="wordCount" content="2583">
 
 
 
@@ -136,7 +136,7 @@
 <blockquote>
 <p>Flatcar / newer Linux kernels  延迟为 1 s</p>
 </blockquote>
-<h2 id="1-引发原因使用-cert-manager">1. 引发原因：使用 cert-manager</h2>
+<h2 id="1-遇到-bug使用-cert-manager">1. 遇到 bug：使用 cert-manager</h2>
 <p>首先是在使用 cert-manager 的时候</p>
 <blockquote>
 <p>cert-manager 的架构需要使用到一个 cert-manager-webhook 用来声明「创建一个 CR certificate」。但是如果 cert-manager-webhoook 被调度到所在的 node 之外的 node，就会出现 time-out。</p>
@@ -213,7 +213,7 @@ systemctl restart k3s
     <img class="mx-auto" alt="FW-IDS-iptables-Flowchart-v2019-04-30-1" src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ggadttipz9j30u01270ya.jpg" />
 </p>
 <p>由上图可以知道数据包在 netfilter 内的走向。「需要有一定 iptables 知识」</p>
-<p>并且我们知道，svc cluster ip 需要的是 DNAT，所以是 NAT table 中的 PREROUTING 和 OUTPUT chain，我们检查 PREROUING chain 和 OUTPUT chain。</p>
+<p>并且我们知道，svc cluster ip 需要的是 DNAT，所以是 NAT table 中的 PREROUTING 和 OUTPUT chain，我们检查 PREROUING chain 和 OUTPUT chain。「在我们的场景下，packet 只会走 OUTPUT 和 POSTROUTING chain」</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># check nat table PREROUTING chain</span>
 <span style="color:#f92672">[</span>root@bowser1704 be<span style="color:#f92672">]</span><span style="color:#75715e"># iptables -t nat -n -v -L PREROUTING/OUTPUT</span>
 Chain PREROUTING <span style="color:#f92672">(</span>policy ACCEPT <span style="color:#ae81ff">49</span> packets, <span style="color:#ae81ff">3398</span> bytes<span style="color:#f92672">)</span>
@@ -245,7 +245,26 @@ Chain KUBE-SEP-Z45YJMXQTGNBLAMQ <span style="color:#f92672">(</span><span style=
 Chain KUBE-MARK-MASQ <span style="color:#f92672">(</span><span style="color:#ae81ff">56</span> references<span style="color:#f92672">)</span>
  pkts bytes target     prot opt in     out     source               destination
    <span style="color:#ae81ff">58</span>  <span style="color:#ae81ff">2400</span> MARK       all  --  *      *       0.0.0.0/0            0.0.0.0/0            MARK or 0x4000
-</code></pre></div><p>kubu-proxy 用来实现 DNAT 和 SNAT 「k3s 二进制文件内置了，没有单独起一个进程。」</p>
+</code></pre></div><p>而 POSTROUTING 做了什么呢？</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>root@iZuf6dq9lezw045stckkhsZ ~<span style="color:#f92672">]</span><span style="color:#75715e"># iptables -t nat -n -v -L POSTROUTING</span>
+Chain POSTROUTING <span style="color:#f92672">(</span>policy ACCEPT <span style="color:#ae81ff">5747</span> packets, 614K bytes<span style="color:#f92672">)</span>
+ pkts bytes target     prot opt in     out     source               destination
+4948K  362M CNI-HOSTPORT-MASQ  all  --  *      *       0.0.0.0/0            0.0.0.0/0            /* CNI portfwd requiring masquerade */
+4948K  362M KUBE-POSTROUTING  all  --  *      *       0.0.0.0/0            0.0.0.0/0            /* kubernetes postrouting rules */
+2346K  150M RETURN     all  --  *      *       10.42.0.0/16         10.42.0.0/16
+ <span style="color:#ae81ff">2608</span>  198K MASQUERADE  all  --  *      *       10.42.0.0/16        !224.0.0.0/4
+<span style="color:#ae81ff">15770</span>  690K RETURN     all  --  *      *      !10.42.0.0/16         10.42.0.0/24
+    <span style="color:#ae81ff">3</span>   <span style="color:#ae81ff">180</span> MASQUERADE  all  --  *      *      !10.42.0.0/16         10.42.0.0/16
+<span style="color:#f92672">[</span>root@iZuf6dq9lezw045stckkhsZ ~<span style="color:#f92672">]</span><span style="color:#75715e"># iptables -t nat -n -v -L CNI-HOSTPORT-MASQ</span>
+Chain CNI-HOSTPORT-MASQ <span style="color:#f92672">(</span><span style="color:#ae81ff">1</span> references<span style="color:#f92672">)</span>
+ pkts bytes target     prot opt in     out     source               destination
+    <span style="color:#ae81ff">0</span>     <span style="color:#ae81ff">0</span> MASQUERADE  all  --  *      *       0.0.0.0/0            0.0.0.0/0            mark match 0x2000/0x2000
+<span style="color:#f92672">[</span>root@iZuf6dq9lezw045stckkhsZ ~<span style="color:#f92672">]</span><span style="color:#75715e"># iptables -t nat -n -v -L KUBE-POSTROUTING</span>
+Chain KUBE-POSTROUTING <span style="color:#f92672">(</span><span style="color:#ae81ff">1</span> references<span style="color:#f92672">)</span>
+ pkts bytes target     prot opt in     out     source               destination
+  <span style="color:#ae81ff">448</span> <span style="color:#ae81ff">18044</span> MASQUERADE  all  --  *      *       0.0.0.0/0            0.0.0.0/0            /* kubernetes service traffic requiring SNAT */ mark match 0x4000/0x4000
+</code></pre></div><p>也就是匹配加了 mark 0x4000/0x4000 的 packet，并做一次 SNAT。</p>
+<p>kubu-proxy 用来实现 DNAT 和 SNAT 「k3s 二进制文件内置了，没有单独起一个进程。」</p>
 <ul>
 <li>
 <p>实现 SNAT 是利用 masquerading rules 「与 SNAT rules 有一些区别，SNAT rules 转换的 IP 是给定的，但是这种方式是 动态获取当前 IP 的。」</p>
@@ -321,7 +340,7 @@ curl 10.43.105.114:8080/sd/health
 <li>检查允许的端口，如果目前的端口，本来就空闲，就不变。之后再返回。</li>
 <li>找一个用于 SNAT 的端口 by calling <a href="https://github.com/torvalds/linux/blob/24de3d377539e384621c5b8f8f8d8d01852dddc8/net/netfilter/nf_nat_proto_common.c#L37-L85">nf_nat_l4proto_unique_tuple()</a>。</li>
 </ol>
-<p>iptables 中的 KUBE-MARK-MASQ 用作标记要不要 SNAT，POSTROUING 会做一次 SNAT，并且 vxlan 封装之后还会做一次 SNAT。所以做了双层 SNAT。不过这依旧是不必要的。P.S.: 已修复</p>
+<p>iptables 中的 KUBE-MARK-MASQ 用作标记要不要 SNAT，POSTROUING 会做一次 SNAT，并且 VXLAN 封装之后还会做一次 SNAT。</p>
 <ul>
 <li>
 <p>flannel issue</p>
@@ -338,12 +357,16 @@ curl 10.43.105.114:8080/sd/health
 <p>这个 issue 中的 comment 详细讲述的原因和如何去解决这个问题。</p>
 </li>
 </ul>
-<p>我猜想可能是因为</p>
 <p>上面这些原因是引起使用 VXLAN/VETH 时 incorrect checksum 的原因，并且是一起触发的。</p>
-<p>TO DO：捋一下为什么会校验错误。</p>
-<hr>
-<p>checksum-offload 指定了内核不做校验和，交给网卡 / 硬件去做，但是使用 VXLAN 时，由于上面某些原因校验值是错的。因为 checksum 错误，所以会丢弃，TCP 不得不重传，然后因为 5 次重传耗时 63s「第六次重传取消 checksum」，所以结果是 63s delay。</p>
 <blockquote>
+<ol>
+<li>由于 packet mark 的方式，当我们在第一次对 packet mark 0x4000/0x4000 并且进行 SNAT 之后，进入 VETH，经过 cni 插件出来之后，POSTROUTING 仍然会识别到这个包的 mark，并且进行二次 SNAT。</li>
+</ol>
+</blockquote>
+<hr>
+<p>checksum-offload 指定了内核不做校验和，交给网卡 / 硬件去做，但是使用 VXLAN 时，由于上面某些原因校验值是错的。导致 checksum 错误，所以会丢弃，TCP 不得不重传，然后因为 5 次重传耗时 63s「第六次重传取消 checksum」，所以结果是 63s delay。</p>
+<blockquote>
+<p><a href="https://github.com/projectcalico/calico/issues/3145">https://github.com/projectcalico/calico/issues/3145</a></p>
 <p>Linux’ TCP stack will sometimes/always attempt to send packets with an incorrect checksum, or that are far too large for the network link, with the result that the packet is rejected and TCP has to re-transmit. This slows down network throughput enormously.</p>
 </blockquote>
 <p>如下图，本级 checksum 一直 incorrect。</p>
@@ -376,9 +399,11 @@ curl 10.43.105.114:8080/sd/health
 <ul>
 <li>iptables <a href="https://www.digitalocean.com/community/tutorials/a-deep-dive-into-iptables-and-netfilter-architecture">https://www.digitalocean.com/community/tutorials/a-deep-dive-into-iptables-and-netfilter-architecture</a></li>
 <li>explaination for the same bug <a href="https://tech.xing.com/a-reason-for-unexplained-connection-timeouts-on-kubernetes-docker-abd041cf7e02">https://tech.xing.com/a-reason-for-unexplained-connection-timeouts-on-kubernetes-docker-abd041cf7e02</a></li>
-<li>linux bug <a href="https://github.com/torvalds/linux/blob/24de3d377539e384621c5b8f8f8d8d01852dddc8/net/netfilter/nf_nat_core.c#L290-L291">https://github.com/torvalds/linux/blob/24de3d377539e384621c5b8f8f8d8d01852dddc8/net/netfilter/nf_nat_core.c#L290-L291</a></li>
+<li>linux code <a href="https://github.com/torvalds/linux/blob/24de3d377539e384621c5b8f8f8d8d01852dddc8/net/netfilter/nf_nat_core.c#L290-L291">https://github.com/torvalds/linux/blob/24de3d377539e384621c5b8f8f8d8d01852dddc8/net/netfilter/nf_nat_core.c#L290-L291</a></li>
 <li><a href="https://github.com/weaveworks/weave/issues/1255#issuecomment-221820171">weaveworks/weave#1255 (comment)</a></li>
 <li>VXLAN <a href="https://community.mellanox.com/s/article/vxlan-considerations-for-connectx-3-pro">https://community.mellanox.com/s/article/vxlan-considerations-for-connectx-3-pro</a></li>
+<li>checksum-bug <a href="https://tech.vijayp.ca/linux-kernel-bug-delivers-corrupt-tcp-ip-data-to-mesos-kubernetes-docker-containers-4986f88f7a19">https://tech.vijayp.ca/linux-kernel-bug-delivers-corrupt-tcp-ip-data-to-mesos-kubernetes-docker-containers-4986f88f7a19</a></li>
+<li><a href="https://www.dynatrace.com/news/blog/detecting-network-errors-impact-on-services/">https://www.dynatrace.com/news/blog/detecting-network-errors-impact-on-services/</a></li>
 </ul>
 
     </div>
