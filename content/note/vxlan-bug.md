@@ -72,7 +72,7 @@ systemctl restart k3s
 
 ~~所以对我来说 更换为 host-gw 似乎并没有作用。~~
 
-因为使用的是阿里云的云企业网，并且使用进度 vpc，属于跨 vpc，host-gw 不能使用。因为阿里云在中间做了一些拦截，把使用 node ip 作为路由下一跳的包全都拦了。
+因为使用的是阿里云的云企业网，并且使用不同账号 vpc，属于跨 vpc，所以 host-gw 不能使用。因为阿里云在中间做了一些拦截，把使用 node ip 作为路由下一跳的包全都拦了。
 
 
 ## 3. 着手 service：检查 iptables 规则
@@ -247,7 +247,11 @@ iptables 中的 KUBE-MARK-MASQ 用作标记要不要 SNAT，POSTROUING 会做一
 
 上面这些原因是引起使用 VXLAN/VETH 时 incorrect checksum 的原因，并且是一起触发的。
 
-> 1. 由于 packet mark 的方式，当我们在第一次对 packet mark 0x4000/0x4000 并且进行 SNAT 之后，进入 VETH，经过 cni 插件出来之后，POSTROUTING 仍然会识别到这个包的 mark，并且进行二次 SNAT。
+1. 由于 packet mark 的方式，当我们在第一次对 packet mark 0x4000/0x4000 并且进行 SNAT 之后，进入 VETH，经过 cni 插件出来之后，POSTROUTING 仍然会识别到这个包的 mark，并且进行二次 SNAT。
+
+2. 并且因为 --random-fully SNAT 方式，source port 会改变，并且因为 kernel bug 不会进行第二次 check sum，所以最后的 checksum is incorrect，解决方案可以是禁止 double SNAT 所以不会有 bad checksum 的情况，或者是升级内核使得他会进行第二次 checksum。
+
+   kernel checksum bug [参考链接](https://tech.vijayp.ca/linux-kernel-bug-delivers-corrupt-tcp-ip-data-to-mesos-kubernetes-docker-containers-4986f88f7a19)
 
 ----------------------------------
 
