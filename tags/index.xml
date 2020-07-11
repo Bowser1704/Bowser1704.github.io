@@ -7,10 +7,37 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
     <copyright>This work is licensed under a CC BY-NC 4.0(署名-非商业性使用 4.0 国际) License.</copyright>
-    <lastBuildDate>Mon, 29 Jun 2020 10:18:22 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 01 Jul 2020 22:21:01 +0800</lastBuildDate>
     
 	<atom:link href="https://bowser1704.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>k3s</title>
+      <link>https://bowser1704.github.io/tags/k3s/</link>
+      <pubDate>Wed, 01 Jul 2020 22:21:01 +0800</pubDate>
+      
+      <guid>https://bowser1704.github.io/tags/k3s/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>monitoring</title>
+      <link>https://bowser1704.github.io/tags/monitoring/</link>
+      <pubDate>Wed, 01 Jul 2020 22:21:01 +0800</pubDate>
+      
+      <guid>https://bowser1704.github.io/tags/monitoring/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>prometheus</title>
+      <link>https://bowser1704.github.io/tags/prometheus/</link>
+      <pubDate>Wed, 01 Jul 2020 22:21:01 +0800</pubDate>
+      
+      <guid>https://bowser1704.github.io/tags/prometheus/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>iptables</title>
@@ -54,15 +81,6 @@
       <pubDate>Sat, 27 Jun 2020 13:21:45 +0800</pubDate>
       
       <guid>https://bowser1704.github.io/tags/flannel/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>k3s</title>
-      <link>https://bowser1704.github.io/tags/k3s/</link>
-      <pubDate>Sat, 27 Jun 2020 13:21:45 +0800</pubDate>
-      
-      <guid>https://bowser1704.github.io/tags/k3s/</guid>
       <description></description>
     </item>
     

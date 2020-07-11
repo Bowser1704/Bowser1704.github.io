@@ -24,7 +24,7 @@
 <meta itemprop="description" content="“国内环境在 k3s 内使用 Helm&rdquo;">
 <meta itemprop="datePublished" content="2020-06-25T10:11:19&#43;08:00" />
 <meta itemprop="dateModified" content="2020-06-25T10:11:19&#43;08:00" />
-<meta itemprop="wordCount" content="457">
+<meta itemprop="wordCount" content="506">
 
 
 
@@ -140,12 +140,17 @@
 NAME         SHORTNAMES   APIGROUP         NAMESPACED   KIND
 helmcharts                helm.cattle.io   true         HelmChart
 </code></pre></div><p>那么在这个 CRD 里面怎么使用国内镜像呢？</p>
+<blockquote>
+<p>HelmChart namespace 必须为 kube-system 因为 HelmChart 的 controller 只在 kube-system 里面。</p>
+<p>Keep in mind that <code>namespace</code> in your HelmChart resource metadata section should always be <code>kube-system</code>, because the K3s deploy controller is configured to watch this namespace for new HelmChart resources.</p>
+</blockquote>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">apiVersion</span>: helm.cattle.io/v1
 <span style="color:#66d9ef">kind</span>: HelmChart
 <span style="color:#66d9ef">metadata</span>:
   <span style="color:#66d9ef">name</span>: example-helmchart
   <span style="color:#66d9ef">namespace</span>: kube-system
 <span style="color:#66d9ef">spec</span>:
+  <span style="color:#66d9ef">helmVersion</span>: v3
   <span style="color:#66d9ef">chart</span>: test-helmchart
   <span style="color:#66d9ef">targetNamespace</span>: test-namespace
   <span style="color:#66d9ef">version</span>: <span style="color:#ae81ff">0.0.1</span> 
