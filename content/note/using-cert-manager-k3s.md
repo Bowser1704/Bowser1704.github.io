@@ -18,7 +18,7 @@ date: 2020-06-25T19:30:20+08:00
 
 ## 使用 cert-manager
 
-普通使用 Helm 安装。
+普通使用 Helm 安装。手动
 ```bash
 # step1 添加仓库
 # 使用 HelmChart 不需要手动添加仓库
@@ -28,7 +28,7 @@ $ helm repo add jetstack https://charts.jetstack.io && helm repo update
 $ kubectl create namespace cert-manager
 
 # step3 创建 CRD
-# Kubernetes 1.15+ yaml 文件在 [GitHub官方主页](https://github.com/jetstack/cert-manager) 下载
+# Kubernetes 1.15+ yaml 文件在 [GitHub 官方主页](https://github.com/jetstack/cert-manager) 下载
 #$ kubectl apply --validate=false -f cert-manager.crds.yaml
 $ kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v0.15.1/cert-manager.yaml
 
@@ -50,24 +50,24 @@ $ helm install \
   # --set installCRDs=true
 ```
 
-使用 k3s 提供的 HelmChart 安装 参考 [在 k3s 上使用 Helm](https://bowser1704.github.io/blog/20200625-helm-in-k3s/)
+使用 k3s 提供的 HelmChart 安装 参考 [在 k3s 上使用 Helm](https://bowser1704.github.io/note/20200625-helm-in-k3s/)
 ```yaml
 apiVersion: helm.cattle.io/v1
 kind: HelmChart
 metadata:
   name: cert-manager
-  namespace: cert-manager
+  namespace: kube-system
 spec:
 	helmVersion: v3
   chart: cert-manager
   targetNamespace: cert-manager
-  version: v0.15.1 
+  version: v0.15.1
   repo: https://charts.jetstack.io
 ```
 
 ### 安装完成之后配置
 
-1. 使用 ClusterIssuer，作用于整个集群。
+1. 使用 ClusterIssuer，作用于整个集群。Issuer 作用于某个 ns。
 
     ```yaml
     apiVersion: cert-manager.io/v1alpha2
@@ -87,9 +87,9 @@ spec:
            ingress:
              class: traefik
     ```
-    可以使用两种检测方式，一种为 `HTTP-01`、一种为 `DNS-01`，区别参考[Let’s Encrypt 验证方式](https://letsencrypt.org/zh-cn/docs/challenge-types/)。
+    可以使用两种检测方式，一种为 `HTTP-01`、一种为 `DNS-01`，区别参考 [Let’s Encrypt 验证方式](https://letsencrypt.org/zh-cn/docs/challenge-types/)。
 
-    如果使用 `DNS-01` 方式，因为原生不支持 AliDNS，所以可以使用 Alidns-[webhook](https://github.com/pragkent/alidns-webhook)。
+    如果使用 `DNS-01` 方式，因为原生不支持 AliDNS，所以可以使用 [Alidns-webhook](https://github.com/pragkent/alidns-webhook)。
 
 2. ClusterIssuer 创建成功之后，创建 Certificate，针对于特定命名空间的。
 
@@ -170,7 +170,7 @@ Error from server (InternalError): error when creating "cluster-issuer.yaml": In
 
 - https://github.com/rancher/k3s/issues/538
 
-- https://rancher.com/docs/k3s/latest/en/installation/network-options/ 
+- https://rancher.com/docs/k3s/latest/en/installation/network-options/
 
   可以通过修改 k3s.service 然后使用 `systemctl daemon-reload` restart k3s。
 
@@ -179,23 +179,23 @@ debug
 1. 检查 svc 和 endpoint。
 
    ```bash
-   # svc ip 
+   # svc ip
    [root@bowser1704 ~]# httpstat -k 10.43.247.15:443
    ^C
-   
+
    # endpoint or pod ip
    [root@bowser1704 ~]# httpstat -k 10.42.1.28:10250
-   
+
    Connected to 10.42.1.28:10250
-   
+
    HTTP/1.1 404 Not Found
    Content-Length: 19
    Content-Type: text/plain; charset=utf-8
    Date: Fri, 26 Jun 2020 07:08:51 GMT
    X-Content-Type-Options: nosniff
-   
+
    Body discarded
-   
+
      DNS Lookup   TCP Connection   TLS Handshake   Server Processing   Content Transfer
    [      0ms  |           0ms  |         44ms  |              0ms  |             0ms  ]
                |                |               |                   |                  |
@@ -214,18 +214,18 @@ debug
    [root@bowser1704 ~]# iptables-save | grep 10.43.247.15
    -A KUBE-SERVICES ! -s 10.42.0.0/16 -d 10.43.247.15/32 -p tcp -m comment --comment "cert-manager/cert-manager-webhook:https cluster IP" -m tcp --dport 443 -j KUBE-MARK-MASQ
    -A KUBE-SERVICES -d 10.43.247.15/32 -p tcp -m comment --comment "cert-manager/cert-manager-webhook:https cluster IP" -m tcp --dport 443 -j KUBE-SVC-ZUD4L6KQKCHD52W4
-   
+
    [root@bowser1704 ~]# iptables-save | grep KUBE-SVC-ZUD4L6KQKCHD52W4
    :KUBE-SVC-ZUD4L6KQKCHD52W4 - [0:0]
    -A KUBE-SERVICES -d 10.43.247.15/32 -p tcp -m comment --comment "cert-manager/cert-manager-webhook:https cluster IP" -m tcp --dport 443 -j KUBE-SVC-ZUD4L6KQKCHD52W4
    -A KUBE-SVC-ZUD4L6KQKCHD52W4 -j KUBE-SEP-MM5Y2SAJQYJV572E
-   
+
    [root@bowser1704 ~]# iptables-save | grep KUBE-SEP-MM5Y2SAJQYJV572E
    :KUBE-SEP-MM5Y2SAJQYJV572E - [0:0]
    -A KUBE-SEP-MM5Y2SAJQYJV572E -s 10.42.1.28/32 -j KUBE-MARK-MASQ
    -A KUBE-SEP-MM5Y2SAJQYJV572E -p tcp -m tcp -j DNAT --to-destination 10.42.1.28:10250
    -A KUBE-SVC-ZUD4L6KQKCHD52W4 -j KUBE-SEP-MM5Y2SAJQYJV572E
-   
+
    # 下面是 KUBE-MARK-MASQ 的作用。
    -A KUBE-MARK-MASQ -j MARK --set-xmark 0x4000/0x4000
    ```
@@ -239,14 +239,14 @@ debug
    NAME                   TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
    cert-manager           ClusterIP   10.43.157.248   <none>        9402/TCP   20h
    cert-manager-webhook   ClusterIP   10.43.247.15    <none>        443/TCP    20h
-   
+
    # can't access
    [root@bowser1704 cert-manager]# curl -k https://10.43.247.15:443
    ^C
-   
+
    # check node
    [root@bowser1704 cert-manager]# kubectl describe pods cert-manager-webhook-7c6c464d7b-vp44p -n cert-manage
-   
+
     ...
    Node:         foo1/172.19.145.208
    ...
@@ -258,19 +258,19 @@ debug
    # edit pod yaml
    nodeSelector:
     k3s.io/internal-ip: 172.16.219.51
-      
+
    [root@bowser1704 cert-manager]# kubectl describe pods cert-manager-webhook-7c6c464d7b-vp44p -n cert-manage
-   
+
    ...
    Node:         bowser1704/172.19.145.188
    ...
-      
+
    # accessing in master node
    [root@bowser1704 cert-manager]# curl -k https://10.43.247.15:443
    404 page not found
    ```
 
-   4. 提 [issue](https://github.com/rancher/k3s/issues/1958) 
+   4. 提 [issue](https://github.com/rancher/k3s/issues/1958)
 
 定位到问题 为 flannel 后端 vxlan 的问题。解决方案参考 [记录一次 vxlan Bug](https://bowser1704.github.io/blog/20200627-%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1-vxlan-bug/)
 

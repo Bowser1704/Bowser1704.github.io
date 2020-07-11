@@ -41,6 +41,10 @@ helmcharts                helm.cattle.io   true         HelmChart
 
 那么在这个 CRD 里面怎么使用国内镜像呢？
 
+> HelmChart namespace 必须为 kube-system 因为 HelmChart 的 controller 只在 kube-system 里面。
+>
+> Keep in mind that `namespace` in your HelmChart resource metadata section should always be `kube-system`, because the K3s deploy controller is configured to watch this namespace for new HelmChart resources.
+
 ```yaml
 apiVersion: helm.cattle.io/v1
 kind: HelmChart
@@ -48,6 +52,7 @@ metadata:
   name: example-helmchart
   namespace: kube-system
 spec:
+  helmVersion: v3
   chart: test-helmchart
   targetNamespace: test-namespace
   version: 0.0.1 
