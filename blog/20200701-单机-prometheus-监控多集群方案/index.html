@@ -24,7 +24,7 @@
 <meta itemprop="description" content="初始化：安装各种组件 Prometheus 和 Alertmanager 的安装都在官网 下载压缩包，手动下载下来解压。 # -C 指定目的目录 # * 代表版本，需要下载正确的系统版本。 tar xf prometheus-*.*.*.linux-amd64.tar.gz -C /opt/ tar xf alertmanager-*.*.*.linux-amd64.tar.gz">
 <meta itemprop="datePublished" content="2020-07-01T22:21:01&#43;08:00" />
 <meta itemprop="dateModified" content="2020-07-01T22:21:01&#43;08:00" />
-<meta itemprop="wordCount" content="3302">
+<meta itemprop="wordCount" content="3331">
 
 
 
@@ -132,6 +132,7 @@ tar xf prometheus-*.*.*.linux-amd64.tar.gz -C /opt/
 tar xf alertmanager-*.*.*.linux-amd64.tar.gz -C /opt/
 </code></pre></div><p>安装之后使用 systemd 来管理这几个服务。手写 service 放到 systemd 文件夹下面，我的目标是 <code>/usr/lib/systemd/system/</code> 。</p>
 <p>prometheus 可以热加载配置文件，如果需要通过 web API 重启，必须要加参数 <code>--web.enable-lifecycle</code>，不安全，不推荐这么做。我们使用 systemd 管理 service，可以直接用 restart 命令重启。</p>
+<p>注意我新建了两个配置文件，名字都为 config.yaml。</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-service" data-lang="service"><span style="color:#66d9ef">[Unit]</span>
 <span style="color:#a6e22e">Description</span><span style="color:#f92672">=</span><span style="color:#e6db74">Prometheus Server</span>
 <span style="color:#a6e22e">Wants</span><span style="color:#f92672">=</span><span style="color:#e6db74">network-online.target</span>
@@ -512,9 +513,9 @@ kubectl describe secret prometheus-token-cw4pd -n monitoring
     <span style="color:#66d9ef">labels</span>:
       <span style="color:#66d9ef">cluster</span>: stage
   - <span style="color:#66d9ef">targets</span>:
-     - product-ip:<span style="color:#ae81ff">6443</span>
-     <span style="color:#66d9ef">labels</span>:
-         <span style="color:#66d9ef">cluster</span>: product
+      - product-ip:<span style="color:#ae81ff">6443</span>
+      <span style="color:#66d9ef">labels</span>:
+          <span style="color:#66d9ef">cluster</span>: product
 </code></pre></div></li>
 <li>
 <p>每个集群都新建所有 job，这个比较简单，有了一个模版，改字段就可以了，我上面的 config 就是这样，如果是 product1 集群，这 Crtl+R 替换所有的 stage 为 product1。</p>

@@ -84,7 +84,7 @@
     <ul class="flex justify-end text-gray-800" itemprop="articleSection">
         
         <li class="pl-2 pr-0 md:pl-0 md:pr-2">
-            <a href="/categories/cloud-native" rel="category">cloud-native</a>
+            <a href="/categories/cloud-native" rel="category"><mark>cloud-native</mark></a>
         </li>
         
     </ul>
@@ -186,11 +186,13 @@
 </ul>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vim /etc/systemd/system/k3s.service
 </code></pre></div><ul>
-<li>修改的部分</li>
-</ul>
+<li>
+<p>修改的部分</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ExecStart<span style="color:#f92672">=</span>/usr/local/bin/k3s server --flannel-backend host-gw
-</code></pre></div><ul>
-<li>restart k3s</li>
+</code></pre></div></li>
+<li>
+<p>restart k3s</p>
+</li>
 </ul>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">systemctl daemon-reload
 systemctl restart k3s
