@@ -3,22 +3,42 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://bowser1704.github.io/blog/</loc>
-    <lastmod>2020-07-01T22:21:01+08:00</lastmod>
+    <loc>https://bowser1704.github.io/categories/</loc>
+    <lastmod>2020-08-03T16:55:07+08:00</lastmod>
   </url>
   
   <url>
-    <loc>https://bowser1704.github.io/categories/</loc>
-    <lastmod>2020-07-01T22:21:01+08:00</lastmod>
+    <loc>https://bowser1704.github.io/tags/ci/</loc>
+    <lastmod>2020-08-03T16:55:07+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://bowser1704.github.io/note/20200803-ci-%E5%AE%9E%E8%B7%B5/</loc>
+    <lastmod>2020-08-03T16:55:07+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://bowser1704.github.io/categories/cloud-native/</loc>
-    <lastmod>2020-07-01T22:21:01+08:00</lastmod>
+    <lastmod>2020-08-03T16:55:07+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://bowser1704.github.io/</loc>
+    <lastmod>2020-08-03T16:55:07+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://bowser1704.github.io/note/</loc>
+    <lastmod>2020-08-03T16:55:07+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://bowser1704.github.io/tags/</loc>
+    <lastmod>2020-08-03T16:55:07+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://bowser1704.github.io/blog/</loc>
     <lastmod>2020-07-01T22:21:01+08:00</lastmod>
   </url>
   
@@ -34,11 +54,6 @@
   
   <url>
     <loc>https://bowser1704.github.io/tags/prometheus/</loc>
-    <lastmod>2020-07-01T22:21:01+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://bowser1704.github.io/tags/</loc>
     <lastmod>2020-07-01T22:21:01+08:00</lastmod>
   </url>
   
@@ -64,11 +79,6 @@
   
   <url>
     <loc>https://bowser1704.github.io/categories/net/</loc>
-    <lastmod>2020-06-29T10:18:22+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://bowser1704.github.io/note/</loc>
     <lastmod>2020-06-29T10:18:22+08:00</lastmod>
   </url>
   

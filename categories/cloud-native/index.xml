@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
     <copyright>This work is licensed under a CC BY-NC 4.0(署名-非商业性使用 4.0 国际) License.</copyright>
-    <lastBuildDate>Wed, 01 Jul 2020 22:21:01 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 03 Aug 2020 16:55:07 +0800</lastBuildDate>
     
 	<atom:link href="https://bowser1704.github.io/categories/cloud-native/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>CI 实践</title>
+      <link>https://bowser1704.github.io/note/20200803-ci-%E5%AE%9E%E8%B7%B5/</link>
+      <pubDate>Mon, 03 Aug 2020 16:55:07 +0800</pubDate>
+      
+      <guid>https://bowser1704.github.io/note/20200803-ci-%E5%AE%9E%E8%B7%B5/</guid>
+      <description>CI Drone CI 我们使用 Drone 和 GitHub Actions 一起作为 CI/CD 工具， GitHub Actions 机器性能好，操作较为简单。 Drone 可定制程度高，拿到手之后想怎么做都可以。并且因为国内的网络环境，CD(</description>
+    </item>
     
     <item>
       <title>单机 Prometheus 监控多集群方案</title>

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><meta charset="utf-8">
+<meta name="HandheldFriendly" content="True">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="referrer" content="no-referrer">
+<meta name="renderer" content="webkit">
+<meta name="force-rendering" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta name="format-detection" content="telephone=no,email=no,address=no">
+<meta name="generator" content="Hugo 0.70.0" />
+
+
+<title>CI 实践 - Bowser</title>
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+<link href="https://fonts.googleapis.com/css?family=Noto+Serif+SC:400,700&display=swap&subset=chinese-simplified" rel="stylesheet" />
+<link rel="canonical" href="https://bowser1704.github.io/note/20200803-ci-%E5%AE%9E%E8%B7%B5/">
+<link rel="shortcut icon" href="/favicon.jpg">
+
+<meta itemprop="name" content="CI 实践">
+<meta itemprop="description" content="CI Drone CI 我们使用 Drone 和 GitHub Actions 一起作为 CI/CD 工具， GitHub Actions 机器性能好，操作较为简单。 Drone 可定制程度高，拿到手之后想怎么做都可以。并且因为国内的网络环境，CD(">
+<meta itemprop="datePublished" content="2020-08-03T16:55:07&#43;08:00" />
+<meta itemprop="dateModified" content="2020-08-03T16:55:07&#43;08:00" />
+<meta itemprop="wordCount" content="641">
+
+
+
+<meta itemprop="keywords" content="ci," />
+<meta property="og:title" content="CI 实践" />
+<meta property="og:description" content="CI Drone CI 我们使用 Drone 和 GitHub Actions 一起作为 CI/CD 工具， GitHub Actions 机器性能好，操作较为简单。 Drone 可定制程度高，拿到手之后想怎么做都可以。并且因为国内的网络环境，CD(" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://bowser1704.github.io/note/20200803-ci-%E5%AE%9E%E8%B7%B5/" />
+<meta property="article:published_time" content="2020-08-03T16:55:07+08:00" />
+<meta property="article:modified_time" content="2020-08-03T16:55:07+08:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="CI 实践"/>
+<meta name="twitter:description" content="CI Drone CI 我们使用 Drone 和 GitHub Actions 一起作为 CI/CD 工具， GitHub Actions 机器性能好，操作较为简单。 Drone 可定制程度高，拿到手之后想怎么做都可以。并且因为国内的网络环境，CD("/>
+<body class="font-sans">
+    <div class="flex flex-col md:flex-row md:w-4/5 mx-auto py-5 min-h-screen">
+<header
+    class="flex flex-col relative border-black border-b-4 md:border-b-0 md:border-r-2 pb-6 mx-4 md:mx-0 md:w-1/5 md:text-right md:pr-8 bg-white md:text-center">
+    <link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/vs.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
+    <div>
+        <h1 id="header_logo" class="text-3xl md:my-12 mt-4 md:mb-12"><a href="https://bowser1704.github.io">Bowser</a></h1>
+        <p class="font-thin italic">There is no dark side of the Moon. It&#39;s all dark, really.</p>
+    </div>
+    <input id="menu-check" type="checkbox" class="hidden" />
+    <label id="menu-label" for="menu-check"
+        class="absolute right-0 text-right md:hidden  inline-block py-4 h-12 cursor-pointer mt-10 text-xl text-gray-900">
+        <span class="icon close-icon">✕</span>
+        <span class="icon open-icon">☰</span>
+        <span class="text">MENU</span>
+    </label>
+    <nav id="menu" class="my-2 w-full md:flex-row-reverse hidden md:block">
+        <ul class="list-none pl-0 mx-auto justify-center  max-w-xs">
+            
+            
+            <li class="my-4 border-black text-center md:text-right border-b-2 md:border-none pb-1">
+                <a class="py-4 md:border-black md:border-b-2  md:pb-1" href="/blog/">博客</a>
+            </li>
+            
+            <li class="my-4 border-black text-center md:text-right border-b-2 md:border-none pb-1">
+                <a class="py-4 md:border-black md:border-b-2  md:pb-1" href="/note/">笔记</a>
+            </li>
+            
+            <li class="my-4 border-black text-center md:text-right border-b-2 md:border-none pb-1">
+                <a class="py-4 md:border-black md:border-b-2  md:pb-1" href="/about/">关于</a>
+            </li>
+            
+        </ul>
+    </nav>
+</header>
+<main class="flex-1 p-4 ">
+<article itemscope itemtype="http://schema.org/Article" class="max-w-3xl mx-auto leading-relaxed">
+    <header class="flex flex-col meta">
+<div class="flex flex-col md:flex-row justify-between ">
+    
+    <ul class="flex justify-end text-gray-800" itemprop="articleSection">
+        
+        <li class="pl-2 pr-0 md:pl-0 md:pr-2">
+            <a href="/categories/cloud-native" rel="category">cloud-native</a>
+        </li>
+        
+    </ul>
+    
+    
+    <ul class="flex justify-end text-gray-700">
+        
+        <li itemprop="keywords" class="pl-2 md:pl-4">
+            <a href="https://bowser1704.github.io/tags/ci/">#ci</a>
+        </li>
+        
+    </ul>
+    
+</div>
+<h1 itemprop="name" class="text-center text-4xl my-4 md:my-6">CI 实践</h1>
+        
+        <h3 class="text-center text-2xl">
+            
+            <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+                <span itemprop="name">Bowser</span>
+                
+                
+                 / 
+                <span itemprop="datePublished"
+                    content="2020-08-03">2020-08-03</span>
+                
+        </h3>
+        
+    </header>
+    <hr class="block my-10 mx-auto max-w-xs h-px border-t border-black">
+    <div itemprop="articleBody" class="content markdown">
+        <h2 id="ci">CI</h2>
+<ol>
+<li>
+<p>Drone CI</p>
+<p>我们使用 Drone 和 GitHub Actions 一起作为 CI/CD 工具，</p>
+<ul>
+<li>GitHub Actions 机器性能好，操作较为简单。</li>
+<li>Drone 可定制程度高，拿到手之后想怎么做都可以。并且因为国内的网络环境，CD(Continous Delpoy) 放在国内是比较正确的。</li>
+</ul>
+<p>镜像构建放在 Github Actions 实际上比较好，减轻了我们的机器压力。但是镜像只能放在国内 deploy 才方便。所以要确认一下 GitHub 对阿里云镜像仓库的连通性。</p>
+<p>通过 Drone CI 来构建是正确的。比较轻便。</p>
+</li>
+</ol>
+<h2 id="cd">CD</h2>
+<ol>
+<li>
+<p>Argo CD</p>
+<p>直接访问 Git 可以不使用 hook ，可以直接通过一个 git 地址「ssh or https」，以及账号密码访问到仓库。</p>
+<p>真正的作用是 部署服务到 kubernetes 但必须在集群内，使用了 CRD。实际上感觉过于冗余了。</p>
+<p>限制就是一定要把 Argo CD server 部署在 kubernetes 上。</p>
+<p>
+
+
+
+    <img class="mx-auto" alt="Argo CD Architecture" src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghltjcqshdj30kn0jo40k.jpg" />
+</p>
+<p>
+
+
+
+    <img class="mx-auto" alt="Argo cloud-native CI/CD Workflow" src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghmna3xsojj30sg0grjsp.jpg" />
+</p>
+</li>
+<li>
+<p>手写 yaml 部署。</p>
+</li>
+</ol>
+<p>木犀云：</p>
+<ul>
+<li></li>
+</ul>
+<p>为什么不使用 Helm 实现 CD pipeline。</p>
+<p>kruise</p>
+<p><a href="https://www.inovex.de/blog/spinnaker-vs-argo-cd-vs-tekton-vs-jenkins-x/">https://www.inovex.de/blog/spinnaker-vs-argo-cd-vs-tekton-vs-jenkins-x/</a></p>
+<p>Argo CD 的使用</p>
+<ol>
+<li>Argo CD 必须部署在 kubernetes 里面。「缺点之一」</li>
+<li>需要两个仓库 一个是代码仓库，一个是 deploy 仓库。
+<ol>
+<li>首先依旧使用 Drone CI 用于 build 以及修改 deploy 仓库，而 Argo CD 监控 deploy 仓库。</li>
+<li>当 Argo CD 感知到 Argo CD 仓库发生变化，就会做一些 deploy 工作。</li>
+</ol>
+</li>
+</ol>
+<p>Muxi App Engine (MAE):</p>
+<p>下面是需求</p>
+<ol>
+<li>
+<p>MKE (Muxi Kubernetes Engine) 能够在网站里面部署、回滚、向不同的机器部署、能够查看 pod 的 log。</p>
+</li>
+<li>
+<p>镜像构建服务，镜像构建基于 Drone CI，需要把它与整个 MAE 接入，需要接入阿里云镜像管理 API。</p>
+<p>有一些 1+2 的例子：</p>
+<ul>
+<li><a href="https://github.com/rancher/rio">https://github.com/rancher/rio</a></li>
+</ul>
+</li>
+<li>
+<p>服务器管理系统 「阿里云机器管理「ECS、RDS」，利用子账号、阿里云开放 API」，可以看到过期时间、地区、可用区，更进一步的也许可以直接通过这个来续费，并且来上报学生机。</p>
+</li>
+<li>
+<p>基于 Prometheus 数据的监控仪板。通过写 PromQL 查询需要的数据，然后前端渲染。</p>
+</li>
+</ol>
+<p>下面是注意的地方 ⚠️</p>
+<ol>
+<li>需要利用到 RBAC 对每个人的权限进行控制。</li>
+<li></li>
+</ol>
+
+    </div>
+</article>
+
+        </main>
+    </div><footer class="flex justify-center">
+    <div class="copyright mx-auto my-8">
+        <p>
+            © 2018-2020 <a href="https://github.com/Bowser1704">Bowser1704</a> - <strong><a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a></strong> - <strong>Power By Hugo | Theme By hugo-w2ng</strong>
+        </p>
+        
+    </div>
+</footer>
+
+
+
+<script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script></body>
+
+</html>
