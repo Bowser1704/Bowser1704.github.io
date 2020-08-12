@@ -4,8 +4,8 @@ disableMeta: true
 ---
 
 ## 关于我自己
-- 一个还在读本科的垃圾cser。
-- 邮箱：bowser1704@icloud.com
+- 一个还在读本科的垃圾 cser。
+- 邮箱：bowser1704@gmail.com
 
 ## 写作原则
 
