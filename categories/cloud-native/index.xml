@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
     <copyright>This work is licensed under a CC BY-NC 4.0(署名-非商业性使用 4.0 国际) License.</copyright>
-    <lastBuildDate>Mon, 03 Aug 2020 16:55:07 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 11 Aug 2020 23:37:44 +0800</lastBuildDate>
     
 	<atom:link href="https://bowser1704.github.io/categories/cloud-native/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>初谈 SDN</title>
+      <link>https://bowser1704.github.io/note/20200811-%E5%88%9D%E8%B0%88-sdn/</link>
+      <pubDate>Tue, 11 Aug 2020 23:37:44 +0800</pubDate>
+      
+      <guid>https://bowser1704.github.io/note/20200811-%E5%88%9D%E8%B0%88-sdn/</guid>
+      <description>谈一谈容器网络和云上网络。 Bridge VXLAN Docker default network Flannel 1. Bridge Bridge 也就是网桥「也可以说是二层交换机/switch」，是一个二层设备，对受到的包，Forwardin</description>
+    </item>
     
     <item>
       <title>CI 实践</title>
