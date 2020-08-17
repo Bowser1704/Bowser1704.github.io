@@ -3,7 +3,7 @@ title: "豆子峡谷黑苹果 5GHz WI-FI 无法使用 80 MHz"
 description: 豆子峡谷黑苹果网络问题。
 tags: [WI-FI, nuc]
 categories: [hardware]
-spotlight: true
+spotlight: false
 date: 2020-06-27T15:37:05+08:00
 ---
 
