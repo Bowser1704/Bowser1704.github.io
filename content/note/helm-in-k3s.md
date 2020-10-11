@@ -9,7 +9,7 @@ date: 2020-06-25T10:11:19+08:00
 
 ## 在 k3s 内使用 Helm（国内）
 
-### 1. 国内访问问题
+### 1. AppHub
 
 [Helm](https://helm.sh/) 可以类似理解为 ”K8s OS“ 的包管理工具，再以前没有这个工具我们要手动写 yaml/json 文件来自动化部署应用，但是 Helm 就类似于 Homebrew 一样，有人帮我们写好了配置文件（Chart），我们只需要一个命令，加自定义的参数就行了。
 
@@ -18,6 +18,8 @@ helm install stable/mysql --generate-name
 ```
 
 Helm 官方提供了一个 Chart 仓库，[Helm Hub](https://hub.helm.sh/)，但是众说周知的原因，无法访问。阿里云原生团队提供了镜像服务，同步所有 Charts 并且将其中的 `gcr.io` 等镜像地址全部替换为国内可以访问的镜像。
+
+阿里云 Helm charts 开源仓库。
 
 [AppHub](https://github.com/cloudnativeapp/charts)
 
@@ -59,9 +61,56 @@ spec:
   repo: https://apphub.aliyuncs.com
 ```
 
+### 3. 使用 release 文件
+
+[k3s helm](https://rancher.com/docs/k3s/latest/en/helm/)
+
+在路径 `/var/lib/rancher/k3s/server/static/charts/` 下的 `tgz` 格式文件可以通过 kubernetes API 访问。
+
+所以可以通过下载 tgz / helm chart release 文件解决「网络」问题。yaml 文件可以这么写：
+
+```yaml
+apiVersion: helm.cattle.io/v1
+kind: HelmChart
+metadata:
+  name: traefik
+  namespace: kube-system
+spec:
+  chart: https://%{KUBERNETES_API}%/static/charts/traefik-1.81.0.tgz
+  valuesContent: |-
+    rbac:
+      enabled: true
+    ssl:
+      enabled: true
+    metrics:
+      prometheus:
+        enabled: true
+    kubernetes:
+      ingressEndpoint:
+        useDefaultPublishedService: true
+    image: "rancher/library-traefik"
+    tolerations:
+      - key: "CriticalAddonsOnly"
+        operator: "Exists"
+      - key: "node-role.kubernetes.io/master"
+        operator: "Exists"
+        effect: "NoSchedule"
+```
+
+#### 如何下载 helm chart release
+
+安装 helm 到网络环境良好的机器，例如你的电脑。
+
+```bash
+helm pull loki/promtail
+# download promtail-x.x.x.tgz to your current directory.
+```
+
+然后上传到机器上，copy 到 `/var/lib/rancher/k3s/server/static/charts/`  目录下。
+
 -------
 
-参考文献。
+Ref:
 
 1. [Operator 与 Controller 的区别](https://octetz.com/docs/2019/2019-10-13-controllers-and-operators/)
 
