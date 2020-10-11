@@ -24,7 +24,7 @@
 <meta itemprop="description" content="CI Drone CI 我们使用 Drone 和 GitHub Actions 一起作为 CI/CD 工具， GitHub Actions 机器性能好，操作较为简单。 Drone 可定制程度高，拿到手之后想怎么做都可以。并且因为国内的网络环境，CD(">
 <meta itemprop="datePublished" content="2020-08-03T16:55:07+08:00" />
 <meta itemprop="dateModified" content="2020-08-03T16:55:07+08:00" />
-<meta itemprop="wordCount" content="641">
+<meta itemprop="wordCount" content="401">
 
 
 
@@ -163,37 +163,16 @@
 <p><a href="https://www.inovex.de/blog/spinnaker-vs-argo-cd-vs-tekton-vs-jenkins-x/">https://www.inovex.de/blog/spinnaker-vs-argo-cd-vs-tekton-vs-jenkins-x/</a></p>
 <p>Argo CD 的使用</p>
 <ol>
-<li>Argo CD 必须部署在 kubernetes 里面。「缺点之一」</li>
-<li>需要两个仓库 一个是代码仓库，一个是 deploy 仓库。
+<li>
+<p>Argo CD 必须部署在 kubernetes 里面。「缺点之一」</p>
+</li>
+<li>
+<p>需要两个仓库 一个是代码仓库，一个是 deploy 仓库。</p>
 <ol>
 <li>首先依旧使用 Drone CI 用于 build 以及修改 deploy 仓库，而 Argo CD 监控 deploy 仓库。</li>
 <li>当 Argo CD 感知到 Argo CD 仓库发生变化，就会做一些 deploy 工作。</li>
 </ol>
 </li>
-</ol>
-<p>Muxi App Engine (MAE):</p>
-<p>下面是需求</p>
-<ol>
-<li>
-<p>MKE (Muxi Kubernetes Engine) 能够在网站里面部署、回滚、向不同的机器部署、能够查看 pod 的 log。</p>
-</li>
-<li>
-<p>镜像构建服务，镜像构建基于 Drone CI，需要把它与整个 MAE 接入，需要接入阿里云镜像管理 API。</p>
-<p>有一些 1+2 的例子：</p>
-<ul>
-<li><a href="https://github.com/rancher/rio">https://github.com/rancher/rio</a></li>
-</ul>
-</li>
-<li>
-<p>服务器管理系统 「阿里云机器管理「ECS、RDS」，利用子账号、阿里云开放 API」，可以看到过期时间、地区、可用区，更进一步的也许可以直接通过这个来续费，并且来上报学生机。</p>
-</li>
-<li>
-<p>基于 Prometheus 数据的监控仪板。通过写 PromQL 查询需要的数据，然后前端渲染。</p>
-</li>
-</ol>
-<p>下面是注意的地方 ⚠️</p>
-<ol>
-<li>需要利用到 RBAC 对每个人的权限进行控制。</li>
 <li></li>
 </ol>
 

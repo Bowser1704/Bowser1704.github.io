@@ -24,7 +24,7 @@
 <meta itemprop="description" content="“国内环境在 k3s 内使用 Helm&rdquo;">
 <meta itemprop="datePublished" content="2020-06-25T10:11:19+08:00" />
 <meta itemprop="dateModified" content="2020-06-25T10:11:19+08:00" />
-<meta itemprop="wordCount" content="506">
+<meta itemprop="wordCount" content="671">
 
 
 
@@ -122,10 +122,11 @@
     <hr class="block my-10 mx-auto max-w-xs h-px border-t border-black">
     <div itemprop="articleBody" class="content markdown">
         <h2 id="在-k3s-内使用-helm国内">在 k3s 内使用 Helm（国内）</h2>
-<h3 id="1-国内访问问题">1. 国内访问问题</h3>
+<h3 id="1-apphub">1. AppHub</h3>
 <p><a href="https://helm.sh/">Helm</a> 可以类似理解为 ”K8s OS“ 的包管理工具，再以前没有这个工具我们要手动写 yaml/json 文件来自动化部署应用，但是 Helm 就类似于 Homebrew 一样，有人帮我们写好了配置文件（Chart），我们只需要一个命令，加自定义的参数就行了。</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">helm install stable/mysql --generate-name
 </code></pre></div><p>Helm 官方提供了一个 Chart 仓库，<a href="https://hub.helm.sh/">Helm Hub</a>，但是众说周知的原因，无法访问。阿里云原生团队提供了镜像服务，同步所有 Charts 并且将其中的 <code>gcr.io</code> 等镜像地址全部替换为国内可以访问的镜像。</p>
+<p>阿里云 Helm charts 开源仓库。</p>
 <p><a href="https://github.com/cloudnativeapp/charts">AppHub</a></p>
 <blockquote>
 <p>AppHub 的主要职责之一，是把所有 Helm 官方 Hub 托管的应用，都自动同步到国内，并自动将 Charts 文件中的 gcr.io 等有网络访问问题的 URL 替换成为稳定的国内镜像 URL。</p>
@@ -156,8 +157,42 @@ helmcharts                helm.cattle.io   true         HelmChart
   <span style="color:#66d9ef">targetNamespace</span>: test-namespace
   <span style="color:#66d9ef">version</span>: <span style="color:#ae81ff">0.0.1</span> 
   <span style="color:#66d9ef">repo</span>: https://apphub.aliyuncs.com
-</code></pre></div><hr>
-<p>参考文献。</p>
+</code></pre></div><h3 id="3-使用-release-文件">3. 使用 release 文件</h3>
+<p><a href="https://rancher.com/docs/k3s/latest/en/helm/">k3s helm</a></p>
+<p>在路径 <code>/var/lib/rancher/k3s/server/static/charts/</code> 下的 <code>tgz</code> 格式文件可以通过 kubernetes API 访问。</p>
+<p>所以可以通过下载 tgz / helm chart release 文件解决「网络」问题。yaml 文件可以这么写：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">apiVersion</span>: helm.cattle.io/v1
+<span style="color:#66d9ef">kind</span>: HelmChart
+<span style="color:#66d9ef">metadata</span>:
+  <span style="color:#66d9ef">name</span>: traefik
+  <span style="color:#66d9ef">namespace</span>: kube-system
+<span style="color:#66d9ef">spec</span>:
+  <span style="color:#66d9ef">chart</span>: https://%{KUBERNETES_API}%/static/charts/traefik<span style="color:#ae81ff">-1.81.0</span>.tgz
+  <span style="color:#66d9ef">valuesContent</span>: |<span style="color:#e6db74">-
+</span><span style="color:#e6db74">    rbac:</span>
+      <span style="color:#66d9ef">enabled</span>: <span style="color:#66d9ef">true</span>
+    <span style="color:#66d9ef">ssl</span>:
+      <span style="color:#66d9ef">enabled</span>: <span style="color:#66d9ef">true</span>
+    <span style="color:#66d9ef">metrics</span>:
+      <span style="color:#66d9ef">prometheus</span>:
+        <span style="color:#66d9ef">enabled</span>: <span style="color:#66d9ef">true</span>
+    <span style="color:#66d9ef">kubernetes</span>:
+      <span style="color:#66d9ef">ingressEndpoint</span>:
+        <span style="color:#66d9ef">useDefaultPublishedService</span>: <span style="color:#66d9ef">true</span>
+    <span style="color:#66d9ef">image</span>: <span style="color:#e6db74">&#34;rancher/library-traefik&#34;</span>
+    <span style="color:#66d9ef">tolerations</span>:
+      - <span style="color:#66d9ef">key</span>: <span style="color:#e6db74">&#34;CriticalAddonsOnly&#34;</span>
+        <span style="color:#66d9ef">operator</span>: <span style="color:#e6db74">&#34;Exists&#34;</span>
+      - <span style="color:#66d9ef">key</span>: <span style="color:#e6db74">&#34;node-role.kubernetes.io/master&#34;</span>
+        <span style="color:#66d9ef">operator</span>: <span style="color:#e6db74">&#34;Exists&#34;</span>
+        <span style="color:#66d9ef">effect</span>: <span style="color:#e6db74">&#34;NoSchedule&#34;</span>
+</code></pre></div><h4 id="如何下载-helm-chart-release">如何下载 helm chart release</h4>
+<p>安装 helm 到网络环境良好的机器，例如你的电脑。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">helm pull loki/promtail
+<span style="color:#75715e"># download promtail-x.x.x.tgz to your current directory.</span>
+</code></pre></div><p>然后上传到机器上，copy 到 <code>/var/lib/rancher/k3s/server/static/charts/</code>  目录下。</p>
+<hr>
+<p>Ref:</p>
 <ol>
 <li>
 <p><a href="https://octetz.com/docs/2019/2019-10-13-controllers-and-operators/">Operator 与 Controller 的区别</a></p>
