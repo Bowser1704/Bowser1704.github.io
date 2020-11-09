@@ -1,69 +1,85 @@
-baseURL = "https://bowser1704.github.io"
-languageCode = "zh-CN"
-title = "Bowser"
-theme = "hugo-w2ng"
-# pygmentsStyle = "github"
-# pygmentsCodeFences = true
-# pygmentsUseClasses = true
-highlightjs = true
-hasCJKLanguage = true
-enableEmoji = true
-copyright = "This work is licensed under a CC BY-NC 4.0(署名-非商业性使用 4.0 国际) License."
+baseURL = "https://bowser1704.github.io/"
+languageCode = "en-us"
+defaultContentLanguage = "en"
+title = "Bowser's blog"
+theme = "hermit"
+# enableGitInfo = true
+pygmentsCodefences  = true
+pygmentsUseClasses  = true
+hasCJKLanguage = true  # If Chinese/Japanese/Korean is your main content language, enable this to make wordCount works right.
+rssLimit = 10  # Maximum number of items in the RSS feed.
+copyright = "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License." # This message is only used by the RSS template.
+enableEmoji = true  # Shorthand emojis in content files - https://gohugo.io/functions/emojify/
+# googleAnalytics = "UA-123-45"
+# disqusShortname = "yourdiscussshortname"
 
 [author]
-name = "Bowser"
+  name = "Bowser"
 
+[blackfriday]
+  # hrefTargetBlank = true
+  # noreferrerLinks = true
+  # nofollowLinks = true
+
+[taxonomies]
+  tag = "tags"
+  # Categories are disabled by default.
 
 [params]
-description = "Bowser's blog"
-slogan = "There is no dark side of the Moon. It's all dark, really."
-Footer = "© 2018-2020 [Bowser1704](https://github.com/Bowser1704) - **[CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/)** - **Power By Hugo | Theme By hugo-w2ng**"
-HomeDesc = "**[博客](/blog/) 和 [笔记](/note/)中还有很多文章✨**"
-AuthorName = "Bowser"
-Favicon = "/favicon.jpg"
-fontsLink = "https://fonts.googleapis.com/css?family=Noto+Serif+SC:400,700&display=swap&subset=chinese-simplified"
+  dateform        = "Jan 2, 2006"
+  dateformShort   = "Jan 2"
+  dateformNum     = "2006-01-02"
+  dateformNumTime = "2006-01-02 15:04 -0700"
 
-[permalinks]
-blog = "/blog/:year:month:day-:title/"
-note = "/note/:year:month:day-:title/"
+  # Metadata mostly used in document's head
+  # description = ""
+  # images = [""]
+  themeColor = "#494f5c"
 
-[params.CDN]
-enable = false
-# Host must NOT end with `/`
+  homeSubtitle = "Echoes from distant lands"
+  footerCopyright = ' &#183; <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a>'
+  # bgImg = ""  # Homepage background-image URL
 
-[params.comments]
-enable = false
+  # Prefix of link to the git commit detail page. GitInfo must be enabled.
+  # gitUrl = "https://github.com/username/repository/commit/"
 
-[params.comments.isso]
-# Host = "https://c.jinxiapu.cn/"
+  # Toggling this option needs to rebuild SCSS, requires Hugo extended version
+  justifyContent = false  # Set "text-align: justify" to `.content`.
 
-[[menu.main]]
-    name = "博客"
-    url = "/blog/"
-    weight = 1
-[[menu.main]]
-    name = "笔记"
-    url = "/note/"
-    weight = 2
-[[menu.main]]
-    name = "关于"
-    url = "/about/"
-    weight = 3
+  relatedPosts = false  # Add a related content section to all single posts page
 
-# [markup]
-#   [markup.goldmark]
-#     [markup.goldmark.extensions]
-#       definitionList = true
-#       footnote = true
-#       linkify = true
-#       strikethrough = true
-#       table = true
-#       taskList = true
-#       typographer = true
-#     [markup.goldmark.parser]
-#       attribute = true
-#       autoHeadingID = true
-#     [markup.goldmark.renderer]
-#       hardWraps = false
-#       unsafe = true
-#       xHTML = false
+  code_copy_button = true # Turn on/off the code-copy-button for code-fields
+  
+  # Add custom css
+  # customCSS = ["css/foo.css", "css/bar.css"]
+
+  # Social Icons
+  # Check https://github.com/Track3/hermit#social-icons for more info.
+  [[params.social]]
+    name = "email"
+    url = "bowser1704@gmail.com"
+  
+  [[params.social]]
+    name = "telegram"
+    url = "Bowser1704"
+  
+  [[params.social]]
+    name = "github"
+    url = "https://github.com/Bowser1704"
+
+[menu]
+
+  [[menu.main]]
+    name = "Posts"
+    url = "posts/"
+    weight = 10
+  
+  [[menu.main]]
+    name = "Note"
+    url = "note/"
+    weight = 20
+
+  [[menu.main]]
+    name = "About"
+    url = "about/"
+    weight = 30
