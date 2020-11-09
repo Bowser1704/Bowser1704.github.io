@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Network-Programming on Bowser</title>
+    <title>Network-Programming on Bowser&#39;s blog</title>
     <link>https://bowser1704.github.io/tags/network-programming/</link>
-    <description>Recent content in Network-Programming on Bowser</description>
+    <description>Recent content in Network-Programming on Bowser&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>zh-CN</language>
-    <copyright>This work is licensed under a CC BY-NC 4.0(署名-非商业性使用 4.0 国际) License.</copyright>
+    <language>en-us</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
     <lastBuildDate>Wed, 13 Nov 2019 21:30:14 +0800</lastBuildDate>
     
 	<atom:link href="https://bowser1704.github.io/tags/network-programming/index.xml" rel="self" type="application/rss+xml" />
@@ -14,10 +14,10 @@
     
     <item>
       <title>csapp Chapter11 网络编程</title>
-      <link>https://bowser1704.github.io/note/20191113-csapp-chapter11-%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/</link>
+      <link>https://bowser1704.github.io/note/csappchapter11/</link>
       <pubDate>Wed, 13 Nov 2019 21:30:14 +0800</pubDate>
       
-      <guid>https://bowser1704.github.io/note/20191113-csapp-chapter11-%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/</guid>
+      <guid>https://bowser1704.github.io/note/csappchapter11/</guid>
       <description>主要记录一下socket相关内容，网络协议不多做描述。 下图是基本的步骤图 getaddrinfo 一句话：获取套接字地址，从url，也就是dns获取真正的ip地址，</description>
     </item>
     

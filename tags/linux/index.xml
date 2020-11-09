@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Linux on Bowser</title>
+    <title>Linux on Bowser&#39;s blog</title>
     <link>https://bowser1704.github.io/tags/linux/</link>
-    <description>Recent content in Linux on Bowser</description>
+    <description>Recent content in Linux on Bowser&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>zh-CN</language>
-    <copyright>This work is licensed under a CC BY-NC 4.0(署名-非商业性使用 4.0 国际) License.</copyright>
+    <language>en-us</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
     <lastBuildDate>Mon, 29 Jun 2020 10:18:22 +0800</lastBuildDate>
     
 	<atom:link href="https://bowser1704.github.io/tags/linux/index.xml" rel="self" type="application/rss+xml" />
@@ -14,19 +14,19 @@
     
     <item>
       <title>iptables 的一些学习总结。</title>
-      <link>https://bowser1704.github.io/note/20200629-iptables-%E7%9A%84%E4%B8%80%E4%BA%9B%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/</link>
+      <link>https://bowser1704.github.io/note/iptables/</link>
       <pubDate>Mon, 29 Jun 2020 10:18:22 +0800</pubDate>
       
-      <guid>https://bowser1704.github.io/note/20200629-iptables-%E7%9A%84%E4%B8%80%E4%BA%9B%E5%AD%A6%E4%B9%A0%E6%80%BB%E7%BB%93/</guid>
+      <guid>https://bowser1704.github.io/note/iptables/</guid>
       <description>iptables 的一些学习笔记。 netfilter 有 几个hook，分别有不同的功能。 PREROUTING: Triggered by the NF_IP_PRE_ROUTING hook. INPUT: Triggered by the NF_IP_LOCAL_IN hook. FORWARD: Triggered by the NF_IP_FORWARD hook. OUTPUT: Triggered by the NF_IP_LOCAL_OUT hook. POSTROUTING: Triggered by the NF_IP_POST_ROUTING hook. Tables↓/Chain</description>
     </item>
     
     <item>
       <title>return与exit的不同</title>
-      <link>https://bowser1704.github.io/note/20191117-return%E4%B8%8Eexit%E7%9A%84%E4%B8%8D%E5%90%8C/</link>
+      <link>https://bowser1704.github.io/note/exec/</link>
       <pubDate>Sun, 17 Nov 2019 11:23:47 +0800</pubDate>
       
-      <guid>https://bowser1704.github.io/note/20191117-return%E4%B8%8Eexit%E7%9A%84%E4%B8%8D%E5%90%8C/</guid>
+      <guid>https://bowser1704.github.io/note/exec/</guid>
       <description>首先问题就是有时候我们返回用return，有时候是exit是什么区别呢？ 首先明确函数执行 我们直接运行某些脚本，或者是``sh x.sh`，这背</description>
     </item>
     

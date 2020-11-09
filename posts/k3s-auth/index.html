@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="theme-color" content="#494f5c">
+	<meta name="msapplication-TileColor" content="#494f5c">
+<meta itemprop="name" content="k3s authentication certificate">
+<meta itemprop="description" content="k3s authentication client certificate 也是一种认证方式 token username and password certificate 在 k8s 的世界里面有两种证书，一种是 client certificate 用于认证，一种是 server certificate 用于 TLS。 用于认证的就是 kubeconfig 文件里面的 client-certificate-data 和 client-key-data apiVersion:v1clusters:- cluster:certificate-authority-data:DATA&#43;OMITTEDserver:https://kubernetes.docker.internal:6443name:docker-desktopcontexts:- context:cluster:docker-desktopuser:docker-desktopname:docker-desktop-">
+<meta itemprop="datePublished" content="2020-11-08T22:18:18+08:00" />
+<meta itemprop="dateModified" content="2020-11-08T22:18:18+08:00" />
+<meta itemprop="wordCount" content="472">
+
+
+
+<meta itemprop="keywords" content="k3s," />
+<meta property="og:title" content="k3s authentication certificate" />
+<meta property="og:description" content="k3s authentication client certificate 也是一种认证方式 token username and password certificate 在 k8s 的世界里面有两种证书，一种是 client certificate 用于认证，一种是 server certificate 用于 TLS。 用于认证的就是 kubeconfig 文件里面的 client-certificate-data 和 client-key-data apiVersion:v1clusters:- cluster:certificate-authority-data:DATA&#43;OMITTEDserver:https://kubernetes.docker.internal:6443name:docker-desktopcontexts:- context:cluster:docker-desktopuser:docker-desktopname:docker-desktop-" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://bowser1704.github.io/posts/k3s-auth/" />
+<meta property="article:published_time" content="2020-11-08T22:18:18+08:00" />
+<meta property="article:modified_time" content="2020-11-08T22:18:18+08:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="k3s authentication certificate"/>
+<meta name="twitter:description" content="k3s authentication client certificate 也是一种认证方式 token username and password certificate 在 k8s 的世界里面有两种证书，一种是 client certificate 用于认证，一种是 server certificate 用于 TLS。 用于认证的就是 kubeconfig 文件里面的 client-certificate-data 和 client-key-data apiVersion:v1clusters:- cluster:certificate-authority-data:DATA&#43;OMITTEDserver:https://kubernetes.docker.internal:6443name:docker-desktopcontexts:- context:cluster:docker-desktopuser:docker-desktopname:docker-desktop-"/>
+
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
+	<link rel="shortcut icon" href="/favicon.ico">
+
+	<title>k3s authentication certificate</title>
+	<link rel="stylesheet" href="https://bowser1704.github.io/css/style.min.eac77496566fd7d5768fd650ddb0b2b181ca6a2d7c5fdd6fe6b8ba4bf47e566f.css" integrity="sha256-6sd0llZv19V2j9ZQ3bCysYHKai18X91v5ri6S/R+Vm8=" crossorigin="anonymous">
+	
+</head>
+
+<body id="page">
+	
+	<header id="site-header" class="animated slideInUp">
+		<div class="hdr-wrapper section-inner">
+			<div class="hdr-left">
+				<div class="site-branding">
+					<a href="https://bowser1704.github.io/">Bowser&#39;s blog</a>
+				</div>
+				<nav class="site-nav hide-in-mobile">
+					
+				<a href="https://bowser1704.github.io/posts/">Posts</a>
+				<a href="https://bowser1704.github.io/note/">Note</a>
+				<a href="https://bowser1704.github.io/about/">About</a>
+
+				</nav>
+			</div>
+			<div class="hdr-right hdr-icons">
+				<span class="hdr-social hide-in-mobile"><a href="bowser1704@gmail.com" target="_blank" rel="noopener me" title="Email"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg></a><a href="Bowser1704" target="_blank" rel="noopener me" title="Telegram"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.198 2.433a2.242 2.242 0 0 0-1.022.215l-8.609 3.33c-2.068.8-4.133 1.598-5.724 2.21a405.15 405.15 0 0 1-2.849 1.09c-.42.147-.99.332-1.473.901-.728.968.193 1.798.919 2.286 1.61.516 3.275 1.009 4.654 1.472.509 1.793.997 3.592 1.48 5.388.16.36.506.494.864.498l-.002.018s.281.028.555-.038a2.1 2.1 0 0 0 .933-.517c.345-.324 1.28-1.244 1.811-1.764l3.999 2.952.032.018s.442.311 1.09.355c.324.022.75-.04 1.116-.308.37-.27.613-.702.728-1.196.342-1.492 2.61-12.285 2.997-14.072l-.01.042c.27-1.006.17-1.928-.455-2.474a1.654 1.654 0 0 0-1.034-.407z"/></svg></a><a href="https://github.com/Bowser1704" target="_blank" rel="noopener me" title="Github"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a></span><button id="menu-btn" class="hdr-btn" title="Menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+			</div>
+		</div>
+	</header>
+	<div id="mobile-menu" class="animated fast">
+		<ul>
+			<li><a href="https://bowser1704.github.io/posts/">Posts</a></li>
+			<li><a href="https://bowser1704.github.io/note/">Note</a></li>
+			<li><a href="https://bowser1704.github.io/about/">About</a></li>
+		</ul>
+	</div>
+
+
+	<main class="site-main section-inner animated fadeIn faster">
+		<article class="thin">
+			<header class="post-header">
+				<div class="post-meta"><span>Nov 8, 2020</span></div>
+				<h1>k3s authentication certificate</h1>
+			</header>
+			<div class="content">
+				<h2 id="k3s-authentication">k3s authentication<a href="#k3s-authentication" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<ul>
+<li>client certificate 也是一种认证方式</li>
+<li>token</li>
+<li>username and password</li>
+</ul>
+<h2 id="certificate">certificate<a href="#certificate" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p>在 k8s 的世界里面有两种证书，一种是 client certificate 用于认证，一种是 server certificate 用于 TLS。</p>
+<p>用于认证的就是 <code>kubeconfig</code> 文件里面的 <code>client-certificate-data </code> 和 <code>client-key-data</code></p>
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>v1<span class="w">
+</span><span class="w"></span><span class="k">clusters</span><span class="p">:</span><span class="w">
+</span><span class="w"></span>- <span class="k">cluster</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="k">certificate-authority-data</span><span class="p">:</span><span class="w"> </span>DATA+OMITTED<span class="w">
+</span><span class="w">    </span><span class="k">server</span><span class="p">:</span><span class="w"> </span>https<span class="p">:</span>//kubernetes.docker.internal<span class="p">:</span><span class="m">6443</span><span class="w">
+</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>docker-desktop<span class="w">
+</span><span class="w"></span><span class="k">contexts</span><span class="p">:</span><span class="w">
+</span><span class="w"></span>- <span class="k">context</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="k">cluster</span><span class="p">:</span><span class="w"> </span>docker-desktop<span class="w">
+</span><span class="w">    </span><span class="k">user</span><span class="p">:</span><span class="w"> </span>docker-desktop<span class="w">
+</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>docker-desktop<span class="w">
+</span><span class="w"></span>- <span class="k">context</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="k">cluster</span><span class="p">:</span><span class="w"> </span>docker-desktop<span class="w">
+</span><span class="w">    </span><span class="k">user</span><span class="p">:</span><span class="w"> </span>docker-desktop<span class="w">
+</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>docker-for-desktop<span class="w">
+</span><span class="w"></span><span class="k">current-context</span><span class="p">:</span><span class="w"> </span>docker-desktop<span class="w">
+</span><span class="w"></span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>Config<span class="w">
+</span><span class="w"></span><span class="k">preferences</span><span class="p">:</span><span class="w"> </span>{}<span class="w">
+</span><span class="w"></span><span class="k">users</span><span class="p">:</span><span class="w">
+</span><span class="w"></span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>docker-desktop<span class="w">
+</span><span class="w">  </span><span class="k">user</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="k">client-certificate-data</span><span class="p">:</span><span class="w"> </span>REDACTED<span class="w">
+</span><span class="w">    </span><span class="k">client-key-data</span><span class="p">:</span><span class="w"> </span>REDACTED<span class="w">
+</span></code></pre></div><ul>
+<li>
+<p><code>client-certificate-data </code></p>
+<p>证书文件，里面包含 public key 和 signature，在 k3s 中由 client-ca 签发。</p>
+</li>
+<li>
+<p><code>client-key-data</code></p>
+<p>上面 public key 的 private key，client certificate 这种认证方式所需要的。</p>
+</li>
+<li>
+<p><code>certificate-authority-data</code></p>
+<p>这是 ca.crt 也就是 ca 的根证书，在 k3s 中这个是 server-ca 签发。也就是 server-ca 的证书。</p>
+</li>
+</ul>
+<blockquote>
+<p>k3s 中分了两个 ca，一个是 server-ca，一个是 client-ca，这不是必须的，可以只有一个 ca 签发所有证书。</p>
+</blockquote>
+<h3 id="tls-验证">TLS 验证<a href="#tls-验证" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
+<p>在 k3s 中，有两个证书用于 HTTPS 验证，</p>
+<ul>
+<li>
+<p><code>serving-kube-apiserver.crt</code></p>
+<p><code>/var/lib/rancher/k3s/server/tls</code>  中的 <code>serving-kube-apiserver.crt</code> 这个用于集群内部组件认证。</p>
+<p>这个证书当我们重启机器的时候 k3s 会有一个 rotation。</p>
+</li>
+<li>
+<p><code>k3s-serving</code></p>
+<p>kube-system namespace 下面的 secret <code>k3s-serving</code>，用于外部访问，例如 kubectl，或者 curl 之类的。</p>
+<p>这个证书不会自动更新，所以可能集群内部没挂，但是你不能通过 ca.crt 访问他。</p>
+<p>经过检验，在 pod 内部访问依旧是返回的这个 cert。</p>
+</li>
+</ul>
+<p>参考 issue <a href="https://github.com/rancher/k3s/pull/1855">https://github.com/rancher/k3s/pull/1855</a></p>
+<h3 id="serviceaccount">serviceaccount<a href="#serviceaccount" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
+<p>在 k3s 的 serviceaccout 中，默认的 secret 也就是 xxxx-token-xxx，里面的信息有三部分。</p>
+<ul>
+<li>ca.crt 也就是 server-ca.crt 用于 TLS 验证，也就是一般我们系统内置的根证书。</li>
+<li>token 就是认证信息</li>
+<li>namespace  也就是这个 sa 的 ns。</li>
+</ul>
+
+			</div>
+			<hr class="post-end">
+			<footer class="post-info">
+				<p>
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="https://bowser1704.github.io/tags/k3s">k3s</a></span>
+				</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>472 Words</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2020-11-08 22:18 &#43;0800</p>
+			</footer>
+		</article>
+		<div class="post-nav thin">
+			<a class="prev-post" href="https://bowser1704.github.io/posts/time/">
+				<span class="post-nav-label">Older&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span><br><span>Time</span>
+			</a>
+		</div>
+		<div id="comments" class="thin">
+</div>
+	</main>
+
+	<footer id="site-footer" class="section-inner thin animated fadeIn faster">
+		<p>&copy; 2020 <a href="https://bowser1704.github.io/">Bowser</a> &#183; <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a></p>
+		<p>
+			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a> &#183; <a href="https://bowser1704.github.io/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
+		</p>
+	</footer>
+
+
+
+	<script src="https://bowser1704.github.io/js/bundle.min.4a9a0ac3d2217822c7865b4161e6c2a71de1d70492264337755427898dd718f6.js" integrity="sha256-SpoKw9IheCLHhltBYebCpx3h1wSSJkM3dVQniY3XGPY=" crossorigin="anonymous"></script>
+	
+
+</body>
+
+</html>

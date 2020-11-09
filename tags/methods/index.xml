@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>methods on Bowser</title>
+    <title>methods on Bowser&#39;s blog</title>
     <link>https://bowser1704.github.io/tags/methods/</link>
-    <description>Recent content in methods on Bowser</description>
+    <description>Recent content in methods on Bowser&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>zh-CN</language>
-    <copyright>This work is licensed under a CC BY-NC 4.0(署名-非商业性使用 4.0 国际) License.</copyright>
+    <language>en-us</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
     <lastBuildDate>Thu, 31 Oct 2019 23:57:33 +0800</lastBuildDate>
     
 	<atom:link href="https://bowser1704.github.io/tags/methods/index.xml" rel="self" type="application/rss+xml" />
@@ -14,10 +14,10 @@
     
     <item>
       <title>短链接的实现</title>
-      <link>https://bowser1704.github.io/note/20191031-%E7%9F%AD%E9%93%BE%E6%8E%A5%E7%9A%84%E5%AE%9E%E7%8E%B0/</link>
+      <link>https://bowser1704.github.io/note/shorturl/</link>
       <pubDate>Thu, 31 Oct 2019 23:57:33 +0800</pubDate>
       
-      <guid>https://bowser1704.github.io/note/20191031-%E7%9F%AD%E9%93%BE%E6%8E%A5%E7%9A%84%E5%AE%9E%E7%8E%B0/</guid>
+      <guid>https://bowser1704.github.io/note/shorturl/</guid>
       <description>什么是短链接 就是你经常在手机短信，或者微博上看到的 URL，都是很短的并且像 t.cn 这种开头的，限制字数，短信发送按字数收费，微博限制回复长度等等。</description>
     </item>
     

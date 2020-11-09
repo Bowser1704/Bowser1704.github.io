@@ -1,125 +1,92 @@
 <!DOCTYPE html>
-<html lang="zh-CN"><meta charset="utf-8">
-<meta name="HandheldFriendly" content="True">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="referrer" content="no-referrer">
-<meta name="renderer" content="webkit">
-<meta name="force-rendering" content="webkit">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta name="format-detection" content="telephone=no,email=no,address=no">
-<meta name="generator" content="Hugo 0.74.3" />
+<html lang="en-us">
 
-
-<title>nginx - Bowser</title>
-
-
-<link rel="stylesheet" href="/css/style.css">
-
-<link href="https://fonts.googleapis.com/css?family=Noto+Serif+SC:400,700&display=swap&subset=chinese-simplified" rel="stylesheet" />
-<link rel="canonical" href="https://bowser1704.github.io/tags/nginx/">
-<link rel="shortcut icon" href="/favicon.jpg">
-
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="theme-color" content="#494f5c">
+	<meta name="msapplication-TileColor" content="#494f5c">
 <meta itemprop="name" content="nginx">
-<meta itemprop="description" content="Bowser&#39;s blog">
-
+<meta itemprop="description" content="">
 <meta property="og:title" content="nginx" />
-<meta property="og:description" content="Bowser&#39;s blog" />
+<meta property="og:description" content="" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://bowser1704.github.io/tags/nginx/" />
 <meta property="og:updated_time" content="2019-11-01T14:50:23+08:00" />
-
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="nginx"/>
-<meta name="twitter:description" content="Bowser&#39;s blog"/>
-<body class="font-sans">
-    <div class="flex flex-col md:flex-row md:w-4/5 mx-auto py-5 min-h-screen">
-<header
-    class="flex flex-col relative border-black border-b-4 md:border-b-0 md:border-r-2 pb-6 mx-4 md:mx-0 md:w-1/5 md:text-right md:pr-8 bg-white md:text-center">
-    <link rel="stylesheet"
-      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/vs.min.css">
-<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
-    <div>
-        <h1 id="header_logo" class="text-3xl md:my-12 mt-4 md:mb-12"><a href="https://bowser1704.github.io">Bowser</a></h1>
-        <p class="font-thin italic">There is no dark side of the Moon. It&#39;s all dark, really.</p>
-    </div>
-    <input id="menu-check" type="checkbox" class="hidden" />
-    <label id="menu-label" for="menu-check"
-        class="absolute right-0 text-right md:hidden  inline-block py-4 h-12 cursor-pointer mt-10 text-xl text-gray-900">
-        <span class="icon close-icon">✕</span>
-        <span class="icon open-icon">☰</span>
-        <span class="text">MENU</span>
-    </label>
-    <nav id="menu" class="my-2 w-full md:flex-row-reverse hidden md:block">
-        <ul class="list-none pl-0 mx-auto justify-center  max-w-xs">
-            
-            
-            <li class="my-4 border-black text-center md:text-right border-b-2 md:border-none pb-1">
-                <a class="py-4 md:border-black md:border-b-2  md:pb-1" href="/blog/">博客</a>
-            </li>
-            
-            <li class="my-4 border-black text-center md:text-right border-b-2 md:border-none pb-1">
-                <a class="py-4 md:border-black md:border-b-2  md:pb-1" href="/note/">笔记</a>
-            </li>
-            
-            <li class="my-4 border-black text-center md:text-right border-b-2 md:border-none pb-1">
-                <a class="py-4 md:border-black md:border-b-2  md:pb-1" href="/about/">关于</a>
-            </li>
-            
-        </ul>
-    </nav>
-</header>
-<main class="flex-1 p-4 ">
-<div class="max-w-3xl mx-auto leading-relaxed my-6">
-    <div class="markdown mb-12">
-        
-    </div>
-        
-        <article itemscope itemtype="http://schema.org/Article" class="flex flex-col mt-6 mb-12">
-<div class="flex flex-col md:flex-row justify-between ">
-    
-    <ul class="flex justify-end text-gray-800" itemprop="articleSection">
-        
-        <li class="pl-2 pr-0 md:pl-0 md:pr-2">
-            <a href="/categories/tools" rel="category">tools</a>
-        </li>
-        
-    </ul>
-    
-    
-    <ul class="flex justify-end text-gray-700">
-        
-        <li itemprop="keywords" class="pl-2 md:pl-4">
-            <a href="https://bowser1704.github.io/tags/nginx/">#nginx</a>
-        </li>
-        
-    </ul>
-    
-</div>
-<h2 itemprop="name" class="text-3xl"><a href="https://bowser1704.github.io/note/20191101-%E5%88%A9%E7%94%A8systemd%E7%AE%A1%E7%90%86nginx.service/">利用systemd管理nginx.service</a></h2>
-    <p itemprop="datePublished" content="2019-11-01" class="">2019/11/01
-    </p>
-    <div class="py-2">
-        
-        如何将一个nginx.service用systemctl托管
-        
-    </div>
-</article>
-    
-</div>
+<meta name="twitter:description" content=""/>
 
-        </main>
-    </div><footer class="flex justify-center">
-    <div class="copyright mx-auto my-8">
-        <p>
-            © 2018-2020 <a href="https://github.com/Bowser1704">Bowser1704</a> - <strong><a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a></strong> - <strong>Power By Hugo | Theme By hugo-w2ng</strong>
-        </p>
-        
-    </div>
-</footer>
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
+	<link rel="shortcut icon" href="/favicon.ico">
+
+	<title>nginx</title>
+	<link rel="alternate" type="application/rss+xml" href="https://bowser1704.github.io/tags/nginx/index.xml" title="nginx" />
+	<link rel="stylesheet" href="https://bowser1704.github.io/css/style.min.eac77496566fd7d5768fd650ddb0b2b181ca6a2d7c5fdd6fe6b8ba4bf47e566f.css" integrity="sha256-6sd0llZv19V2j9ZQ3bCysYHKai18X91v5ri6S/R+Vm8=" crossorigin="anonymous">
+</head>
+
+<body id="page">
+	
+	<header id="site-header" class="animated slideInUp">
+		<div class="hdr-wrapper section-inner">
+			<div class="hdr-left">
+				<div class="site-branding">
+					<a href="https://bowser1704.github.io/">Bowser&#39;s blog</a>
+				</div>
+				<nav class="site-nav hide-in-mobile">
+					
+				<a href="https://bowser1704.github.io/posts/">Posts</a>
+				<a href="https://bowser1704.github.io/note/">Note</a>
+				<a href="https://bowser1704.github.io/about/">About</a>
+
+				</nav>
+			</div>
+			<div class="hdr-right hdr-icons">
+				<span class="hdr-social hide-in-mobile"><a href="bowser1704@gmail.com" target="_blank" rel="noopener me" title="Email"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg></a><a href="Bowser1704" target="_blank" rel="noopener me" title="Telegram"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.198 2.433a2.242 2.242 0 0 0-1.022.215l-8.609 3.33c-2.068.8-4.133 1.598-5.724 2.21a405.15 405.15 0 0 1-2.849 1.09c-.42.147-.99.332-1.473.901-.728.968.193 1.798.919 2.286 1.61.516 3.275 1.009 4.654 1.472.509 1.793.997 3.592 1.48 5.388.16.36.506.494.864.498l-.002.018s.281.028.555-.038a2.1 2.1 0 0 0 .933-.517c.345-.324 1.28-1.244 1.811-1.764l3.999 2.952.032.018s.442.311 1.09.355c.324.022.75-.04 1.116-.308.37-.27.613-.702.728-1.196.342-1.492 2.61-12.285 2.997-14.072l-.01.042c.27-1.006.17-1.928-.455-2.474a1.654 1.654 0 0 0-1.034-.407z"/></svg></a><a href="https://github.com/Bowser1704" target="_blank" rel="noopener me" title="Github"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a></span><button id="menu-btn" class="hdr-btn" title="Menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+			</div>
+		</div>
+	</header>
+	<div id="mobile-menu" class="animated fast">
+		<ul>
+			<li><a href="https://bowser1704.github.io/posts/">Posts</a></li>
+			<li><a href="https://bowser1704.github.io/note/">Note</a></li>
+			<li><a href="https://bowser1704.github.io/about/">About</a></li>
+		</ul>
+	</div>
+
+
+	<main class="site-main section-inner thin animated fadeIn faster">
+		<h1>nginx</h1>
+		<div class="posts-group">
+			<div class="post-year" id="2019">2019</div>
+			<ul class="posts-list">
+				<li class="post-item">
+					<a href="https://bowser1704.github.io/note/systemctlservice/">
+						<span class="post-title">利用systemd管理nginx.service</span>
+						<span class="post-day">Nov 1</span>
+					</a>
+				</li>
+			</ul>
+		</div>
+	</main>
+
+	<footer id="site-footer" class="section-inner thin animated fadeIn faster">
+		<p>&copy; 2020 <a href="https://bowser1704.github.io/">Bowser</a> &#183; <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a></p>
+		<p>
+			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a> &#183; <a href="https://bowser1704.github.io/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
+		</p>
+	</footer>
 
 
 
-<script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script></body>
+	<script src="https://bowser1704.github.io/js/bundle.min.4a9a0ac3d2217822c7865b4161e6c2a71de1d70492264337755427898dd718f6.js" integrity="sha256-SpoKw9IheCLHhltBYebCpx3h1wSSJkM3dVQniY3XGPY=" crossorigin="anonymous"></script>
+	
+
+</body>
 
 </html>

@@ -1,52 +1,1050 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Posts on Bowser</title>
-    <link>https://bowser1704.github.io/posts/</link>
-    <description>Recent content in Posts on Bowser</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>zh-CN</language>
-    <copyright>This work is licensed under a CC BY-NC 4.0(署名-非商业性使用 4.0 国际) License.</copyright>
-    <lastBuildDate>Wed, 01 Jul 2020 22:21:01 +0800</lastBuildDate>
-    
-	<atom:link href="https://bowser1704.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-    <item>
-      <title>单机 Prometheus 监控多集群方案</title>
-      <link>https://bowser1704.github.io/posts/cluster-monitoring/</link>
-      <pubDate>Wed, 01 Jul 2020 22:21:01 +0800</pubDate>
-      
-      <guid>https://bowser1704.github.io/posts/cluster-monitoring/</guid>
-      <description>初始化：安装各种组件 Prometheus 和 Alertmanager 的安装都在官网 下载压缩包，手动下载下来解压。 # -C 指定目的目录 # * 代表版本，需要下载正确的系统版本。 tar xf prometheus-*.*.*.linux-amd64.tar.gz -C /opt/ tar xf alertmanager-*.*.*.linux-amd64.tar.gz</description>
-    </item>
-    
-    <item>
-      <title>读卡夫卡《变形计》</title>
-      <link>https://bowser1704.github.io/posts/kafka-the-metamorphosis/</link>
-      <pubDate>Thu, 05 Dec 2019 01:04:48 +0800</pubDate>
-      
-      <guid>https://bowser1704.github.io/posts/kafka-the-metamorphosis/</guid>
-      <description>小说的开头，“一天早晨, 格里高尔·萨姆沙从不安的睡梦中醒来, 却发现自己躺在床上变成了一只巨大的甲虫。”，看上去难以置信，是荒谬的，但是当我们</description>
-    </item>
-    
-    <item>
-      <title>《天气之子》反映的人生观</title>
-      <link>https://bowser1704.github.io/posts/weather-with-you/</link>
-      <pubDate>Sat, 02 Nov 2019 20:30:51 +0800</pubDate>
-      
-      <guid>https://bowser1704.github.io/posts/weather-with-you/</guid>
-      <description>电影中不断出现的《麦田里的守望者》 开头就是一个麦田里的守望者的特写镜头，就像霍尔顿一样，帆高也是离家出走，十分敏感，胆小，软弱，但是就是不愿</description>
-    </item>
-    
-    <item>
-      <title>谈谈系统启动发生了什么</title>
-      <link>https://bowser1704.github.io/posts/system-boot/</link>
-      <pubDate>Thu, 22 Aug 2019 16:23:18 +0800</pubDate>
-      
-      <guid>https://bowser1704.github.io/posts/system-boot/</guid>
-      <description>&lt;p&gt;系统启动实际上东西比较多，这里只是讲一讲，系统引导方面的东西。&lt;/p&gt;</description>
-    </item>
-    
-  </channel>
+	<channel>
+		<title>Posts on Bowser&#39;s blog</title>
+		<link>https://bowser1704.github.io/posts/</link>
+		<description>Recent content in Posts on Bowser&#39;s blog</description>
+		<generator>Hugo -- gohugo.io</generator>
+		<language>en-us</language>
+		<copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+		<lastBuildDate>Sun, 08 Nov 2020 22:18:18 +0800</lastBuildDate>
+		<atom:link href="https://bowser1704.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+		
+		<item>
+			<title>k3s authentication certificate</title>
+			<link>https://bowser1704.github.io/posts/k3s-auth/</link>
+			<pubDate>Sun, 08 Nov 2020 22:18:18 +0800</pubDate>
+			
+			<guid>https://bowser1704.github.io/posts/k3s-auth/</guid>
+			<description>k3s authentication client certificate 也是一种认证方式 token username and password certificate 在 k8s 的世界里面有两种证书，一种是 client certificate 用于认证，一种是 server certificate 用于 TLS。 用于认证的就是 kubeconfig 文件里面的 client-certificate-data 和 client-key-data apiVersion:v1clusters:- cluster:certificate-authority-data:DATA+OMITTEDserver:https://kubernetes.docker.internal:6443name:docker-desktopcontexts:- context:cluster:docker-desktopuser:docker-desktopname:docker-desktop-</description>
+			<content type="html"><![CDATA[<h2 id="k3s-authentication">k3s authentication</h2>
+<ul>
+<li>client certificate 也是一种认证方式</li>
+<li>token</li>
+<li>username and password</li>
+</ul>
+<h2 id="certificate">certificate</h2>
+<p>在 k8s 的世界里面有两种证书，一种是 client certificate 用于认证，一种是 server certificate 用于 TLS。</p>
+<p>用于认证的就是 <code>kubeconfig</code> 文件里面的 <code>client-certificate-data </code> 和 <code>client-key-data</code></p>
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>v1<span class="w">
+</span><span class="w"></span><span class="k">clusters</span><span class="p">:</span><span class="w">
+</span><span class="w"></span>- <span class="k">cluster</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="k">certificate-authority-data</span><span class="p">:</span><span class="w"> </span>DATA+OMITTED<span class="w">
+</span><span class="w">    </span><span class="k">server</span><span class="p">:</span><span class="w"> </span>https<span class="p">:</span>//kubernetes.docker.internal<span class="p">:</span><span class="m">6443</span><span class="w">
+</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>docker-desktop<span class="w">
+</span><span class="w"></span><span class="k">contexts</span><span class="p">:</span><span class="w">
+</span><span class="w"></span>- <span class="k">context</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="k">cluster</span><span class="p">:</span><span class="w"> </span>docker-desktop<span class="w">
+</span><span class="w">    </span><span class="k">user</span><span class="p">:</span><span class="w"> </span>docker-desktop<span class="w">
+</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>docker-desktop<span class="w">
+</span><span class="w"></span>- <span class="k">context</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="k">cluster</span><span class="p">:</span><span class="w"> </span>docker-desktop<span class="w">
+</span><span class="w">    </span><span class="k">user</span><span class="p">:</span><span class="w"> </span>docker-desktop<span class="w">
+</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>docker-for-desktop<span class="w">
+</span><span class="w"></span><span class="k">current-context</span><span class="p">:</span><span class="w"> </span>docker-desktop<span class="w">
+</span><span class="w"></span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>Config<span class="w">
+</span><span class="w"></span><span class="k">preferences</span><span class="p">:</span><span class="w"> </span>{}<span class="w">
+</span><span class="w"></span><span class="k">users</span><span class="p">:</span><span class="w">
+</span><span class="w"></span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>docker-desktop<span class="w">
+</span><span class="w">  </span><span class="k">user</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="k">client-certificate-data</span><span class="p">:</span><span class="w"> </span>REDACTED<span class="w">
+</span><span class="w">    </span><span class="k">client-key-data</span><span class="p">:</span><span class="w"> </span>REDACTED<span class="w">
+</span></code></pre></div><ul>
+<li>
+<p><code>client-certificate-data </code></p>
+<p>证书文件，里面包含 public key 和 signature，在 k3s 中由 client-ca 签发。</p>
+</li>
+<li>
+<p><code>client-key-data</code></p>
+<p>上面 public key 的 private key，client certificate 这种认证方式所需要的。</p>
+</li>
+<li>
+<p><code>certificate-authority-data</code></p>
+<p>这是 ca.crt 也就是 ca 的根证书，在 k3s 中这个是 server-ca 签发。也就是 server-ca 的证书。</p>
+</li>
+</ul>
+<blockquote>
+<p>k3s 中分了两个 ca，一个是 server-ca，一个是 client-ca，这不是必须的，可以只有一个 ca 签发所有证书。</p>
+</blockquote>
+<h3 id="tls-验证">TLS 验证</h3>
+<p>在 k3s 中，有两个证书用于 HTTPS 验证，</p>
+<ul>
+<li>
+<p><code>serving-kube-apiserver.crt</code></p>
+<p><code>/var/lib/rancher/k3s/server/tls</code>  中的 <code>serving-kube-apiserver.crt</code> 这个用于集群内部组件认证。</p>
+<p>这个证书当我们重启机器的时候 k3s 会有一个 rotation。</p>
+</li>
+<li>
+<p><code>k3s-serving</code></p>
+<p>kube-system namespace 下面的 secret <code>k3s-serving</code>，用于外部访问，例如 kubectl，或者 curl 之类的。</p>
+<p>这个证书不会自动更新，所以可能集群内部没挂，但是你不能通过 ca.crt 访问他。</p>
+<p>经过检验，在 pod 内部访问依旧是返回的这个 cert。</p>
+</li>
+</ul>
+<p>参考 issue <a href="https://github.com/rancher/k3s/pull/1855">https://github.com/rancher/k3s/pull/1855</a></p>
+<h3 id="serviceaccount">serviceaccount</h3>
+<p>在 k3s 的 serviceaccout 中，默认的 secret 也就是 xxxx-token-xxx，里面的信息有三部分。</p>
+<ul>
+<li>ca.crt 也就是 server-ca.crt 用于 TLS 验证，也就是一般我们系统内置的根证书。</li>
+<li>token 就是认证信息</li>
+<li>namespace  也就是这个 sa 的 ns。</li>
+</ul>
+]]></content>
+		</item>
+		
+		<item>
+			<title>Time</title>
+			<link>https://bowser1704.github.io/posts/time/</link>
+			<pubDate>Mon, 26 Oct 2020 12:23:46 +0800</pubDate>
+			
+			<guid>https://bowser1704.github.io/posts/time/</guid>
+			<description>时间</description>
+			<content type="html"><![CDATA[<p>偶然想到 V2EX 的虚拟货币系统的设计。</p>
+<blockquote>
+<p>这套系统设计的初衷，是关于时间的隐喻。</p>
+</blockquote>
+<blockquote>
+<p>你在这里所做的每一件事情，都会消耗你的时间。倘若一件事情做完之后，无法得到任何有意义的回应，那么这件事情就像是白做了。如果一个人持续做那些无意义的事情，那么他实际上就是在浪费他的时间。</p>
+</blockquote>
+<p>想想自己每天花费的时间都有什么意义？玩手机，刷视频，这些东西的意义在哪里，自己收获了什么，如果没有，是不是可以不做，或者做一些别的事情。</p>
+<p>对于时间的思考目的不是说抓紧时间，而是说对于时间的耗费都要有意义，你可以花多一些时间，而不能浪费时间，必须要让时间的付出得到有意义的回报。</p>
+]]></content>
+		</item>
+		
+		<item>
+			<title>单机 Prometheus 监控多集群方案</title>
+			<link>https://bowser1704.github.io/posts/cluster-monitoring/</link>
+			<pubDate>Wed, 01 Jul 2020 22:21:01 +0800</pubDate>
+			
+			<guid>https://bowser1704.github.io/posts/cluster-monitoring/</guid>
+			<description>初始化：安装各种组件 Prometheus 和 Alertmanager 的安装都在官网 下载压缩包，手动下载下来解压。 # -C 指定目的目录 # * 代表版本，需要下载正确的系统版本。 tar xf prometheus-*.*.*.linux-amd64.tar.gz -C /opt/ tar xf alertmanager-*.*.*.linux-amd64.tar.gz</description>
+			<content type="html"><![CDATA[<h2 id="初始化安装各种组件">初始化：安装各种组件</h2>
+<p>Prometheus 和 Alertmanager 的安装都在<a href="https://prometheus.io/download/">官网</a> 下载压缩包，手动下载下来解压。</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># -C 指定目的目录</span>
+<span class="c1"># * 代表版本，需要下载正确的系统版本。</span>
+tar xf prometheus-*.*.*.linux-amd64.tar.gz -C /opt/
+tar xf alertmanager-*.*.*.linux-amd64.tar.gz -C /opt/
+</code></pre></div><p>安装之后使用 systemd 来管理这几个服务。手写 service 放到 systemd 文件夹下面，我的目标是 <code>/usr/lib/systemd/system/</code> 。</p>
+<p>prometheus 可以热加载配置文件，如果需要通过 web API 重启，必须要加参数 <code>--web.enable-lifecycle</code>，不安全，不推荐这么做。我们使用 systemd 管理 service，可以直接用 restart 命令重启。</p>
+<p>注意我新建了两个配置文件，名字都为 config.yaml。</p>
+<div class="highlight"><pre class="chroma"><code class="language-service" data-lang="service"><span class="k">[Unit]</span>
+<span class="na">Description</span><span class="o">=</span><span class="s">Prometheus Server</span>
+<span class="na">Wants</span><span class="o">=</span><span class="s">network-online.target</span>
+<span class="na">After</span><span class="o">=</span><span class="s">network-online.target</span>
+
+<span class="k">[Service]</span>
+<span class="na">Type</span><span class="o">=</span><span class="s">simple</span>
+<span class="na">ExecStartPre</span><span class="o">=</span><span class="s">/opt/prometheus/promtool check config /opt/prometheus/config.yaml</span>
+<span class="na">ExecStart</span><span class="o">=</span><span class="s">/opt/prometheus/prometheus </span>\
+<span class="s">  --config.file /opt/prometheus/config.yaml</span>
+
+<span class="k">[Install]</span>
+<span class="na">WantedBy</span><span class="o">=</span><span class="s">multi-user.target</span>
+</code></pre></div><p>alertmanager</p>
+<div class="highlight"><pre class="chroma"><code class="language-service" data-lang="service"><span class="k">[Unit]</span>
+<span class="na">Description</span><span class="o">=</span><span class="s">Alertmanager Server</span>
+<span class="na">Wants</span><span class="o">=</span><span class="s">network-online.target</span>
+<span class="na">After</span><span class="o">=</span><span class="s">network-online.target</span>
+
+<span class="k">[Service]</span>
+<span class="na">Type</span><span class="o">=</span><span class="s">simple</span>
+<span class="na">ExecStartPre</span><span class="o">=</span><span class="s">/opt/alertmanager/amtool check-config /opt/alertmanager/config.yaml</span>
+<span class="na">ExecStart</span><span class="o">=</span><span class="s">/opt/alertmanager/altermanager </span>\
+<span class="s">  --config.file=/opt/alertmanager/config.yaml </span>\
+<span class="s">  --log.level=debug </span>\
+<span class="s">  --cluster.listen-address=&#34;&#34;</span>
+
+<span class="k">[Install]</span>
+<span class="na">WantedBy</span><span class="o">=</span><span class="s">multi-user.target</span>
+</code></pre></div><p>安装 node-exporter 和 kube-state-metrics。</p>
+<blockquote>
+<p>在 k3s 中我使用 helmchart 安装，但是这个 CRD 有一些问题，可以更换到 <a href="https://github.com/fluxcd/helm-operator">helm-operator</a>。</p>
+</blockquote>
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>helm.cattle.io/v1<span class="w">
+</span><span class="w"></span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>HelmChart<span class="w">
+</span><span class="w"></span><span class="k">metadata</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>prometheus-node-exporter<span class="w">
+</span><span class="w">  </span><span class="k">namespace</span><span class="p">:</span><span class="w"> </span>kube-system<span class="w">
+</span><span class="w"></span><span class="k">spec</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="k">helmVersion</span><span class="p">:</span><span class="w"> </span>v3<span class="w">
+</span><span class="w">  </span><span class="k">chart</span><span class="p">:</span><span class="w"> </span>prometheus-node-exporter<span class="w">
+</span><span class="w">  </span><span class="k">targetNamespace</span><span class="p">:</span><span class="w"> </span>monitoring<span class="w">
+</span><span class="w">  </span><span class="k">repo</span><span class="p">:</span><span class="w"> </span>https<span class="p">:</span>//apphub.aliyuncs.com<span class="w">
+</span><span class="w"></span>---<span class="w">
+</span><span class="w"></span><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>helm.cattle.io/v1<span class="w">
+</span><span class="w"></span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>HelmChart<span class="w">
+</span><span class="w"></span><span class="k">metadata</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>kube-state-metrics<span class="w">
+</span><span class="w">  </span><span class="k">namespace</span><span class="p">:</span><span class="w"> </span>kube-system<span class="w">
+</span><span class="w"></span><span class="k">spec</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="k">helmVersion</span><span class="p">:</span><span class="w"> </span>v3<span class="w">
+</span><span class="w">  </span><span class="k">chart</span><span class="p">:</span><span class="w"> </span>kube-state-metrics<span class="w">
+</span><span class="w">  </span><span class="k">targetNamespace</span><span class="p">:</span><span class="w"> </span>monitoring<span class="w">
+</span><span class="w">  </span><span class="k">repo</span><span class="p">:</span><span class="w"> </span>https<span class="p">:</span>//apphub.aliyuncs.com<span class="w">
+</span></code></pre></div><p>安装两个 exporter 之后。</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="o">[</span>root@bowser1704 ~<span class="o">]</span><span class="c1"># kubectl get svc -n monitoring</span>
+NAME                       TYPE        CLUSTER-IP      EXTERNAL-IP   PORT<span class="o">(</span>S<span class="o">)</span>    AGE
+kube-state-metrics         ClusterIP   10.43.204.99    &lt;none&gt;        8080/TCP   19h
+prometheus-node-exporter   ClusterIP   10.43.222.110   &lt;none&gt;        9100/TCP   39h
+</code></pre></div><h2 id="单机监控中心监控多集群">单机监控中心监控多集群</h2>
+<p>由标题，想要单机 prometheus 监控多个集群，不考虑单机压力问题，prometheus 配置和 exportor 的安装需要考虑两个问题：</p>
+<ol>
+<li>prometheus 通过公网访问集群的 metrics。</li>
+<li>不使用 <a href="https://prometheus.io/docs/prometheus/latest/federation/#federation">prometheus federation</a> 或者 <a href="https://thanos.io/">thanos</a> 采集多集群的信息。</li>
+</ol>
+<h3 id="1-公网访问集群的-metrics">1. 公网访问集群的 metrics</h3>
+<p>集群内部已经自建了一些 metrics 指标，这种指标可以直接通过它们暴露的 API 访问，例如 kubelet metrics，cAdvisor，API server&hellip;.。也可以通过 API server 提供的 proxy 访问。无论是怎么访问，从集群外部访问集群内部都需要手动配置 Authorization 可以直接通过 Bearer Token，也可以通过账号和密码。这里使用 token。</p>
+<p>首先使用 <a href="https://kubernetes.io/zh/docs/reference/access-authn-authz/rbac/">rbac</a> 创建一个 serviceaccount，并且创建 clusterrole，和做 clusterbinding。</p>
+<p>可以参考我的 <a href="https://gist.github.com/Bowser1704/63d982782a3a8645316669d3100d8fc1">gist</a>。</p>
+<blockquote>
+<p>gist 中的 sa 并不能直接使用，需要后面进行二次修改，否则没有权限访问。</p>
+<p>使用 clusterrole 需要访问集群所有信息，不考虑某个 namespace。</p>
+</blockquote>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># 假设创建的 serviceaccount 是 monitoring 下的 prometheus</span>
+kubectl get sa prometheus -n monitoring -o yaml
+
+<span class="c1"># secret 的名字是上面获取的</span>
+kubectl describe secret prometheus-token-cw4pd -n monitoring
+</code></pre></div><h4 id="11-使用原生-api-访问内建指标">1.1 使用原生 API 访问内建指标</h4>
+<blockquote>
+<p>因为需要使用 https 但是证书是自签的，所以需要自己拿 ca.crt 下来，但是为了方便直接 disable validate certificates 了。</p>
+</blockquote>
+<ul>
+<li>
+<p>kubelet</p>
+<p>Kubelet 监听于 10250 端口，暴露的 API 为 https://public-ip:10250/metircs，需要给 sa 的 clusterrole 设置一定的权限从而可以访问这个 API。我们使用上面创建的 sa，并且这个 sa 的 role 没有什么权限，假设只有一个 pod get 的权限，访问 API，结果是：</p>
+<div class="highlight"><pre class="chroma"><code class="language-http" data-lang="http"><span class="err">Forbidden (user=system:serviceaccount:monitoring:prometheus, verb=get, resource=nodes, subresource=metrics)
+</span></code></pre></div><p>说明这个 API 需要的权限是</p>
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml">- <span class="k">apiGroups</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="s2">&#34;&#34;</span><span class="w">
+</span><span class="w">  </span><span class="k">resources</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- nodes<span class="w">
+</span><span class="w">  </span>- nodes/metrics<span class="w">
+</span><span class="w">  </span><span class="k">verbs</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- get<span class="w">
+</span></code></pre></div><p>在我们的 ClusterRole 里面加上这个权限。然后就可以拿到数据了，因为 http 的<a href="https://zh.wikipedia.org/wiki/%E5%88%86%E5%9D%97%E4%BC%A0%E8%BE%93%E7%BC%96%E7%A0%81">分块传输编码</a>，以及数据量很大，需要等待较长一段时间。</p>
+<p>而在 prometheus.yml 里面的设置为。</p>
+<blockquote>
+<p>最下面的 relabel_configs 是把自带的 label 全都拿过来。</p>
+</blockquote>
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="c"># 我们的场景需要设置两个 tls_config 和 bearer_token。</span><span class="w">
+</span><span class="w"></span>- <span class="k">job_name</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;kubelet&#39;</span><span class="w">
+</span><span class="w">    </span><span class="k">scheme</span><span class="p">:</span><span class="w"> </span>https<span class="w">
+</span><span class="w">    </span><span class="k">tls_config</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="k">insecure_skip_verify</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w">    </span><span class="k">bearer_token_file</span><span class="p">:</span><span class="w"> </span>/var/run/secrets/kubernetes.io/serviceaccount/token<span class="w">
+</span><span class="w">    </span><span class="k">static_configs</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- <span class="k">target</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- public-ip<span class="p">:</span><span class="m">10250</span><span class="w">
+</span><span class="w">    </span><span class="k">relabel_configs</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- <span class="k">action</span><span class="p">:</span><span class="w"> </span>labelmap<span class="w">
+</span><span class="w">    </span><span class="k">regex</span><span class="p">:</span><span class="w"> </span>__meta_kubernetes_node_label_(.+)<span class="w">
+</span></code></pre></div></li>
+<li>
+<p>cAdvisor</p>
+<p>由于高版本的 cAdvisor 合并到了 kubelet 里面，并且经过实践权限不需要修改，所以可以可以直接添加 prometheus job 就可以了。暴露的 API 为 https://public-ip:10250/metircs/cadvisor。</p>
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml">- <span class="k">job_name</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;cAdvisor&#39;</span><span class="w">
+</span><span class="w">    </span><span class="k">scheme</span><span class="p">:</span><span class="w"> </span>https<span class="w">
+</span><span class="w">    </span><span class="k">tls_config</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="k">insecure_skip_verify</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w">    </span><span class="k">bearer_token_file</span><span class="p">:</span><span class="w"> </span>/var/run/secrets/kubernetes.io/serviceaccount/token<span class="w">
+</span><span class="w">    </span><span class="k">static_configs</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- <span class="k">target</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- public-ip<span class="p">:</span><span class="m">10250</span><span class="w">
+</span><span class="w">    </span><span class="k">relabel_configs</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- <span class="k">action</span><span class="p">:</span><span class="w"> </span>labelmap<span class="w">
+</span><span class="w">    </span><span class="k">regex</span><span class="p">:</span><span class="w"> </span>__meta_kubernetes_node_label_(.+)<span class="w">
+</span><span class="w">    </span>- <span class="k">source_labels</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>__meta_kubernetes_node_name<span class="p">]</span><span class="w">
+</span><span class="w">    </span><span class="k">regex</span><span class="p">:</span><span class="w"> </span>(.+)<span class="w">
+</span><span class="w">    </span><span class="k">target_label</span><span class="p">:</span><span class="w"> </span>__metrics_path__<span class="w">
+</span><span class="w">    </span><span class="k">replacement</span><span class="p">:</span><span class="w"> </span>metrics/cadvisor<span class="w">
+</span></code></pre></div><blockquote>
+<p>最下面的 relabel_configs 是把内建的  <code>__metrics_path__</code> 修改为 metircs/cadvisor 默认为 metrics。</p>
+</blockquote>
+</li>
+<li>
+<p>&hellip;&hellip;</p>
+</li>
+</ul>
+<h4 id="12-使用-api-server-代理访问到内建指标">1.2 使用 API server 代理访问到内建指标</h4>
+<p>根据 kubernetes 的架构，我们是通过 API server 操纵访问集群内的所有 API 对象的，并且我们也可以通过 API server 代理到我们的 service，pod 从而达到外网访问集群内部资源的效果。</p>
+<p>这里还要介绍一个 prometheus config <a href="https://prometheus.io/docs/prometheus/latest/configuration/configuration/#kubernetes_sd_config">kubernetes_sd_config</a>，请参考文档详细配置信息。</p>
+<blockquote>
+<p>Kubernetes SD configurations allow retrieving scrape targets from <a href="https://kubernetes.io/">Kubernetes&rsquo;</a> REST API and always staying synchronized with the cluster state.</p>
+</blockquote>
+<p>也就是说设置 kubernetes_sd_config 可以帮助我们自动发现需要监控的指标，可以根据集群的状态变化，例如你加了一个 node 他可能多了几个指标，这个时候就不需要我们手动去设置了，也就是实现了 service discovery。</p>
+<ul>
+<li>
+<p>kubelet</p>
+<p>账号依然是 1.1 中加了权限后的账号。token 还是那个 token， 证书可选。</p>
+<p>下面是 config。我在 relabel_configs 主要做了几点配置：</p>
+<ol>
+<li>
+<p>把 discover 发现的 pod ip，修改为 API server 暴露的地址 / master node public ip。</p>
+<blockquote>
+<p>prometheus 找到并且使用的都是 pod ip / endpoints。</p>
+</blockquote>
+</li>
+<li>
+<p>根据每个 node 的名字构建 metrics path，因为 kubelet metrics 每个 node 都有一个，所以需要采集多个 node 的 metircs，利用 kubernetes_sd_config 可以自动发现，不需要手动填写。</p>
+</li>
+</ol>
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml">- <span class="k">job_name</span><span class="p">:</span><span class="w"> </span>stage-cadvisor<span class="w">
+</span><span class="w">  </span><span class="k">honor_timestamps</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w">  </span><span class="k">scrape_interval</span><span class="p">:</span><span class="w"> </span>15s<span class="w">
+</span><span class="w">  </span><span class="k">scrape_timeout</span><span class="p">:</span><span class="w"> </span>15s<span class="w">
+</span><span class="w">  </span><span class="k">metrics_path</span><span class="p">:</span><span class="w"> </span>/metrics<span class="w">
+</span><span class="w">  </span><span class="k">scheme</span><span class="p">:</span><span class="w"> </span>https<span class="w">
+</span><span class="w">  </span><span class="k">kubernetes_sd_configs</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="k">api_server</span><span class="p">:</span><span class="w"> </span>https<span class="p">:</span>//<span class="p">:</span><span class="m">6443</span><span class="w">
+</span><span class="w">    </span><span class="k">role</span><span class="p">:</span><span class="w"> </span>node<span class="w">
+</span><span class="w">    </span><span class="k">bearer_token_file</span><span class="p">:</span><span class="w"> </span>/opt/prometheus/serviceaccount/stage/token<span class="w">
+</span><span class="w">    </span><span class="k">tls_config</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="k">ca_file</span><span class="p">:</span><span class="w"> </span>/opt/prometheus/serviceaccount/stage/ca.crt<span class="w">
+</span><span class="w">      </span><span class="k">insecure_skip_verify</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w">  </span><span class="k">bearer_token_file</span><span class="p">:</span><span class="w"> </span>/opt/prometheus/serviceaccount/stage/token<span class="w">
+</span><span class="w">  </span><span class="k">tls_config</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="k">ca_file</span><span class="p">:</span><span class="w"> </span>/opt/prometheus/serviceaccount/stage/ca.crt<span class="w">
+</span><span class="w">    </span><span class="k">insecure_skip_verify</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w">  </span><span class="k">relabel_configs</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="k">separator</span><span class="p">:</span><span class="w"> </span>;<span class="w">
+</span><span class="w">    </span><span class="k">regex</span><span class="p">:</span><span class="w"> </span>__meta_kubernetes_node_label_(.+)<span class="w">
+</span><span class="w">    </span><span class="k">replacement</span><span class="p">:</span><span class="w"> </span>$<span class="m">1</span><span class="w">
+</span><span class="w">    </span><span class="k">action</span><span class="p">:</span><span class="w"> </span>labelmap<span class="w">
+</span><span class="w">  </span>- <span class="k">separator</span><span class="p">:</span><span class="w"> </span>;<span class="w">
+</span><span class="w">    </span><span class="k">regex</span><span class="p">:</span><span class="w"> </span>(.<span class="cp">*)</span><span class="w">
+</span><span class="w">    </span><span class="k">target_label</span><span class="p">:</span><span class="w"> </span>__address__<span class="w">
+</span><span class="w">    </span><span class="k">replacement</span><span class="p">:</span><span class="w"> </span>public-ip<span class="p">:</span><span class="m">6443</span><span class="w">
+</span><span class="w">    </span><span class="k">action</span><span class="p">:</span><span class="w"> </span>replace<span class="w">
+</span><span class="w">  </span>- <span class="k">source_labels</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>__meta_kubernetes_node_name<span class="p">]</span><span class="w">
+</span><span class="w">    </span><span class="k">separator</span><span class="p">:</span><span class="w"> </span>;<span class="w">
+</span><span class="w">    </span><span class="k">regex</span><span class="p">:</span><span class="w"> </span>(.+)<span class="w">
+</span><span class="w">    </span><span class="k">target_label</span><span class="p">:</span><span class="w"> </span>__metrics_path__<span class="w">
+</span><span class="w">    </span><span class="k">replacement</span><span class="p">:</span><span class="w"> </span>/api/v1/nodes/${<span class="m">1</span>}/proxy/metrics<span class="w">
+</span><span class="w">    </span><span class="k">action</span><span class="p">:</span><span class="w"> </span>replace<span class="w">
+</span></code></pre></div></li>
+<li>
+<p>cAdvisor</p>
+<p>cAdivisor 和 kubelet 类似，只需要在 metrics path 后面加一个 cadvisor 就可以了。</p>
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml">- <span class="k">job_name</span><span class="p">:</span><span class="w"> </span>stage-cadvisor<span class="w">
+</span><span class="w">  </span><span class="k">honor_timestamps</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w">  </span><span class="k">scrape_interval</span><span class="p">:</span><span class="w"> </span>15s<span class="w">
+</span><span class="w">  </span><span class="k">scrape_timeout</span><span class="p">:</span><span class="w"> </span>15s<span class="w">
+</span><span class="w">  </span><span class="k">metrics_path</span><span class="p">:</span><span class="w"> </span>/metrics<span class="w">
+</span><span class="w">  </span><span class="k">scheme</span><span class="p">:</span><span class="w"> </span>https<span class="w">
+</span><span class="w">  </span><span class="k">kubernetes_sd_configs</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="k">api_server</span><span class="p">:</span><span class="w"> </span>https<span class="p">:</span>//public-ip<span class="p">:</span><span class="m">6443</span><span class="w">
+</span><span class="w">    </span><span class="k">role</span><span class="p">:</span><span class="w"> </span>node<span class="w">
+</span><span class="w">    </span><span class="k">bearer_token_file</span><span class="p">:</span><span class="w"> </span>/opt/prometheus/serviceaccount/stage/token<span class="w">
+</span><span class="w">    </span><span class="k">tls_config</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="k">ca_file</span><span class="p">:</span><span class="w"> </span>/opt/prometheus/serviceaccount/stage/ca.crt<span class="w">
+</span><span class="w">      </span><span class="k">insecure_skip_verify</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w">  </span><span class="k">bearer_token_file</span><span class="p">:</span><span class="w"> </span>/opt/prometheus/serviceaccount/stage/token<span class="w">
+</span><span class="w">  </span><span class="k">tls_config</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="k">ca_file</span><span class="p">:</span><span class="w"> </span>/opt/prometheus/serviceaccount/stage/ca.crt<span class="w">
+</span><span class="w">    </span><span class="k">insecure_skip_verify</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w">  </span><span class="k">relabel_configs</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="k">separator</span><span class="p">:</span><span class="w"> </span>;<span class="w">
+</span><span class="w">    </span><span class="k">regex</span><span class="p">:</span><span class="w"> </span>__meta_kubernetes_node_label_(.+)<span class="w">
+</span><span class="w">    </span><span class="k">replacement</span><span class="p">:</span><span class="w"> </span>$<span class="m">1</span><span class="w">
+</span><span class="w">    </span><span class="k">action</span><span class="p">:</span><span class="w"> </span>labelmap<span class="w">
+</span><span class="w">  </span>- <span class="k">separator</span><span class="p">:</span><span class="w"> </span>;<span class="w">
+</span><span class="w">    </span><span class="k">regex</span><span class="p">:</span><span class="w"> </span>(.<span class="cp">*)</span><span class="w">
+</span><span class="w">    </span><span class="k">target_label</span><span class="p">:</span><span class="w"> </span>__address__<span class="w">
+</span><span class="w">    </span><span class="k">replacement</span><span class="p">:</span><span class="w"> </span>public-ip<span class="p">:</span><span class="m">6443</span><span class="w">
+</span><span class="w">    </span><span class="k">action</span><span class="p">:</span><span class="w"> </span>replace<span class="w">
+</span><span class="w">  </span>- <span class="k">source_labels</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>__meta_kubernetes_node_name<span class="p">]</span><span class="w">
+</span><span class="w">    </span><span class="k">separator</span><span class="p">:</span><span class="w"> </span>;<span class="w">
+</span><span class="w">    </span><span class="k">regex</span><span class="p">:</span><span class="w"> </span>(.+)<span class="w">
+</span><span class="w">    </span><span class="k">target_label</span><span class="p">:</span><span class="w"> </span>__metrics_path__<span class="w">
+</span><span class="w">    </span><span class="k">replacement</span><span class="p">:</span><span class="w"> </span>/api/v1/nodes/${<span class="m">1</span>}/proxy/metrics/cadvisor<span class="w">
+</span><span class="w">    </span><span class="k">action</span><span class="p">:</span><span class="w"> </span>replace<span class="w">
+</span><span class="w">  </span>- <span class="k">separator</span><span class="p">:</span><span class="w"> </span>;<span class="w">
+</span><span class="w">    </span><span class="k">regex</span><span class="p">:</span><span class="w"> </span>(.<span class="cp">*)</span><span class="w">
+</span><span class="w">    </span><span class="k">target_label</span><span class="p">:</span><span class="w"> </span>cluster<span class="w">
+</span><span class="w">    </span><span class="k">replacement</span><span class="p">:</span><span class="w"> </span>stage<span class="w">
+</span><span class="w">    </span><span class="k">action</span><span class="p">:</span><span class="w"> </span>replace<span class="w">
+</span></code></pre></div></li>
+<li>
+<p>apiserver</p>
+<p>apiserver 可以直接通过 API server 暴露的地址加上一个 metrics path 就可以了，例如 https://public-ip:6443/metrics。</p>
+<p>我在 relabel_configs 主要做的配置是：</p>
+<ol>
+<li>把 discover 发现的 pod ip，修改为 API server 暴露的地址 / master node public ip。</li>
+</ol>
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml">- <span class="k">job_name</span><span class="p">:</span><span class="w"> </span>stage-apiservers<span class="w">
+</span><span class="w">  </span><span class="k">honor_timestamps</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w">  </span><span class="k">scrape_interval</span><span class="p">:</span><span class="w"> </span>15s<span class="w">
+</span><span class="w">  </span><span class="k">scrape_timeout</span><span class="p">:</span><span class="w"> </span>15s<span class="w">
+</span><span class="w">  </span><span class="k">metrics_path</span><span class="p">:</span><span class="w"> </span>/metrics<span class="w">
+</span><span class="w">  </span><span class="k">scheme</span><span class="p">:</span><span class="w"> </span>https<span class="w">
+</span><span class="w">  </span><span class="k">kubernetes_sd_configs</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="k">api_server</span><span class="p">:</span><span class="w"> </span>https<span class="p">:</span>//public-ip<span class="p">:</span><span class="m">6443</span><span class="w">
+</span><span class="w">    </span><span class="k">role</span><span class="p">:</span><span class="w"> </span>endpoints<span class="w">
+</span><span class="w">    </span><span class="k">bearer_token_file</span><span class="p">:</span><span class="w"> </span>/opt/prometheus/serviceaccount/stage/token<span class="w">
+</span><span class="w">    </span><span class="k">tls_config</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="k">insecure_skip_verify</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w">  </span><span class="k">bearer_token_file</span><span class="p">:</span><span class="w"> </span>/opt/prometheus/serviceaccount/stage/token<span class="w">
+</span><span class="w">  </span><span class="k">tls_config</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="k">insecure_skip_verify</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w">  </span><span class="k">relabel_configs</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="k">source_labels</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>__meta_kubernetes_namespace<span class="p">,</span><span class="w"> </span>__meta_kubernetes_service_name<span class="p">,</span><span class="w"> </span>__meta_kubernetes_endpoint_port_name<span class="p">]</span><span class="w">
+</span><span class="w">    </span><span class="k">separator</span><span class="p">:</span><span class="w"> </span>;<span class="w">
+</span><span class="w">    </span><span class="k">regex</span><span class="p">:</span><span class="w"> </span>default;kubernetes;https<span class="w">
+</span><span class="w">    </span><span class="k">replacement</span><span class="p">:</span><span class="w"> </span>$<span class="m">1</span><span class="w">
+</span><span class="w">    </span><span class="k">action</span><span class="p">:</span><span class="w"> </span>keep<span class="w">
+</span><span class="w">  </span>- <span class="k">separator</span><span class="p">:</span><span class="w"> </span>;<span class="w">
+</span><span class="w">    </span><span class="k">regex</span><span class="p">:</span><span class="w"> </span>(.<span class="cp">*)</span><span class="w">
+</span><span class="w">    </span><span class="k">target_label</span><span class="p">:</span><span class="w"> </span>__address__<span class="w">
+</span><span class="w">    </span><span class="k">replacement</span><span class="p">:</span><span class="w"> </span>public-ip<span class="p">:</span><span class="m">6443</span><span class="w">
+</span><span class="w">    </span><span class="k">action</span><span class="p">:</span><span class="w"> </span>replace<span class="w">
+</span></code></pre></div></li>
+</ul>
+<h4 id="13-使用-api-server-代理访问到自建指标">1.3 使用 API server 代理访问到自建指标</h4>
+<p>你可以将自建的 exporter 都部署到一个 namespace 然后根据这个 namespace 的名字抓取所有的 metrics，或者根据某个 annotation 选择，但是这样的坏处是，所有的指标都在一个 job 下面，不太美观，出了问题不能一样排查出来，所以我选择的是 node-exporter，kube-state-metrics，traefik 都分开来。</p>
+<ul>
+<li>
+<p>Node-exporter</p>
+<p>node-exporter 会根据 node 的个数自己变化，所以我们肯定需要使用 kubernetes_sd_config 来自动发现。</p>
+<p>下面是 config，注意我们 kubernetes_sd_config 的 role 是 endpoints。在 relabel_configs 做的配置是</p>
+<ol>
+<li>
+<p>匹配 __meta_kubernetes_endpoints_name 为 prometheus-node-exporter 的，实际上这里是你 node-exporter service 的 name。</p>
+<blockquote>
+<p>你依然可以指定 namespace，指定 annotation，但是如果确定这个已经是唯一定位到你需要的 svc 就不需要写那么多了。</p>
+</blockquote>
+</li>
+<li>
+<p>更换 metrics path</p>
+<p>目标为 <code>/api/v1/namespaces/$1/services/$2:$3/proxy$4</code>。</p>
+</li>
+</ol>
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml">- <span class="k">job_name</span><span class="p">:</span><span class="w"> </span>stage-node-exporter<span class="w">
+</span><span class="w">  </span><span class="k">honor_timestamps</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w">  </span><span class="k">scrape_interval</span><span class="p">:</span><span class="w"> </span>15s<span class="w">
+</span><span class="w">  </span><span class="k">scrape_timeout</span><span class="p">:</span><span class="w"> </span>15s<span class="w">
+</span><span class="w">  </span><span class="k">metrics_path</span><span class="p">:</span><span class="w"> </span>/metrics<span class="w">
+</span><span class="w">  </span><span class="k">scheme</span><span class="p">:</span><span class="w"> </span>https<span class="w">
+</span><span class="w">  </span><span class="k">kubernetes_sd_configs</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="k">api_server</span><span class="p">:</span><span class="w"> </span>https<span class="p">:</span>//public-ip<span class="p">:</span><span class="m">6443</span><span class="w">
+</span><span class="w">    </span><span class="k">role</span><span class="p">:</span><span class="w"> </span>endpoints<span class="w">
+</span><span class="w">    </span><span class="k">bearer_token_file</span><span class="p">:</span><span class="w"> </span>/opt/prometheus/serviceaccount/stage/token<span class="w">
+</span><span class="w">    </span><span class="k">tls_config</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="k">insecure_skip_verify</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w">  </span><span class="k">bearer_token_file</span><span class="p">:</span><span class="w"> </span>/opt/prometheus/serviceaccount/stage/token<span class="w">
+</span><span class="w">  </span><span class="k">tls_config</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="k">insecure_skip_verify</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w">  </span><span class="k">relabel_configs</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="k">source_labels</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>__meta_kubernetes_endpoints_name<span class="p">]</span><span class="w">
+</span><span class="w">    </span><span class="k">separator</span><span class="p">:</span><span class="w"> </span>;<span class="w">
+</span><span class="w">    </span><span class="k">regex</span><span class="p">:</span><span class="w"> </span>prometheus-node-exporter<span class="w">
+</span><span class="w">    </span><span class="k">replacement</span><span class="p">:</span><span class="w"> </span>$<span class="m">1</span><span class="w">
+</span><span class="w">    </span><span class="k">action</span><span class="p">:</span><span class="w"> </span>keep<span class="w">
+</span><span class="w">  </span>- <span class="k">source_labels</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>__meta_kubernetes_pod_annotation_prometheus_io_port<span class="p">]</span><span class="w">
+</span><span class="w">    </span><span class="k">separator</span><span class="p">:</span><span class="w"> </span>;<span class="w">
+</span><span class="w">    </span><span class="k">regex</span><span class="p">:</span><span class="w"> </span>(\d+)<span class="w">
+</span><span class="w">    </span><span class="k">target_label</span><span class="p">:</span><span class="w"> </span>__meta_kubernetes_pod_container_port_number<span class="w">
+</span><span class="w">    </span><span class="k">replacement</span><span class="p">:</span><span class="w"> </span>$<span class="m">1</span><span class="w">
+</span><span class="w">    </span><span class="k">action</span><span class="p">:</span><span class="w"> </span>replace<span class="w">
+</span><span class="w">  </span>- <span class="k">source_labels</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>__meta_kubernetes_service_annotation_prometheus_io_path<span class="p">]</span><span class="w">
+</span><span class="w">    </span><span class="k">separator</span><span class="p">:</span><span class="w"> </span>;<span class="w">
+</span><span class="w">    </span><span class="k">regex</span><span class="p">:</span><span class="w"> </span>()<span class="w">
+</span><span class="w">    </span><span class="k">target_label</span><span class="p">:</span><span class="w"> </span>__meta_kubernetes_service_annotation_prometheus_io_path<span class="w">
+</span><span class="w">    </span><span class="k">replacement</span><span class="p">:</span><span class="w"> </span>/metrics<span class="w">
+</span><span class="w">    </span><span class="k">action</span><span class="p">:</span><span class="w"> </span>replace<span class="w">
+</span><span class="w">  </span>- <span class="k">source_labels</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>__meta_kubernetes_namespace<span class="p">,</span><span class="w"> </span>__meta_kubernetes_service_name<span class="p">,</span><span class="w"> </span>__meta_kubernetes_pod_container_port_number<span class="p">,</span><span class="w"> </span>__meta_kubernetes_service_annotation_prometheus_io_path<span class="p">]</span><span class="w">
+</span><span class="w">    </span><span class="k">separator</span><span class="p">:</span><span class="w"> </span>;<span class="w">
+</span><span class="w">    </span><span class="k">regex</span><span class="p">:</span><span class="w"> </span>(.+);(.+);(.+);(.+)<span class="w">
+</span><span class="w">    </span><span class="k">target_label</span><span class="p">:</span><span class="w"> </span>__metrics_path__<span class="w">
+</span><span class="w">    </span><span class="k">replacement</span><span class="p">:</span><span class="w"> </span>/api/v1/namespaces/$<span class="m">1</span>/services/$<span class="m">2</span><span class="p">:</span>$<span class="m">3</span>/proxy$<span class="m">4</span><span class="w">
+</span><span class="w">    </span><span class="k">action</span><span class="p">:</span><span class="w"> </span>replace<span class="w">
+</span><span class="w">  </span>- <span class="k">separator</span><span class="p">:</span><span class="w"> </span>;<span class="w">
+</span><span class="w">    </span><span class="k">regex</span><span class="p">:</span><span class="w"> </span>(.<span class="cp">*)</span><span class="w">
+</span><span class="w">    </span><span class="k">target_label</span><span class="p">:</span><span class="w"> </span>__address__<span class="w">
+</span><span class="w">    </span><span class="k">replacement</span><span class="p">:</span><span class="w"> </span>public-ip<span class="p">:</span><span class="m">6443</span><span class="w">
+</span><span class="w">    </span><span class="k">action</span><span class="p">:</span><span class="w"> </span>replace<span class="w">
+</span><span class="w">  </span>- <span class="k">separator</span><span class="p">:</span><span class="w"> </span>;<span class="w">
+</span><span class="w">    </span><span class="k">regex</span><span class="p">:</span><span class="w"> </span>__meta_kubernetes_service_label_(.+)<span class="w">
+</span><span class="w">    </span><span class="k">replacement</span><span class="p">:</span><span class="w"> </span>$<span class="m">1</span><span class="w">
+</span><span class="w">    </span><span class="k">action</span><span class="p">:</span><span class="w"> </span>labelmap<span class="w">
+</span><span class="w">  </span>- <span class="k">source_labels</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>__meta_kubernetes_namespace<span class="p">]</span><span class="w">
+</span><span class="w">    </span><span class="k">separator</span><span class="p">:</span><span class="w"> </span>;<span class="w">
+</span><span class="w">    </span><span class="k">regex</span><span class="p">:</span><span class="w"> </span>(.<span class="cp">*)</span><span class="w">
+</span><span class="w">    </span><span class="k">target_label</span><span class="p">:</span><span class="w"> </span>kubernetes_namespace<span class="w">
+</span><span class="w">    </span><span class="k">replacement</span><span class="p">:</span><span class="w"> </span>$<span class="m">1</span><span class="w">
+</span><span class="w">    </span><span class="k">action</span><span class="p">:</span><span class="w"> </span>replace<span class="w">
+</span><span class="w">  </span>- <span class="k">source_labels</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>__meta_kubernetes_service_name<span class="p">]</span><span class="w">
+</span><span class="w">    </span><span class="k">separator</span><span class="p">:</span><span class="w"> </span>;<span class="w">
+</span><span class="w">    </span><span class="k">regex</span><span class="p">:</span><span class="w"> </span>(.<span class="cp">*)</span><span class="w">
+</span><span class="w">    </span><span class="k">target_label</span><span class="p">:</span><span class="w"> </span>kubernetes_name<span class="w">
+</span><span class="w">    </span><span class="k">replacement</span><span class="p">:</span><span class="w"> </span>$<span class="m">1</span><span class="w">
+</span><span class="w">    </span><span class="k">action</span><span class="p">:</span><span class="w"> </span>replace<span class="w">
+</span><span class="w">  </span>- <span class="k">source_labels</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>__meta_kubernetes_pod_node_name<span class="p">]</span><span class="w">
+</span><span class="w">    </span><span class="k">separator</span><span class="p">:</span><span class="w"> </span>;<span class="w">
+</span><span class="w">    </span><span class="k">regex</span><span class="p">:</span><span class="w"> </span>(.<span class="cp">*)</span><span class="w">
+</span><span class="w">    </span><span class="k">target_label</span><span class="p">:</span><span class="w"> </span>instance<span class="w">
+</span><span class="w">    </span><span class="k">replacement</span><span class="p">:</span><span class="w"> </span>$<span class="m">1</span><span class="w">
+</span><span class="w">    </span><span class="k">action</span><span class="p">:</span><span class="w"> </span>replace<span class="w">
+</span></code></pre></div></li>
+</ul>
+<p>其他的自建指标都与这个类似，使用 label 可以唯一找到目标就行了。</p>
+<p>同时有些指标可能不需要服务发现，可能只有一个 endpoint，那我们其实可以手动写 static_config。</p>
+<ul>
+<li>kube-state-metrics</li>
+<li>traefik</li>
+<li>CoreDNS</li>
+</ul>
+<p>完整 config 可以参考 <a href="https://gist.github.com/Bowser1704/9ceb310cf9d0f1f605a5eeafb6ddbce4">gist</a></p>
+<h3 id="2-监控多集群">2. 监控多集群</h3>
+<p>由于 Prometheus 监控的单位是 job，并且一个 job 里面不能写多个 kubernetes_sd_config，但是 static_configs 里面可以有多个 target。所以说我们有两种思路：</p>
+<ol>
+<li>
+<p>需要使用 kubernetes_sd_config 的，每个集群新建一个 job，而其他则可以使用 static_configs 并且使用 label 来区分。</p>
+<p>例如：</p>
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="k">static_configs</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="k">targets</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- stage-ip<span class="p">:</span><span class="m">6443</span><span class="w">
+</span><span class="w">    </span><span class="k">labels</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="k">cluster</span><span class="p">:</span><span class="w"> </span>stage<span class="w">
+</span><span class="w">  </span>- <span class="k">targets</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- product-ip<span class="p">:</span><span class="m">6443</span><span class="w">
+</span><span class="w">      </span><span class="k">labels</span><span class="p">:</span><span class="w">
+</span><span class="w">          </span><span class="k">cluster</span><span class="p">:</span><span class="w"> </span>product<span class="w">
+</span></code></pre></div></li>
+<li>
+<p>每个集群都新建所有 job，这个比较简单，有了一个模版，改字段就可以了，我上面的 config 就是这样，如果是 product1 集群，这 Crtl+R 替换所有的 stage 为 product1。</p>
+<blockquote>
+<p>stage、product 等名字都是自己定的。</p>
+</blockquote>
+<p>也不需要再添加新的 label，因为 job_name 就可以作为一个 label。</p>
+</li>
+</ol>
+<p>最后的结果也是汇总到同一个 time series 下面的。</p>
+<h2 id="prometheus-operator">Prometheus Operator</h2>
+<p>目前来说集群的主流监控方案，使用的都是 <a href="https://prometheus.io/">prometheus</a> 组件，并且配合 <a href="https://grafana.com/">Grafana</a> 实现可视化。而随着 <a href="https://coreos.com/blog/introducing-operators.html">Operators</a> 的提出，以及 CoreOS 首先实现的两个 Operator 其中之一是 <a href="https://coreos.com/blog/the-prometheus-operator.html">Prometheus Operator</a>，主流的部署方案也不再是原生写 yaml 文件来部署 prometheus 等软件了，而是采用 CoreOS 提供的 <a href="https://github.com/coreos/prometheus-operator">Prometheus Operator</a> 部署，另外由于 Helm 的流行，更多的人使用 Helm 来安装 Prometheus Operator 从而使得集群监控方案的部署就像普通 Linux 发行版安装一个软件时使用一条包管理器命令一样简单。</p>
+<blockquote>
+<p>To demonstrate the Operator concept in running code, we have two concrete examples to announce as open source projects today:</p>
+<ol>
+<li>The <a href="https://coreos.com/blog/introducing-the-etcd-operator.html"><em>etcd Operator</em></a> creates, configures, and manages etcd clusters. etcd is a reliable, distributed key-value store introduced by CoreOS for sustaining the most critical data in a distributed system, and is the primary configuration datastore of Kubernetes itself.</li>
+<li>The <a href="https://coreos.com/blog/the-prometheus-operator.html"><em>Prometheus Operator</em></a> creates, configures, and manages Prometheus monitoring instances. Prometheus is a powerful monitoring, metrics, and alerting tool, and a Cloud Native Computing Foundation (CNCF) project supported by the CoreOS team.</li>
+</ol>
+<p>&mdash; CoreOS</p>
+</blockquote>
+<h2 id="为什么不使用原生-prometheus">为什么不使用原生 Prometheus</h2>
+<p>众所周知，目前来说，k8s 对于有状态（stateful）应用的管理还是没有很好，可以说是一个痛点，所以像 databases, caches, 和 monitoring systems 这些有状态应用，手动使用 StatefulSet 来部署，不过显然是没有 Operator 来的方便。</p>
+<blockquote>
+<p>operater 可以看成一个特定应用的 SRE 保姆。</p>
+</blockquote>
+<p>并且使用 Operator 将很多复杂的配置都抽离出来了。使部署一些需要高运维的工具不再那么容易。不过我们的场景用不了 Operator。</p>
+]]></content>
+		</item>
+		
+		<item>
+			<title>k8s vxlan 作为 cni 后端引发的 63 秒延迟</title>
+			<link>https://bowser1704.github.io/posts/vxlan-bug/</link>
+			<pubDate>Sat, 27 Jun 2020 13:21:45 +0800</pubDate>
+			
+			<guid>https://bowser1704.github.io/posts/vxlan-bug/</guid>
+			<description>vxlan as the flannel backend</description>
+			<content type="html"><![CDATA[<p>使用 flanne 作为 cni 插件，并且使用 vxlan 作为后端会有 bug，表现为</p>
+<ol>
+<li>
+<p>「 node 不能访问 pod 被调度到其他 node 的 service，但是可以通过 pod real IP/ endpoint 访问。」</p>
+</li>
+<li>
+<p>实际上是「node 通过 svc 访问 调度到其他  node 的 pod 会有延时， 63s」</p>
+</li>
+</ol>
+<blockquote>
+<p>Flatcar / newer Linux kernels  延迟为 1 s</p>
+</blockquote>
+<h2 id="1-遇到-bug使用-cert-manager">1. 遇到 bug：使用 cert-manager</h2>
+<p>首先是在使用 cert-manager 的时候</p>
+<blockquote>
+<p>cert-manager 的架构需要使用到一个 cert-manager-webhook 用来声明「创建一个 CR certificate」。但是如果 cert-manager-webhoook 被调度到所在的 node 之外的 node，就会出现 time-out。</p>
+</blockquote>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">Error from server <span class="o">(</span>InternalError<span class="o">)</span>: error when creating <span class="s2">&#34;certificate.yaml&#34;</span>: Internal error occurred: failed calling webhook <span class="s2">&#34;webhook.cert-manager.io&#34;</span>: Post https://cert-manager-webhook.cert-manager.svc:443/mutate?timeout<span class="o">=</span>30s: dial tcp 10.43.18.211:443: i/o timeout
+</code></pre></div><p>如上，因为 cert-manager 设置了一个 timeout 所以结果肯定是失败的。</p>
+<ul>
+<li>涉及 issue <a href="https://github.com/jetstack/cert-manager/issues/2811">https://github.com/jetstack/cert-manager/issues/2811</a></li>
+</ul>
+<h2 id="2-探寻原因">2. 探寻原因</h2>
+<table>
+<thead>
+<tr>
+<th align="center">源</th>
+<th align="center">目标</th>
+<th align="center">结果</th>
+<th align="center">组别</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">nodeA</td>
+<td align="center">service(pod in nodeA)</td>
+<td align="center">success</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td align="center">nodeA</td>
+<td align="center">service(pod in nodeB)</td>
+<td align="center">failure/delay 63s</td>
+<td align="center">2</td>
+</tr>
+<tr>
+<td align="center">pod(in nodeA)</td>
+<td align="center">service(pod in nodeB)</td>
+<td align="center">success</td>
+<td align="center">3</td>
+</tr>
+</tbody>
+</table>
+<p>参考 <a href="https://github.com/jetstack/cert-manager/issues/2811">cert-manager#2811</a>，也许修改 flannel backend to host-gw 可能有用。</p>
+<blockquote>
+<p>I changed the flannel backend from vxlan to host-gw, but it doesn&rsquo;t seem to work.</p>
+</blockquote>
+<ul>
+<li>怎么修改 flannel backend</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">vim /etc/systemd/system/k3s.service
+</code></pre></div><ul>
+<li>
+<p>修改的部分</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nv">ExecStart</span><span class="o">=</span>/usr/local/bin/k3s server --flannel-backend host-gw
+</code></pre></div></li>
+<li>
+<p>restart k3s</p>
+</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">systemctl daemon-reload
+systemctl restart k3s
+<span class="c1">#如果没重启的话是不会的，所以要重启所有 node 「包括 agent」。</span>
+</code></pre></div><ul>
+<li>check my k3s net-conf 这样只能看到 backed 的设置。</li>
+</ul>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">- 检查每个节点的 flannel backend type。
+
+​<span class="sb">```</span>bash
+<span class="o">[</span>root@iZuf6dq9lezw045stckkhsZ ~<span class="o">]</span><span class="c1"># kubectl get node bowser1704 -o yaml | grep backend-type</span>
+    flannel.alpha.coreos.com/backend-type: host-gw
+</code></pre></div><p><del>所以对我来说 更换为 host-gw 似乎并没有作用。</del></p>
+<p>因为使用的是阿里云的云企业网，并且使用不同账号 vpc，属于跨 vpc，也就是阿里云的 vpc 网络是二层隔离的，所以 host-gw 不能使用。因为阿里云在中间做了一些拦截，把使用 node ip 作为路由下一跳的包全都拦了。</p>
+<h2 id="3-着手-service检查-iptables-规则">3. 着手 service：检查 iptables 规则</h2>
+<p>众所周知，service cluster IP 并不是真实 IP，而是通过 iptables 或者 ipvs 修改内核 netfilter 规则，做一些 <a href="https://en.wikipedia.org/wiki/Network_address_translation#DNAT">DNAT</a>(Destination Network Address Translation)，将给定的协议 / 数据报转发到 endpoing 「实际上是 pod 的 real ip，建立在 overlay network 的」。</p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ggadttipz9j30u01270ya.jpg" alt="FW-IDS-iptables-Flowchart-v2019-04-30-1"></p>
+<p>由上图可以知道数据包在 netfilter 内的走向。「需要有一定 iptables 知识」</p>
+<p>并且我们知道，svc cluster ip 需要的是 DNAT，所以是 NAT table 中的 PREROUTING 和 OUTPUT chain，我们检查 PREROUING chain 和 OUTPUT chain。「在我们的场景下，packet 只会走 OUTPUT 和 POSTROUTING chain」</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># check nat table PREROUTING chain</span>
+<span class="o">[</span>root@bowser1704 be<span class="o">]</span><span class="c1"># iptables -t nat -n -v -L PREROUTING/OUTPUT</span>
+Chain PREROUTING <span class="o">(</span>policy ACCEPT <span class="m">49</span> packets, <span class="m">3398</span> bytes<span class="o">)</span>
+ pkts bytes target     prot opt in     out     <span class="nb">source</span>               destination
+3193K  209M KUBE-SERVICES  all  --  *      *       0.0.0.0/0            0.0.0.0/0            /* kubernetes service portals */
+1944K  142M CNI-HOSTPORT-DNAT  all  --  *      *       0.0.0.0/0            0.0.0.0/0            ADDRTYPE match dst-type LOCAL
+
+<span class="c1"># check KUBE-SERIVCES chain / food is my service name</span>
+<span class="o">[</span>root@iZuf6dq9lezw045stckkhsZ be<span class="o">]</span><span class="c1"># iptables -t nat -n -v -L KUBE-SERVICES | grep food</span>
+    <span class="m">2</span>   <span class="m">120</span> KUBE-MARK-MASQ  tcp  --  *      *      !10.42.0.0/16         10.43.105.114        /* food/food-backend:http cluster IP */ tcp dpt:8080
+    <span class="m">2</span>   <span class="m">120</span> KUBE-SVC-J4YWF6HICEDZUWTC  tcp  --  *      *       0.0.0.0/0            10.43.105.114        /* food/food-backend:http cluster IP */ tcp dpt:8080
+    <span class="m">0</span>     <span class="m">0</span> KUBE-MARK-MASQ  tcp  --  *      *      !10.42.0.0/16         10.43.105.118        /* food/redis: cluster IP */ tcp dpt:7388
+    <span class="m">0</span>     <span class="m">0</span> KUBE-SVC-OXGTRCQ72XOGLTBD  tcp  --  *      *       0.0.0.0/0            10.43.105.118        /* food/redis: cluster IP */ tcp dpt:7388
+
+<span class="c1"># check food svc chain</span>
+<span class="o">[</span>root@iZuf6dq9lezw045stckkhsZ be<span class="o">]</span><span class="c1"># iptables -t nat -n -v -L  KUBE-SVC-J4YWF6HICEDZUWTC</span>
+Chain KUBE-SVC-J4YWF6HICEDZUWTC <span class="o">(</span><span class="m">1</span> references<span class="o">)</span>
+ pkts bytes target     prot opt in     out     <span class="nb">source</span>               destination
+    <span class="m">2</span>   <span class="m">120</span> KUBE-SEP-Z45YJMXQTGNBLAMQ  all  --  *      *       0.0.0.0/0            0.0.0.0/0
+
+<span class="c1"># check kstack sep chain / sep is made for load balance</span>
+<span class="o">[</span>root@iZuf6dq9lezw045stckkhsZ be<span class="o">]</span><span class="c1"># iptables -t nat -n -v -L  KUBE-SEP-Z45YJMXQTGNBLAMQ</span>
+Chain KUBE-SEP-Z45YJMXQTGNBLAMQ <span class="o">(</span><span class="m">1</span> references<span class="o">)</span>
+ pkts bytes target     prot opt in     out     <span class="nb">source</span>               destination
+    <span class="m">0</span>     <span class="m">0</span> KUBE-MARK-MASQ  all  --  *      *       10.42.1.4            0.0.0.0/0
+    <span class="m">2</span>   <span class="m">120</span> DNAT       tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp to:10.42.1.4:8080
+
+<span class="o">[</span>root@bowser1704 be<span class="o">]</span><span class="c1"># iptables -t nat -n -v -L KUBE-MARK-MASQ</span>
+Chain KUBE-MARK-MASQ <span class="o">(</span><span class="m">56</span> references<span class="o">)</span>
+ pkts bytes target     prot opt in     out     <span class="nb">source</span>               destination
+   <span class="m">58</span>  <span class="m">2400</span> MARK       all  --  *      *       0.0.0.0/0            0.0.0.0/0            MARK or 0x4000
+</code></pre></div><p>而 POSTROUTING 做了什么呢？</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="o">[</span>root@iZuf6dq9lezw045stckkhsZ ~<span class="o">]</span><span class="c1"># iptables -t nat -n -v -L POSTROUTING</span>
+Chain POSTROUTING <span class="o">(</span>policy ACCEPT <span class="m">5747</span> packets, 614K bytes<span class="o">)</span>
+ pkts bytes target     prot opt in     out     <span class="nb">source</span>               destination
+4948K  362M CNI-HOSTPORT-MASQ  all  --  *      *       0.0.0.0/0            0.0.0.0/0            /* CNI portfwd requiring masquerade */
+4948K  362M KUBE-POSTROUTING  all  --  *      *       0.0.0.0/0            0.0.0.0/0            /* kubernetes postrouting rules */
+2346K  150M RETURN     all  --  *      *       10.42.0.0/16         10.42.0.0/16
+ <span class="m">2608</span>  198K MASQUERADE  all  --  *      *       10.42.0.0/16        !224.0.0.0/4
+<span class="m">15770</span>  690K RETURN     all  --  *      *      !10.42.0.0/16         10.42.0.0/24
+    <span class="m">3</span>   <span class="m">180</span> MASQUERADE  all  --  *      *      !10.42.0.0/16         10.42.0.0/16
+<span class="o">[</span>root@iZuf6dq9lezw045stckkhsZ ~<span class="o">]</span><span class="c1"># iptables -t nat -n -v -L CNI-HOSTPORT-MASQ</span>
+Chain CNI-HOSTPORT-MASQ <span class="o">(</span><span class="m">1</span> references<span class="o">)</span>
+ pkts bytes target     prot opt in     out     <span class="nb">source</span>               destination
+    <span class="m">0</span>     <span class="m">0</span> MASQUERADE  all  --  *      *       0.0.0.0/0            0.0.0.0/0            mark match 0x2000/0x2000
+<span class="o">[</span>root@iZuf6dq9lezw045stckkhsZ ~<span class="o">]</span><span class="c1"># iptables -t nat -n -v -L KUBE-POSTROUTING</span>
+Chain KUBE-POSTROUTING <span class="o">(</span><span class="m">1</span> references<span class="o">)</span>
+ pkts bytes target     prot opt in     out     <span class="nb">source</span>               destination
+  <span class="m">448</span> <span class="m">18044</span> MASQUERADE  all  --  *      *       0.0.0.0/0            0.0.0.0/0            /* kubernetes service traffic requiring SNAT */ mark match 0x4000/0x4000
+</code></pre></div><p>也就是匹配加了 mark 0x4000/0x4000 的 packet，并做一次 SNAT。</p>
+<p>kubu-proxy 用来实现 DNAT 和 SNAT 「k3s 二进制文件内置了，没有单独起一个进程。」</p>
+<ul>
+<li>
+<p>实现 SNAT 是利用 masquerading rules 「与 SNAT rules 有一些区别，SNAT rules 转换的 IP 是给定的，但是这种方式是 动态获取当前 IP 的。」</p>
+<p>实现 SNAT 只针对于，pod（in k3s it’s 10.42.0.0/16） 之外的网段访问 svc，具体过程是先用 KUBE-MARK-MASQ 加一个 mark，POSTROUING 阶段检查，如果有这个 mark 就做 SNAT。</p>
+</li>
+<li>
+<p>实现 DNAT 是利用 DNAT rules。</p>
+</li>
+</ul>
+<hr>
+<p><strong>根据第二步中的对照组，</strong></p>
+<ul>
+<li>1 3 对照发现 node 和 pod in node 访问结果不一样，在这里区别是 node 做了 SNAT。所以 SNAT 可能有影响。</li>
+</ul>
+<h2 id="4-查看-dnat-之后的走向">4. 查看 DNAT 之后的走向</h2>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="o">[</span>root@iZuf6dq9lezw045stckkhsZ ~<span class="o">]</span><span class="c1"># route -n</span>
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+0.0.0.0         172.19.159.253  0.0.0.0         UG    <span class="m">0</span>      <span class="m">0</span>        <span class="m">0</span> eth0
+10.42.0.0       0.0.0.0         255.255.255.0   U     <span class="m">0</span>      <span class="m">0</span>        <span class="m">0</span> cni0
+10.42.1.0       10.42.1.0       255.255.255.0   UG    <span class="m">0</span>      <span class="m">0</span>        <span class="m">0</span> flannel.1
+10.42.2.0       10.42.2.0       255.255.255.0   UG    <span class="m">0</span>      <span class="m">0</span>        <span class="m">0</span> flannel.1
+</code></pre></div><hr>
+<p><strong>根据第二步中的对照组</strong></p>
+<p>1 2 对照可以发现，1 和 2 结果不一样。在这里不一样的原因是 1 中直接走 cni 了，但是 2 中会走 flannel。所以走 flannel 可能有影响，并且根据别人使用 host-gw 会有帮助，也许 vxlan 有问题。</p>
+<blockquote>
+<p>cni0 是容器网桥，flannel.1 是 cni 插件 flannel 网桥，走 flannel 意味着会有 vxlan。</p>
+</blockquote>
+<h2 id="5-追踪数据包-tcpdump-抓包">5. 追踪数据包 tcpdump 抓包</h2>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1"># 监听 pod ip / endpoing</span>
+tcpdump -i any -vv host 10.42.1.34
+
+<span class="c1"># 另一个 shell curl svc</span>
+curl 10.43.105.114:8080/sd/health
+
+<span class="c1"># P.S. 此时不能有其他人访问这个 pod。</span>
+</code></pre></div><p>发现有输出，说明监听到了，也就是 svc 转发到了对应的 pod。<strong>并且等了一分钟左右他居然是能连通的</strong>。</p>
+<p><strong>初次之外，建立 TCP 连接时，一直重发 SYN，第七次才真正传送到了。</strong></p>
+<p>明确两点：</p>
+<ul>
+<li>tcp 数据报是转发到了 pod IP 上的。</li>
+<li>63s 的延迟之后又可以了。</li>
+</ul>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ggar4e5zmqj30q304n0te.jpg" alt="image-20200630235158877"></p>
+<p>在 tcp 三次握手时：</p>
+<ol>
+<li>客户端首先要发送一个 SYN 给服务端</li>
+<li>服务端再发送一个 SYN-ACK 回复客户端</li>
+<li>客户端最后发送一个 ACK 给服务端，握手就成功了。</li>
+</ol>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ggahwt6l8vj30go0960tb.jpg" alt="img"></p>
+<blockquote>
+<p>当连接未建立成功，重传需要 1s + 2s + 4s+ 8s+ 16s + 32s = 63s。并且第六次重传输会取消 checksum，也就是 &lsquo;no cksum&rsquo; 。</p>
+</blockquote>
+<hr>
+<p>根据 TCP 的原理以及前几步骤的确认，可以确认问题出现在 IP packet 进入 flannel 之后，并且做了 SNAT 以及 利用 VXLAN。</p>
+<h2 id="6-追踪产生-bug-的原因">6. 追踪产生 bug 的原因</h2>
+<p>由第三步可以暂时认定是有 SNAT 的原因。并且做 SNAT 转出来还是自己的 IP。</p>
+<p>关于内核 SNAT 的步骤，参考 <a href="https://github.com/torvalds/linux/blob/24de3d377539e384621c5b8f8f8d8d01852dddc8/net/netfilter/nf_nat_core.c#L290-L301">Linux NAT core</a>。</p>
+<ol>
+<li>检查 source IP 是否为 IP pool 内的 IP，如果是的话直接返回。</li>
+<li>找到 IP pool 里面最少使用的 IP，将 IP packet 的 source IP 换成这个 IP。</li>
+<li>检查允许的端口，如果目前的端口，本来就空闲，就不变。之后再返回。</li>
+<li>找一个用于 SNAT 的端口 by calling <a href="https://github.com/torvalds/linux/blob/24de3d377539e384621c5b8f8f8d8d01852dddc8/net/netfilter/nf_nat_proto_common.c#L37-L85">nf_nat_l4proto_unique_tuple()</a>。</li>
+</ol>
+<p>iptables 中的 KUBE-MARK-MASQ 用作标记要不要 SNAT，POSTROUING 会做一次 SNAT，并且 VXLAN 封装之后还会做一次 SNAT。</p>
+<ul>
+<li>
+<p>flannel issue</p>
+<p><a href="https://github.com/coreos/flannel/pull/1282#issuecomment-635639567">coreos/flannel#1282 (comment)</a></p>
+<p><a href="https://github.com/coreos/flannel/pull/1282#issuecomment-635145841">coreos/flannel#1282 (comment)</a></p>
+<p><a href="https://github.com/coreos/flannel/pull/1282#issuecomment-635145841">coreos/flannel#1282 (comment)</a></p>
+<p>有人关于 &ndash;random-fully 参数做了详细的测试，这个参数是用于选择 SNAT 的两种算法。</p>
+</li>
+</ul>
+<p>大意是 iptables 和 kube-proxy 对 &ndash;random-fully 支持的问题。</p>
+<ul>
+<li>
+<p>k8s issue <a href="https://github.com/kubernetes/kubernetes/issues/88986#issuecomment-640929804">https://github.com/kubernetes/kubernetes/issues/88986#issuecomment-640929804</a></p>
+<p>这个 issue 中的 comment 详细讲述的原因和如何去解决这个问题。</p>
+</li>
+</ul>
+<p>上面这些原因是引起使用 VXLAN/VETH 时 incorrect checksum 的原因，并且是一起触发的。</p>
+<ol>
+<li>
+<p>由于 packet mark 的方式，当我们在第一次对 packet mark 0x4000/0x4000 并且进行 SNAT 之后，进入 VETH，经过 cni 插件出来之后，POSTROUTING 仍然会识别到这个包的 mark，并且进行二次 SNAT。</p>
+</li>
+<li>
+<p>并且因为 &ndash;random-fully SNAT 方式，source port 会改变，并且因为 kernel bug 不会进行第二次 check sum，所以最后的 checksum is incorrect，解决方案可以是禁止 double SNAT 所以不会有 bad checksum 的情况，或者是升级内核使得他会进行第二次 checksum。</p>
+<p>kernel checksum bug <a href="https://tech.vijayp.ca/linux-kernel-bug-delivers-corrupt-tcp-ip-data-to-mesos-kubernetes-docker-containers-4986f88f7a19">参考链接</a></p>
+</li>
+</ol>
+<hr>
+<p>checksum-offload 指定了内核不做校验和，交给网卡 / 硬件去做，但是使用 VXLAN 时，由于上面某些原因校验值是错的。导致 checksum 错误，所以会丢弃，TCP 不得不重传，然后因为 5 次重传耗时 63s「第六次重传取消 checksum」，所以结果是 63s delay。</p>
+<blockquote>
+<p><a href="https://github.com/projectcalico/calico/issues/3145">https://github.com/projectcalico/calico/issues/3145</a></p>
+<p>Linux’ TCP stack will sometimes/always attempt to send packets with an incorrect checksum, or that are far too large for the network link, with the result that the packet is rejected and TCP has to re-transmit. This slows down network throughput enormously.</p>
+</blockquote>
+<p>如下图，本级 checksum 一直 incorrect。</p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ggatc17gefj31hc0i6n3x.jpg" alt="image-20200701010831331"></p>
+<p>解决办法</p>
+<ol>
+<li>
+<p>关闭 Checksum Offloading</p>
+<p><code>ethtool -K flannel.1 tx-checksum-ip-generic off</code></p>
+</li>
+</ol>
+<h2 id="7-fix-this-bug">7. fix this bug</h2>
+<ol>
+<li>
+<p><a href="https://github.com/kubernetes/kubernetes/pull/92035#issuecomment-644502203">https://github.com/kubernetes/kubernetes/pull/92035#issuecomment-644502203</a></p>
+<p>pr 中详细讲述了触发这个 bug 的几要素。他的方法是使得走 flannel 后不会校验失败。</p>
+</li>
+<li>
+<p>关闭 Checksum Offloading</p>
+<p>因为是用的是 flannel 等虚拟网络硬件，做 checksum 等操作会 incorrect，所以关闭其实还是最省心的。</p>
+</li>
+</ol>
+<hr>
+<p>参考链接</p>
+<ul>
+<li>iptables <a href="https://www.digitalocean.com/community/tutorials/a-deep-dive-into-iptables-and-netfilter-architecture">https://www.digitalocean.com/community/tutorials/a-deep-dive-into-iptables-and-netfilter-architecture</a></li>
+<li>explaination for the same bug <a href="https://tech.xing.com/a-reason-for-unexplained-connection-timeouts-on-kubernetes-docker-abd041cf7e02">https://tech.xing.com/a-reason-for-unexplained-connection-timeouts-on-kubernetes-docker-abd041cf7e02</a></li>
+<li>linux code <a href="https://github.com/torvalds/linux/blob/24de3d377539e384621c5b8f8f8d8d01852dddc8/net/netfilter/nf_nat_core.c#L290-L291">https://github.com/torvalds/linux/blob/24de3d377539e384621c5b8f8f8d8d01852dddc8/net/netfilter/nf_nat_core.c#L290-L291</a></li>
+<li><a href="https://github.com/weaveworks/weave/issues/1255#issuecomment-221820171">weaveworks/weave#1255 (comment)</a></li>
+<li>VXLAN <a href="https://community.mellanox.com/s/article/vxlan-considerations-for-connectx-3-pro">https://community.mellanox.com/s/article/vxlan-considerations-for-connectx-3-pro</a></li>
+<li>checksum-bug <a href="https://tech.vijayp.ca/linux-kernel-bug-delivers-corrupt-tcp-ip-data-to-mesos-kubernetes-docker-containers-4986f88f7a19">https://tech.vijayp.ca/linux-kernel-bug-delivers-corrupt-tcp-ip-data-to-mesos-kubernetes-docker-containers-4986f88f7a19</a></li>
+<li><a href="https://www.dynatrace.com/news/blog/detecting-network-errors-impact-on-services/">https://www.dynatrace.com/news/blog/detecting-network-errors-impact-on-services/</a></li>
+</ul>
+]]></content>
+		</item>
+		
+		<item>
+			<title>读卡夫卡《变形计》</title>
+			<link>https://bowser1704.github.io/posts/kafka-the-metamorphosis/</link>
+			<pubDate>Thu, 05 Dec 2019 01:04:48 +0800</pubDate>
+			
+			<guid>https://bowser1704.github.io/posts/kafka-the-metamorphosis/</guid>
+			<description>小说的开头，“一天早晨, 格里高尔·萨姆沙从不安的睡梦中醒来, 却发现自己躺在床上变成了一只巨大的甲虫。”，看上去难以置信，是荒谬的，但是当我们</description>
+			<content type="html"><![CDATA[<p>小说的开头，“一天早晨, 格里高尔·萨姆沙从不安的睡梦中醒来, 却发现自己躺在床上变成了一只巨大的甲虫。”，看上去难以置信，是荒谬的，但是当我们看完这部作品之后，会想，这难以置信吗？是否有一天，我们也会变成如此。</p>
+<h2 id="一荒谬的社会伦理关系">一、<strong>荒谬的社会伦理关系</strong></h2>
+<p>维基百科说荒谬的概念：</p>
+<blockquote>
+<p>荒谬这个概念是指世界的不合理部分与我们渴望解释一切的冲突和离异。加缪认为，建立在怀疑论之上的生活是没有真正意义的，但接受荒谬的诚实的人会以自己的反抗赋予生活意义。这种无意义性还涵盖着世界的是非不分与不公平。这与“坏事不会发生在好人身上”的概念相左；对世界而言，打个比方说，没有所谓的好人或坏人；发生的事就这样发生了，它可能降临在任何“好”人或“坏”人身上。</p>
+<p>维基百科： 荒谬的定义</p>
+</blockquote>
+<p>在变形计中，突出的荒谬有，格里高尔(人)变成臭虫，家人并不关心格里高尔如何变形，是否能变回，又如何变回。</p>
+<p>这里还是要说到，卡夫卡与他父亲的关系，很多学者说，卡夫卡在他父亲心目中就是一只臭虫，其实可以从卡夫卡给父亲的信中看得出来，他对父亲是极度害怕的，变形是不是可以作为一种反抗，比人还大的臭虫形象，吓跑了秘书，是否也能吓到父亲呢，去作为一种反抗，但事实上却没有，父亲并不怕他，所以在父亲这里，变形反而是一种受罚，身体的痛苦，行动的困难。</p>
+<p>其实变形这个情节在许多神话，故事，或者书籍都有很多，古希腊神话中尤其是，可以说变形在古希腊神话中，是一个恒久不变的主题，有出于善意的，阿尔库俄涅变成翠鸟，也有出于恶意带有惩罚性质的，伊娥变为白色的小母牛，庇厄丽娅姐妹变成喜鹊。</p>
+<p>古希腊神话中，人神同形，那个时候神还并不是高高在上的，人并未将神看作绝对的权威，神话中也不鲜见人挑战神的桥段，那么什么是神呢，什么是人呢，神性是什么，人性又是什么？</p>
+<p>其实我们可以想一下，将人变为动物即为荒诞，或者说大多情况为惩罚，这个时候将人的位置与万物相比，人在上了，但是现实生活中还有许多人类无法接触，无法改变，无法承受的伤害等，人便得出，高于人的存在，神。</p>
+<p>而变形是否又可以看做是对人性的追求，对人性的探索，也即是人到底是什么？</p>
+<p>许久之前便有如此的<em>变形</em>——变成动物(臭虫)，那么变形还算做是荒诞吗？</p>
+<p>其实真正荒谬的是家人对于格里高尔变形的态度，格里高尔<strong>的的确确变形了</strong>，但不是自己身体上所谓的变形，而是家人的态度，邻里的态度，让格里高尔变成了非人，他被家人从人的世界剥离了出来，不让别人看见他，甚至不愿意给他送食，这一切与曾经截然不同，以前的格里高尔有一份工作，有能养活全家的应酬，那个时候全家都是<em>友善的</em>，因为他的作用，他对家庭的作用，一旦他家庭的作用失效了，那曾经的友善就荡然全无了。这是不是就是<code>世界的不合理部分与我们渴望解释一切的冲突和离异</code>，恩格斯就说过，“维系家庭的纽带并不是家庭的爱，而是隐藏在财产共有关系之后的私人利益。”，这是荒诞，人与社会相处的荒谬，社会关系的荒谬。</p>
+<p>如果一个人对家庭，或者对某个组织没有了价值，没有了作用，那么这个组织曾经对这个人的友好还会在吗？这个问题是真实的，人们对于这种现象的反应，行为也是真实的，我们不会变成臭虫，但我们都有可能失去作用，失去价值，可能你现在身在某处，带着光环，群星环绕，十分耀眼，但是一旦你没有了那些对他们而言有价值的东西，一切本质都将暴露出来，这是变形吗？当然是，人际关系的变形，并且十分不堪，其实深处想想，<strong>人们表明看起来关系融洽，友好，腻歪，但是内心大多是孤独的，与其他人是陌生的，这不是缺少某个人的存在，也不是没有真正与他人交好</strong>，而是事实就是这样，<strong>一切关系的结合，一切关系的存在，一切组织的成立，都是应为某种利害关系，都是利益，一旦这种关系不复存在，人的真实就会暴露出来，自私与冷漠</strong>。</p>
+<p>其实大家身边都可能发生过这种事情，就在身边，真真切切，大家很有可能得病——变成臭虫，我有一个阿姨，得了癌症，很多年，治愈后再度复发，这个时候，身边的人，其实都会陌生了，大家都不愿去伺候她，她失去了她本有的价值，无法实现任何事情，这个时候他已经成为了臭虫，变成了只会折磨家人，让大家都过不上好日子的存在，虽然大多数人，面前，眼前，依旧善良，依旧真诚，可是内心的真实已经渐渐暴露出来了。</p>
+<p>所以在这个荒谬的社会，我们到底是为谁而活着，要有价值，要有付出，否则人们将会唾弃你，直到你变成了非人，这便是人类的生活状况，看过一部电影，叫《杀生》，牛结实被村民们杀害，这不被世人认可的存在，最总被抹杀，所以我们到底是为什么而活着？当我们达不到他人的期望，实现不了很大的价值，是否，我们已经成为了臭虫。很多时候不是人活着，而是人被活着。</p>
+<p>最近很多互联网公司，在员工招聘就职离职相关，出现了很多大新闻，互联网公司，30岁以上的老人就要开始清退了，这是为了什么而活着。</p>
+<p>如何才能改变这种状态呢？结尾处：</p>
+<blockquote>
+<p>“现在又该怎么办呢？”格里高尔自言自语地说，又向四周的黑暗扫了一眼。他很快就发现自己已经完全不能动弹了。这并没有使他吃惊，相反，他依靠这些又细又弱的腿爬了这么多路，这倒真是不可思议。其他也没有什么不舒服的地方了。的确，他整个身子都觉得酸疼，不过这酸疼也好像正在逐渐减轻，以后一定会完全不疼的。他背上的烂苹果和周围发炎的地方都蒙上了柔软的尘土，早就不太难过了。他怀着温柔和爱意想着自己的一家人。他消灭自己的决心比妹妹还强烈呢，只要这件事真能办得到。他陷在这样空虚而安谧的沉思中，一直到钟楼上打响了半夜三点。从窗外的世界透进来的第一道光线又一次地唤醒了他的知觉，接着他的头无力地颓然垂下，他的鼻孔里也呼出了最后一丝摇曳不定的气息。</p>
+<p>摘自：《变形记》 — 〔奥地利〕弗朗茨·卡夫卡</p>
+</blockquote>
+<p>他怀着温柔和爱意想着一家人，他消灭自己的决心比妹妹还要强烈，多么ridiculous，这种对比，让痛苦变得深刻起来，他似乎没有了自我，不再是一个个体，怀着温柔和爱意，想着自己的一家人，似乎他的活着就是为了家人，为了他们生活的质量，所以当他给不了家人生活，最总一定会走向毁灭。</p>
+<p>所以是否毁灭是最后的结局呢？</p>
+<h2 id="二人到底是什么">二、人到底是什么</h2>
+<p>决定一个是这个人的到底是，形体，还是意识，又或者是人的价值。</p>
+<ol>
+<li>
+<p>格里高尔变成了臭虫，他还是格里高尔吗？</p>
+</li>
+<li>
+<p>格里高尔不能再给家庭带了经济支持，他还是格里高尔吗？</p>
+</li>
+<li>
+<p>格里高尔意识还是那个格里高尔，他就是格里高尔？</p>
+</li>
+</ol>
+<p>其实没有人知道，人到底是什么，完全不能给出一个公式，或定理证明人到底是什么，那么人到底是什么。</p>
+<p>因为生活，因为责任，价值是人，还是为了价值实现，他是人，价值人。</p>
+<p>因为意识，意识是人，我其实更想偏向于意识是人，这样更美好，不是吗，格里高尔的形体发生了变化，但是感情和意识还在，还是关心家人，关心妹妹，关心工作，这是他的意识形态，也许他是自卑的，为了家人而活着，没有自己的主体，无自我意识。但是他的意识就是没有自我，也就是说这就是他的自我意识。</p>
+<p>卡夫卡的书是多态的，人是什么的问题也是多态的，我倾向于书中所指出的为，片面的想法是，人的价值代表了人，一个人，只看价值，价值相同便可以等效替换，这就是人，社会中的人，这就是社会，人的意识形态如果有价值便可算作自身价值，但是意识形态有价值吗？</p>
+<hr>
+<p>艺术上对于“非人”的刻画，对于人的异化，大多是对社会，世界，深刻的刻画，让我们感受到了”人与人的对立，人都是自私的。“，在人与社会的关系中，是不存在妥协和和解的，世界就是冷漠的，人生无所谓希望，也无所谓失望，只是作为一个，为他，履行责任的存在而已。</p>
+<p>看过一部短片，中文叫做《螺丝人生》，其中的回答就是，人是工具，人只是社会中的一个个螺丝钉。</p>
+<p>所以人生似乎不在有意义了。</p>
+<blockquote>
+<p>世界是毫无理由的荒诞，人生是毫无内容的空虚</p>
+<p>《存在与虚无》： 萨特</p>
+</blockquote>
+<p>萨特的后一句是：但是正因为世界荒诞，才提出人之直面荒诞而活下去的勇气和伟大。直面荒诞，承担虚无，这也许才是人的价值吧。</p>
+]]></content>
+		</item>
+		
+		<item>
+			<title>《天气之子》反映的人生观</title>
+			<link>https://bowser1704.github.io/posts/weather-with-you/</link>
+			<pubDate>Sat, 02 Nov 2019 20:30:51 +0800</pubDate>
+			
+			<guid>https://bowser1704.github.io/posts/weather-with-you/</guid>
+			<description>电影中不断出现的《麦田里的守望者》 开头就是一个麦田里的守望者的特写镜头，就像霍尔顿一样，帆高也是离家出走，十分敏感，胆小，软弱，但是就是不愿</description>
+			<content type="html"><![CDATA[<h2 id="电影中不断出现的麦田里的守望者">电影中不断出现的《麦田里的守望者》</h2>
+<p>开头就是一个麦田里的守望者的<code>特写镜头</code>，就像霍尔顿一样，帆高也是离家出走，十分敏感，胆小，软弱，但是就是不愿意在家中待着，有一堆的理由，首先我认为这就是一个很感性的做法，这带来的后果很大，没有理性的去思考所做的事情会发生什么后果。</p>
+<h3 id="小资情调的忧伤">小资情调的忧伤</h3>
+<p>在生活水平一定发展之后，也就是小资产阶级就有了很多忧伤，也就是闲的蛋疼，他们感到平庸，世界的无理性，生命是没有意义的，所以他们想要逃跑，不停地逃跑，去一个没有人认识自己的地方，但其实如果去了另一个地方，还是会认识人，还是想要逃离，这是没有意义的逃离，就像霍尔顿一样最后还是回到家里，帆高也是回到家里，无论怎么逃，你所做的事情，其实没有意义，只是给更多人带来更多的麻烦。</p>
+<p>片中提到很多次，圭介和帆高很相似，对，他们其实就是一个少年，一个中年而已，但是表示出来了，都是离家出走，中年的圭介已经妥协了，不愿意麻烦别人，不愿意被别人麻烦，不再是一个感性的存在（但是片子最后他还是感性了），而少年的帆高，无论发生多大的事情，闯了多大的祸，依旧，依旧是没有后悔，没有紧张，当然这是片子刻意不去表现出来正常人的反应，也正是这样，感性的存在深刻的表现出来，也正是许多二次元爱好者的生活态度。</p>
+<p>许多人，中间比较突出的是很多二次元爱好者，家庭生活条件优越，但是可能会有家庭不完整的情况，她们尤其爱这中生活态度，对事物感到忧伤，很容易忧郁，并且喜欢把这种态度宣扬出去，告诉别人自己的状态，我认为这种态度是不正常的，或者说是幼稚的，你小时候17,8岁时候这样我都可以理解，但是如果你长大了，你认为你自己长大了，请不要再去宣扬你这种想法了，你可以忧郁，可以悲伤，但是满世界说你的悲伤是为了什么呢？你要做的还是得做，你的工作还是要完成，既然是生活，都是为了死亡，过程要完整。</p>
+<h2 id="天气">天气</h2>
+<p>天气在这里很重要，阳菜可以改变天气，让世界更美好，让人们更加开心，父亲可以带生病的孩子快乐游玩，商家可以卖更多货物&hellip;&hellip;..，总有那么些人会让世界更美好，有更多的欢声笑语，让本来到处逃跑的帆高，开始向往生活，开始认真的面对这个世界，似乎不再那么软弱了，想起葛优在《不见不散》中说的，这可能就是==爱情的力量吧==，圭介也变得更加好，接回了女儿，影片的结尾，他似乎过上了更好的生活，一切都是那么美好，看上去很融洽，大团圆结局。</p>
+<p>但是在这种美好中，带有那么一丝丝的悲伤，这或许就是小资产阶级的忧伤吧，东京成了一个海，或许他以前是那样的，但是让他变回去又付出了多大的代价呢，但是如果牺牲阳菜的话，情况又是怎么样呢，毕竟世界是那么肮脏，如果人们知道阳菜能改变这些，那他也许会被强迫牺牲吧。</p>
+<p>另外，天气，晴天，就比雨天好吗？</p>
+<p>下起了雨，你感到冷吗？</p>
+<h2 id="所以为的爱情">所以为的爱情</h2>
+<p>很多女生喜欢这种爱情，彼此之间，无所畏惧，帆高为了阳菜义无反顾，无所畏惧，看上去很美，看上去很感人的，这就是感性，帆高似乎最后得到了爱情，阳菜过上了幸福的生活，我所认为的不是，阳菜必须要牺牲自己，为了大家，为了世界，没必要，每个人都是一个个体，独立的个体，我们要做的是，不去麻烦别人，但是也不用被别人麻烦，甚至是贡献生命，我所以为的爱情没有这种轰轰烈烈，万物瞩目，平平淡淡其实才是最真的，不用打扰谁，如果你们有爱情，那就在一起，仅此，而已。</p>
+<h2 id="写在最后">写在最后</h2>
+<p>其实这是一篇带有反思的文字，我想不明白，为什么我会那样忧郁，悲观，我是农村人，没有优越的生活环境，小县城没有星巴克，生活中没有耐克阿迪，总是感受那些莫名的忧伤，奇怪了，事情变得复杂了，以前喜欢到处宣扬自己的那种忧伤，但是后来慢慢发现，这是很错误的，其实就是渴望被人发现自己，把丧看作是很好的文化，现在丧文化越来越流行，也让我更多的反思自己，自己到底是在做什么，在想什么？</p>
+<p>过度的随性所欲，过度的丧，都是十分感性的表现，如果要to be better，请保持理性。</p>
+]]></content>
+		</item>
+		
+		<item>
+			<title>谈谈系统启动发生了什么</title>
+			<link>https://bowser1704.github.io/posts/system-boot/</link>
+			<pubDate>Thu, 22 Aug 2019 16:23:18 +0800</pubDate>
+			
+			<guid>https://bowser1704.github.io/posts/system-boot/</guid>
+			<description>&lt;p&gt;系统启动实际上东西比较多，这里只是讲一讲，系统引导方面的东西。&lt;/p&gt;</description>
+			<content type="html"><![CDATA[<p>系统启动实际上东西比较多，这里只是讲一讲，系统引导方面的东西。</p>
+<h3 id="0-杂谈">0. 杂谈</h3>
+<p>首先我们知道在系统中启动叫做 <code>boot</code>，取自 Bootstrap，这里有个小故事</p>
+<blockquote>
+<p>Bootstrap 不是鞋带的意思，应该是“鞋子背带”的意思（http://en.wiktionary.org/wiki/bootstrap）
+在这里隐喻表示一种不需要外部帮助自己能够处理事情的情形。“pull oneself up by one&rsquo;s bootstraps”最初来自于《The Surprising Adventures of Baron Munchausen》这本书里的一个故事：主人公 Baron Munchausen 不小心掉进了一片沼泽，他通过自己的 bootstraps 将自己拉了出来（当然有童话神奇的色彩）。事实上在 19 世纪初美国就有&quot;pull oneself over a fence by one&rsquo;s bootstraps&quot;的语言，意思是“做荒谬不可能完成的事情”。
+参考：http://en.wikipedia.org/wiki/Bootstrapping</p>
+</blockquote>
+<p>为什么说这个故事呢，我们要启动系统，就要启动程序对吧，但是启动程序又要系统，这不就是一个死循环了吗？所以 <code>一种不需要外部帮助自己能够处理事情的情形</code>，在当时 ROM（Read only memory）的发展下，人们刚开始发明了 BIOS（Basic Input/Output System），后来又出现了 <code>UEFI</code> 全称“统一的可扩展固件接口”(Unified Extensible Firmware Interface)。</p>
+<h3 id="1-最开始是如何加载系统的">1. 最开始是如何加载系统的</h3>
+<h4 id="11-老一代的-legacy-bios--mbr">1.1 老一代的 Legacy BIOS + <code>MBR</code></h4>
+<p>最初的启动就是按下电源键之后，电脑读取写入 ROM 的 BIOS。BIOS 开始下面几个步骤。</p>
+<ol>
+<li>硬件自检（Power-On Self-Test）简称为 POST，如果有问题计算机会发出不同含义的蜂鸣声。（有没有很傻屌）</li>
+<li>选择启动顺序，现在 BIOS 开始要运行的权利给下一个 device 了，但是你电脑可能有多个硬盘，也可能你会插入 U 盘，所以可能需要你选择一个设备。
+<ul>
+<li>计算机开始读取设备的第一个扇区，也就是 512 字节，就叫做&quot;主引导记录&rdquo;（Master boot record，缩写为 <code>MBR</code>）。</li>
+<li>但是 <code>MBR</code> 有一些问题，所以现在基本不用了。</li>
+</ul>
+</li>
+<li>从硬盘启动，加载系统内核相关的东西。
+<ul>
+<li>这里因为 <code>MBR</code>，所以系统启动读取的是 <code>MBR</code> 内的启动程序，但是如果你一个硬盘，装了很多的系统，每次装新的系统，后面的启动代码就会覆盖前者的。</li>
+</ul>
+</li>
+</ol>
+<p>总结的话 <code>BIOS</code> 不认识设备，直接硬的来，你的 <code>MBR</code> 内写了什么，他就是什么。</p>
+<h4 id="12-进入-linux-系统之后-initd">1.2 进入 Linux 系统之后 initd</h4>
+<ol>
+<li>加载内核，进入 <code>/boot</code> 下找到内核文件，加载。</li>
+<li>开始运行初始化文件 <code>/sbin/init</code>，他的作用是初始化系统环境，<code>init</code> 就是第一个进程，<code>pid</code>=1</li>
+<li>确定运行级别</li>
+<li>加载开机启动程序</li>
+<li>用户登录</li>
+<li>进入 login shell</li>
+<li>打开 non-login shell</li>
+</ol>
+<p>这里初略讲，详情看阮一峰的文章。</p>
+<p>阮一峰写了两篇文章对于以前的启动方式很好的讲解了</p>
+<p><a href="http://www.ruanyifeng.com/blog/2013/02/booting.html">http://www.ruanyifeng.com/blog/2013/02/booting.html</a> 参考文章，作者阮一峰，对于 <code>MBR</code> 的详细解释</p>
+<p><a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html">http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html</a> 参考文章，作者阮一峰，对于 <code>Linux</code> 内核启动的解释。</p>
+<h3 id="2-今天我们怎么加载系统">2. 今天我们怎么加载系统</h3>
+<h4 id="21-新时代的-uefi-biosgpt">2.1 新时代的 <code>UEFI BIOS</code>+<code>GPT</code></h4>
+<p><code>UEFI</code> 不同于 legacy BIOS 的是，他认识设备，他会在 <code>/boot/efi</code> 寻找以 <code>.efi</code> 为后缀的文件，里面有一个目录 <code>EFI</code>，放了各种系统的 <code>efi</code> 启动程序。</p>
+<p>例如（不同厂商的驱动放在不同厂家的文件夹下面）</p>
+<blockquote>
+<p>启动 windows	进入 Microsoft/Boot/*.efi</p>
+<p>启动 <code>ubuntu</code>       进入 ubuntu/*.efi</p>
+</blockquote>
+<p><img src="https://upload-images.jianshu.io/upload_images/4072641-4b58e0e13c209d14.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/345/format/webp" alt="efi"></p>
+<h5 id="流程">流程</h5>
+<ol>
+<li>
+<p>POST，硬件自检</p>
+</li>
+<li>
+<p><code>UEFI</code> 固件加载，一系列初始化。</p>
+</li>
+<li>
+<p>按照设置里面的顺序，读取 <code>efi</code> 启动项，加载硬件驱动，解析其中的分区表（GPT 和 MBR）。</p>
+<p>启动项分为两种</p>
+<ul>
+<li>文件启动项，即 <code>UEFI</code> 已经记录了启动项的地址，某个磁盘-&gt; 某个分区-&gt;/<code>EFI/Boot/*.efi</code></li>
+<li>设备启动项，就是磁盘，会直接去磁盘里面寻找 <code>ESP</code> 分区下的 <code>/EFI/Boot/*.efi</code></li>
+</ul>
+</li>
+</ol>
+<blockquote>
+<p>随着 Windows8.x，以及 UEFI 标准 2.x，win 推出了一个叫做 SecureBoot 的功能。开了 SecureBoot 之后，主板会验证即将加载的 efi 文件的签名，如果开发者不是受信任的开发者，就会拒绝加载。
+比如 CloverX64.efi 就好像没有签名。</p>
+</blockquote>
+<p>所以在装 Linux 的时候我们会关闭 SecureBoot，防止不被授权，无法加载 efi</p>
+<h5 id="磁盘分区文件系统">磁盘分区，文件系统</h5>
+<p>磁盘就是我们用的硬盘，U 盘之类的，我们要对磁盘进行分区，其实不分区可以理解为只分一个区，然后每个区要进行格式化，并且选择文件系统。不同类型磁盘有不同类型的设备驱动，不同系统有不同的文件系统驱动。</p>
+<ul>
+<li>磁盘驱动
+<ul>
+<li><code>win8/10</code> 含有 <code>IDE/SATA/NVME</code> 三种驱动</li>
+<li><code>macos</code> 含有 <code>/SATA/NVME</code> 驱动，但是 10.13 之前是苹果专用 <code>NVME</code> 驱动</li>
+</ul>
+</li>
+<li>文件系统驱动
+<ul>
+<li><code>win10</code> 含有 FAT32、NTFS、exFAT、ReFS 几种</li>
+<li>Linux 含有 ext2、ext3、ext4、FAT32 等</li>
+<li>macOS 含有 FAT32、HFS+、APFS、exFAT，NTFS 只读</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>驱动是可以后期安装的，Paragon 这个公司推出了 NTFS for Mac、HFS for Windows、ExtFS for……等一套文件系统驱动。</p>
+</blockquote>
+<h5 id="总结">总结</h5>
+<p>UEFI 规范里，在 GPT 分区表的基础上，规定了一个 EFI 系统分区（EFI System Partition，ESP），ESP 要格式化成 FAT32，EFI 启动文件要放在“/EFI&lt; 厂商 &gt;”文件夹下面。<strong>但是 Apple 比较特殊</strong></p>
+<p>作为 UEFI 标准里，钦定的文件系统，FAT32.efi 是每个主板都会带的。所有 UEFI 的主板都认识 FAT32 分区。这就是为啥非得是 FAT32 的。</p>
+<p>至于 GPT（GUID Partition Table，缩写：GPT），可以理解为新时代的 <code>MBR</code>，分区表。</p>
+<p>所以说</p>
+<blockquote>
+<p>装系统可以不用制作启动盘了，将 iso 文件压缩到一个 FAT32 分区内，~~ 然后在将该分区下的 <code>EFI/Boot/BOOTx64</code> 添加到 UEFI 文件启动项 ~~，直接进入 UEFI 引导，就可以选择这一项启动。</p>
+</blockquote>
+<blockquote>
+<p>另外 UEFI 为了兼容 MBR，是可以用的，但是 Lgacy 不支持 GPT</p>
+</blockquote>
+<h4 id="22-systemd-启动系统">2.2 Systemd 启动系统</h4>
+<p>init 启动系统有几点不好</p>
+<ul>
+<li>串行启动，启动时间长</li>
+<li>启动脚本复杂</li>
+</ul>
+<p>Systemd 是用来替代 init 启动而生的，读作 System daemon（系统，守护进程）。</p>
+<p>Systemd 是一组命令，涉及到系统管理的方方面面，本来我们启动系统是用 initd 初始化一个 pid=1 的进程，然后所有进程都是他的子进程，但是现在的话我们不需要，直接启动 Systemd，用它来管理系统。</p>
+<p>这个时候就和上面类似了。但是我们要重点关注 <code>systemd</code> 命令组。这里就会体现 Linux 下一切皆文件的思想。</p>
+<p><img src="https://ccnupp.oss-cn-shanghai.aliyuncs.com/%E6%9C%AA%E5%91%BD%E5%90%8D%E6%96%87%E4%BB%B6.svg" alt="未命名文件"></p>
+<h4 id="这里还要提一点系统进入之后">这里还要提一点，系统进入之后</h4>
+<p>首先我们会进入 login shell，这个时候会读取一些配置文件。</p>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1">#命令行登录</span>
+~/.bash_profile
+~/.bash_login
+~/.profile	<span class="c1">#这里有语句会同时执行.bashrc</span>
+<span class="c1">#只要读取了上面一个，就不会再读取后面的了，按上述顺序读取。</span>
+
+<span class="c1">#图形界面登录的话,只会读取下面两个，不管是否有.bash_profile 存在</span>
+etc/ptofile	<span class="c1">#这个是对于所有用户的配置文件，~/.bashrc 是对于当前用户的。</span>
+~/.profile
+</code></pre></div><p>然后我们手动开启的 shell 叫做 non login shell，他就会读取 .bashrc</p>
+<h3 id="参考文章">参考文章</h3>
+<p><a href="https://www.ibm.com/developerworks/cn/linux/l-lpic1-101-2/index.html">https://www.ibm.com/developerworks/cn/linux/l-lpic1-101-2/index.html</a>	IBM，引导系统</p>
+<p><a href="http://www.ruanyifeng.com/blog/2013/02/booting.html">http://www.ruanyifeng.com/blog/2013/02/booting.html</a> 参考文章，作者阮一峰，对于 MBR 的详细解释</p>
+<p><a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html">http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html</a> 参考文章，作者阮一峰，对于 Linux 内核启动的解释。</p>
+<p>关于 systemd 使用，这里有几篇文章。</p>
+<p><a href="http://www.ruanyifeng.com/blog/2016/03/systemd-tutorial-commands.html">http://www.ruanyifeng.com/blog/2016/03/systemd-tutorial-commands.html</a>	作者：阮一峰</p>
+<p><a href="http://www.ruanyifeng.com/blog/2016/03/systemd-tutorial-part-two.html">http://www.ruanyifeng.com/blog/2016/03/systemd-tutorial-part-two.html</a>	作者：阮一峰</p>
+<p><a href="https://wiki.archlinux.org/index.php/Systemd_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)">https://wiki.archlinux.org/index.php/Systemd_</a>	来源 Archwiki</p>]]></content>
+		</item>
+		
+	</channel>
 </rss>

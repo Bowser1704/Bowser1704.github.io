@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Helm on Bowser</title>
+    <title>Helm on Bowser&#39;s blog</title>
     <link>https://bowser1704.github.io/tags/helm/</link>
-    <description>Recent content in Helm on Bowser</description>
+    <description>Recent content in Helm on Bowser&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>zh-CN</language>
-    <copyright>This work is licensed under a CC BY-NC 4.0(署名-非商业性使用 4.0 国际) License.</copyright>
+    <language>en-us</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
     <lastBuildDate>Thu, 25 Jun 2020 10:11:19 +0800</lastBuildDate>
     
 	<atom:link href="https://bowser1704.github.io/tags/helm/index.xml" rel="self" type="application/rss+xml" />
@@ -14,10 +14,10 @@
     
     <item>
       <title>Helm in k3s</title>
-      <link>https://bowser1704.github.io/note/20200625-helm-in-k3s/</link>
+      <link>https://bowser1704.github.io/note/helm-in-k3s/</link>
       <pubDate>Thu, 25 Jun 2020 10:11:19 +0800</pubDate>
       
-      <guid>https://bowser1704.github.io/note/20200625-helm-in-k3s/</guid>
+      <guid>https://bowser1704.github.io/note/helm-in-k3s/</guid>
       <description>“国内环境在 k3s 内使用 Helm&amp;rdquo;</description>
     </item>
     

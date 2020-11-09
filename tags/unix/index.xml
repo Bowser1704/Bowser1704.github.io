@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Unix on Bowser</title>
+    <title>Unix on Bowser&#39;s blog</title>
     <link>https://bowser1704.github.io/tags/unix/</link>
-    <description>Recent content in Unix on Bowser</description>
+    <description>Recent content in Unix on Bowser&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>zh-CN</language>
-    <copyright>This work is licensed under a CC BY-NC 4.0(署名-非商业性使用 4.0 国际) License.</copyright>
+    <language>en-us</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
     <lastBuildDate>Tue, 12 Nov 2019 22:05:45 +0800</lastBuildDate>
     
 	<atom:link href="https://bowser1704.github.io/tags/unix/index.xml" rel="self" type="application/rss+xml" />
@@ -14,10 +14,10 @@
     
     <item>
       <title>csapp Chapter10 UnixIO</title>
-      <link>https://bowser1704.github.io/note/20191112-csapp-chapter10-unixio/</link>
+      <link>https://bowser1704.github.io/note/csappchapter10/</link>
       <pubDate>Tue, 12 Nov 2019 22:05:45 +0800</pubDate>
       
-      <guid>https://bowser1704.github.io/note/20191112-csapp-chapter10-unixio/</guid>
+      <guid>https://bowser1704.github.io/note/csappchapter10/</guid>
       <description>基本概念 首先要有一个思维，Linux 上面基本上所有外部设备都是文件，都是通过 IO 来读取，写入的，包括键盘，网络，终端&amp;hellip;.. P.S</description>
     </item>
     

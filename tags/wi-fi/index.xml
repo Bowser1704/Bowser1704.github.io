@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>WI-FI on Bowser</title>
+    <title>WI-FI on Bowser&#39;s blog</title>
     <link>https://bowser1704.github.io/tags/wi-fi/</link>
-    <description>Recent content in WI-FI on Bowser</description>
+    <description>Recent content in WI-FI on Bowser&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>zh-CN</language>
-    <copyright>This work is licensed under a CC BY-NC 4.0(署名-非商业性使用 4.0 国际) License.</copyright>
+    <language>en-us</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
     <lastBuildDate>Sat, 27 Jun 2020 15:37:05 +0800</lastBuildDate>
     
 	<atom:link href="https://bowser1704.github.io/tags/wi-fi/index.xml" rel="self" type="application/rss+xml" />
@@ -14,10 +14,10 @@
     
     <item>
       <title>豆子峡谷黑苹果 5GHz WI-FI 无法使用 80 MHz</title>
-      <link>https://bowser1704.github.io/note/20200627-%E8%B1%86%E5%AD%90%E5%B3%A1%E8%B0%B7%E9%BB%91%E8%8B%B9%E6%9E%9C-5ghz-wi-fi-%E6%97%A0%E6%B3%95%E4%BD%BF%E7%94%A8-80-mhz/</link>
+      <link>https://bowser1704.github.io/note/nuc8i5-wifi/</link>
       <pubDate>Sat, 27 Jun 2020 15:37:05 +0800</pubDate>
       
-      <guid>https://bowser1704.github.io/note/20200627-%E8%B1%86%E5%AD%90%E5%B3%A1%E8%B0%B7%E9%BB%91%E8%8B%B9%E6%9E%9C-5ghz-wi-fi-%E6%97%A0%E6%B3%95%E4%BD%BF%E7%94%A8-80-mhz/</guid>
+      <guid>https://bowser1704.github.io/note/nuc8i5-wifi/</guid>
       <description>nuc8i5bench hackintosh WIFI 跑不满速度 路由器：斐讯 K2 网卡：BCM94360CS K2 理论上 5GHz 速度应该可以达到 867 Mbps 但是这里只有 180 Mbps。网卡和路由器都是支持 802.11ac 的。 经过</description>
     </item>
     

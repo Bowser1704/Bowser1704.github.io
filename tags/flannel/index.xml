@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>flannel on Bowser</title>
+    <title>flannel on Bowser&#39;s blog</title>
     <link>https://bowser1704.github.io/tags/flannel/</link>
-    <description>Recent content in flannel on Bowser</description>
+    <description>Recent content in flannel on Bowser&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>zh-CN</language>
-    <copyright>This work is licensed under a CC BY-NC 4.0(署名-非商业性使用 4.0 国际) License.</copyright>
+    <language>en-us</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
     <lastBuildDate>Sat, 27 Jun 2020 13:21:45 +0800</lastBuildDate>
     
 	<atom:link href="https://bowser1704.github.io/tags/flannel/index.xml" rel="self" type="application/rss+xml" />
@@ -14,10 +14,10 @@
     
     <item>
       <title>k8s vxlan 作为 cni 后端引发的 63 秒延迟</title>
-      <link>https://bowser1704.github.io/note/20200627-k8s-vxlan-%E4%BD%9C%E4%B8%BA-cni-%E5%90%8E%E7%AB%AF%E5%BC%95%E5%8F%91%E7%9A%84-63-%E7%A7%92%E5%BB%B6%E8%BF%9F/</link>
+      <link>https://bowser1704.github.io/posts/vxlan-bug/</link>
       <pubDate>Sat, 27 Jun 2020 13:21:45 +0800</pubDate>
       
-      <guid>https://bowser1704.github.io/note/20200627-k8s-vxlan-%E4%BD%9C%E4%B8%BA-cni-%E5%90%8E%E7%AB%AF%E5%BC%95%E5%8F%91%E7%9A%84-63-%E7%A7%92%E5%BB%B6%E8%BF%9F/</guid>
+      <guid>https://bowser1704.github.io/posts/vxlan-bug/</guid>
       <description>vxlan as the flannel backend</description>
     </item>
     

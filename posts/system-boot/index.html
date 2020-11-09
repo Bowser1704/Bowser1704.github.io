@@ -1,25 +1,12 @@
 <!DOCTYPE html>
-<html lang="zh-CN"><meta charset="utf-8">
-<meta name="HandheldFriendly" content="True">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="referrer" content="no-referrer">
-<meta name="renderer" content="webkit">
-<meta name="force-rendering" content="webkit">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta name="format-detection" content="telephone=no,email=no,address=no">
-<meta name="generator" content="Hugo 0.74.3" />
+<html lang="en-us">
 
-
-<title>谈谈系统启动发生了什么 - Bowser</title>
-
-
-<link rel="stylesheet" href="/css/style.css">
-
-<link href="https://fonts.googleapis.com/css?family=Noto+Serif+SC:400,700&display=swap&subset=chinese-simplified" rel="stylesheet" />
-<link rel="canonical" href="https://bowser1704.github.io/posts/system-boot/">
-<link rel="shortcut icon" href="/favicon.jpg">
-
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="theme-color" content="#494f5c">
+	<meta name="msapplication-TileColor" content="#494f5c">
 <meta itemprop="name" content="谈谈系统启动发生了什么">
 <meta itemprop="description" content="系统启动实际上东西比较多，这里只是讲一讲，系统引导方面的东西。">
 <meta itemprop="datePublished" content="2019-08-22T16:23:18+08:00" />
@@ -29,96 +16,67 @@
 
 
 <meta itemprop="keywords" content="Linux," />
-
 <meta property="og:title" content="谈谈系统启动发生了什么" />
 <meta property="og:description" content="系统启动实际上东西比较多，这里只是讲一讲，系统引导方面的东西。" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://bowser1704.github.io/posts/system-boot/" />
 <meta property="article:published_time" content="2019-08-22T16:23:18+08:00" />
 <meta property="article:modified_time" content="2019-08-22T16:23:18+08:00" />
-
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="谈谈系统启动发生了什么"/>
 <meta name="twitter:description" content="系统启动实际上东西比较多，这里只是讲一讲，系统引导方面的东西。"/>
-<body class="font-sans">
-    <div class="flex flex-col md:flex-row md:w-4/5 mx-auto py-5 min-h-screen">
-<header
-    class="flex flex-col relative border-black border-b-4 md:border-b-0 md:border-r-2 pb-6 mx-4 md:mx-0 md:w-1/5 md:text-right md:pr-8 bg-white md:text-center">
-    <link rel="stylesheet"
-      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/vs.min.css">
-<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
-    <div>
-        <h1 id="header_logo" class="text-3xl md:my-12 mt-4 md:mb-12"><a href="https://bowser1704.github.io">Bowser</a></h1>
-        <p class="font-thin italic">There is no dark side of the Moon. It&#39;s all dark, really.</p>
-    </div>
-    <input id="menu-check" type="checkbox" class="hidden" />
-    <label id="menu-label" for="menu-check"
-        class="absolute right-0 text-right md:hidden  inline-block py-4 h-12 cursor-pointer mt-10 text-xl text-gray-900">
-        <span class="icon close-icon">✕</span>
-        <span class="icon open-icon">☰</span>
-        <span class="text">MENU</span>
-    </label>
-    <nav id="menu" class="my-2 w-full md:flex-row-reverse hidden md:block">
-        <ul class="list-none pl-0 mx-auto justify-center  max-w-xs">
-            
-            
-            <li class="my-4 border-black text-center md:text-right border-b-2 md:border-none pb-1">
-                <a class="py-4 md:border-black md:border-b-2  md:pb-1" href="/blog/">博客</a>
-            </li>
-            
-            <li class="my-4 border-black text-center md:text-right border-b-2 md:border-none pb-1">
-                <a class="py-4 md:border-black md:border-b-2  md:pb-1" href="/note/">笔记</a>
-            </li>
-            
-            <li class="my-4 border-black text-center md:text-right border-b-2 md:border-none pb-1">
-                <a class="py-4 md:border-black md:border-b-2  md:pb-1" href="/about/">关于</a>
-            </li>
-            
-        </ul>
-    </nav>
-</header>
-<main class="flex-1 p-4 ">
-<article itemscope itemtype="http://schema.org/Article" class="max-w-3xl mx-auto leading-relaxed">
-    <header class="flex flex-col meta">
-<div class="flex flex-col md:flex-row justify-between ">
-    
-    <ul class="flex justify-end text-gray-800" itemprop="articleSection">
-        
-        <li class="pl-2 pr-0 md:pl-0 md:pr-2">
-            <a href="/categories/cs" rel="category">cs</a>
-        </li>
-        
-    </ul>
-    
-    
-    <ul class="flex justify-end text-gray-700">
-        
-        <li itemprop="keywords" class="pl-2 md:pl-4">
-            <a href="https://bowser1704.github.io/tags/linux/">#Linux</a>
-        </li>
-        
-    </ul>
-    
-</div>
-<h1 itemprop="name" class="text-center text-4xl my-4 md:my-6">谈谈系统启动发生了什么</h1>
-        
-        <h3 class="text-center text-2xl">
-            
-            <span itemprop="author" itemscope itemtype="http://schema.org/Person">
-                <span itemprop="name">Bowser</span>
-                
-                
-                 / 
-                <span itemprop="datePublished"
-                    content="2019-08-22">2019-08-22</span>
-                
-        </h3>
-        
-    </header>
-    <hr class="block my-10 mx-auto max-w-xs h-px border-t border-black">
-    <div itemprop="articleBody" class="content markdown">
-        <p>系统启动实际上东西比较多，这里只是讲一讲，系统引导方面的东西。</p>
-<h3 id="0-杂谈">0. 杂谈</h3>
+
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
+	<link rel="shortcut icon" href="/favicon.ico">
+
+	<title>谈谈系统启动发生了什么</title>
+	<link rel="stylesheet" href="https://bowser1704.github.io/css/style.min.eac77496566fd7d5768fd650ddb0b2b181ca6a2d7c5fdd6fe6b8ba4bf47e566f.css" integrity="sha256-6sd0llZv19V2j9ZQ3bCysYHKai18X91v5ri6S/R+Vm8=" crossorigin="anonymous">
+	
+</head>
+
+<body id="page">
+	
+	<header id="site-header" class="animated slideInUp">
+		<div class="hdr-wrapper section-inner">
+			<div class="hdr-left">
+				<div class="site-branding">
+					<a href="https://bowser1704.github.io/">Bowser&#39;s blog</a>
+				</div>
+				<nav class="site-nav hide-in-mobile">
+					
+				<a href="https://bowser1704.github.io/posts/">Posts</a>
+				<a href="https://bowser1704.github.io/note/">Note</a>
+				<a href="https://bowser1704.github.io/about/">About</a>
+
+				</nav>
+			</div>
+			<div class="hdr-right hdr-icons">
+				<span class="hdr-social hide-in-mobile"><a href="bowser1704@gmail.com" target="_blank" rel="noopener me" title="Email"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg></a><a href="Bowser1704" target="_blank" rel="noopener me" title="Telegram"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.198 2.433a2.242 2.242 0 0 0-1.022.215l-8.609 3.33c-2.068.8-4.133 1.598-5.724 2.21a405.15 405.15 0 0 1-2.849 1.09c-.42.147-.99.332-1.473.901-.728.968.193 1.798.919 2.286 1.61.516 3.275 1.009 4.654 1.472.509 1.793.997 3.592 1.48 5.388.16.36.506.494.864.498l-.002.018s.281.028.555-.038a2.1 2.1 0 0 0 .933-.517c.345-.324 1.28-1.244 1.811-1.764l3.999 2.952.032.018s.442.311 1.09.355c.324.022.75-.04 1.116-.308.37-.27.613-.702.728-1.196.342-1.492 2.61-12.285 2.997-14.072l-.01.042c.27-1.006.17-1.928-.455-2.474a1.654 1.654 0 0 0-1.034-.407z"/></svg></a><a href="https://github.com/Bowser1704" target="_blank" rel="noopener me" title="Github"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a></span><button id="menu-btn" class="hdr-btn" title="Menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+			</div>
+		</div>
+	</header>
+	<div id="mobile-menu" class="animated fast">
+		<ul>
+			<li><a href="https://bowser1704.github.io/posts/">Posts</a></li>
+			<li><a href="https://bowser1704.github.io/note/">Note</a></li>
+			<li><a href="https://bowser1704.github.io/about/">About</a></li>
+		</ul>
+	</div>
+
+
+	<main class="site-main section-inner animated fadeIn faster">
+		<article class="thin">
+			<header class="post-header">
+				<div class="post-meta"><span>Aug 22, 2019</span></div>
+				<h1>谈谈系统启动发生了什么</h1>
+			</header>
+			<div class="content">
+				<p>系统启动实际上东西比较多，这里只是讲一讲，系统引导方面的东西。</p>
+<h3 id="0-杂谈">0. 杂谈<a href="#0-杂谈" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
 <p>首先我们知道在系统中启动叫做 <code>boot</code>，取自 Bootstrap，这里有个小故事</p>
 <blockquote>
 <p>Bootstrap 不是鞋带的意思，应该是“鞋子背带”的意思（http://en.wiktionary.org/wiki/bootstrap）
@@ -126,8 +84,8 @@
 参考：http://en.wikipedia.org/wiki/Bootstrapping</p>
 </blockquote>
 <p>为什么说这个故事呢，我们要启动系统，就要启动程序对吧，但是启动程序又要系统，这不就是一个死循环了吗？所以 <code>一种不需要外部帮助自己能够处理事情的情形</code>，在当时 ROM（Read only memory）的发展下，人们刚开始发明了 BIOS（Basic Input/Output System），后来又出现了 <code>UEFI</code> 全称“统一的可扩展固件接口”(Unified Extensible Firmware Interface)。</p>
-<h3 id="1-最开始是如何加载系统的">1. 最开始是如何加载系统的</h3>
-<h4 id="11-老一代的-legacy-bios--mbr">1.1 老一代的 Legacy BIOS + <code>MBR</code></h4>
+<h3 id="1-最开始是如何加载系统的">1. 最开始是如何加载系统的<a href="#1-最开始是如何加载系统的" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
+<h4 id="11-老一代的-legacy-bios--mbr">1.1 老一代的 Legacy BIOS + <code>MBR</code><a href="#11-老一代的-legacy-bios--mbr" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h4>
 <p>最初的启动就是按下电源键之后，电脑读取写入 ROM 的 BIOS。BIOS 开始下面几个步骤。</p>
 <ol>
 <li>硬件自检（Power-On Self-Test）简称为 POST，如果有问题计算机会发出不同含义的蜂鸣声。（有没有很傻屌）</li>
@@ -144,7 +102,7 @@
 </li>
 </ol>
 <p>总结的话 <code>BIOS</code> 不认识设备，直接硬的来，你的 <code>MBR</code> 内写了什么，他就是什么。</p>
-<h4 id="12-进入-linux-系统之后-initd">1.2 进入 Linux 系统之后 initd</h4>
+<h4 id="12-进入-linux-系统之后-initd">1.2 进入 Linux 系统之后 initd<a href="#12-进入-linux-系统之后-initd" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h4>
 <ol>
 <li>加载内核，进入 <code>/boot</code> 下找到内核文件，加载。</li>
 <li>开始运行初始化文件 <code>/sbin/init</code>，他的作用是初始化系统环境，<code>init</code> 就是第一个进程，<code>pid</code>=1</li>
@@ -158,21 +116,16 @@
 <p>阮一峰写了两篇文章对于以前的启动方式很好的讲解了</p>
 <p><a href="http://www.ruanyifeng.com/blog/2013/02/booting.html">http://www.ruanyifeng.com/blog/2013/02/booting.html</a> 参考文章，作者阮一峰，对于 <code>MBR</code> 的详细解释</p>
 <p><a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html">http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html</a> 参考文章，作者阮一峰，对于 <code>Linux</code> 内核启动的解释。</p>
-<h3 id="2-今天我们怎么加载系统">2. 今天我们怎么加载系统</h3>
-<h4 id="21-新时代的-uefi-biosgpt">2.1 新时代的 <code>UEFI BIOS</code>+<code>GPT</code></h4>
+<h3 id="2-今天我们怎么加载系统">2. 今天我们怎么加载系统<a href="#2-今天我们怎么加载系统" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
+<h4 id="21-新时代的-uefi-biosgpt">2.1 新时代的 <code>UEFI BIOS</code>+<code>GPT</code><a href="#21-新时代的-uefi-biosgpt" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h4>
 <p><code>UEFI</code> 不同于 legacy BIOS 的是，他认识设备，他会在 <code>/boot/efi</code> 寻找以 <code>.efi</code> 为后缀的文件，里面有一个目录 <code>EFI</code>，放了各种系统的 <code>efi</code> 启动程序。</p>
 <p>例如（不同厂商的驱动放在不同厂家的文件夹下面）</p>
 <blockquote>
 <p>启动 windows	进入 Microsoft/Boot/*.efi</p>
 <p>启动 <code>ubuntu</code>       进入 ubuntu/*.efi</p>
 </blockquote>
-<p>
-
-
-
-    <img class="mx-auto" alt="efi" src="https://upload-images.jianshu.io/upload_images/4072641-4b58e0e13c209d14.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/345/format/webp" />
-</p>
-<h5 id="流程">流程</h5>
+<p><img src="https://upload-images.jianshu.io/upload_images/4072641-4b58e0e13c209d14.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/345/format/webp" alt="efi"></p>
+<h5 id="流程">流程<a href="#流程" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h5>
 <ol>
 <li>
 <p>POST，硬件自检</p>
@@ -194,7 +147,7 @@
 比如 CloverX64.efi 就好像没有签名。</p>
 </blockquote>
 <p>所以在装 Linux 的时候我们会关闭 SecureBoot，防止不被授权，无法加载 efi</p>
-<h5 id="磁盘分区文件系统">磁盘分区，文件系统</h5>
+<h5 id="磁盘分区文件系统">磁盘分区，文件系统<a href="#磁盘分区文件系统" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h5>
 <p>磁盘就是我们用的硬盘，U 盘之类的，我们要对磁盘进行分区，其实不分区可以理解为只分一个区，然后每个区要进行格式化，并且选择文件系统。不同类型磁盘有不同类型的设备驱动，不同系统有不同的文件系统驱动。</p>
 <ul>
 <li>磁盘驱动
@@ -214,7 +167,7 @@
 <blockquote>
 <p>驱动是可以后期安装的，Paragon 这个公司推出了 NTFS for Mac、HFS for Windows、ExtFS for……等一套文件系统驱动。</p>
 </blockquote>
-<h5 id="总结">总结</h5>
+<h5 id="总结">总结<a href="#总结" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h5>
 <p>UEFI 规范里，在 GPT 分区表的基础上，规定了一个 EFI 系统分区（EFI System Partition，ESP），ESP 要格式化成 FAT32，EFI 启动文件要放在“/EFI&lt; 厂商 &gt;”文件夹下面。<strong>但是 Apple 比较特殊</strong></p>
 <p>作为 UEFI 标准里，钦定的文件系统，FAT32.efi 是每个主板都会带的。所有 UEFI 的主板都认识 FAT32 分区。这就是为啥非得是 FAT32 的。</p>
 <p>至于 GPT（GUID Partition Table，缩写：GPT），可以理解为新时代的 <code>MBR</code>，分区表。</p>
@@ -225,7 +178,7 @@
 <blockquote>
 <p>另外 UEFI 为了兼容 MBR，是可以用的，但是 Lgacy 不支持 GPT</p>
 </blockquote>
-<h4 id="22-systemd-启动系统">2.2 Systemd 启动系统</h4>
+<h4 id="22-systemd-启动系统">2.2 Systemd 启动系统<a href="#22-systemd-启动系统" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h4>
 <p>init 启动系统有几点不好</p>
 <ul>
 <li>串行启动，启动时间长</li>
@@ -234,25 +187,20 @@
 <p>Systemd 是用来替代 init 启动而生的，读作 System daemon（系统，守护进程）。</p>
 <p>Systemd 是一组命令，涉及到系统管理的方方面面，本来我们启动系统是用 initd 初始化一个 pid=1 的进程，然后所有进程都是他的子进程，但是现在的话我们不需要，直接启动 Systemd，用它来管理系统。</p>
 <p>这个时候就和上面类似了。但是我们要重点关注 <code>systemd</code> 命令组。这里就会体现 Linux 下一切皆文件的思想。</p>
-<p>
-
-
-
-    <img class="mx-auto" alt="未命名文件" src="https://ccnupp.oss-cn-shanghai.aliyuncs.com/%E6%9C%AA%E5%91%BD%E5%90%8D%E6%96%87%E4%BB%B6.svg" />
-</p>
-<h4 id="这里还要提一点系统进入之后">这里还要提一点，系统进入之后</h4>
+<p><img src="https://ccnupp.oss-cn-shanghai.aliyuncs.com/%E6%9C%AA%E5%91%BD%E5%90%8D%E6%96%87%E4%BB%B6.svg" alt="未命名文件"></p>
+<h4 id="这里还要提一点系统进入之后">这里还要提一点，系统进入之后<a href="#这里还要提一点系统进入之后" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h4>
 <p>首先我们会进入 login shell，这个时候会读取一些配置文件。</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">#命令行登录</span>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="c1">#命令行登录</span>
 ~/.bash_profile
 ~/.bash_login
-~/.profile	<span style="color:#75715e">#这里有语句会同时执行.bashrc</span>
-<span style="color:#75715e">#只要读取了上面一个，就不会再读取后面的了，按上述顺序读取。</span>
+~/.profile	<span class="c1">#这里有语句会同时执行.bashrc</span>
+<span class="c1">#只要读取了上面一个，就不会再读取后面的了，按上述顺序读取。</span>
 
-<span style="color:#75715e">#图形界面登录的话,只会读取下面两个，不管是否有.bash_profile 存在</span>
-etc/ptofile	<span style="color:#75715e">#这个是对于所有用户的配置文件，~/.bashrc 是对于当前用户的。</span>
+<span class="c1">#图形界面登录的话,只会读取下面两个，不管是否有.bash_profile 存在</span>
+etc/ptofile	<span class="c1">#这个是对于所有用户的配置文件，~/.bashrc 是对于当前用户的。</span>
 ~/.profile
 </code></pre></div><p>然后我们手动开启的 shell 叫做 non login shell，他就会读取 .bashrc</p>
-<h3 id="参考文章">参考文章</h3>
+<h3 id="参考文章">参考文章<a href="#参考文章" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
 <p><a href="https://www.ibm.com/developerworks/cn/linux/l-lpic1-101-2/index.html">https://www.ibm.com/developerworks/cn/linux/l-lpic1-101-2/index.html</a>	IBM，引导系统</p>
 <p><a href="http://www.ruanyifeng.com/blog/2013/02/booting.html">http://www.ruanyifeng.com/blog/2013/02/booting.html</a> 参考文章，作者阮一峰，对于 MBR 的详细解释</p>
 <p><a href="http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html">http://www.ruanyifeng.com/blog/2013/08/linux_boot_process.html</a> 参考文章，作者阮一峰，对于 Linux 内核启动的解释。</p>
@@ -260,21 +208,37 @@ etc/ptofile	<span style="color:#75715e">#这个是对于所有用户的配置文
 <p><a href="http://www.ruanyifeng.com/blog/2016/03/systemd-tutorial-commands.html">http://www.ruanyifeng.com/blog/2016/03/systemd-tutorial-commands.html</a>	作者：阮一峰</p>
 <p><a href="http://www.ruanyifeng.com/blog/2016/03/systemd-tutorial-part-two.html">http://www.ruanyifeng.com/blog/2016/03/systemd-tutorial-part-two.html</a>	作者：阮一峰</p>
 <p><a href="https://wiki.archlinux.org/index.php/Systemd_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)">https://wiki.archlinux.org/index.php/Systemd_</a>	来源 Archwiki</p>
-    </div>
-</article>
+			</div>
+			<hr class="post-end">
+			<footer class="post-info">
+				<p>
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="https://bowser1704.github.io/tags/linux">Linux</a></span>
+				</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>2565 Words</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2019-08-22 16:23 &#43;0800</p>
+			</footer>
+		</article>
+		<div class="post-nav thin">
+			<a class="next-post" href="https://bowser1704.github.io/posts/weather-with-you/">
+				<span class="post-nav-label"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>&nbsp;Newer</span><br><span>《天气之子》反映的人生观</span>
+			</a>
+		</div>
+		<div id="comments" class="thin">
+</div>
+	</main>
 
-        </main>
-    </div><footer class="flex justify-center">
-    <div class="copyright mx-auto my-8">
-        <p>
-            © 2018-2020 <a href="https://github.com/Bowser1704">Bowser1704</a> - <strong><a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a></strong> - <strong>Power By Hugo | Theme By hugo-w2ng</strong>
-        </p>
-        
-    </div>
-</footer>
+	<footer id="site-footer" class="section-inner thin animated fadeIn faster">
+		<p>&copy; 2020 <a href="https://bowser1704.github.io/">Bowser</a> &#183; <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a></p>
+		<p>
+			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a> &#183; <a href="https://bowser1704.github.io/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
+		</p>
+	</footer>
 
 
 
-<script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script></body>
+	<script src="https://bowser1704.github.io/js/bundle.min.4a9a0ac3d2217822c7865b4161e6c2a71de1d70492264337755427898dd718f6.js" integrity="sha256-SpoKw9IheCLHhltBYebCpx3h1wSSJkM3dVQniY3XGPY=" crossorigin="anonymous"></script>
+	
+
+</body>
 
 </html>

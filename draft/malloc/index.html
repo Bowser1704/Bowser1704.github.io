@@ -1,25 +1,12 @@
 <!DOCTYPE html>
-<html lang="zh-CN"><meta charset="utf-8">
-<meta name="HandheldFriendly" content="True">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="referrer" content="no-referrer">
-<meta name="renderer" content="webkit">
-<meta name="force-rendering" content="webkit">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta name="format-detection" content="telephone=no,email=no,address=no">
-<meta name="generator" content="Hugo 0.74.3" />
+<html lang="en-us">
 
-
-<title> - Bowser</title>
-
-
-<link rel="stylesheet" href="/css/style.css">
-
-<link href="https://fonts.googleapis.com/css?family=Noto+Serif+SC:400,700&display=swap&subset=chinese-simplified" rel="stylesheet" />
-<link rel="canonical" href="https://bowser1704.github.io/draft/malloc/">
-<link rel="shortcut icon" href="/favicon.jpg">
-
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="theme-color" content="#494f5c">
+	<meta name="msapplication-TileColor" content="#494f5c">
 <meta itemprop="name" content="">
 <meta itemprop="description" content="几种在堆上分配内存的方式 void *malloc(size_t size); void free(void *ptr); void *calloc(size_t nmemb, size_t size); void *realloc(void *ptr, size_t size); void *reallocarray(void *ptr, size_t nmemb, size_t size); 1. malloc void *malloc(int n);//n为要分配的字节数 该函数必须配合memset初始化 int">
 
@@ -28,126 +15,113 @@
 
 
 <meta itemprop="keywords" content="" />
-
 <meta property="og:title" content="" />
 <meta property="og:description" content="几种在堆上分配内存的方式 void *malloc(size_t size); void free(void *ptr); void *calloc(size_t nmemb, size_t size); void *realloc(void *ptr, size_t size); void *reallocarray(void *ptr, size_t nmemb, size_t size); 1. malloc void *malloc(int n);//n为要分配的字节数 该函数必须配合memset初始化 int" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://bowser1704.github.io/draft/malloc/" />
 
-
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content=""/>
 <meta name="twitter:description" content="几种在堆上分配内存的方式 void *malloc(size_t size); void free(void *ptr); void *calloc(size_t nmemb, size_t size); void *realloc(void *ptr, size_t size); void *reallocarray(void *ptr, size_t nmemb, size_t size); 1. malloc void *malloc(int n);//n为要分配的字节数 该函数必须配合memset初始化 int"/>
-<body class="font-sans">
-    <div class="flex flex-col md:flex-row md:w-4/5 mx-auto py-5 min-h-screen">
-<header
-    class="flex flex-col relative border-black border-b-4 md:border-b-0 md:border-r-2 pb-6 mx-4 md:mx-0 md:w-1/5 md:text-right md:pr-8 bg-white md:text-center">
-    <link rel="stylesheet"
-      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/vs.min.css">
-<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
-    <div>
-        <h1 id="header_logo" class="text-3xl md:my-12 mt-4 md:mb-12"><a href="https://bowser1704.github.io">Bowser</a></h1>
-        <p class="font-thin italic">There is no dark side of the Moon. It&#39;s all dark, really.</p>
-    </div>
-    <input id="menu-check" type="checkbox" class="hidden" />
-    <label id="menu-label" for="menu-check"
-        class="absolute right-0 text-right md:hidden  inline-block py-4 h-12 cursor-pointer mt-10 text-xl text-gray-900">
-        <span class="icon close-icon">✕</span>
-        <span class="icon open-icon">☰</span>
-        <span class="text">MENU</span>
-    </label>
-    <nav id="menu" class="my-2 w-full md:flex-row-reverse hidden md:block">
-        <ul class="list-none pl-0 mx-auto justify-center  max-w-xs">
-            
-            
-            <li class="my-4 border-black text-center md:text-right border-b-2 md:border-none pb-1">
-                <a class="py-4 md:border-black md:border-b-2  md:pb-1" href="/blog/">博客</a>
-            </li>
-            
-            <li class="my-4 border-black text-center md:text-right border-b-2 md:border-none pb-1">
-                <a class="py-4 md:border-black md:border-b-2  md:pb-1" href="/note/">笔记</a>
-            </li>
-            
-            <li class="my-4 border-black text-center md:text-right border-b-2 md:border-none pb-1">
-                <a class="py-4 md:border-black md:border-b-2  md:pb-1" href="/about/">关于</a>
-            </li>
-            
-        </ul>
-    </nav>
-</header>
-<main class="flex-1 p-4 ">
-<article itemscope itemtype="http://schema.org/Article" class="max-w-3xl mx-auto leading-relaxed">
-    <header class="flex flex-col meta">
-<div class="flex flex-col md:flex-row justify-between ">
-    
-    
-</div>
-<h1 itemprop="name" class="text-center text-4xl my-4 md:my-6"></h1>
-        
-        <h3 class="text-center text-2xl">
-            
-            <span itemprop="author" itemscope itemtype="http://schema.org/Person">
-                <span itemprop="name">Bowser</span>
-                
-                
-        </h3>
-        
-    </header>
-    <hr class="block my-10 mx-auto max-w-xs h-px border-t border-black">
-    <div itemprop="articleBody" class="content markdown">
-        <p>几种在堆上分配内存的方式</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">malloc</span>(size_t size);
-<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">free</span>(<span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>ptr);
-<span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">calloc</span>(size_t nmemb, size_t size);
-<span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">realloc</span>(<span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>ptr, size_t size);
-<span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">reallocarray</span>(<span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>ptr, size_t nmemb, size_t size);
-</code></pre></div><h3 id="1-malloc">1. malloc</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">malloc</span>(<span style="color:#66d9ef">int</span> n);<span style="color:#75715e">//n为要分配的字节数
+
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
+	<link rel="shortcut icon" href="/favicon.ico">
+
+	<title></title>
+	<link rel="stylesheet" href="https://bowser1704.github.io/css/style.min.eac77496566fd7d5768fd650ddb0b2b181ca6a2d7c5fdd6fe6b8ba4bf47e566f.css" integrity="sha256-6sd0llZv19V2j9ZQ3bCysYHKai18X91v5ri6S/R+Vm8=" crossorigin="anonymous">
+	
+</head>
+
+<body id="page">
+	
+	<header id="site-header" class="animated slideInUp">
+		<div class="hdr-wrapper section-inner">
+			<div class="hdr-left">
+				<div class="site-branding">
+					<a href="https://bowser1704.github.io/">Bowser&#39;s blog</a>
+				</div>
+				<nav class="site-nav hide-in-mobile">
+					
+				<a href="https://bowser1704.github.io/posts/">Posts</a>
+				<a href="https://bowser1704.github.io/note/">Note</a>
+				<a href="https://bowser1704.github.io/about/">About</a>
+
+				</nav>
+			</div>
+			<div class="hdr-right hdr-icons">
+				<span class="hdr-social hide-in-mobile"><a href="bowser1704@gmail.com" target="_blank" rel="noopener me" title="Email"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg></a><a href="Bowser1704" target="_blank" rel="noopener me" title="Telegram"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.198 2.433a2.242 2.242 0 0 0-1.022.215l-8.609 3.33c-2.068.8-4.133 1.598-5.724 2.21a405.15 405.15 0 0 1-2.849 1.09c-.42.147-.99.332-1.473.901-.728.968.193 1.798.919 2.286 1.61.516 3.275 1.009 4.654 1.472.509 1.793.997 3.592 1.48 5.388.16.36.506.494.864.498l-.002.018s.281.028.555-.038a2.1 2.1 0 0 0 .933-.517c.345-.324 1.28-1.244 1.811-1.764l3.999 2.952.032.018s.442.311 1.09.355c.324.022.75-.04 1.116-.308.37-.27.613-.702.728-1.196.342-1.492 2.61-12.285 2.997-14.072l-.01.042c.27-1.006.17-1.928-.455-2.474a1.654 1.654 0 0 0-1.034-.407z"/></svg></a><a href="https://github.com/Bowser1704" target="_blank" rel="noopener me" title="Github"><svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a></span><button id="menu-btn" class="hdr-btn" title="Menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+			</div>
+		</div>
+	</header>
+	<div id="mobile-menu" class="animated fast">
+		<ul>
+			<li><a href="https://bowser1704.github.io/posts/">Posts</a></li>
+			<li><a href="https://bowser1704.github.io/note/">Note</a></li>
+			<li><a href="https://bowser1704.github.io/about/">About</a></li>
+		</ul>
+	</div>
+
+
+	<main class="site-main section-inner thin animated fadeIn faster">
+		<h1></h1>
+		<div class="content">
+			<p>几种在堆上分配内存的方式</p>
+<div class="highlight"><pre class="chroma"><code class="language-c" data-lang="c"><span class="kt">void</span> <span class="o">*</span><span class="nf">malloc</span><span class="p">(</span><span class="n">size_t</span> <span class="n">size</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">free</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">ptr</span><span class="p">);</span>
+<span class="kt">void</span> <span class="o">*</span><span class="nf">calloc</span><span class="p">(</span><span class="n">size_t</span> <span class="n">nmemb</span><span class="p">,</span> <span class="n">size_t</span> <span class="n">size</span><span class="p">);</span>
+<span class="kt">void</span> <span class="o">*</span><span class="nf">realloc</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">ptr</span><span class="p">,</span> <span class="n">size_t</span> <span class="n">size</span><span class="p">);</span>
+<span class="kt">void</span> <span class="o">*</span><span class="nf">reallocarray</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">ptr</span><span class="p">,</span> <span class="n">size_t</span> <span class="n">nmemb</span><span class="p">,</span> <span class="n">size_t</span> <span class="n">size</span><span class="p">);</span>
+</code></pre></div><h3 id="1-malloc">1. malloc<a href="#1-malloc" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
+<div class="highlight"><pre class="chroma"><code class="language-c" data-lang="c"><span class="kt">void</span> <span class="o">*</span><span class="nf">malloc</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">);</span><span class="c1">//n为要分配的字节数
 </span></code></pre></div><p>该函数必须配合memset初始化</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">int</span> <span style="color:#f92672">*</span>p;
-p <span style="color:#f92672">=</span> (<span style="color:#66d9ef">int</span><span style="color:#f92672">*</span>)malloc(<span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">int</span>));
-memset(p, <span style="color:#ae81ff">0</span>, <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">int</span>));
-</code></pre></div><h3 id="2-calloc">2. calloc</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">calloc</span>(<span style="color:#66d9ef">int</span> n, <span style="color:#66d9ef">int</span> size);
-<span style="color:#75715e">//n为要分配的元素个数，size为元素所占的字节数。
+<div class="highlight"><pre class="chroma"><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="o">*</span><span class="n">p</span><span class="p">;</span>
+<span class="n">p</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">));</span>
+<span class="n">memset</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">));</span>
+</code></pre></div><h3 id="2-calloc">2. calloc<a href="#2-calloc" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
+<div class="highlight"><pre class="chroma"><code class="language-c" data-lang="c"><span class="kt">void</span> <span class="o">*</span><span class="nf">calloc</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">,</span> <span class="kt">int</span> <span class="n">size</span><span class="p">);</span>
+<span class="c1">//n为要分配的元素个数，size为元素所占的字节数。
 </span></code></pre></div><p>该函数默认初始化都为0，不需要memset手动初始化，适合用于数组创建。</p>
-<h3 id="3-realloc">3. realloc</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">realloc</span>(<span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>p, <span style="color:#66d9ef">int</span> n);
-<span style="color:#75715e">//p是堆上一块内存的地址，也就是我们分配的
-</span><span style="color:#75715e">//n是我们将p指向的内存空间大小字节数设置为n，新起一块大小为n的内存，并且将数据给复制过去。
-</span><span style="color:#75715e">//但是如果p指向的内存空间大于或等于n，不变。
-</span></code></pre></div><h3 id="4-free">4. free</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">free</span>(<span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>p);
-<span style="color:#75715e">//释放该指针所指向的内容，但是该指针还是存在的，其实他是在栈上的，只不过指向的空间是在堆上。
-</span><span style="color:#75715e">//所以我们为了不让她成为野指针，我们再释放p后，设p为NULL；
-</span><span style="color:#75715e">//free(p);
-</span><span style="color:#75715e">//p = NULL;
-</span></code></pre></div><h3 id="5-reallocarray">5. reallocarray</h3>
+<h3 id="3-realloc">3. realloc<a href="#3-realloc" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
+<div class="highlight"><pre class="chroma"><code class="language-c" data-lang="c"><span class="kt">void</span> <span class="o">*</span><span class="nf">realloc</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">p</span><span class="p">,</span> <span class="kt">int</span> <span class="n">n</span><span class="p">);</span>
+<span class="c1">//p是堆上一块内存的地址，也就是我们分配的
+</span><span class="c1">//n是我们将p指向的内存空间大小字节数设置为n，新起一块大小为n的内存，并且将数据给复制过去。
+</span><span class="c1">//但是如果p指向的内存空间大于或等于n，不变。
+</span></code></pre></div><h3 id="4-free">4. free<a href="#4-free" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
+<div class="highlight"><pre class="chroma"><code class="language-c" data-lang="c"><span class="kt">void</span> <span class="nf">free</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">p</span><span class="p">);</span>
+<span class="c1">//释放该指针所指向的内容，但是该指针还是存在的，其实他是在栈上的，只不过指向的空间是在堆上。
+</span><span class="c1">//所以我们为了不让她成为野指针，我们再释放p后，设p为NULL；
+</span><span class="c1">//free(p);
+</span><span class="c1">//p = NULL;
+</span></code></pre></div><h3 id="5-reallocarray">5. reallocarray<a href="#5-reallocarray" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
 <p>The reallocarray() function changes the size of the memory block pointed to by ptr to be large enough for an array of  nmemb  elements,
 each of which is size bytes.  It is equivalent to the call</p>
 <p><code>realloc(ptr, nmemb * size);</code>
 However, unlike that realloc() call, reallocarray() fails safely in the case where the multiplication would overflow.  If such an over‐flow occurs, reallocarray() returns NULL, sets errno to ENOMEM, and leaves the original block of memory unchanged.</p>
-<h3 id="为什么free不用传入malloc的内存的大小却可以正确的释放呢">为什么free不用传入malloc的内存的大小，却可以正确的释放呢？</h3>
+<h3 id="为什么free不用传入malloc的内存的大小却可以正确的释放呢">为什么free不用传入malloc的内存的大小，却可以正确的释放呢？<a href="#为什么free不用传入malloc的内存的大小却可以正确的释放呢" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
 <p>事实上我们malloc的时候，并不是严格按照我们指定的大小去申请的，而是有四个字节的头部存放，我们到底申请了多少内存，所以我们free的时候其实是去查看前面的四个字节，到底多大，再往后偏移的释放空间。</p>
 <p>实际上你申请0的空间，他也不一定就是给你0的大小。</p>
 <p>并且在cpp中，我们new[]一块空间，也不仅仅是new的空间，首部有4个字节存放，你new的对象个数，所以我们必须使用delete[]去释放，他会检查前面的4个字节，查看到底有多少个对象，再去释放。</p>
 <p>​	TODO：详细捋一捋内存模型</p>
 
-    </div>
-</article>
+		</div>
+	</main>
 
-        </main>
-    </div><footer class="flex justify-center">
-    <div class="copyright mx-auto my-8">
-        <p>
-            © 2018-2020 <a href="https://github.com/Bowser1704">Bowser1704</a> - <strong><a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a></strong> - <strong>Power By Hugo | Theme By hugo-w2ng</strong>
-        </p>
-        
-    </div>
-</footer>
+	<footer id="site-footer" class="section-inner thin animated fadeIn faster">
+		<p>&copy; 2020 <a href="https://bowser1704.github.io/">Bowser</a> &#183; <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a></p>
+		<p>
+			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a> &#183; <a href="https://bowser1704.github.io/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
+		</p>
+	</footer>
 
 
 
-<script src="//instant.page/3.0.0" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script></body>
+	<script src="https://bowser1704.github.io/js/bundle.min.4a9a0ac3d2217822c7865b4161e6c2a71de1d70492264337755427898dd718f6.js" integrity="sha256-SpoKw9IheCLHhltBYebCpx3h1wSSJkM3dVQniY3XGPY=" crossorigin="anonymous"></script>
+	
+
+</body>
 
 </html>
