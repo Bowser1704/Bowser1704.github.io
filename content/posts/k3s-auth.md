@@ -65,19 +65,24 @@ users:
 
 - `serving-kube-apiserver.crt`
 
-   `/var/lib/rancher/k3s/server/tls`  中的 `serving-kube-apiserver.crt` 这个用于集群内部组件认证。
+   `/var/lib/rancher/k3s/server/tls`  中的 `serving-kube-apiserver.crt` 这个用于 apiserver 内部组件认证。
 
   这个证书当我们重启机器的时候 k3s 会有一个 rotation。
+
+  [k3s#1855](https://github.com/rancher/k3s/pull/1855#issuecomment-637704645)
+
+  > Yes, this controls the certificate that's used for the internal apiserver endpoint. As far as I can tell this is NOT the same endpoint as external clients (kubectl, etc) interact with on port 6443.
 
 - `k3s-serving`
   
   kube-system namespace 下面的 secret `k3s-serving`，用于外部访问，例如 kubectl，或者 curl 之类的。
   
-  这个证书不会自动更新，所以可能集群内部没挂，但是你不能通过 ca.crt 访问他。
+  经过检验，在我们部署的 pod 内部访问依旧是返回的这个 cert。
   
-  经过检验，在 pod 内部访问依旧是返回的这个 cert。
 
-参考 issue https://github.com/rancher/k3s/pull/1855
+[k3s#1621](https://github.com/rancher/k3s/issues/1621) 关于证书的更新。重启一下 k3s，就会自动更新所有证书（如果 Expiration < 60d）。
+
+[v1.19.3+k3s2](https://github.com/rancher/k3s/releases/tag/v1.19.3%2Bk3s2) 版本之后，才会更新 k3s-serving, 否则只会更新 `/var/lib/rancher/k3s/server/tls` 下的证书。
 
 ### serviceaccount
 
