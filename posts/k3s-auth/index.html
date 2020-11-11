@@ -11,7 +11,7 @@
 <meta itemprop="description" content="k3s authentication client certificate 也是一种认证方式 token username and password certificate 在 k8s 的世界里面有两种证书，一种是 client certificate 用于认证，一种是 server certificate 用于 TLS。 用于认证的就是 kubeconfig 文件里面的 client-certificate-data 和 client-key-data apiVersion:v1clusters:- cluster:certificate-authority-data:DATA&#43;OMITTEDserver:https://kubernetes.docker.internal:6443name:docker-desktopcontexts:- context:cluster:docker-desktopuser:docker-desktopname:docker-desktop-">
 <meta itemprop="datePublished" content="2020-11-08T22:18:18+08:00" />
 <meta itemprop="dateModified" content="2020-11-08T22:18:18+08:00" />
-<meta itemprop="wordCount" content="472">
+<meta itemprop="wordCount" content="533">
 
 
 
@@ -129,17 +129,21 @@
 <ul>
 <li>
 <p><code>serving-kube-apiserver.crt</code></p>
-<p><code>/var/lib/rancher/k3s/server/tls</code>  中的 <code>serving-kube-apiserver.crt</code> 这个用于集群内部组件认证。</p>
+<p><code>/var/lib/rancher/k3s/server/tls</code>  中的 <code>serving-kube-apiserver.crt</code> 这个用于 apiserver 内部组件认证。</p>
 <p>这个证书当我们重启机器的时候 k3s 会有一个 rotation。</p>
+<p><a href="https://github.com/rancher/k3s/pull/1855#issuecomment-637704645">k3s#1855</a></p>
+<blockquote>
+<p>Yes, this controls the certificate that&rsquo;s used for the internal apiserver endpoint. As far as I can tell this is NOT the same endpoint as external clients (kubectl, etc) interact with on port 6443.</p>
+</blockquote>
 </li>
 <li>
 <p><code>k3s-serving</code></p>
 <p>kube-system namespace 下面的 secret <code>k3s-serving</code>，用于外部访问，例如 kubectl，或者 curl 之类的。</p>
-<p>这个证书不会自动更新，所以可能集群内部没挂，但是你不能通过 ca.crt 访问他。</p>
-<p>经过检验，在 pod 内部访问依旧是返回的这个 cert。</p>
+<p>经过检验，在我们部署的 pod 内部访问依旧是返回的这个 cert。</p>
 </li>
 </ul>
-<p>参考 issue <a href="https://github.com/rancher/k3s/pull/1855">https://github.com/rancher/k3s/pull/1855</a></p>
+<p><a href="https://github.com/rancher/k3s/issues/1621">k3s#1621</a> 关于证书的更新。重启一下 k3s，就会自动更新所有证书（如果 Expiration &lt; 60d）。</p>
+<p><a href="https://github.com/rancher/k3s/releases/tag/v1.19.3%2Bk3s2">v1.19.3+k3s2</a> 版本之后，才会更新 k3s-serving, 否则只会更新 <code>/var/lib/rancher/k3s/server/tls</code> 下的证书。</p>
 <h3 id="serviceaccount">serviceaccount<a href="#serviceaccount" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
 <p>在 k3s 的 serviceaccout 中，默认的 secret 也就是 xxxx-token-xxx，里面的信息有三部分。</p>
 <ul>
@@ -154,7 +158,7 @@
 				<p>
 					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="https://bowser1704.github.io/tags/k3s">k3s</a></span>
 				</p>
-				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>472 Words</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>533 Words</p>
 				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2020-11-08 22:18 &#43;0800</p>
 			</footer>
 		</article>
