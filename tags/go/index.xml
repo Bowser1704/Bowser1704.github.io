@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Go on Bowser&#39;s blog</title>
+    <link>https://bowser1704.github.io/tags/go/</link>
+    <description>Recent content in Go on Bowser&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Thu, 12 Nov 2020 19:19:16 +0800</lastBuildDate>
+    
+	<atom:link href="https://bowser1704.github.io/tags/go/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Go Modules</title>
+      <link>https://bowser1704.github.io/note/gomod/</link>
+      <pubDate>Thu, 12 Nov 2020 19:19:16 +0800</pubDate>
+      
+      <guid>https://bowser1704.github.io/note/gomod/</guid>
+      <description>Go Modules 参考 Go blogpost using-go-modules. 两个 version Pseudo-versions VS semantic versions 前者为依赖 repo 没有打 tag, 则按照一定的规则给一个 version。 后者为一种 version 规则。 // 可以指定 version go get. go get rsc.io/quote@v3.0.0 下载和校验 Module downloading</description>
+    </item>
+    
+  </channel>
+</rss>

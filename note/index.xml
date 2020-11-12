@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Tue, 11 Aug 2020 23:37:44 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 12 Nov 2020 19:19:16 +0800</lastBuildDate>
     
 	<atom:link href="https://bowser1704.github.io/note/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Go Modules</title>
+      <link>https://bowser1704.github.io/note/gomod/</link>
+      <pubDate>Thu, 12 Nov 2020 19:19:16 +0800</pubDate>
+      
+      <guid>https://bowser1704.github.io/note/gomod/</guid>
+      <description>Go Modules 参考 Go blogpost using-go-modules. 两个 version Pseudo-versions VS semantic versions 前者为依赖 repo 没有打 tag, 则按照一定的规则给一个 version。 后者为一种 version 规则。 // 可以指定 version go get. go get rsc.io/quote@v3.0.0 下载和校验 Module downloading</description>
+    </item>
     
     <item>
       <title>初谈 SDN</title>
@@ -91,15 +100,6 @@
       
       <guid>https://bowser1704.github.io/note/csappchapter12/</guid>
       <description>基于进程的并发编程 就像我们最初写的echo服务一样，listen来了一个请求，创建一个connfd，一个子进程去处理，写入coonfd。如下</description>
-    </item>
-    
-    <item>
-      <title>csapp Chapter11 网络编程</title>
-      <link>https://bowser1704.github.io/note/csappchapter11/</link>
-      <pubDate>Wed, 13 Nov 2019 21:30:14 +0800</pubDate>
-      
-      <guid>https://bowser1704.github.io/note/csappchapter11/</guid>
-      <description>主要记录一下socket相关内容，网络协议不多做描述。 下图是基本的步骤图 getaddrinfo 一句话：获取套接字地址，从url，也就是dns获取真正的ip地址，</description>
     </item>
     
   </channel>

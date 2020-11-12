@@ -59,7 +59,7 @@
 </li>
 <li>
 <p><code>certificate-authority-data</code></p>
-<p>这是 ca.crt 也就是 ca 的根证书，在 k3s 中这个是 server-ca 签发。也就是 server-ca 的证书。</p>
+<p>这是 ca.crt 也就是 ca 的根证书，在 k3s 中这个是 server-ca 签发。也就是 server-ca 的证书。这个用于 TLS，也就是我们系统内置的根证书，它签发了一些服务端的证书。</p>
 </li>
 </ul>
 <blockquote>
