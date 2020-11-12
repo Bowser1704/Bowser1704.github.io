@@ -55,7 +55,7 @@ users:
 
 - `certificate-authority-data`
 
-  这是 ca.crt 也就是 ca 的根证书，在 k3s 中这个是 server-ca 签发。也就是 server-ca 的证书。
+  这是 ca.crt 也就是 ca 的根证书，在 k3s 中这个是 server-ca 签发。也就是 server-ca 的证书。这个用于 TLS，也就是我们系统内置的根证书，它签发了一些服务端的证书。
 
 > k3s 中分了两个 ca，一个是 server-ca，一个是 client-ca，这不是必须的，可以只有一个 ca 签发所有证书。
 
@@ -91,4 +91,3 @@ users:
 - ca.crt 也就是 server-ca.crt 用于 TLS 验证，也就是一般我们系统内置的根证书。
 - token 就是认证信息
 - namespace  也就是这个 sa 的 ns。
-
