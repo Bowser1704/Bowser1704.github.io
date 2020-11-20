@@ -1,23 +1,21 @@
 ---
 title: k3s authentication certificate
-summary: ""
-tags: [k3s]
 categories: [cloud-native]
 spotlight: false
 date: 2020-11-08T22:18:18+08:00
 ---
 
-## k3s authentication
+## k3s authentication 方式
 
-- client certificate 也是一种认证方式
+- client certificate 
 - token
 - username and password
 
 ## certificate
 
-在 k8s 的世界里面有两种证书，一种是 client certificate 用于认证，一种是 server certificate 用于 TLS。
+在 k8s 的世界里面有两种证书，一种是 client certificate 用于认证，一种是 server certificate 用于 TLS 验证。
 
-用于认证的就是 `kubeconfig` 文件里面的 `client-certificate-data ` 和 `client-key-data`
+用于认证的就是 kubeconfig 文件里面的 client-certificate-data 和 client-key-data
 
 ```yaml
 apiVersion: v1
@@ -45,15 +43,15 @@ users:
     client-key-data: REDACTED
 ```
 
-- `client-certificate-data `
+- client-certificate-data 
 
   证书文件，里面包含 public key 和 signature，在 k3s 中由 client-ca 签发。
 
-- `client-key-data`
+- client-key-data
 
-  上面 public key 的 private key，client certificate 这种认证方式所需要的。
+  是上面 public key 对应的 private key，也是 client certificate 这种认证方式所需要的。
 
-- `certificate-authority-data`
+- certificate-authority-data
 
   这是 ca.crt 也就是 ca 的根证书，在 k3s 中这个是 server-ca 签发。也就是 server-ca 的证书。这个用于 TLS，也就是我们系统内置的根证书，它签发了一些服务端的证书。
 
@@ -63,26 +61,26 @@ users:
 
 在 k3s 中，有两个证书用于 HTTPS 验证，
 
-- `serving-kube-apiserver.crt`
+- serving-kube-apiserver.crt
 
-   `/var/lib/rancher/k3s/server/tls`  中的 `serving-kube-apiserver.crt` 这个用于 apiserver 内部组件认证。
+   `/var/lib/rancher/k3s/server/tls`  中的 serving-kube-apiserver.crt 这个用于 apiserver 内部组件认证。
 
   这个证书当我们重启机器的时候 k3s 会有一个 rotation。
 
-  [k3s#1855](https://github.com/rancher/k3s/pull/1855#issuecomment-637704645)
+  参考 pull request [k3s#1855](https://github.com/rancher/k3s/pull/1855#issuecomment-637704645)[^0]
 
   > Yes, this controls the certificate that's used for the internal apiserver endpoint. As far as I can tell this is NOT the same endpoint as external clients (kubectl, etc) interact with on port 6443.
 
-- `k3s-serving`
+- k3s-serving
   
-  kube-system namespace 下面的 secret `k3s-serving`，用于外部访问，例如 kubectl，或者 curl 之类的。
+  kube-system namespace 下面的 secret k3s-serving，用于外部访问，例如 `kubectl`，或者 `curl` 之类的。
   
   经过检验，在我们部署的 pod 内部访问依旧是返回的这个 cert。
   
 
-[k3s#1621](https://github.com/rancher/k3s/issues/1621) 关于证书的更新。重启一下 k3s，就会自动更新所有证书（如果 Expiration < 60d）。
+issue [k3s#1621](https://github.com/rancher/k3s/issues/1621)[^1] 解释了关于证书的更新。重启一下 k3s，就会自动更新所有证书（如果 Expiration < 60d）。
 
-[v1.19.3+k3s2](https://github.com/rancher/k3s/releases/tag/v1.19.3%2Bk3s2) 版本之后，才会更新 k3s-serving, 否则只会更新 `/var/lib/rancher/k3s/server/tls` 下的证书。
+**并且可能是 bug 只有 [v1.19.3+k3s2](https://github.com/rancher/k3s/releases/tag/v1.19.3%2Bk3s2)[^2] 版本之后，才会更新 k3s-serving, 否则只会更新 `/var/lib/rancher/k3s/server/tls` 下的证书。**
 
 ### serviceaccount
 
@@ -91,3 +89,12 @@ users:
 - ca.crt 也就是 server-ca.crt 用于 TLS 验证，也就是一般我们系统内置的根证书。
 - token 就是认证信息
 - namespace  也就是这个 sa 的 ns。
+
+### *References*
+
+[^0]: https://github.com/rancher/k3s/pull/1855#issuecomment-637704645
+[^1]: https://github.com/rancher/k3s/issues/1621
+[^2]: https://github.com/rancher/k3s/releases/tag/v1.19.3%2Bk3s2
+
+
+
