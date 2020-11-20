@@ -15,16 +15,16 @@
 			<pubDate>Sun, 08 Nov 2020 22:18:18 +0800</pubDate>
 			
 			<guid>https://bowser1704.github.io/posts/k3s-auth/</guid>
-			<description>k3s authentication client certificate 也是一种认证方式 token username and password certificate 在 k8s 的世界里面有两种证书，一种是 client certificate 用于认证，一种是 server certificate 用于 TLS。 用于认证的就是 kubeconfig 文件里面的 client-certificate-data 和 client-key-data apiVersion:v1clusters:- cluster:certificate-authority-data:DATA+OMITTEDserver:https://kubernetes.docker.internal:6443name:docker-desktopcontexts:- context:cluster:docker-desktopuser:docker-desktopname:docker-desktop-</description>
-			<content type="html"><![CDATA[<h2 id="k3s-authentication">k3s authentication</h2>
+			<description>k3s authentication 方式 client certificate token username and password certificate 在 k8s 的世界里面有两种证书，一种是 client certificate 用于认证，一种是 server certificate 用于 TLS 验证。 用于认证的就是 kubeconfig 文件里面的 client-certificate-data 和 client-key-data apiVersion:v1clusters:- cluster:certificate-authority-data:DATA+OMITTEDserver:https://kubernetes.docker.internal:6443name:docker-desktopcontexts:- context:cluster:docker-desktopuser:docker-desktopname:docker-desktop- context:cluster:docker-desktopuser:docker-desktopname:docker-for-desktopcurrent-context:docker-desktopkind:Configpreferences:{}users:- name:docker-desktopuser:client-certificate-data:REDACTEDclient-key-data:REDACTED client-certificate-data 证书文</description>
+			<content type="html"><![CDATA[<h2 id="k3s-authentication-方式">k3s authentication 方式</h2>
 <ul>
-<li>client certificate 也是一种认证方式</li>
+<li>client certificate</li>
 <li>token</li>
 <li>username and password</li>
 </ul>
 <h2 id="certificate">certificate</h2>
-<p>在 k8s 的世界里面有两种证书，一种是 client certificate 用于认证，一种是 server certificate 用于 TLS。</p>
-<p>用于认证的就是 <code>kubeconfig</code> 文件里面的 <code>client-certificate-data </code> 和 <code>client-key-data</code></p>
+<p>在 k8s 的世界里面有两种证书，一种是 client certificate 用于认证，一种是 server certificate 用于 TLS 验证。</p>
+<p>用于认证的就是 kubeconfig 文件里面的 client-certificate-data 和 client-key-data</p>
 <div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>v1<span class="w">
 </span><span class="w"></span><span class="k">clusters</span><span class="p">:</span><span class="w">
 </span><span class="w"></span>- <span class="k">cluster</span><span class="p">:</span><span class="w">
@@ -50,15 +50,15 @@
 </span><span class="w">    </span><span class="k">client-key-data</span><span class="p">:</span><span class="w"> </span>REDACTED<span class="w">
 </span></code></pre></div><ul>
 <li>
-<p><code>client-certificate-data </code></p>
+<p>client-certificate-data</p>
 <p>证书文件，里面包含 public key 和 signature，在 k3s 中由 client-ca 签发。</p>
 </li>
 <li>
-<p><code>client-key-data</code></p>
-<p>上面 public key 的 private key，client certificate 这种认证方式所需要的。</p>
+<p>client-key-data</p>
+<p>是上面 public key 对应的 private key，也是 client certificate 这种认证方式所需要的。</p>
 </li>
 <li>
-<p><code>certificate-authority-data</code></p>
+<p>certificate-authority-data</p>
 <p>这是 ca.crt 也就是 ca 的根证书，在 k3s 中这个是 server-ca 签发。也就是 server-ca 的证书。这个用于 TLS，也就是我们系统内置的根证书，它签发了一些服务端的证书。</p>
 </li>
 </ul>
@@ -69,22 +69,22 @@
 <p>在 k3s 中，有两个证书用于 HTTPS 验证，</p>
 <ul>
 <li>
-<p><code>serving-kube-apiserver.crt</code></p>
-<p><code>/var/lib/rancher/k3s/server/tls</code>  中的 <code>serving-kube-apiserver.crt</code> 这个用于 apiserver 内部组件认证。</p>
+<p>serving-kube-apiserver.crt</p>
+<p><code>/var/lib/rancher/k3s/server/tls</code>  中的 serving-kube-apiserver.crt 这个用于 apiserver 内部组件认证。</p>
 <p>这个证书当我们重启机器的时候 k3s 会有一个 rotation。</p>
-<p><a href="https://github.com/rancher/k3s/pull/1855#issuecomment-637704645">k3s#1855</a></p>
+<p>参考 pull request <a href="https://github.com/rancher/k3s/pull/1855#issuecomment-637704645">k3s#1855</a><sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>
 <blockquote>
 <p>Yes, this controls the certificate that&rsquo;s used for the internal apiserver endpoint. As far as I can tell this is NOT the same endpoint as external clients (kubectl, etc) interact with on port 6443.</p>
 </blockquote>
 </li>
 <li>
-<p><code>k3s-serving</code></p>
-<p>kube-system namespace 下面的 secret <code>k3s-serving</code>，用于外部访问，例如 kubectl，或者 curl 之类的。</p>
+<p>k3s-serving</p>
+<p>kube-system namespace 下面的 secret k3s-serving，用于外部访问，例如 <code>kubectl</code>，或者 <code>curl</code> 之类的。</p>
 <p>经过检验，在我们部署的 pod 内部访问依旧是返回的这个 cert。</p>
 </li>
 </ul>
-<p><a href="https://github.com/rancher/k3s/issues/1621">k3s#1621</a> 关于证书的更新。重启一下 k3s，就会自动更新所有证书（如果 Expiration &lt; 60d）。</p>
-<p><a href="https://github.com/rancher/k3s/releases/tag/v1.19.3%2Bk3s2">v1.19.3+k3s2</a> 版本之后，才会更新 k3s-serving, 否则只会更新 <code>/var/lib/rancher/k3s/server/tls</code> 下的证书。</p>
+<p>issue <a href="https://github.com/rancher/k3s/issues/1621">k3s#1621</a><sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup> 解释了关于证书的更新。重启一下 k3s，就会自动更新所有证书（如果 Expiration &lt; 60d）。</p>
+<p><strong>并且可能是 bug 只有 <a href="https://github.com/rancher/k3s/releases/tag/v1.19.3%2Bk3s2">v1.19.3+k3s2</a><sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup> 版本之后，才会更新 k3s-serving, 否则只会更新 <code>/var/lib/rancher/k3s/server/tls</code> 下的证书。</strong></p>
 <h3 id="serviceaccount">serviceaccount</h3>
 <p>在 k3s 的 serviceaccout 中，默认的 secret 也就是 xxxx-token-xxx，里面的信息有三部分。</p>
 <ul>
@@ -92,6 +92,21 @@
 <li>token 就是认证信息</li>
 <li>namespace  也就是这个 sa 的 ns。</li>
 </ul>
+<h3 id="references"><em>References</em></h3>
+<section class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1" role="doc-endnote">
+<p><a href="https://github.com/rancher/k3s/pull/1855#issuecomment-637704645">https://github.com/rancher/k3s/pull/1855#issuecomment-637704645</a> <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2" role="doc-endnote">
+<p><a href="https://github.com/rancher/k3s/issues/1621">https://github.com/rancher/k3s/issues/1621</a> <a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3" role="doc-endnote">
+<p><a href="https://github.com/rancher/k3s/releases/tag/v1.19.3%2Bk3s2">https://github.com/rancher/k3s/releases/tag/v1.19.3%2Bk3s2</a> <a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</section>
 ]]></content>
 		</item>
 		

@@ -4,12 +4,27 @@
   
   <url>
     <loc>https://bowser1704.github.io/</loc>
-    <lastmod>2020-11-08T22:18:18+08:00</lastmod>
+    <lastmod>2020-11-17T11:54:28+08:00</lastmod>
   </url>
   
   <url>
-    <loc>https://bowser1704.github.io/tags/k3s/</loc>
-    <lastmod>2020-11-08T22:18:18+08:00</lastmod>
+    <loc>https://bowser1704.github.io/tags/language/</loc>
+    <lastmod>2020-11-17T11:54:28+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://bowser1704.github.io/note/</loc>
+    <lastmod>2020-11-17T11:54:28+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://bowser1704.github.io/tags/</loc>
+    <lastmod>2020-11-17T11:54:28+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://bowser1704.github.io/note/type-conversion/</loc>
+    <lastmod>2020-11-17T11:54:28+08:00</lastmod>
   </url>
   
   <url>
@@ -19,11 +34,6 @@
   
   <url>
     <loc>https://bowser1704.github.io/posts/</loc>
-    <lastmod>2020-11-08T22:18:18+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://bowser1704.github.io/tags/</loc>
     <lastmod>2020-11-08T22:18:18+08:00</lastmod>
   </url>
   
@@ -43,11 +53,6 @@
   </url>
   
   <url>
-    <loc>https://bowser1704.github.io/note/</loc>
-    <lastmod>2020-08-11T23:37:44+08:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://bowser1704.github.io/note/overlay-network/</loc>
     <lastmod>2020-08-11T23:37:44+08:00</lastmod>
   </url>
@@ -60,6 +65,11 @@
   <url>
     <loc>https://bowser1704.github.io/note/ci/</loc>
     <lastmod>2020-08-03T16:55:07+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://bowser1704.github.io/tags/k3s/</loc>
+    <lastmod>2020-07-01T22:21:01+08:00</lastmod>
   </url>
   
   <url>
