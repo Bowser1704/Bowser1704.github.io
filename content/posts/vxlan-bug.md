@@ -67,7 +67,7 @@ systemctl restart k3s
 - 检查每个节点的 flannel backend type。
 
 ​```bash
-[root@iZuf6dq9lezw045stckkhsZ ~]# kubectl get node bowser1704 -o yaml | grep backend-type
+[root@bowser1704 ~]# kubectl get node bowser1704 -o yaml | grep backend-type
     flannel.alpha.coreos.com/backend-type: host-gw
 ```
 
@@ -94,20 +94,20 @@ Chain PREROUTING (policy ACCEPT 49 packets, 3398 bytes)
 1944K  142M CNI-HOSTPORT-DNAT  all  --  *      *       0.0.0.0/0            0.0.0.0/0            ADDRTYPE match dst-type LOCAL
 
 # check KUBE-SERIVCES chain / food is my service name
-[root@iZuf6dq9lezw045stckkhsZ be]# iptables -t nat -n -v -L KUBE-SERVICES | grep food
+[root@bowser1704 be]# iptables -t nat -n -v -L KUBE-SERVICES | grep food
     2   120 KUBE-MARK-MASQ  tcp  --  *      *      !10.42.0.0/16         10.43.105.114        /* food/food-backend:http cluster IP */ tcp dpt:8080
     2   120 KUBE-SVC-J4YWF6HICEDZUWTC  tcp  --  *      *       0.0.0.0/0            10.43.105.114        /* food/food-backend:http cluster IP */ tcp dpt:8080
     0     0 KUBE-MARK-MASQ  tcp  --  *      *      !10.42.0.0/16         10.43.105.118        /* food/redis: cluster IP */ tcp dpt:7388
     0     0 KUBE-SVC-OXGTRCQ72XOGLTBD  tcp  --  *      *       0.0.0.0/0            10.43.105.118        /* food/redis: cluster IP */ tcp dpt:7388
 
 # check food svc chain
-[root@iZuf6dq9lezw045stckkhsZ be]# iptables -t nat -n -v -L  KUBE-SVC-J4YWF6HICEDZUWTC
+[root@bowser1704 be]# iptables -t nat -n -v -L  KUBE-SVC-J4YWF6HICEDZUWTC
 Chain KUBE-SVC-J4YWF6HICEDZUWTC (1 references)
  pkts bytes target     prot opt in     out     source               destination
     2   120 KUBE-SEP-Z45YJMXQTGNBLAMQ  all  --  *      *       0.0.0.0/0            0.0.0.0/0
 
 # check kstack sep chain / sep is made for load balance
-[root@iZuf6dq9lezw045stckkhsZ be]# iptables -t nat -n -v -L  KUBE-SEP-Z45YJMXQTGNBLAMQ
+[root@bowser1704 be]# iptables -t nat -n -v -L  KUBE-SEP-Z45YJMXQTGNBLAMQ
 Chain KUBE-SEP-Z45YJMXQTGNBLAMQ (1 references)
  pkts bytes target     prot opt in     out     source               destination
     0     0 KUBE-MARK-MASQ  all  --  *      *       10.42.1.4            0.0.0.0/0
@@ -122,7 +122,7 @@ Chain KUBE-MARK-MASQ (56 references)
 而 POSTROUTING 做了什么呢？
 
 ```bash
-[root@iZuf6dq9lezw045stckkhsZ ~]# iptables -t nat -n -v -L POSTROUTING
+[root@bowser1704 ~]# iptables -t nat -n -v -L POSTROUTING
 Chain POSTROUTING (policy ACCEPT 5747 packets, 614K bytes)
  pkts bytes target     prot opt in     out     source               destination
 4948K  362M CNI-HOSTPORT-MASQ  all  --  *      *       0.0.0.0/0            0.0.0.0/0            /* CNI portfwd requiring masquerade */
@@ -131,11 +131,11 @@ Chain POSTROUTING (policy ACCEPT 5747 packets, 614K bytes)
  2608  198K MASQUERADE  all  --  *      *       10.42.0.0/16        !224.0.0.0/4
 15770  690K RETURN     all  --  *      *      !10.42.0.0/16         10.42.0.0/24
     3   180 MASQUERADE  all  --  *      *      !10.42.0.0/16         10.42.0.0/16
-[root@iZuf6dq9lezw045stckkhsZ ~]# iptables -t nat -n -v -L CNI-HOSTPORT-MASQ
+[root@bowser1704 ~]# iptables -t nat -n -v -L CNI-HOSTPORT-MASQ
 Chain CNI-HOSTPORT-MASQ (1 references)
  pkts bytes target     prot opt in     out     source               destination
     0     0 MASQUERADE  all  --  *      *       0.0.0.0/0            0.0.0.0/0            mark match 0x2000/0x2000
-[root@iZuf6dq9lezw045stckkhsZ ~]# iptables -t nat -n -v -L KUBE-POSTROUTING
+[root@bowser1704 ~]# iptables -t nat -n -v -L KUBE-POSTROUTING
 Chain KUBE-POSTROUTING (1 references)
  pkts bytes target     prot opt in     out     source               destination
   448 18044 MASQUERADE  all  --  *      *       0.0.0.0/0            0.0.0.0/0            /* kubernetes service traffic requiring SNAT */ mark match 0x4000/0x4000
@@ -160,7 +160,7 @@ kubu-proxy 用来实现 DNAT 和 SNAT 「k3s 二进制文件内置了，没有�
 ## 4. 查看 DNAT 之后的走向
 
 ```bash
-[root@iZuf6dq9lezw045stckkhsZ ~]# route -n
+[root@bowser1704 ~]# route -n
 Kernel IP routing table
 Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
 0.0.0.0         172.19.159.253  0.0.0.0         UG    0      0        0 eth0

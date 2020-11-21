@@ -1,8 +1,7 @@
 ---
 title: "《天气之子》反映的人生观"
 date: 2019-11-02T20:30:51+08:00
-draft: false
-spotlight: true
+draft: true
 categories:
 - film
 tags:

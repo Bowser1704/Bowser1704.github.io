@@ -7,10 +7,10 @@ theme = "hermit"
 pygmentsCodefences  = true
 pygmentsUseClasses  = true
 hasCJKLanguage = true  # If Chinese/Japanese/Korean is your main content language, enable this to make wordCount works right.
-rssLimit = 10  # Maximum number of items in the RSS feed.
+rssLimit = 5  # Maximum number of items in the RSS feed.
 copyright = "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License." # This message is only used by the RSS template.
 enableEmoji = true  # Shorthand emojis in content files - https://gohugo.io/functions/emojify/
-# googleAnalytics = "UA-123-45"
+googleAnalytics = "UA-151172261-1"
 # disqusShortname = "yourdiscussshortname"
 
 [author]
@@ -57,11 +57,11 @@ enableEmoji = true  # Shorthand emojis in content files - https://gohugo.io/func
   # Check https://github.com/Track3/hermit#social-icons for more info.
   [[params.social]]
     name = "email"
-    url = "bowser1704@gmail.com"
+    url = "mailto:bowser1704@gmail.com"
   
   [[params.social]]
     name = "telegram"
-    url = "Bowser1704"
+    url = "https://t.me/bowser1704"
   
   [[params.social]]
     name = "github"
@@ -75,8 +75,8 @@ enableEmoji = true  # Shorthand emojis in content files - https://gohugo.io/func
     weight = 10
   
   [[menu.main]]
-    name = "Note"
-    url = "note/"
+    name = "Notes"
+    url = "notes/"
     weight = 20
 
   [[menu.main]]
