@@ -14,10 +14,10 @@
     
     <item>
       <title>CI 实践</title>
-      <link>https://bowser1704.github.io/note/ci/</link>
+      <link>https://bowser1704.github.io/notes/ci/</link>
       <pubDate>Mon, 03 Aug 2020 16:55:07 +0800</pubDate>
       
-      <guid>https://bowser1704.github.io/note/ci/</guid>
+      <guid>https://bowser1704.github.io/notes/ci/</guid>
       <description>CI Drone CI 我们使用 Drone 和 GitHub Actions 一起作为 CI/CD 工具， GitHub Actions 机器性能好，操作较为简单。 Drone 可定制程度高，拿到手之后想怎么做都可以。并且因为国内的网络环境，CD(</description>
     </item>
     

@@ -14,10 +14,10 @@
     
     <item>
       <title>豆子峡谷黑苹果 5GHz WI-FI 无法使用 80 MHz</title>
-      <link>https://bowser1704.github.io/note/nuc8i5-wifi/</link>
+      <link>https://bowser1704.github.io/notes/nuc8i5-wifi/</link>
       <pubDate>Sat, 27 Jun 2020 15:37:05 +0800</pubDate>
       
-      <guid>https://bowser1704.github.io/note/nuc8i5-wifi/</guid>
+      <guid>https://bowser1704.github.io/notes/nuc8i5-wifi/</guid>
       <description>nuc8i5bench hackintosh WIFI 跑不满速度 路由器：斐讯 K2 网卡：BCM94360CS K2 理论上 5GHz 速度应该可以达到 867 Mbps 但是这里只有 180 Mbps。网卡和路由器都是支持 802.11ac 的。 经过</description>
     </item>
     

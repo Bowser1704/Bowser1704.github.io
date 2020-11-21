@@ -7,19 +7,10 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Tue, 17 Nov 2020 11:54:28 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 26 Oct 2020 12:23:46 +0800</lastBuildDate>
     
 	<atom:link href="https://bowser1704.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>language</title>
-      <link>https://bowser1704.github.io/tags/language/</link>
-      <pubDate>Tue, 17 Nov 2020 11:54:28 +0800</pubDate>
-      
-      <guid>https://bowser1704.github.io/tags/language/</guid>
-      <description></description>
-    </item>
     
     <item>
       <title>time</title>
@@ -63,42 +54,6 @@
       <pubDate>Wed, 01 Jul 2020 22:21:01 +0800</pubDate>
       
       <guid>https://bowser1704.github.io/tags/monitoring/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>prometheus</title>
-      <link>https://bowser1704.github.io/tags/prometheus/</link>
-      <pubDate>Wed, 01 Jul 2020 22:21:01 +0800</pubDate>
-      
-      <guid>https://bowser1704.github.io/tags/prometheus/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>iptables</title>
-      <link>https://bowser1704.github.io/tags/iptables/</link>
-      <pubDate>Mon, 29 Jun 2020 10:18:22 +0800</pubDate>
-      
-      <guid>https://bowser1704.github.io/tags/iptables/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Linux</title>
-      <link>https://bowser1704.github.io/tags/linux/</link>
-      <pubDate>Mon, 29 Jun 2020 10:18:22 +0800</pubDate>
-      
-      <guid>https://bowser1704.github.io/tags/linux/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>nuc</title>
-      <link>https://bowser1704.github.io/tags/nuc/</link>
-      <pubDate>Sat, 27 Jun 2020 15:37:05 +0800</pubDate>
-      
-      <guid>https://bowser1704.github.io/tags/nuc/</guid>
       <description></description>
     </item>
     

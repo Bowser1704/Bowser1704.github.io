@@ -643,7 +643,7 @@ systemctl restart k3s
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">- 检查每个节点的 flannel backend type。
 
 ​<span class="sb">```</span>bash
-<span class="o">[</span>root@iZuf6dq9lezw045stckkhsZ ~<span class="o">]</span><span class="c1"># kubectl get node bowser1704 -o yaml | grep backend-type</span>
+<span class="o">[</span>root@bowser1704 ~<span class="o">]</span><span class="c1"># kubectl get node bowser1704 -o yaml | grep backend-type</span>
     flannel.alpha.coreos.com/backend-type: host-gw
 </code></pre></div><p><del>所以对我来说 更换为 host-gw 似乎并没有作用。</del></p>
 <p>因为使用的是阿里云的云企业网，并且使用不同账号 vpc，属于跨 vpc，也就是阿里云的 vpc 网络是二层隔离的，所以 host-gw 不能使用。因为阿里云在中间做了一些拦截，把使用 node ip 作为路由下一跳的包全都拦了。</p>
@@ -660,20 +660,20 @@ Chain PREROUTING <span class="o">(</span>policy ACCEPT <span class="m">49</span>
 1944K  142M CNI-HOSTPORT-DNAT  all  --  *      *       0.0.0.0/0            0.0.0.0/0            ADDRTYPE match dst-type LOCAL
 
 <span class="c1"># check KUBE-SERIVCES chain / food is my service name</span>
-<span class="o">[</span>root@iZuf6dq9lezw045stckkhsZ be<span class="o">]</span><span class="c1"># iptables -t nat -n -v -L KUBE-SERVICES | grep food</span>
+<span class="o">[</span>root@bowser1704 be<span class="o">]</span><span class="c1"># iptables -t nat -n -v -L KUBE-SERVICES | grep food</span>
     <span class="m">2</span>   <span class="m">120</span> KUBE-MARK-MASQ  tcp  --  *      *      !10.42.0.0/16         10.43.105.114        /* food/food-backend:http cluster IP */ tcp dpt:8080
     <span class="m">2</span>   <span class="m">120</span> KUBE-SVC-J4YWF6HICEDZUWTC  tcp  --  *      *       0.0.0.0/0            10.43.105.114        /* food/food-backend:http cluster IP */ tcp dpt:8080
     <span class="m">0</span>     <span class="m">0</span> KUBE-MARK-MASQ  tcp  --  *      *      !10.42.0.0/16         10.43.105.118        /* food/redis: cluster IP */ tcp dpt:7388
     <span class="m">0</span>     <span class="m">0</span> KUBE-SVC-OXGTRCQ72XOGLTBD  tcp  --  *      *       0.0.0.0/0            10.43.105.118        /* food/redis: cluster IP */ tcp dpt:7388
 
 <span class="c1"># check food svc chain</span>
-<span class="o">[</span>root@iZuf6dq9lezw045stckkhsZ be<span class="o">]</span><span class="c1"># iptables -t nat -n -v -L  KUBE-SVC-J4YWF6HICEDZUWTC</span>
+<span class="o">[</span>root@bowser1704 be<span class="o">]</span><span class="c1"># iptables -t nat -n -v -L  KUBE-SVC-J4YWF6HICEDZUWTC</span>
 Chain KUBE-SVC-J4YWF6HICEDZUWTC <span class="o">(</span><span class="m">1</span> references<span class="o">)</span>
  pkts bytes target     prot opt in     out     <span class="nb">source</span>               destination
     <span class="m">2</span>   <span class="m">120</span> KUBE-SEP-Z45YJMXQTGNBLAMQ  all  --  *      *       0.0.0.0/0            0.0.0.0/0
 
 <span class="c1"># check kstack sep chain / sep is made for load balance</span>
-<span class="o">[</span>root@iZuf6dq9lezw045stckkhsZ be<span class="o">]</span><span class="c1"># iptables -t nat -n -v -L  KUBE-SEP-Z45YJMXQTGNBLAMQ</span>
+<span class="o">[</span>root@bowser1704 be<span class="o">]</span><span class="c1"># iptables -t nat -n -v -L  KUBE-SEP-Z45YJMXQTGNBLAMQ</span>
 Chain KUBE-SEP-Z45YJMXQTGNBLAMQ <span class="o">(</span><span class="m">1</span> references<span class="o">)</span>
  pkts bytes target     prot opt in     out     <span class="nb">source</span>               destination
     <span class="m">0</span>     <span class="m">0</span> KUBE-MARK-MASQ  all  --  *      *       10.42.1.4            0.0.0.0/0
@@ -684,7 +684,7 @@ Chain KUBE-MARK-MASQ <span class="o">(</span><span class="m">56</span> reference
  pkts bytes target     prot opt in     out     <span class="nb">source</span>               destination
    <span class="m">58</span>  <span class="m">2400</span> MARK       all  --  *      *       0.0.0.0/0            0.0.0.0/0            MARK or 0x4000
 </code></pre></div><p>而 POSTROUTING 做了什么呢？</p>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="o">[</span>root@iZuf6dq9lezw045stckkhsZ ~<span class="o">]</span><span class="c1"># iptables -t nat -n -v -L POSTROUTING</span>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="o">[</span>root@bowser1704 ~<span class="o">]</span><span class="c1"># iptables -t nat -n -v -L POSTROUTING</span>
 Chain POSTROUTING <span class="o">(</span>policy ACCEPT <span class="m">5747</span> packets, 614K bytes<span class="o">)</span>
  pkts bytes target     prot opt in     out     <span class="nb">source</span>               destination
 4948K  362M CNI-HOSTPORT-MASQ  all  --  *      *       0.0.0.0/0            0.0.0.0/0            /* CNI portfwd requiring masquerade */
@@ -693,11 +693,11 @@ Chain POSTROUTING <span class="o">(</span>policy ACCEPT <span class="m">5747</sp
  <span class="m">2608</span>  198K MASQUERADE  all  --  *      *       10.42.0.0/16        !224.0.0.0/4
 <span class="m">15770</span>  690K RETURN     all  --  *      *      !10.42.0.0/16         10.42.0.0/24
     <span class="m">3</span>   <span class="m">180</span> MASQUERADE  all  --  *      *      !10.42.0.0/16         10.42.0.0/16
-<span class="o">[</span>root@iZuf6dq9lezw045stckkhsZ ~<span class="o">]</span><span class="c1"># iptables -t nat -n -v -L CNI-HOSTPORT-MASQ</span>
+<span class="o">[</span>root@bowser1704 ~<span class="o">]</span><span class="c1"># iptables -t nat -n -v -L CNI-HOSTPORT-MASQ</span>
 Chain CNI-HOSTPORT-MASQ <span class="o">(</span><span class="m">1</span> references<span class="o">)</span>
  pkts bytes target     prot opt in     out     <span class="nb">source</span>               destination
     <span class="m">0</span>     <span class="m">0</span> MASQUERADE  all  --  *      *       0.0.0.0/0            0.0.0.0/0            mark match 0x2000/0x2000
-<span class="o">[</span>root@iZuf6dq9lezw045stckkhsZ ~<span class="o">]</span><span class="c1"># iptables -t nat -n -v -L KUBE-POSTROUTING</span>
+<span class="o">[</span>root@bowser1704 ~<span class="o">]</span><span class="c1"># iptables -t nat -n -v -L KUBE-POSTROUTING</span>
 Chain KUBE-POSTROUTING <span class="o">(</span><span class="m">1</span> references<span class="o">)</span>
  pkts bytes target     prot opt in     out     <span class="nb">source</span>               destination
   <span class="m">448</span> <span class="m">18044</span> MASQUERADE  all  --  *      *       0.0.0.0/0            0.0.0.0/0            /* kubernetes service traffic requiring SNAT */ mark match 0x4000/0x4000
@@ -718,7 +718,7 @@ Chain KUBE-POSTROUTING <span class="o">(</span><span class="m">1</span> referenc
 <li>1 3 对照发现 node 和 pod in node 访问结果不一样，在这里区别是 node 做了 SNAT。所以 SNAT 可能有影响。</li>
 </ul>
 <h2 id="4-查看-dnat-之后的走向">4. 查看 DNAT 之后的走向</h2>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="o">[</span>root@iZuf6dq9lezw045stckkhsZ ~<span class="o">]</span><span class="c1"># route -n</span>
+<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="o">[</span>root@bowser1704 ~<span class="o">]</span><span class="c1"># route -n</span>
 Kernel IP routing table
 Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
 0.0.0.0         172.19.159.253  0.0.0.0         UG    <span class="m">0</span>      <span class="m">0</span>        <span class="m">0</span> eth0
@@ -894,32 +894,6 @@ curl 10.43.105.114:8080/sd/health
 <p>《存在与虚无》： 萨特</p>
 </blockquote>
 <p>萨特的后一句是：但是正因为世界荒诞，才提出人之直面荒诞而活下去的勇气和伟大。直面荒诞，承担虚无，这也许才是人的价值吧。</p>
-]]></content>
-		</item>
-		
-		<item>
-			<title>《天气之子》反映的人生观</title>
-			<link>https://bowser1704.github.io/posts/weather-with-you/</link>
-			<pubDate>Sat, 02 Nov 2019 20:30:51 +0800</pubDate>
-			
-			<guid>https://bowser1704.github.io/posts/weather-with-you/</guid>
-			<description>电影中不断出现的《麦田里的守望者》 开头就是一个麦田里的守望者的特写镜头，就像霍尔顿一样，帆高也是离家出走，十分敏感，胆小，软弱，但是就是不愿</description>
-			<content type="html"><![CDATA[<h2 id="电影中不断出现的麦田里的守望者">电影中不断出现的《麦田里的守望者》</h2>
-<p>开头就是一个麦田里的守望者的<code>特写镜头</code>，就像霍尔顿一样，帆高也是离家出走，十分敏感，胆小，软弱，但是就是不愿意在家中待着，有一堆的理由，首先我认为这就是一个很感性的做法，这带来的后果很大，没有理性的去思考所做的事情会发生什么后果。</p>
-<h3 id="小资情调的忧伤">小资情调的忧伤</h3>
-<p>在生活水平一定发展之后，也就是小资产阶级就有了很多忧伤，也就是闲的蛋疼，他们感到平庸，世界的无理性，生命是没有意义的，所以他们想要逃跑，不停地逃跑，去一个没有人认识自己的地方，但其实如果去了另一个地方，还是会认识人，还是想要逃离，这是没有意义的逃离，就像霍尔顿一样最后还是回到家里，帆高也是回到家里，无论怎么逃，你所做的事情，其实没有意义，只是给更多人带来更多的麻烦。</p>
-<p>片中提到很多次，圭介和帆高很相似，对，他们其实就是一个少年，一个中年而已，但是表示出来了，都是离家出走，中年的圭介已经妥协了，不愿意麻烦别人，不愿意被别人麻烦，不再是一个感性的存在（但是片子最后他还是感性了），而少年的帆高，无论发生多大的事情，闯了多大的祸，依旧，依旧是没有后悔，没有紧张，当然这是片子刻意不去表现出来正常人的反应，也正是这样，感性的存在深刻的表现出来，也正是许多二次元爱好者的生活态度。</p>
-<p>许多人，中间比较突出的是很多二次元爱好者，家庭生活条件优越，但是可能会有家庭不完整的情况，她们尤其爱这中生活态度，对事物感到忧伤，很容易忧郁，并且喜欢把这种态度宣扬出去，告诉别人自己的状态，我认为这种态度是不正常的，或者说是幼稚的，你小时候17,8岁时候这样我都可以理解，但是如果你长大了，你认为你自己长大了，请不要再去宣扬你这种想法了，你可以忧郁，可以悲伤，但是满世界说你的悲伤是为了什么呢？你要做的还是得做，你的工作还是要完成，既然是生活，都是为了死亡，过程要完整。</p>
-<h2 id="天气">天气</h2>
-<p>天气在这里很重要，阳菜可以改变天气，让世界更美好，让人们更加开心，父亲可以带生病的孩子快乐游玩，商家可以卖更多货物&hellip;&hellip;..，总有那么些人会让世界更美好，有更多的欢声笑语，让本来到处逃跑的帆高，开始向往生活，开始认真的面对这个世界，似乎不再那么软弱了，想起葛优在《不见不散》中说的，这可能就是==爱情的力量吧==，圭介也变得更加好，接回了女儿，影片的结尾，他似乎过上了更好的生活，一切都是那么美好，看上去很融洽，大团圆结局。</p>
-<p>但是在这种美好中，带有那么一丝丝的悲伤，这或许就是小资产阶级的忧伤吧，东京成了一个海，或许他以前是那样的，但是让他变回去又付出了多大的代价呢，但是如果牺牲阳菜的话，情况又是怎么样呢，毕竟世界是那么肮脏，如果人们知道阳菜能改变这些，那他也许会被强迫牺牲吧。</p>
-<p>另外，天气，晴天，就比雨天好吗？</p>
-<p>下起了雨，你感到冷吗？</p>
-<h2 id="所以为的爱情">所以为的爱情</h2>
-<p>很多女生喜欢这种爱情，彼此之间，无所畏惧，帆高为了阳菜义无反顾，无所畏惧，看上去很美，看上去很感人的，这就是感性，帆高似乎最后得到了爱情，阳菜过上了幸福的生活，我所认为的不是，阳菜必须要牺牲自己，为了大家，为了世界，没必要，每个人都是一个个体，独立的个体，我们要做的是，不去麻烦别人，但是也不用被别人麻烦，甚至是贡献生命，我所以为的爱情没有这种轰轰烈烈，万物瞩目，平平淡淡其实才是最真的，不用打扰谁，如果你们有爱情，那就在一起，仅此，而已。</p>
-<h2 id="写在最后">写在最后</h2>
-<p>其实这是一篇带有反思的文字，我想不明白，为什么我会那样忧郁，悲观，我是农村人，没有优越的生活环境，小县城没有星巴克，生活中没有耐克阿迪，总是感受那些莫名的忧伤，奇怪了，事情变得复杂了，以前喜欢到处宣扬自己的那种忧伤，但是后来慢慢发现，这是很错误的，其实就是渴望被人发现自己，把丧看作是很好的文化，现在丧文化越来越流行，也让我更多的反思自己，自己到底是在做什么，在想什么？</p>
-<p>过度的随性所欲，过度的丧，都是十分感性的表现，如果要to be better，请保持理性。</p>
 ]]></content>
 		</item>
 		

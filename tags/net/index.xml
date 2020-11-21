@@ -14,10 +14,10 @@
     
     <item>
       <title>初谈 SDN</title>
-      <link>https://bowser1704.github.io/note/overlay-network/</link>
+      <link>https://bowser1704.github.io/notes/overlay-network/</link>
       <pubDate>Tue, 11 Aug 2020 23:37:44 +0800</pubDate>
       
-      <guid>https://bowser1704.github.io/note/overlay-network/</guid>
+      <guid>https://bowser1704.github.io/notes/overlay-network/</guid>
       <description>谈一谈容器网络和云上网络。 Bridge VXLAN Docker default network Flannel 1. Bridge Bridge 也就是网桥「也可以说是二层交换机/switch」，是一个二层设备，对受到的包，Forwardin</description>
     </item>
     

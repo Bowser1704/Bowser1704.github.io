@@ -14,19 +14,19 @@
     
     <item>
       <title>iptables 的一些学习总结。</title>
-      <link>https://bowser1704.github.io/note/iptables/</link>
+      <link>https://bowser1704.github.io/notes/iptables/</link>
       <pubDate>Mon, 29 Jun 2020 10:18:22 +0800</pubDate>
       
-      <guid>https://bowser1704.github.io/note/iptables/</guid>
+      <guid>https://bowser1704.github.io/notes/iptables/</guid>
       <description>iptables 的一些学习笔记。 netfilter 有 几个hook，分别有不同的功能。 PREROUTING: Triggered by the NF_IP_PRE_ROUTING hook. INPUT: Triggered by the NF_IP_LOCAL_IN hook. FORWARD: Triggered by the NF_IP_FORWARD hook. OUTPUT: Triggered by the NF_IP_LOCAL_OUT hook. POSTROUTING: Triggered by the NF_IP_POST_ROUTING hook. Tables↓/Chain</description>
     </item>
     
     <item>
       <title>return与exit的不同</title>
-      <link>https://bowser1704.github.io/note/exec/</link>
+      <link>https://bowser1704.github.io/notes/exec/</link>
       <pubDate>Sun, 17 Nov 2019 11:23:47 +0800</pubDate>
       
-      <guid>https://bowser1704.github.io/note/exec/</guid>
+      <guid>https://bowser1704.github.io/notes/exec/</guid>
       <description>首先问题就是有时候我们返回用return，有时候是exit是什么区别呢？ 首先明确函数执行 我们直接运行某些脚本，或者是``sh x.sh`，这背</description>
     </item>
     

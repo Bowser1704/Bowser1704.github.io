@@ -14,10 +14,10 @@
     
     <item>
       <title>利用systemd管理nginx.service</title>
-      <link>https://bowser1704.github.io/note/systemctlservice/</link>
+      <link>https://bowser1704.github.io/notes/systemctlservice/</link>
       <pubDate>Fri, 01 Nov 2019 14:50:23 +0800</pubDate>
       
-      <guid>https://bowser1704.github.io/note/systemctlservice/</guid>
+      <guid>https://bowser1704.github.io/notes/systemctlservice/</guid>
       <description>systemd是什么 以前的Linux系统启动，首先会启动一个init.d，然后其他所有的进程都是这个进程的子进程，但是现在的改进，启用sys</description>
     </item>
     

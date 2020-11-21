@@ -14,10 +14,10 @@
     
     <item>
       <title>csapp Chapter12 并发编程</title>
-      <link>https://bowser1704.github.io/note/csappchapter12/</link>
+      <link>https://bowser1704.github.io/notes/csappchapter12/</link>
       <pubDate>Thu, 14 Nov 2019 23:43:14 +0800</pubDate>
       
-      <guid>https://bowser1704.github.io/note/csappchapter12/</guid>
+      <guid>https://bowser1704.github.io/notes/csappchapter12/</guid>
       <description>基于进程的并发编程 就像我们最初写的echo服务一样，listen来了一个请求，创建一个connfd，一个子进程去处理，写入coonfd。如下</description>
     </item>
     

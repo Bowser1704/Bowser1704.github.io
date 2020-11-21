@@ -7,20 +7,10 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Tue, 17 Nov 2020 11:54:28 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 08 Nov 2020 22:18:18 +0800</lastBuildDate>
     
 	<atom:link href="https://bowser1704.github.io/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>Type Conversion</title>
-      <link>https://bowser1704.github.io/note/type-conversion/</link>
-      <pubDate>Tue, 17 Nov 2020 11:54:28 +0800</pubDate>
-      
-      <guid>https://bowser1704.github.io/note/type-conversion/</guid>
-      <description>https://golang.org/ref/spec#Conversions
-C type conversions K&amp;amp;R 2.7</description>
-    </item>
     
     <item>
       <title>k3s authentication certificate</title>
@@ -42,19 +32,19 @@ C type conversions K&amp;amp;R 2.7</description>
     
     <item>
       <title>初谈 SDN</title>
-      <link>https://bowser1704.github.io/note/overlay-network/</link>
+      <link>https://bowser1704.github.io/notes/overlay-network/</link>
       <pubDate>Tue, 11 Aug 2020 23:37:44 +0800</pubDate>
       
-      <guid>https://bowser1704.github.io/note/overlay-network/</guid>
+      <guid>https://bowser1704.github.io/notes/overlay-network/</guid>
       <description>谈一谈容器网络和云上网络。 Bridge VXLAN Docker default network Flannel 1. Bridge Bridge 也就是网桥「也可以说是二层交换机/switch」，是一个二层设备，对受到的包，Forwardin</description>
     </item>
     
     <item>
       <title>CI 实践</title>
-      <link>https://bowser1704.github.io/note/ci/</link>
+      <link>https://bowser1704.github.io/notes/ci/</link>
       <pubDate>Mon, 03 Aug 2020 16:55:07 +0800</pubDate>
       
-      <guid>https://bowser1704.github.io/note/ci/</guid>
+      <guid>https://bowser1704.github.io/notes/ci/</guid>
       <description>CI Drone CI 我们使用 Drone 和 GitHub Actions 一起作为 CI/CD 工具， GitHub Actions 机器性能好，操作较为简单。 Drone 可定制程度高，拿到手之后想怎么做都可以。并且因为国内的网络环境，CD(</description>
     </item>
     
@@ -65,42 +55,6 @@ C type conversions K&amp;amp;R 2.7</description>
       
       <guid>https://bowser1704.github.io/posts/cluster-monitoring/</guid>
       <description>初始化：安装各种组件 Prometheus 和 Alertmanager 的安装都在官网 下载压缩包，手动下载下来解压。 # -C 指定目的目录 # * 代表版本，需要下载正确的系统版本。 tar xf prometheus-*.*.*.linux-amd64.tar.gz -C /opt/ tar xf alertmanager-*.*.*.linux-amd64.tar.gz</description>
-    </item>
-    
-    <item>
-      <title>iptables 的一些学习总结。</title>
-      <link>https://bowser1704.github.io/note/iptables/</link>
-      <pubDate>Mon, 29 Jun 2020 10:18:22 +0800</pubDate>
-      
-      <guid>https://bowser1704.github.io/note/iptables/</guid>
-      <description>iptables 的一些学习笔记。 netfilter 有 几个hook，分别有不同的功能。 PREROUTING: Triggered by the NF_IP_PRE_ROUTING hook. INPUT: Triggered by the NF_IP_LOCAL_IN hook. FORWARD: Triggered by the NF_IP_FORWARD hook. OUTPUT: Triggered by the NF_IP_LOCAL_OUT hook. POSTROUTING: Triggered by the NF_IP_POST_ROUTING hook. Tables↓/Chain</description>
-    </item>
-    
-    <item>
-      <title>豆子峡谷黑苹果 5GHz WI-FI 无法使用 80 MHz</title>
-      <link>https://bowser1704.github.io/note/nuc8i5-wifi/</link>
-      <pubDate>Sat, 27 Jun 2020 15:37:05 +0800</pubDate>
-      
-      <guid>https://bowser1704.github.io/note/nuc8i5-wifi/</guid>
-      <description>nuc8i5bench hackintosh WIFI 跑不满速度 路由器：斐讯 K2 网卡：BCM94360CS K2 理论上 5GHz 速度应该可以达到 867 Mbps 但是这里只有 180 Mbps。网卡和路由器都是支持 802.11ac 的。 经过</description>
-    </item>
-    
-    <item>
-      <title>k8s vxlan 作为 cni 后端引发的 63 秒延迟</title>
-      <link>https://bowser1704.github.io/posts/vxlan-bug/</link>
-      <pubDate>Sat, 27 Jun 2020 13:21:45 +0800</pubDate>
-      
-      <guid>https://bowser1704.github.io/posts/vxlan-bug/</guid>
-      <description>vxlan as the flannel backend</description>
-    </item>
-    
-    <item>
-      <title>使用 coc.nvim</title>
-      <link>https://bowser1704.github.io/note/coc-in-vim/</link>
-      <pubDate>Fri, 26 Jun 2020 11:12:15 +0800</pubDate>
-      
-      <guid>https://bowser1704.github.io/note/coc-in-vim/</guid>
-      <description>“在 vim 中像 vscode 一样 使用 LSP &amp;quot;</description>
     </item>
     
   </channel>
