@@ -31,15 +31,6 @@
     </item>
     
     <item>
-      <title>ci</title>
-      <link>https://bowser1704.github.io/tags/ci/</link>
-      <pubDate>Mon, 03 Aug 2020 16:55:07 +0800</pubDate>
-      
-      <guid>https://bowser1704.github.io/tags/ci/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>k3s</title>
       <link>https://bowser1704.github.io/tags/k3s/</link>
       <pubDate>Wed, 01 Jul 2020 22:21:01 +0800</pubDate>
@@ -54,6 +45,15 @@
       <pubDate>Wed, 01 Jul 2020 22:21:01 +0800</pubDate>
       
       <guid>https://bowser1704.github.io/tags/monitoring/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>prometheus</title>
+      <link>https://bowser1704.github.io/tags/prometheus/</link>
+      <pubDate>Wed, 01 Jul 2020 22:21:01 +0800</pubDate>
+      
+      <guid>https://bowser1704.github.io/tags/prometheus/</guid>
       <description></description>
     </item>
     

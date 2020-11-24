@@ -40,21 +40,21 @@
     </item>
     
     <item>
-      <title>CI 实践</title>
-      <link>https://bowser1704.github.io/notes/ci/</link>
-      <pubDate>Mon, 03 Aug 2020 16:55:07 +0800</pubDate>
-      
-      <guid>https://bowser1704.github.io/notes/ci/</guid>
-      <description>CI Drone CI 我们使用 Drone 和 GitHub Actions 一起作为 CI/CD 工具， GitHub Actions 机器性能好，操作较为简单。 Drone 可定制程度高，拿到手之后想怎么做都可以。并且因为国内的网络环境，CD(</description>
-    </item>
-    
-    <item>
       <title>单机 Prometheus 监控多集群方案</title>
       <link>https://bowser1704.github.io/posts/cluster-monitoring/</link>
       <pubDate>Wed, 01 Jul 2020 22:21:01 +0800</pubDate>
       
       <guid>https://bowser1704.github.io/posts/cluster-monitoring/</guid>
       <description>初始化：安装各种组件 Prometheus 和 Alertmanager 的安装都在官网 下载压缩包，手动下载下来解压。 # -C 指定目的目录 # * 代表版本，需要下载正确的系统版本。 tar xf prometheus-*.*.*.linux-amd64.tar.gz -C /opt/ tar xf alertmanager-*.*.*.linux-amd64.tar.gz</description>
+    </item>
+    
+    <item>
+      <title>iptables 的一些学习总结。</title>
+      <link>https://bowser1704.github.io/notes/iptables/</link>
+      <pubDate>Mon, 29 Jun 2020 10:18:22 +0800</pubDate>
+      
+      <guid>https://bowser1704.github.io/notes/iptables/</guid>
+      <description>iptables 的一些学习笔记。 netfilter 有 几个hook，分别有不同的功能。 PREROUTING: Triggered by the NF_IP_PRE_ROUTING hook. INPUT: Triggered by the NF_IP_LOCAL_IN hook. FORWARD: Triggered by the NF_IP_FORWARD hook. OUTPUT: Triggered by the NF_IP_LOCAL_OUT hook. POSTROUTING: Triggered by the NF_IP_POST_ROUTING hook. Tables↓/Chain</description>
     </item>
     
   </channel>
