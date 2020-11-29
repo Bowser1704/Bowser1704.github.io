@@ -65,6 +65,10 @@ fmt.Println(a)	// [1 2 3 4 5]
 s := make([]int, 1<<63)         // illegal: len(s) is not representable by a value of type int
 ```
 
+### Pass by value
+
+>  but for instance to change the length of a slice in a method the receiver must still be a pointer
+
 ## *Reference*
 
 [^0]: https://blog.golang.org/slices-intro
