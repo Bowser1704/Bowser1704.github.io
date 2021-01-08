@@ -127,6 +127,7 @@ func appendSlice(s []int) {
 
 如上面的代码，list 可变，所以能够在函数内改变他的值，number 不可变，所以改变他的值是创建了另一个对象，原来的对象依旧没变。
 
+
 ## *Reference*
 
 [^1]: https://golang.org/doc/faq#pass_by_value
