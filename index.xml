@@ -7,10 +7,15 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Sun, 29 Nov 2020 14:31:07 +0800</lastBuildDate>
-    
-	<atom:link href="https://bowser1704.github.io/index.xml" rel="self" type="application/rss+xml" />
-    
+    <lastBuildDate>Mon, 01 Mar 2021 22:41:24 +0800</lastBuildDate><atom:link href="https://bowser1704.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Session</title>
+      <link>https://bowser1704.github.io/notes/session/</link>
+      <pubDate>Mon, 01 Mar 2021 22:41:24 +0800</pubDate>
+      
+      <guid>https://bowser1704.github.io/notes/session/</guid>
+      <description>Session 分为两种：server-side-session 和 client-side-session，日常见的基本是 server-side-sessi</description>
+    </item>
     
     <item>
       <title>Go 与 Python3 函数传参</title>
@@ -46,15 +51,6 @@
       
       <guid>https://bowser1704.github.io/notes/overlay-network/</guid>
       <description>谈一谈容器网络和云上网络。 Bridge VXLAN Docker default network Flannel 1. Bridge Bridge 也就是网桥「也可以说是二层交换机/switch」，是一个二层设备，对受到的包，Forwardin</description>
-    </item>
-    
-    <item>
-      <title>单机 Prometheus 监控多集群方案</title>
-      <link>https://bowser1704.github.io/posts/cluster-monitoring/</link>
-      <pubDate>Wed, 01 Jul 2020 22:21:01 +0800</pubDate>
-      
-      <guid>https://bowser1704.github.io/posts/cluster-monitoring/</guid>
-      <description>初始化：安装各种组件 Prometheus 和 Alertmanager 的安装都在官网 下载压缩包，手动下载下来解压。 # -C 指定目的目录 # * 代表版本，需要下载正确的系统版本。 tar xf prometheus-*.*.*.linux-amd64.tar.gz -C /opt/ tar xf alertmanager-*.*.*.linux-amd64.tar.gz</description>
     </item>
     
   </channel>

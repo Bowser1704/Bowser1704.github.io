@@ -84,29 +84,29 @@
 <h2 id="certificate">certificate<a href="#certificate" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
 <p>在 k8s 的世界里面有两种证书，一种是 client certificate 用于认证，一种是 server certificate 用于 TLS 验证。</p>
 <p>用于认证的就是 kubeconfig 文件里面的 client-certificate-data 和 client-key-data</p>
-<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>v1<span class="w">
-</span><span class="w"></span><span class="k">clusters</span><span class="p">:</span><span class="w">
-</span><span class="w"></span>- <span class="k">cluster</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="k">certificate-authority-data</span><span class="p">:</span><span class="w"> </span>DATA+OMITTED<span class="w">
-</span><span class="w">    </span><span class="k">server</span><span class="p">:</span><span class="w"> </span>https<span class="p">:</span>//kubernetes.docker.internal<span class="p">:</span><span class="m">6443</span><span class="w">
-</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>docker-desktop<span class="w">
-</span><span class="w"></span><span class="k">contexts</span><span class="p">:</span><span class="w">
-</span><span class="w"></span>- <span class="k">context</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="k">cluster</span><span class="p">:</span><span class="w"> </span>docker-desktop<span class="w">
-</span><span class="w">    </span><span class="k">user</span><span class="p">:</span><span class="w"> </span>docker-desktop<span class="w">
-</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>docker-desktop<span class="w">
-</span><span class="w"></span>- <span class="k">context</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="k">cluster</span><span class="p">:</span><span class="w"> </span>docker-desktop<span class="w">
-</span><span class="w">    </span><span class="k">user</span><span class="p">:</span><span class="w"> </span>docker-desktop<span class="w">
-</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>docker-for-desktop<span class="w">
-</span><span class="w"></span><span class="k">current-context</span><span class="p">:</span><span class="w"> </span>docker-desktop<span class="w">
-</span><span class="w"></span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>Config<span class="w">
-</span><span class="w"></span><span class="k">preferences</span><span class="p">:</span><span class="w"> </span>{}<span class="w">
-</span><span class="w"></span><span class="k">users</span><span class="p">:</span><span class="w">
-</span><span class="w"></span>- <span class="k">name</span><span class="p">:</span><span class="w"> </span>docker-desktop<span class="w">
-</span><span class="w">  </span><span class="k">user</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="k">client-certificate-data</span><span class="p">:</span><span class="w"> </span>REDACTED<span class="w">
-</span><span class="w">    </span><span class="k">client-key-data</span><span class="p">:</span><span class="w"> </span>REDACTED<span class="w">
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">v1</span><span class="w">
+</span><span class="w"></span><span class="nt">clusters</span><span class="p">:</span><span class="w">
+</span><span class="w"></span>- <span class="nt">cluster</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">certificate-authority-data</span><span class="p">:</span><span class="w"> </span><span class="l">DATA+OMITTED</span><span class="w">
+</span><span class="w">    </span><span class="nt">server</span><span class="p">:</span><span class="w"> </span><span class="l">https://kubernetes.docker.internal:6443</span><span class="w">
+</span><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">docker-desktop</span><span class="w">
+</span><span class="w"></span><span class="nt">contexts</span><span class="p">:</span><span class="w">
+</span><span class="w"></span>- <span class="nt">context</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">cluster</span><span class="p">:</span><span class="w"> </span><span class="l">docker-desktop</span><span class="w">
+</span><span class="w">    </span><span class="nt">user</span><span class="p">:</span><span class="w"> </span><span class="l">docker-desktop</span><span class="w">
+</span><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">docker-desktop</span><span class="w">
+</span><span class="w"></span>- <span class="nt">context</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">cluster</span><span class="p">:</span><span class="w"> </span><span class="l">docker-desktop</span><span class="w">
+</span><span class="w">    </span><span class="nt">user</span><span class="p">:</span><span class="w"> </span><span class="l">docker-desktop</span><span class="w">
+</span><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">docker-for-desktop</span><span class="w">
+</span><span class="w"></span><span class="nt">current-context</span><span class="p">:</span><span class="w"> </span><span class="l">docker-desktop</span><span class="w">
+</span><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">Config</span><span class="w">
+</span><span class="w"></span><span class="nt">preferences</span><span class="p">:</span><span class="w"> </span>{}<span class="w">
+</span><span class="w"></span><span class="nt">users</span><span class="p">:</span><span class="w">
+</span><span class="w"></span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">docker-desktop</span><span class="w">
+</span><span class="w">  </span><span class="nt">user</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">client-certificate-data</span><span class="p">:</span><span class="w"> </span><span class="l">REDACTED</span><span class="w">
+</span><span class="w">    </span><span class="nt">client-key-data</span><span class="p">:</span><span class="w"> </span><span class="l">REDACTED</span><span class="w">
 </span></code></pre></div><ul>
 <li>
 <p>client-certificate-data</p>

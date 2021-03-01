@@ -7,18 +7,14 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Thu, 25 Jun 2020 10:11:19 +0800</lastBuildDate>
-    
-	<atom:link href="https://bowser1704.github.io/tags/helm/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Thu, 25 Jun 2020 10:11:19 +0800</lastBuildDate><atom:link href="https://bowser1704.github.io/tags/helm/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Helm in k3s</title>
       <link>https://bowser1704.github.io/notes/helm-in-k3s/</link>
       <pubDate>Thu, 25 Jun 2020 10:11:19 +0800</pubDate>
       
       <guid>https://bowser1704.github.io/notes/helm-in-k3s/</guid>
-      <description>“国内环境在 k3s 内使用 Helm&amp;rdquo;</description>
+      <description>“国内环境在 k3s 内使用 Helm&amp;quot;</description>
     </item>
     
   </channel>

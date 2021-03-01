@@ -7,10 +7,15 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Sun, 29 Nov 2020 14:31:07 +0800</lastBuildDate>
-    
-	<atom:link href="https://bowser1704.github.io/notes/index.xml" rel="self" type="application/rss+xml" />
-    
+    <lastBuildDate>Mon, 01 Mar 2021 22:41:24 +0800</lastBuildDate><atom:link href="https://bowser1704.github.io/notes/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Session</title>
+      <link>https://bowser1704.github.io/notes/session/</link>
+      <pubDate>Mon, 01 Mar 2021 22:41:24 +0800</pubDate>
+      
+      <guid>https://bowser1704.github.io/notes/session/</guid>
+      <description>Session 分为两种：server-side-session 和 client-side-session，日常见的基本是 server-side-sessi</description>
+    </item>
     
     <item>
       <title>Go 与 Python3 函数传参</title>
@@ -46,15 +51,6 @@
       
       <guid>https://bowser1704.github.io/notes/nuc8i5-wifi/</guid>
       <description>nuc8i5bench hackintosh WIFI 跑不满速度 路由器：斐讯 K2 网卡：BCM94360CS K2 理论上 5GHz 速度应该可以达到 867 Mbps 但是这里只有 180 Mbps。网卡和路由器都是支持 802.11ac 的。 经过</description>
-    </item>
-    
-    <item>
-      <title>使用 coc.nvim</title>
-      <link>https://bowser1704.github.io/notes/coc-in-vim/</link>
-      <pubDate>Fri, 26 Jun 2020 11:12:15 +0800</pubDate>
-      
-      <guid>https://bowser1704.github.io/notes/coc-in-vim/</guid>
-      <description>“在 vim 中像 vscode 一样 使用 LSP &amp;quot;</description>
     </item>
     
   </channel>

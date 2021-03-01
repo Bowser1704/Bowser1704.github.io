@@ -7,16 +7,24 @@
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<meta name="theme-color" content="#494f5c">
 	<meta name="msapplication-TileColor" content="#494f5c">
-<meta itemprop="name" content="notes">
-<meta itemprop="description" content="">
-<meta property="og:title" content="notes" />
-<meta property="og:description" content="" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://bowser1704.github.io/notes/" />
-<meta property="og:updated_time" content="2021-03-01T22:41:24+08:00" />
+<meta itemprop="name" content="Session">
+<meta itemprop="description" content="Session 分为两种：server-side-session 和 client-side-session，日常见的基本是 server-side-sessi">
+<meta itemprop="datePublished" content="2021-03-01T22:41:24+08:00" />
+<meta itemprop="dateModified" content="2021-03-01T22:41:24+08:00" />
+<meta itemprop="wordCount" content="389">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta property="og:title" content="Session" />
+<meta property="og:description" content="Session 分为两种：server-side-session 和 client-side-session，日常见的基本是 server-side-sessi" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://bowser1704.github.io/notes/session/" />
+<meta property="article:published_time" content="2021-03-01T22:41:24+08:00" />
+<meta property="article:modified_time" content="2021-03-01T22:41:24+08:00" />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="notes"/>
-<meta name="twitter:description" content=""/>
+<meta name="twitter:title" content="Session"/>
+<meta name="twitter:description" content="Session 分为两种：server-side-session 和 client-side-session，日常见的基本是 server-side-sessi"/>
 
 	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -25,9 +33,9 @@
 	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
 	<link rel="shortcut icon" href="/favicon.ico">
 
-	<title>notes</title>
-	<link rel="alternate" type="application/rss+xml" href="https://bowser1704.github.io/notes/index.xml" title="notes" />
+	<title>Session</title>
 	<link rel="stylesheet" href="https://bowser1704.github.io/css/style.min.eac77496566fd7d5768fd650ddb0b2b181ca6a2d7c5fdd6fe6b8ba4bf47e566f.css" integrity="sha256-6sd0llZv19V2j9ZQ3bCysYHKai18X91v5ri6S/R+Vm8=" crossorigin="anonymous">
+	
 </head>
 
 <body id="page">
@@ -61,110 +69,32 @@
 
 
 	<main class="site-main section-inner thin animated fadeIn faster">
-		<h1>notes</h1>
+		<h1>Session</h1>
 		<div class="content">
-			<h2 id="笔记和平常遇到的问题">笔记和平常遇到的问题</h2>
-<p><strong>notes</strong> 包含一些不适合作为博文出现的内容，主要是一些教程，比如如何安装某个库，如何使用某些软件，或者怎么处理某些bug。以及一些读书笔记。</p>
+			<h2 id="session">Session<a href="#session" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p>分为两种：server-side-session 和 client-side-session，日常见的基本是 server-side-session，放在 cookies 里面的是 session-ID, 通过这个 ID 去后台 session 数据库里面找 session-data。</p>
+<h3 id="jwt">JWT<a href="#jwt" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
+<p><a href="https://tools.ietf.org/html/rfc7519">JSON Web Token</a> 可以看做是 client-side-session 的一种。</p>
+<p>JWT 只是一种处理数据的手法，它通过签名保证了信息的不可篡改。</p>
+<ol>
+<li>
+<p>JWT 默认是不加密的，分为三个部分</p>
+<p>header, payload, signature</p>
+<p><img src="https://i.loli.net/2021/03/01/3KgpvAdNL46sYOi.png" alt="image-20210301224509717"></p>
+<blockquote>
+<p>base64URL 特殊的 base64</p>
+<p>Using standard Base64 in <a href="https://en.wikipedia.org/wiki/URL">URL</a> requires encoding of &lsquo;<code>+</code>&rsquo;, &lsquo;<code>/</code>&rsquo; and &lsquo;<code>=</code>&rsquo; characters into special <a href="https://en.wikipedia.org/wiki/Percent-encoding">percent-encoded</a> hexadecimal sequences ('<code>+</code>' becomes &lsquo;<code>%2B</code>&rsquo;, &lsquo;<code>/</code>&rsquo; becomes &lsquo;<code>%2F</code>&rsquo; and &lsquo;<code>=</code>&rsquo; becomes &lsquo;<code>%3D</code>'), which makes the string unnecessarily longer.</p>
+<p>For this reason, <strong>modified Base64 for URL</strong> variants exist (such as <strong>base64url</strong> in <a href="https://en.wikipedia.org/wiki/RFC_(identifier)">RFC</a> <a href="https://tools.ietf.org/html/rfc4648">4648</a>), where the &lsquo;<code>+</code>&rsquo; and &lsquo;<code>/</code>&rsquo; characters of standard Base64 are respectively replaced by &lsquo;<code>-</code>&rsquo; and &lsquo;<code>_</code>&rsquo;</p>
+</blockquote>
+<p>signature 用来保证 jwt 没有被篡改，是 server 发出去的，这里用对称加密（HMAC）和非对称加密都行</p>
+<p>由于 jwt 中的 header 和 payload 默认都没有加密所以不要放敏感数据，当然我们可以把信息加密放进去。</p>
+</li>
+<li>
+<p>jwt 放的位置一般是是 header：Authorization：Bearer</p>
+<p>不要放在 cookies 里面，前端存在 local storage，每次发请求带到 header 里面去。</p>
+</li>
+</ol>
 
-		</div>
-		<div class="posts-group">
-			<div class="post-year" id="2021">2021</div>
-			<ul class="posts-list">
-				<li class="post-item">
-					<a href="https://bowser1704.github.io/notes/session/">
-						<span class="post-title">Session</span>
-						<span class="post-day">Mar 1</span>
-					</a>
-				</li>
-			</ul>
-		</div>
-		<div class="posts-group">
-			<div class="post-year" id="2020">2020</div>
-			<ul class="posts-list">
-				<li class="post-item">
-					<a href="https://bowser1704.github.io/notes/pass-by-what/">
-						<span class="post-title">Go 与 Python3 函数传参</span>
-						<span class="post-day">Nov 29</span>
-					</a>
-				</li>
-				<li class="post-item">
-					<a href="https://bowser1704.github.io/notes/overlay-network/">
-						<span class="post-title">初谈 SDN</span>
-						<span class="post-day">Aug 11</span>
-					</a>
-				</li>
-				<li class="post-item">
-					<a href="https://bowser1704.github.io/notes/iptables/">
-						<span class="post-title">iptables 的一些学习总结。</span>
-						<span class="post-day">Jun 29</span>
-					</a>
-				</li>
-				<li class="post-item">
-					<a href="https://bowser1704.github.io/notes/nuc8i5-wifi/">
-						<span class="post-title">豆子峡谷黑苹果 5GHz WI-FI 无法使用 80 MHz</span>
-						<span class="post-day">Jun 27</span>
-					</a>
-				</li>
-				<li class="post-item">
-					<a href="https://bowser1704.github.io/notes/coc-in-vim/">
-						<span class="post-title">使用 coc.nvim</span>
-						<span class="post-day">Jun 26</span>
-					</a>
-				</li>
-				<li class="post-item">
-					<a href="https://bowser1704.github.io/notes/using-cert-manager-k3s/">
-						<span class="post-title">在 k3s 内使用 cert-manager 管理证书</span>
-						<span class="post-day">Jun 25</span>
-					</a>
-				</li>
-				<li class="post-item">
-					<a href="https://bowser1704.github.io/notes/helm-in-k3s/">
-						<span class="post-title">Helm in k3s</span>
-						<span class="post-day">Jun 25</span>
-					</a>
-				</li>
-			</ul>
-		</div>
-		<div class="posts-group">
-			<div class="post-year" id="2019">2019</div>
-			<ul class="posts-list">
-				<li class="post-item">
-					<a href="https://bowser1704.github.io/notes/exec/">
-						<span class="post-title">return与exit的不同</span>
-						<span class="post-day">Nov 17</span>
-					</a>
-				</li>
-				<li class="post-item">
-					<a href="https://bowser1704.github.io/notes/csappchapter12/">
-						<span class="post-title">csapp Chapter12 并发编程</span>
-						<span class="post-day">Nov 14</span>
-					</a>
-				</li>
-				<li class="post-item">
-					<a href="https://bowser1704.github.io/notes/csappchapter11/">
-						<span class="post-title">csapp Chapter11 网络编程</span>
-						<span class="post-day">Nov 13</span>
-					</a>
-				</li>
-				<li class="post-item">
-					<a href="https://bowser1704.github.io/notes/csappchapter10/">
-						<span class="post-title">csapp Chapter10 UnixIO</span>
-						<span class="post-day">Nov 12</span>
-					</a>
-				</li>
-				<li class="post-item">
-					<a href="https://bowser1704.github.io/notes/systemctlservice/">
-						<span class="post-title">利用systemd管理nginx.service</span>
-						<span class="post-day">Nov 1</span>
-					</a>
-				</li>
-				<li class="post-item">
-					<a href="https://bowser1704.github.io/notes/shorturl/">
-						<span class="post-title">短链接的实现</span>
-						<span class="post-day">Oct 31</span>
-					</a>
-				</li>
-			</ul>
 		</div>
 	</main>
 

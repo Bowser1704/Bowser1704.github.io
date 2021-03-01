@@ -8,23 +8,23 @@
 	<meta name="theme-color" content="#494f5c">
 	<meta name="msapplication-TileColor" content="#494f5c">
 <meta itemprop="name" content="Helm in k3s">
-<meta itemprop="description" content="“国内环境在 k3s 内使用 Helm&rdquo;">
+<meta itemprop="description" content="“国内环境在 k3s 内使用 Helm&quot;">
 <meta itemprop="datePublished" content="2020-06-25T10:11:19+08:00" />
 <meta itemprop="dateModified" content="2020-06-25T10:11:19+08:00" />
-<meta itemprop="wordCount" content="707">
+<meta itemprop="wordCount" content="656">
 
 
 
 <meta itemprop="keywords" content="k3s,Helm," />
 <meta property="og:title" content="Helm in k3s" />
-<meta property="og:description" content="“国内环境在 k3s 内使用 Helm&rdquo;" />
+<meta property="og:description" content="“国内环境在 k3s 内使用 Helm&quot;" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://bowser1704.github.io/notes/helm-in-k3s/" />
 <meta property="article:published_time" content="2020-06-25T10:11:19+08:00" />
 <meta property="article:modified_time" content="2020-06-25T10:11:19+08:00" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Helm in k3s"/>
-<meta name="twitter:description" content="“国内环境在 k3s 内使用 Helm&rdquo;"/>
+<meta name="twitter:description" content="“国内环境在 k3s 内使用 Helm&quot;"/>
 
 	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -96,46 +96,46 @@ helmcharts                helm.cattle.io   <span class="nb">true</span>         
 <p>HelmChart namespace 必须为 kube-system 因为 HelmChart 的 controller 只在 kube-system 里面。</p>
 <p>Keep in mind that <code>namespace</code> in your HelmChart resource metadata section should always be <code>kube-system</code>, because the K3s deploy controller is configured to watch this namespace for new HelmChart resources.</p>
 </blockquote>
-<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>helm.cattle.io/v1<span class="w">
-</span><span class="w"></span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>HelmChart<span class="w">
-</span><span class="w"></span><span class="k">metadata</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>example-helmchart<span class="w">
-</span><span class="w">  </span><span class="k">namespace</span><span class="p">:</span><span class="w"> </span>kube-system<span class="w">
-</span><span class="w"></span><span class="k">spec</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">helmVersion</span><span class="p">:</span><span class="w"> </span>v3<span class="w">
-</span><span class="w">  </span><span class="k">chart</span><span class="p">:</span><span class="w"> </span>test-helmchart<span class="w">
-</span><span class="w">  </span><span class="k">targetNamespace</span><span class="p">:</span><span class="w"> </span>test-namespace<span class="w">
-</span><span class="w">  </span><span class="k">version</span><span class="p">:</span><span class="w"> </span><span class="m">0.0.1</span><span class="w"> 
-</span><span class="w">  </span><span class="k">repo</span><span class="p">:</span><span class="w"> </span>https<span class="p">:</span>//apphub.aliyuncs.com<span class="w">
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">helm.cattle.io/v1</span><span class="w">
+</span><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">HelmChart</span><span class="w">
+</span><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">example-helmchart</span><span class="w">
+</span><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l">kube-system</span><span class="w">
+</span><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">helmVersion</span><span class="p">:</span><span class="w"> </span><span class="l">v3</span><span class="w">
+</span><span class="w">  </span><span class="nt">chart</span><span class="p">:</span><span class="w"> </span><span class="l">test-helmchart</span><span class="w">
+</span><span class="w">  </span><span class="nt">targetNamespace</span><span class="p">:</span><span class="w"> </span><span class="l">test-namespace</span><span class="w">
+</span><span class="w">  </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="m">0.0.1</span><span class="w"> 
+</span><span class="w">  </span><span class="nt">repo</span><span class="p">:</span><span class="w"> </span><span class="l">https://apphub.aliyuncs.com</span><span class="w">
 </span></code></pre></div><h3 id="3-使用-release-文件">3. 使用 release 文件<a href="#3-使用-release-文件" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
 <p><a href="https://rancher.com/docs/k3s/latest/en/helm/">k3s helm</a></p>
 <p>在路径 <code>/var/lib/rancher/k3s/server/static/charts/</code> 下的 <code>tgz</code> 格式文件可以通过 kubernetes API 访问。</p>
 <p>所以可以通过下载 tgz / helm chart release 文件解决「网络」问题。yaml 文件可以这么写：</p>
-<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>helm.cattle.io/v1<span class="w">
-</span><span class="w"></span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>HelmChart<span class="w">
-</span><span class="w"></span><span class="k">metadata</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>traefik<span class="w">
-</span><span class="w">  </span><span class="k">namespace</span><span class="p">:</span><span class="w"> </span>kube-system<span class="w">
-</span><span class="w"></span><span class="k">spec</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">chart</span><span class="p">:</span><span class="w"> </span>https<span class="p">:</span>//%{KUBERNETES_API}%/static/charts/traefik<span class="m">-1.81.0</span>.tgz<span class="w">
-</span><span class="w">  </span><span class="k">valuesContent</span><span class="p">:</span><span class="w"> </span>|<span class="sd">-
-</span><span class="sd">    rbac:</span><span class="w">
-</span><span class="w">      </span><span class="k">enabled</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
-</span><span class="w">    </span><span class="k">ssl</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="k">enabled</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
-</span><span class="w">    </span><span class="k">metrics</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="k">prometheus</span><span class="p">:</span><span class="w">
-</span><span class="w">        </span><span class="k">enabled</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
-</span><span class="w">    </span><span class="k">kubernetes</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="k">ingressEndpoint</span><span class="p">:</span><span class="w">
-</span><span class="w">        </span><span class="k">useDefaultPublishedService</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
-</span><span class="w">    </span><span class="k">image</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;rancher/library-traefik&#34;</span><span class="w">
-</span><span class="w">    </span><span class="k">tolerations</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span>- <span class="k">key</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;CriticalAddonsOnly&#34;</span><span class="w">
-</span><span class="w">        </span><span class="k">operator</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;Exists&#34;</span><span class="w">
-</span><span class="w">      </span>- <span class="k">key</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;node-role.kubernetes.io/master&#34;</span><span class="w">
-</span><span class="w">        </span><span class="k">operator</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;Exists&#34;</span><span class="w">
-</span><span class="w">        </span><span class="k">effect</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;NoSchedule&#34;</span><span class="w">
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">helm.cattle.io/v1</span><span class="w">
+</span><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">HelmChart</span><span class="w">
+</span><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">traefik</span><span class="w">
+</span><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l">kube-system</span><span class="w">
+</span><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">chart</span><span class="p">:</span><span class="w"> </span><span class="l">https://%{KUBERNETES_API}%/static/charts/traefik-1.81.0.tgz</span><span class="w">
+</span><span class="w">  </span><span class="nt">valuesContent</span><span class="p">:</span><span class="w"> </span><span class="p">|-</span><span class="sd">
+</span><span class="sd">    rbac:
+</span><span class="sd">      enabled: true
+</span><span class="sd">    ssl:
+</span><span class="sd">      enabled: true
+</span><span class="sd">    metrics:
+</span><span class="sd">      prometheus:
+</span><span class="sd">        enabled: true
+</span><span class="sd">    kubernetes:
+</span><span class="sd">      ingressEndpoint:
+</span><span class="sd">        useDefaultPublishedService: true
+</span><span class="sd">    image: &#34;rancher/library-traefik&#34;
+</span><span class="sd">    tolerations:
+</span><span class="sd">      - key: &#34;CriticalAddonsOnly&#34;
+</span><span class="sd">        operator: &#34;Exists&#34;
+</span><span class="sd">      - key: &#34;node-role.kubernetes.io/master&#34;
+</span><span class="sd">        operator: &#34;Exists&#34;
+</span><span class="sd">        effect: &#34;NoSchedule&#34;</span><span class="w">    
 </span></code></pre></div><h4 id="如何下载-helm-chart-release">如何下载 helm chart release<a href="#如何下载-helm-chart-release" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h4>
 <p>安装 helm 到网络环境良好的机器，例如你的电脑。</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">helm pull loki/promtail

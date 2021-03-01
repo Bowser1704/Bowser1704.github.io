@@ -107,54 +107,54 @@ $ helm install <span class="se">\
 </span><span class="se"></span>  jetstack/cert-manager <span class="se">\
 </span><span class="se"></span>  <span class="c1"># --set installCRDs=true</span>
 </code></pre></div><p>使用 k3s 提供的 HelmChart 安装 参考 <a href="https://bowser1704.github.io/note/20200625-helm-in-k3s/">在 k3s 上使用 Helm</a></p>
-<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>helm.cattle.io/v1<span class="w">
-</span><span class="w"></span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>HelmChart<span class="w">
-</span><span class="w"></span><span class="k">metadata</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>cert-manager<span class="w">
-</span><span class="w">  </span><span class="k">namespace</span><span class="p">:</span><span class="w"> </span>kube-system<span class="w">
-</span><span class="w"></span><span class="k">spec</span><span class="p">:</span><span class="w">
-</span><span class="w">	</span><span class="k">helmVersion</span><span class="p">:</span><span class="w"> </span>v3<span class="w">
-</span><span class="w">  </span><span class="k">chart</span><span class="p">:</span><span class="w"> </span>cert-manager<span class="w">
-</span><span class="w">  </span><span class="k">targetNamespace</span><span class="p">:</span><span class="w"> </span>cert-manager<span class="w">
-</span><span class="w">  </span><span class="k">version</span><span class="p">:</span><span class="w"> </span>v0<span class="m">.15.1</span><span class="w">
-</span><span class="w">  </span><span class="k">repo</span><span class="p">:</span><span class="w"> </span>https<span class="p">:</span>//charts.jetstack.io<span class="w">
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">helm.cattle.io/v1</span><span class="w">
+</span><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">HelmChart</span><span class="w">
+</span><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">cert-manager</span><span class="w">
+</span><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l">kube-system</span><span class="w">
+</span><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span><span class="w">	</span><span class="nt">helmVersion</span><span class="p">:</span><span class="w"> </span><span class="l">v3</span><span class="w">
+</span><span class="w">  </span><span class="nt">chart</span><span class="p">:</span><span class="w"> </span><span class="l">cert-manager</span><span class="w">
+</span><span class="w">  </span><span class="nt">targetNamespace</span><span class="p">:</span><span class="w"> </span><span class="l">cert-manager</span><span class="w">
+</span><span class="w">  </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l">v0.15.1</span><span class="w">
+</span><span class="w">  </span><span class="nt">repo</span><span class="p">:</span><span class="w"> </span><span class="l">https://charts.jetstack.io</span><span class="w">
 </span></code></pre></div><h3 id="安装完成之后配置">安装完成之后配置<a href="#安装完成之后配置" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
 <ol>
 <li>
 <p>使用 ClusterIssuer，作用于整个集群。Issuer 作用于某个 ns。</p>
-<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>cert-manager.io/v1alpha2<span class="w">
-</span><span class="w"></span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>ClusterIssuer<span class="w">
-</span><span class="w"></span><span class="k">metadata</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>letsencrypt-prod<span class="w">
-</span><span class="w"></span><span class="k">spec</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">acme</span><span class="p">:</span><span class="w">
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">cert-manager.io/v1alpha2</span><span class="w">
+</span><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">ClusterIssuer</span><span class="w">
+</span><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">letsencrypt-prod</span><span class="w">
+</span><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">acme</span><span class="p">:</span><span class="w">
 </span><span class="w">    </span><span class="c"># server: https://acme-v02.api.letsencrypt.org/directory</span><span class="w">
 </span><span class="w">    </span><span class="c"># 建议先使用 测试 API，区别参考 https://letsencrypt.org/zh-cn/docs/staging-environment/</span><span class="w">
-</span><span class="w">    </span><span class="k">server</span><span class="p">:</span><span class="w"> </span>https<span class="p">:</span>//acme-staging-v02.api.letsencrypt.org/directory<span class="w">
-</span><span class="w">    </span><span class="k">email</span><span class="p">:</span><span class="w"> </span>name@user.com<span class="w">
-</span><span class="w">    </span><span class="k">privateKeySecretRef</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>letsencrypt-prod<span class="w">
-</span><span class="w">    </span><span class="k">solvers</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span>- <span class="k">http01</span><span class="p">:</span><span class="w">
-</span><span class="w">       </span><span class="k">ingress</span><span class="p">:</span><span class="w">
-</span><span class="w">         </span><span class="k">class</span><span class="p">:</span><span class="w"> </span>traefik<span class="w">
+</span><span class="w">    </span><span class="nt">server</span><span class="p">:</span><span class="w"> </span><span class="l">https://acme-staging-v02.api.letsencrypt.org/directory</span><span class="w">
+</span><span class="w">    </span><span class="nt">email</span><span class="p">:</span><span class="w"> </span><span class="l">name@user.com</span><span class="w">
+</span><span class="w">    </span><span class="nt">privateKeySecretRef</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">letsencrypt-prod</span><span class="w">
+</span><span class="w">    </span><span class="nt">solvers</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- <span class="nt">http01</span><span class="p">:</span><span class="w">
+</span><span class="w">       </span><span class="nt">ingress</span><span class="p">:</span><span class="w">
+</span><span class="w">         </span><span class="nt">class</span><span class="p">:</span><span class="w"> </span><span class="l">traefik</span><span class="w">
 </span></code></pre></div><p>可以使用两种检测方式，一种为 <code>HTTP-01</code>、一种为 <code>DNS-01</code>，区别参考 <a href="https://letsencrypt.org/zh-cn/docs/challenge-types/">Let’s Encrypt 验证方式</a>。</p>
 <p>如果使用 <code>DNS-01</code> 方式，因为原生不支持 AliDNS，所以可以使用 <a href="https://github.com/pragkent/alidns-webhook">Alidns-webhook</a>。</p>
 </li>
 <li>
 <p>ClusterIssuer 创建成功之后，创建 Certificate，针对于特定命名空间的。</p>
-<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>cert-manager.io/v1alpha2<span class="w">
-</span><span class="w"></span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>Certificate<span class="w">
-</span><span class="w"></span><span class="k">metadata</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>food<span class="w">
-</span><span class="w">  </span><span class="k">namespace</span><span class="p">:</span><span class="w"> </span>food<span class="w">
-</span><span class="w"></span><span class="k">spec</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">secretName</span><span class="p">:</span><span class="w"> </span>food-secret<span class="w">
-</span><span class="w">  </span><span class="k">dnsNames</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span>- food.test.domain.com<span class="w">
-</span><span class="w">  </span><span class="k">issuerRef</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>letsencrypt-prod<span class="w">
-</span><span class="w">    </span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>ClusterIssuer<span class="w">
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">cert-manager.io/v1alpha2</span><span class="w">
+</span><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">Certificate</span><span class="w">
+</span><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">food</span><span class="w">
+</span><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l">food</span><span class="w">
+</span><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">secretName</span><span class="p">:</span><span class="w"> </span><span class="l">food-secret</span><span class="w">
+</span><span class="w">  </span><span class="nt">dnsNames</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="l">food.test.domain.com</span><span class="w">
+</span><span class="w">  </span><span class="nt">issuerRef</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">letsencrypt-prod</span><span class="w">
+</span><span class="w">    </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">ClusterIssuer</span><span class="w">
 </span></code></pre></div><p>配置成功之后查看一下 certificate 的状态</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="o">[</span>root@bowser1704 food<span class="o">]</span><span class="c1"># kubectl get certificate -n food</span>
 NAME   READY   SECRET        AGE
@@ -162,29 +162,29 @@ food   True    food-secret   3h27m
 </code></pre></div></li>
 <li>
 <p>ingress 设置</p>
-<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>extensions/v1beta1<span class="w">
-</span><span class="w"></span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>Ingress<span class="w">
-</span><span class="w"></span><span class="k">metadata</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>food<span class="w">
-</span><span class="w">  </span><span class="k">namespace</span><span class="p">:</span><span class="w"> </span>food<span class="w">
-</span><span class="w">  </span><span class="k">annotations</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="k">kubernetes.io/ingress.class</span><span class="p">:</span><span class="w"> </span>traefik<span class="w">
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">extensions/v1beta1</span><span class="w">
+</span><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">Ingress</span><span class="w">
+</span><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">food</span><span class="w">
+</span><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l">food</span><span class="w">
+</span><span class="w">  </span><span class="nt">annotations</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">kubernetes.io/ingress.class</span><span class="p">:</span><span class="w"> </span><span class="l">traefik</span><span class="w">
 </span><span class="w">    </span><span class="c"># 添加一个 annotations</span><span class="w">
-</span><span class="w">    </span><span class="k">cert-manager.io/issuer-name</span><span class="p">:</span><span class="w"> </span>letsencrypt-prod<span class="w">
-</span><span class="w"></span><span class="k">spec</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">rules</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span>- <span class="k">host</span><span class="p">:</span><span class="w"> </span>food.test.domain.com<span class="w">
-</span><span class="w">    </span><span class="k">http</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="k">paths</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span>- <span class="k">path</span><span class="p">:</span><span class="w"> </span>/<span class="w">
-</span><span class="w">        </span><span class="k">backend</span><span class="p">:</span><span class="w">
-</span><span class="w">          </span><span class="k">serviceName</span><span class="p">:</span><span class="w"> </span>food-backend<span class="w">
-</span><span class="w">          </span><span class="k">servicePort</span><span class="p">:</span><span class="w"> </span>http<span class="w">
-</span><span class="w">  </span><span class="k">tls</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span>- <span class="k">hosts</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span>- food.test.domain.com<span class="w">
+</span><span class="w">    </span><span class="nt">cert-manager.io/issuer-name</span><span class="p">:</span><span class="w"> </span><span class="l">letsencrypt-prod</span><span class="w">
+</span><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">rules</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="l">food.test.domain.com</span><span class="w">
+</span><span class="w">    </span><span class="nt">http</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">paths</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- <span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l">/</span><span class="w">
+</span><span class="w">        </span><span class="nt">backend</span><span class="p">:</span><span class="w">
+</span><span class="w">          </span><span class="nt">serviceName</span><span class="p">:</span><span class="w"> </span><span class="l">food-backend</span><span class="w">
+</span><span class="w">          </span><span class="nt">servicePort</span><span class="p">:</span><span class="w"> </span><span class="l">http</span><span class="w">
+</span><span class="w">  </span><span class="nt">tls</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="nt">hosts</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- <span class="l">food.test.domain.com</span><span class="w">
 </span><span class="w">    </span><span class="c"># certificate 里面的 secret-name</span><span class="w">
-</span><span class="w">    </span><span class="k">secretName</span><span class="p">:</span><span class="w"> </span>food-secret<span class="w">
+</span><span class="w">    </span><span class="nt">secretName</span><span class="p">:</span><span class="w"> </span><span class="l">food-secret</span><span class="w">
 </span></code></pre></div><p>大功告成！以后就不会发生证书过期的事情了。</p>
 </li>
 </ol>

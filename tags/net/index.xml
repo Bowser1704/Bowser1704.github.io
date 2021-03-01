@@ -7,11 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Tue, 11 Aug 2020 23:37:44 +0800</lastBuildDate>
-    
-	<atom:link href="https://bowser1704.github.io/tags/net/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Tue, 11 Aug 2020 23:37:44 +0800</lastBuildDate><atom:link href="https://bowser1704.github.io/tags/net/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>初谈 SDN</title>
       <link>https://bowser1704.github.io/notes/overlay-network/</link>

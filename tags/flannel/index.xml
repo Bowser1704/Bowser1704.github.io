@@ -7,11 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Sat, 27 Jun 2020 13:21:45 +0800</lastBuildDate>
-    
-	<atom:link href="https://bowser1704.github.io/tags/flannel/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Sat, 27 Jun 2020 13:21:45 +0800</lastBuildDate><atom:link href="https://bowser1704.github.io/tags/flannel/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>k8s vxlan 作为 cni 后端引发的 63 秒延迟</title>
       <link>https://bowser1704.github.io/posts/vxlan-bug/</link>

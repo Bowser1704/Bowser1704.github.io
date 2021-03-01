@@ -11,7 +11,7 @@
 <meta itemprop="description" content="初始化：安装各种组件 Prometheus 和 Alertmanager 的安装都在官网 下载压缩包，手动下载下来解压。 # -C 指定目的目录 # * 代表版本，需要下载正确的系统版本。 tar xf prometheus-*.*.*.linux-amd64.tar.gz -C /opt/ tar xf alertmanager-*.*.*.linux-amd64.tar.gz">
 <meta itemprop="datePublished" content="2020-07-01T22:21:01+08:00" />
 <meta itemprop="dateModified" content="2020-07-01T22:21:01+08:00" />
-<meta itemprop="wordCount" content="3336">
+<meta itemprop="wordCount" content="3341">
 
 
 
@@ -117,27 +117,27 @@ tar xf alertmanager-*.*.*.linux-amd64.tar.gz -C /opt/
 <blockquote>
 <p>在 k3s 中我使用 helmchart 安装，但是这个 CRD 有一些问题，可以更换到 <a href="https://github.com/fluxcd/helm-operator">helm-operator</a>。</p>
 </blockquote>
-<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>helm.cattle.io/v1<span class="w">
-</span><span class="w"></span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>HelmChart<span class="w">
-</span><span class="w"></span><span class="k">metadata</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>prometheus-node-exporter<span class="w">
-</span><span class="w">  </span><span class="k">namespace</span><span class="p">:</span><span class="w"> </span>kube-system<span class="w">
-</span><span class="w"></span><span class="k">spec</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">helmVersion</span><span class="p">:</span><span class="w"> </span>v3<span class="w">
-</span><span class="w">  </span><span class="k">chart</span><span class="p">:</span><span class="w"> </span>prometheus-node-exporter<span class="w">
-</span><span class="w">  </span><span class="k">targetNamespace</span><span class="p">:</span><span class="w"> </span>monitoring<span class="w">
-</span><span class="w">  </span><span class="k">repo</span><span class="p">:</span><span class="w"> </span>https<span class="p">:</span>//apphub.aliyuncs.com<span class="w">
-</span><span class="w"></span>---<span class="w">
-</span><span class="w"></span><span class="k">apiVersion</span><span class="p">:</span><span class="w"> </span>helm.cattle.io/v1<span class="w">
-</span><span class="w"></span><span class="k">kind</span><span class="p">:</span><span class="w"> </span>HelmChart<span class="w">
-</span><span class="w"></span><span class="k">metadata</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">name</span><span class="p">:</span><span class="w"> </span>kube-state-metrics<span class="w">
-</span><span class="w">  </span><span class="k">namespace</span><span class="p">:</span><span class="w"> </span>kube-system<span class="w">
-</span><span class="w"></span><span class="k">spec</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span><span class="k">helmVersion</span><span class="p">:</span><span class="w"> </span>v3<span class="w">
-</span><span class="w">  </span><span class="k">chart</span><span class="p">:</span><span class="w"> </span>kube-state-metrics<span class="w">
-</span><span class="w">  </span><span class="k">targetNamespace</span><span class="p">:</span><span class="w"> </span>monitoring<span class="w">
-</span><span class="w">  </span><span class="k">repo</span><span class="p">:</span><span class="w"> </span>https<span class="p">:</span>//apphub.aliyuncs.com<span class="w">
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">helm.cattle.io/v1</span><span class="w">
+</span><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">HelmChart</span><span class="w">
+</span><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">prometheus-node-exporter</span><span class="w">
+</span><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l">kube-system</span><span class="w">
+</span><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">helmVersion</span><span class="p">:</span><span class="w"> </span><span class="l">v3</span><span class="w">
+</span><span class="w">  </span><span class="nt">chart</span><span class="p">:</span><span class="w"> </span><span class="l">prometheus-node-exporter</span><span class="w">
+</span><span class="w">  </span><span class="nt">targetNamespace</span><span class="p">:</span><span class="w"> </span><span class="l">monitoring</span><span class="w">
+</span><span class="w">  </span><span class="nt">repo</span><span class="p">:</span><span class="w"> </span><span class="l">https://apphub.aliyuncs.com</span><span class="w">
+</span><span class="w"></span><span class="nn">---</span><span class="w">
+</span><span class="w"></span><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l">helm.cattle.io/v1</span><span class="w">
+</span><span class="w"></span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l">HelmChart</span><span class="w">
+</span><span class="w"></span><span class="nt">metadata</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">kube-state-metrics</span><span class="w">
+</span><span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l">kube-system</span><span class="w">
+</span><span class="w"></span><span class="nt">spec</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">helmVersion</span><span class="p">:</span><span class="w"> </span><span class="l">v3</span><span class="w">
+</span><span class="w">  </span><span class="nt">chart</span><span class="p">:</span><span class="w"> </span><span class="l">kube-state-metrics</span><span class="w">
+</span><span class="w">  </span><span class="nt">targetNamespace</span><span class="p">:</span><span class="w"> </span><span class="l">monitoring</span><span class="w">
+</span><span class="w">  </span><span class="nt">repo</span><span class="p">:</span><span class="w"> </span><span class="l">https://apphub.aliyuncs.com</span><span class="w">
 </span></code></pre></div><p>安装两个 exporter 之后。</p>
 <div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="o">[</span>root@bowser1704 ~<span class="o">]</span><span class="c1"># kubectl get svc -n monitoring</span>
 NAME                       TYPE        CLUSTER-IP      EXTERNAL-IP   PORT<span class="o">(</span>S<span class="o">)</span>    AGE
@@ -172,49 +172,49 @@ kubectl describe secret prometheus-token-cw4pd -n monitoring
 <p>Kubelet 监听于 10250 端口，暴露的 API 为 https://public-ip:10250/metircs，需要给 sa 的 clusterrole 设置一定的权限从而可以访问这个 API。我们使用上面创建的 sa，并且这个 sa 的 role 没有什么权限，假设只有一个 pod get 的权限，访问 API，结果是：</p>
 <div class="highlight"><pre class="chroma"><code class="language-http" data-lang="http"><span class="err">Forbidden (user=system:serviceaccount:monitoring:prometheus, verb=get, resource=nodes, subresource=metrics)
 </span></code></pre></div><p>说明这个 API 需要的权限是</p>
-<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml">- <span class="k">apiGroups</span><span class="p">:</span><span class="w">
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml">- <span class="nt">apiGroups</span><span class="p">:</span><span class="w">
 </span><span class="w">  </span>- <span class="s2">&#34;&#34;</span><span class="w">
-</span><span class="w">  </span><span class="k">resources</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span>- nodes<span class="w">
-</span><span class="w">  </span>- nodes/metrics<span class="w">
-</span><span class="w">  </span><span class="k">verbs</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span>- get<span class="w">
+</span><span class="w">  </span><span class="nt">resources</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="l">nodes</span><span class="w">
+</span><span class="w">  </span>- <span class="l">nodes/metrics</span><span class="w">
+</span><span class="w">  </span><span class="nt">verbs</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="l">get</span><span class="w">
 </span></code></pre></div><p>在我们的 ClusterRole 里面加上这个权限。然后就可以拿到数据了，因为 http 的<a href="https://zh.wikipedia.org/wiki/%E5%88%86%E5%9D%97%E4%BC%A0%E8%BE%93%E7%BC%96%E7%A0%81">分块传输编码</a>，以及数据量很大，需要等待较长一段时间。</p>
 <p>而在 prometheus.yml 里面的设置为。</p>
 <blockquote>
 <p>最下面的 relabel_configs 是把自带的 label 全都拿过来。</p>
 </blockquote>
 <div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="c"># 我们的场景需要设置两个 tls_config 和 bearer_token。</span><span class="w">
-</span><span class="w"></span>- <span class="k">job_name</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;kubelet&#39;</span><span class="w">
-</span><span class="w">    </span><span class="k">scheme</span><span class="p">:</span><span class="w"> </span>https<span class="w">
-</span><span class="w">    </span><span class="k">tls_config</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="k">insecure_skip_verify</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
-</span><span class="w">    </span><span class="k">bearer_token_file</span><span class="p">:</span><span class="w"> </span>/var/run/secrets/kubernetes.io/serviceaccount/token<span class="w">
-</span><span class="w">    </span><span class="k">static_configs</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span>- <span class="k">target</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span>- public-ip<span class="p">:</span><span class="m">10250</span><span class="w">
-</span><span class="w">    </span><span class="k">relabel_configs</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span>- <span class="k">action</span><span class="p">:</span><span class="w"> </span>labelmap<span class="w">
-</span><span class="w">    </span><span class="k">regex</span><span class="p">:</span><span class="w"> </span>__meta_kubernetes_node_label_(.+)<span class="w">
+</span><span class="w"></span>- <span class="nt">job_name</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;kubelet&#39;</span><span class="w">
+</span><span class="w">    </span><span class="nt">scheme</span><span class="p">:</span><span class="w"> </span><span class="l">https</span><span class="w">
+</span><span class="w">    </span><span class="nt">tls_config</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">insecure_skip_verify</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w">    </span><span class="nt">bearer_token_file</span><span class="p">:</span><span class="w"> </span><span class="l">/var/run/secrets/kubernetes.io/serviceaccount/token</span><span class="w">
+</span><span class="w">    </span><span class="nt">static_configs</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- <span class="nt">target</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- <span class="l">public-ip:10250</span><span class="w">
+</span><span class="w">    </span><span class="nt">relabel_configs</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- <span class="nt">action</span><span class="p">:</span><span class="w"> </span><span class="l">labelmap</span><span class="w">
+</span><span class="w">    </span><span class="nt">regex</span><span class="p">:</span><span class="w"> </span><span class="l">__meta_kubernetes_node_label_(.+)</span><span class="w">
 </span></code></pre></div></li>
 <li>
 <p>cAdvisor</p>
 <p>由于高版本的 cAdvisor 合并到了 kubelet 里面，并且经过实践权限不需要修改，所以可以可以直接添加 prometheus job 就可以了。暴露的 API 为 https://public-ip:10250/metircs/cadvisor。</p>
-<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml">- <span class="k">job_name</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;cAdvisor&#39;</span><span class="w">
-</span><span class="w">    </span><span class="k">scheme</span><span class="p">:</span><span class="w"> </span>https<span class="w">
-</span><span class="w">    </span><span class="k">tls_config</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="k">insecure_skip_verify</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
-</span><span class="w">    </span><span class="k">bearer_token_file</span><span class="p">:</span><span class="w"> </span>/var/run/secrets/kubernetes.io/serviceaccount/token<span class="w">
-</span><span class="w">    </span><span class="k">static_configs</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span>- <span class="k">target</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span>- public-ip<span class="p">:</span><span class="m">10250</span><span class="w">
-</span><span class="w">    </span><span class="k">relabel_configs</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span>- <span class="k">action</span><span class="p">:</span><span class="w"> </span>labelmap<span class="w">
-</span><span class="w">    </span><span class="k">regex</span><span class="p">:</span><span class="w"> </span>__meta_kubernetes_node_label_(.+)<span class="w">
-</span><span class="w">    </span>- <span class="k">source_labels</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>__meta_kubernetes_node_name<span class="p">]</span><span class="w">
-</span><span class="w">    </span><span class="k">regex</span><span class="p">:</span><span class="w"> </span>(.+)<span class="w">
-</span><span class="w">    </span><span class="k">target_label</span><span class="p">:</span><span class="w"> </span>__metrics_path__<span class="w">
-</span><span class="w">    </span><span class="k">replacement</span><span class="p">:</span><span class="w"> </span>metrics/cadvisor<span class="w">
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml">- <span class="nt">job_name</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;cAdvisor&#39;</span><span class="w">
+</span><span class="w">    </span><span class="nt">scheme</span><span class="p">:</span><span class="w"> </span><span class="l">https</span><span class="w">
+</span><span class="w">    </span><span class="nt">tls_config</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">insecure_skip_verify</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w">    </span><span class="nt">bearer_token_file</span><span class="p">:</span><span class="w"> </span><span class="l">/var/run/secrets/kubernetes.io/serviceaccount/token</span><span class="w">
+</span><span class="w">    </span><span class="nt">static_configs</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- <span class="nt">target</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- <span class="l">public-ip:10250</span><span class="w">
+</span><span class="w">    </span><span class="nt">relabel_configs</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- <span class="nt">action</span><span class="p">:</span><span class="w"> </span><span class="l">labelmap</span><span class="w">
+</span><span class="w">    </span><span class="nt">regex</span><span class="p">:</span><span class="w"> </span><span class="l">__meta_kubernetes_node_label_(.+)</span><span class="w">
+</span><span class="w">    </span>- <span class="nt">source_labels</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="l">__meta_kubernetes_node_name]</span><span class="w">
+</span><span class="w">    </span><span class="nt">regex</span><span class="p">:</span><span class="w"> </span><span class="l">(.+)</span><span class="w">
+</span><span class="w">    </span><span class="nt">target_label</span><span class="p">:</span><span class="w"> </span><span class="l">__metrics_path__</span><span class="w">
+</span><span class="w">    </span><span class="nt">replacement</span><span class="p">:</span><span class="w"> </span><span class="l">metrics/cadvisor</span><span class="w">
 </span></code></pre></div><blockquote>
 <p>最下面的 relabel_configs 是把内建的  <code>__metrics_path__</code> 修改为 metircs/cadvisor 默认为 metrics。</p>
 </blockquote>
@@ -227,7 +227,7 @@ kubectl describe secret prometheus-token-cw4pd -n monitoring
 <p>根据 kubernetes 的架构，我们是通过 API server 操纵访问集群内的所有 API 对象的，并且我们也可以通过 API server 代理到我们的 service，pod 从而达到外网访问集群内部资源的效果。</p>
 <p>这里还要介绍一个 prometheus config <a href="https://prometheus.io/docs/prometheus/latest/configuration/configuration/#kubernetes_sd_config">kubernetes_sd_config</a>，请参考文档详细配置信息。</p>
 <blockquote>
-<p>Kubernetes SD configurations allow retrieving scrape targets from <a href="https://kubernetes.io/">Kubernetes&rsquo;</a> REST API and always staying synchronized with the cluster state.</p>
+<p>Kubernetes SD configurations allow retrieving scrape targets from <a href="https://kubernetes.io/">Kubernetes'</a> REST API and always staying synchronized with the cluster state.</p>
 </blockquote>
 <p>也就是说设置 kubernetes_sd_config 可以帮助我们自动发现需要监控的指标，可以根据集群的状态变化，例如你加了一个 node 他可能多了几个指标，这个时候就不需要我们手动去设置了，也就是实现了 service discovery。</p>
 <ul>
@@ -246,81 +246,81 @@ kubectl describe secret prometheus-token-cw4pd -n monitoring
 <p>根据每个 node 的名字构建 metrics path，因为 kubelet metrics 每个 node 都有一个，所以需要采集多个 node 的 metircs，利用 kubernetes_sd_config 可以自动发现，不需要手动填写。</p>
 </li>
 </ol>
-<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml">- <span class="k">job_name</span><span class="p">:</span><span class="w"> </span>stage-cadvisor<span class="w">
-</span><span class="w">  </span><span class="k">honor_timestamps</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
-</span><span class="w">  </span><span class="k">scrape_interval</span><span class="p">:</span><span class="w"> </span>15s<span class="w">
-</span><span class="w">  </span><span class="k">scrape_timeout</span><span class="p">:</span><span class="w"> </span>15s<span class="w">
-</span><span class="w">  </span><span class="k">metrics_path</span><span class="p">:</span><span class="w"> </span>/metrics<span class="w">
-</span><span class="w">  </span><span class="k">scheme</span><span class="p">:</span><span class="w"> </span>https<span class="w">
-</span><span class="w">  </span><span class="k">kubernetes_sd_configs</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span>- <span class="k">api_server</span><span class="p">:</span><span class="w"> </span>https<span class="p">:</span>//<span class="p">:</span><span class="m">6443</span><span class="w">
-</span><span class="w">    </span><span class="k">role</span><span class="p">:</span><span class="w"> </span>node<span class="w">
-</span><span class="w">    </span><span class="k">bearer_token_file</span><span class="p">:</span><span class="w"> </span>/opt/prometheus/serviceaccount/stage/token<span class="w">
-</span><span class="w">    </span><span class="k">tls_config</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="k">ca_file</span><span class="p">:</span><span class="w"> </span>/opt/prometheus/serviceaccount/stage/ca.crt<span class="w">
-</span><span class="w">      </span><span class="k">insecure_skip_verify</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
-</span><span class="w">  </span><span class="k">bearer_token_file</span><span class="p">:</span><span class="w"> </span>/opt/prometheus/serviceaccount/stage/token<span class="w">
-</span><span class="w">  </span><span class="k">tls_config</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="k">ca_file</span><span class="p">:</span><span class="w"> </span>/opt/prometheus/serviceaccount/stage/ca.crt<span class="w">
-</span><span class="w">    </span><span class="k">insecure_skip_verify</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
-</span><span class="w">  </span><span class="k">relabel_configs</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span>- <span class="k">separator</span><span class="p">:</span><span class="w"> </span>;<span class="w">
-</span><span class="w">    </span><span class="k">regex</span><span class="p">:</span><span class="w"> </span>__meta_kubernetes_node_label_(.+)<span class="w">
-</span><span class="w">    </span><span class="k">replacement</span><span class="p">:</span><span class="w"> </span>$<span class="m">1</span><span class="w">
-</span><span class="w">    </span><span class="k">action</span><span class="p">:</span><span class="w"> </span>labelmap<span class="w">
-</span><span class="w">  </span>- <span class="k">separator</span><span class="p">:</span><span class="w"> </span>;<span class="w">
-</span><span class="w">    </span><span class="k">regex</span><span class="p">:</span><span class="w"> </span>(.<span class="cp">*)</span><span class="w">
-</span><span class="w">    </span><span class="k">target_label</span><span class="p">:</span><span class="w"> </span>__address__<span class="w">
-</span><span class="w">    </span><span class="k">replacement</span><span class="p">:</span><span class="w"> </span>public-ip<span class="p">:</span><span class="m">6443</span><span class="w">
-</span><span class="w">    </span><span class="k">action</span><span class="p">:</span><span class="w"> </span>replace<span class="w">
-</span><span class="w">  </span>- <span class="k">source_labels</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>__meta_kubernetes_node_name<span class="p">]</span><span class="w">
-</span><span class="w">    </span><span class="k">separator</span><span class="p">:</span><span class="w"> </span>;<span class="w">
-</span><span class="w">    </span><span class="k">regex</span><span class="p">:</span><span class="w"> </span>(.+)<span class="w">
-</span><span class="w">    </span><span class="k">target_label</span><span class="p">:</span><span class="w"> </span>__metrics_path__<span class="w">
-</span><span class="w">    </span><span class="k">replacement</span><span class="p">:</span><span class="w"> </span>/api/v1/nodes/${<span class="m">1</span>}/proxy/metrics<span class="w">
-</span><span class="w">    </span><span class="k">action</span><span class="p">:</span><span class="w"> </span>replace<span class="w">
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml">- <span class="nt">job_name</span><span class="p">:</span><span class="w"> </span><span class="l">stage-cadvisor</span><span class="w">
+</span><span class="w">  </span><span class="nt">honor_timestamps</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w">  </span><span class="nt">scrape_interval</span><span class="p">:</span><span class="w"> </span><span class="l">15s</span><span class="w">
+</span><span class="w">  </span><span class="nt">scrape_timeout</span><span class="p">:</span><span class="w"> </span><span class="l">15s</span><span class="w">
+</span><span class="w">  </span><span class="nt">metrics_path</span><span class="p">:</span><span class="w"> </span><span class="l">/metrics</span><span class="w">
+</span><span class="w">  </span><span class="nt">scheme</span><span class="p">:</span><span class="w"> </span><span class="l">https</span><span class="w">
+</span><span class="w">  </span><span class="nt">kubernetes_sd_configs</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="nt">api_server</span><span class="p">:</span><span class="w"> </span><span class="l">https://:6443</span><span class="w">
+</span><span class="w">    </span><span class="nt">role</span><span class="p">:</span><span class="w"> </span><span class="l">node</span><span class="w">
+</span><span class="w">    </span><span class="nt">bearer_token_file</span><span class="p">:</span><span class="w"> </span><span class="l">/opt/prometheus/serviceaccount/stage/token</span><span class="w">
+</span><span class="w">    </span><span class="nt">tls_config</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">ca_file</span><span class="p">:</span><span class="w"> </span><span class="l">/opt/prometheus/serviceaccount/stage/ca.crt</span><span class="w">
+</span><span class="w">      </span><span class="nt">insecure_skip_verify</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w">  </span><span class="nt">bearer_token_file</span><span class="p">:</span><span class="w"> </span><span class="l">/opt/prometheus/serviceaccount/stage/token</span><span class="w">
+</span><span class="w">  </span><span class="nt">tls_config</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">ca_file</span><span class="p">:</span><span class="w"> </span><span class="l">/opt/prometheus/serviceaccount/stage/ca.crt</span><span class="w">
+</span><span class="w">    </span><span class="nt">insecure_skip_verify</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w">  </span><span class="nt">relabel_configs</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="nt">separator</span><span class="p">:</span><span class="w"> </span><span class="l">;</span><span class="w">
+</span><span class="w">    </span><span class="nt">regex</span><span class="p">:</span><span class="w"> </span><span class="l">__meta_kubernetes_node_label_(.+)</span><span class="w">
+</span><span class="w">    </span><span class="nt">replacement</span><span class="p">:</span><span class="w"> </span><span class="l">$1</span><span class="w">
+</span><span class="w">    </span><span class="nt">action</span><span class="p">:</span><span class="w"> </span><span class="l">labelmap</span><span class="w">
+</span><span class="w">  </span>- <span class="nt">separator</span><span class="p">:</span><span class="w"> </span><span class="l">;</span><span class="w">
+</span><span class="w">    </span><span class="nt">regex</span><span class="p">:</span><span class="w"> </span><span class="l">(.*)</span><span class="w">
+</span><span class="w">    </span><span class="nt">target_label</span><span class="p">:</span><span class="w"> </span><span class="l">__address__</span><span class="w">
+</span><span class="w">    </span><span class="nt">replacement</span><span class="p">:</span><span class="w"> </span><span class="l">public-ip:6443</span><span class="w">
+</span><span class="w">    </span><span class="nt">action</span><span class="p">:</span><span class="w"> </span><span class="l">replace</span><span class="w">
+</span><span class="w">  </span>- <span class="nt">source_labels</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="l">__meta_kubernetes_node_name]</span><span class="w">
+</span><span class="w">    </span><span class="nt">separator</span><span class="p">:</span><span class="w"> </span><span class="l">;</span><span class="w">
+</span><span class="w">    </span><span class="nt">regex</span><span class="p">:</span><span class="w"> </span><span class="l">(.+)</span><span class="w">
+</span><span class="w">    </span><span class="nt">target_label</span><span class="p">:</span><span class="w"> </span><span class="l">__metrics_path__</span><span class="w">
+</span><span class="w">    </span><span class="nt">replacement</span><span class="p">:</span><span class="w"> </span><span class="l">/api/v1/nodes/${1}/proxy/metrics</span><span class="w">
+</span><span class="w">    </span><span class="nt">action</span><span class="p">:</span><span class="w"> </span><span class="l">replace</span><span class="w">
 </span></code></pre></div></li>
 <li>
 <p>cAdvisor</p>
 <p>cAdivisor 和 kubelet 类似，只需要在 metrics path 后面加一个 cadvisor 就可以了。</p>
-<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml">- <span class="k">job_name</span><span class="p">:</span><span class="w"> </span>stage-cadvisor<span class="w">
-</span><span class="w">  </span><span class="k">honor_timestamps</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
-</span><span class="w">  </span><span class="k">scrape_interval</span><span class="p">:</span><span class="w"> </span>15s<span class="w">
-</span><span class="w">  </span><span class="k">scrape_timeout</span><span class="p">:</span><span class="w"> </span>15s<span class="w">
-</span><span class="w">  </span><span class="k">metrics_path</span><span class="p">:</span><span class="w"> </span>/metrics<span class="w">
-</span><span class="w">  </span><span class="k">scheme</span><span class="p">:</span><span class="w"> </span>https<span class="w">
-</span><span class="w">  </span><span class="k">kubernetes_sd_configs</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span>- <span class="k">api_server</span><span class="p">:</span><span class="w"> </span>https<span class="p">:</span>//public-ip<span class="p">:</span><span class="m">6443</span><span class="w">
-</span><span class="w">    </span><span class="k">role</span><span class="p">:</span><span class="w"> </span>node<span class="w">
-</span><span class="w">    </span><span class="k">bearer_token_file</span><span class="p">:</span><span class="w"> </span>/opt/prometheus/serviceaccount/stage/token<span class="w">
-</span><span class="w">    </span><span class="k">tls_config</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="k">ca_file</span><span class="p">:</span><span class="w"> </span>/opt/prometheus/serviceaccount/stage/ca.crt<span class="w">
-</span><span class="w">      </span><span class="k">insecure_skip_verify</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
-</span><span class="w">  </span><span class="k">bearer_token_file</span><span class="p">:</span><span class="w"> </span>/opt/prometheus/serviceaccount/stage/token<span class="w">
-</span><span class="w">  </span><span class="k">tls_config</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="k">ca_file</span><span class="p">:</span><span class="w"> </span>/opt/prometheus/serviceaccount/stage/ca.crt<span class="w">
-</span><span class="w">    </span><span class="k">insecure_skip_verify</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
-</span><span class="w">  </span><span class="k">relabel_configs</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span>- <span class="k">separator</span><span class="p">:</span><span class="w"> </span>;<span class="w">
-</span><span class="w">    </span><span class="k">regex</span><span class="p">:</span><span class="w"> </span>__meta_kubernetes_node_label_(.+)<span class="w">
-</span><span class="w">    </span><span class="k">replacement</span><span class="p">:</span><span class="w"> </span>$<span class="m">1</span><span class="w">
-</span><span class="w">    </span><span class="k">action</span><span class="p">:</span><span class="w"> </span>labelmap<span class="w">
-</span><span class="w">  </span>- <span class="k">separator</span><span class="p">:</span><span class="w"> </span>;<span class="w">
-</span><span class="w">    </span><span class="k">regex</span><span class="p">:</span><span class="w"> </span>(.<span class="cp">*)</span><span class="w">
-</span><span class="w">    </span><span class="k">target_label</span><span class="p">:</span><span class="w"> </span>__address__<span class="w">
-</span><span class="w">    </span><span class="k">replacement</span><span class="p">:</span><span class="w"> </span>public-ip<span class="p">:</span><span class="m">6443</span><span class="w">
-</span><span class="w">    </span><span class="k">action</span><span class="p">:</span><span class="w"> </span>replace<span class="w">
-</span><span class="w">  </span>- <span class="k">source_labels</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>__meta_kubernetes_node_name<span class="p">]</span><span class="w">
-</span><span class="w">    </span><span class="k">separator</span><span class="p">:</span><span class="w"> </span>;<span class="w">
-</span><span class="w">    </span><span class="k">regex</span><span class="p">:</span><span class="w"> </span>(.+)<span class="w">
-</span><span class="w">    </span><span class="k">target_label</span><span class="p">:</span><span class="w"> </span>__metrics_path__<span class="w">
-</span><span class="w">    </span><span class="k">replacement</span><span class="p">:</span><span class="w"> </span>/api/v1/nodes/${<span class="m">1</span>}/proxy/metrics/cadvisor<span class="w">
-</span><span class="w">    </span><span class="k">action</span><span class="p">:</span><span class="w"> </span>replace<span class="w">
-</span><span class="w">  </span>- <span class="k">separator</span><span class="p">:</span><span class="w"> </span>;<span class="w">
-</span><span class="w">    </span><span class="k">regex</span><span class="p">:</span><span class="w"> </span>(.<span class="cp">*)</span><span class="w">
-</span><span class="w">    </span><span class="k">target_label</span><span class="p">:</span><span class="w"> </span>cluster<span class="w">
-</span><span class="w">    </span><span class="k">replacement</span><span class="p">:</span><span class="w"> </span>stage<span class="w">
-</span><span class="w">    </span><span class="k">action</span><span class="p">:</span><span class="w"> </span>replace<span class="w">
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml">- <span class="nt">job_name</span><span class="p">:</span><span class="w"> </span><span class="l">stage-cadvisor</span><span class="w">
+</span><span class="w">  </span><span class="nt">honor_timestamps</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w">  </span><span class="nt">scrape_interval</span><span class="p">:</span><span class="w"> </span><span class="l">15s</span><span class="w">
+</span><span class="w">  </span><span class="nt">scrape_timeout</span><span class="p">:</span><span class="w"> </span><span class="l">15s</span><span class="w">
+</span><span class="w">  </span><span class="nt">metrics_path</span><span class="p">:</span><span class="w"> </span><span class="l">/metrics</span><span class="w">
+</span><span class="w">  </span><span class="nt">scheme</span><span class="p">:</span><span class="w"> </span><span class="l">https</span><span class="w">
+</span><span class="w">  </span><span class="nt">kubernetes_sd_configs</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="nt">api_server</span><span class="p">:</span><span class="w"> </span><span class="l">https://public-ip:6443</span><span class="w">
+</span><span class="w">    </span><span class="nt">role</span><span class="p">:</span><span class="w"> </span><span class="l">node</span><span class="w">
+</span><span class="w">    </span><span class="nt">bearer_token_file</span><span class="p">:</span><span class="w"> </span><span class="l">/opt/prometheus/serviceaccount/stage/token</span><span class="w">
+</span><span class="w">    </span><span class="nt">tls_config</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">ca_file</span><span class="p">:</span><span class="w"> </span><span class="l">/opt/prometheus/serviceaccount/stage/ca.crt</span><span class="w">
+</span><span class="w">      </span><span class="nt">insecure_skip_verify</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w">  </span><span class="nt">bearer_token_file</span><span class="p">:</span><span class="w"> </span><span class="l">/opt/prometheus/serviceaccount/stage/token</span><span class="w">
+</span><span class="w">  </span><span class="nt">tls_config</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">ca_file</span><span class="p">:</span><span class="w"> </span><span class="l">/opt/prometheus/serviceaccount/stage/ca.crt</span><span class="w">
+</span><span class="w">    </span><span class="nt">insecure_skip_verify</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w">  </span><span class="nt">relabel_configs</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="nt">separator</span><span class="p">:</span><span class="w"> </span><span class="l">;</span><span class="w">
+</span><span class="w">    </span><span class="nt">regex</span><span class="p">:</span><span class="w"> </span><span class="l">__meta_kubernetes_node_label_(.+)</span><span class="w">
+</span><span class="w">    </span><span class="nt">replacement</span><span class="p">:</span><span class="w"> </span><span class="l">$1</span><span class="w">
+</span><span class="w">    </span><span class="nt">action</span><span class="p">:</span><span class="w"> </span><span class="l">labelmap</span><span class="w">
+</span><span class="w">  </span>- <span class="nt">separator</span><span class="p">:</span><span class="w"> </span><span class="l">;</span><span class="w">
+</span><span class="w">    </span><span class="nt">regex</span><span class="p">:</span><span class="w"> </span><span class="l">(.*)</span><span class="w">
+</span><span class="w">    </span><span class="nt">target_label</span><span class="p">:</span><span class="w"> </span><span class="l">__address__</span><span class="w">
+</span><span class="w">    </span><span class="nt">replacement</span><span class="p">:</span><span class="w"> </span><span class="l">public-ip:6443</span><span class="w">
+</span><span class="w">    </span><span class="nt">action</span><span class="p">:</span><span class="w"> </span><span class="l">replace</span><span class="w">
+</span><span class="w">  </span>- <span class="nt">source_labels</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="l">__meta_kubernetes_node_name]</span><span class="w">
+</span><span class="w">    </span><span class="nt">separator</span><span class="p">:</span><span class="w"> </span><span class="l">;</span><span class="w">
+</span><span class="w">    </span><span class="nt">regex</span><span class="p">:</span><span class="w"> </span><span class="l">(.+)</span><span class="w">
+</span><span class="w">    </span><span class="nt">target_label</span><span class="p">:</span><span class="w"> </span><span class="l">__metrics_path__</span><span class="w">
+</span><span class="w">    </span><span class="nt">replacement</span><span class="p">:</span><span class="w"> </span><span class="l">/api/v1/nodes/${1}/proxy/metrics/cadvisor</span><span class="w">
+</span><span class="w">    </span><span class="nt">action</span><span class="p">:</span><span class="w"> </span><span class="l">replace</span><span class="w">
+</span><span class="w">  </span>- <span class="nt">separator</span><span class="p">:</span><span class="w"> </span><span class="l">;</span><span class="w">
+</span><span class="w">    </span><span class="nt">regex</span><span class="p">:</span><span class="w"> </span><span class="l">(.*)</span><span class="w">
+</span><span class="w">    </span><span class="nt">target_label</span><span class="p">:</span><span class="w"> </span><span class="l">cluster</span><span class="w">
+</span><span class="w">    </span><span class="nt">replacement</span><span class="p">:</span><span class="w"> </span><span class="l">stage</span><span class="w">
+</span><span class="w">    </span><span class="nt">action</span><span class="p">:</span><span class="w"> </span><span class="l">replace</span><span class="w">
 </span></code></pre></div></li>
 <li>
 <p>apiserver</p>
@@ -329,32 +329,32 @@ kubectl describe secret prometheus-token-cw4pd -n monitoring
 <ol>
 <li>把 discover 发现的 pod ip，修改为 API server 暴露的地址 / master node public ip。</li>
 </ol>
-<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml">- <span class="k">job_name</span><span class="p">:</span><span class="w"> </span>stage-apiservers<span class="w">
-</span><span class="w">  </span><span class="k">honor_timestamps</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
-</span><span class="w">  </span><span class="k">scrape_interval</span><span class="p">:</span><span class="w"> </span>15s<span class="w">
-</span><span class="w">  </span><span class="k">scrape_timeout</span><span class="p">:</span><span class="w"> </span>15s<span class="w">
-</span><span class="w">  </span><span class="k">metrics_path</span><span class="p">:</span><span class="w"> </span>/metrics<span class="w">
-</span><span class="w">  </span><span class="k">scheme</span><span class="p">:</span><span class="w"> </span>https<span class="w">
-</span><span class="w">  </span><span class="k">kubernetes_sd_configs</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span>- <span class="k">api_server</span><span class="p">:</span><span class="w"> </span>https<span class="p">:</span>//public-ip<span class="p">:</span><span class="m">6443</span><span class="w">
-</span><span class="w">    </span><span class="k">role</span><span class="p">:</span><span class="w"> </span>endpoints<span class="w">
-</span><span class="w">    </span><span class="k">bearer_token_file</span><span class="p">:</span><span class="w"> </span>/opt/prometheus/serviceaccount/stage/token<span class="w">
-</span><span class="w">    </span><span class="k">tls_config</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="k">insecure_skip_verify</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
-</span><span class="w">  </span><span class="k">bearer_token_file</span><span class="p">:</span><span class="w"> </span>/opt/prometheus/serviceaccount/stage/token<span class="w">
-</span><span class="w">  </span><span class="k">tls_config</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="k">insecure_skip_verify</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
-</span><span class="w">  </span><span class="k">relabel_configs</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span>- <span class="k">source_labels</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>__meta_kubernetes_namespace<span class="p">,</span><span class="w"> </span>__meta_kubernetes_service_name<span class="p">,</span><span class="w"> </span>__meta_kubernetes_endpoint_port_name<span class="p">]</span><span class="w">
-</span><span class="w">    </span><span class="k">separator</span><span class="p">:</span><span class="w"> </span>;<span class="w">
-</span><span class="w">    </span><span class="k">regex</span><span class="p">:</span><span class="w"> </span>default;kubernetes;https<span class="w">
-</span><span class="w">    </span><span class="k">replacement</span><span class="p">:</span><span class="w"> </span>$<span class="m">1</span><span class="w">
-</span><span class="w">    </span><span class="k">action</span><span class="p">:</span><span class="w"> </span>keep<span class="w">
-</span><span class="w">  </span>- <span class="k">separator</span><span class="p">:</span><span class="w"> </span>;<span class="w">
-</span><span class="w">    </span><span class="k">regex</span><span class="p">:</span><span class="w"> </span>(.<span class="cp">*)</span><span class="w">
-</span><span class="w">    </span><span class="k">target_label</span><span class="p">:</span><span class="w"> </span>__address__<span class="w">
-</span><span class="w">    </span><span class="k">replacement</span><span class="p">:</span><span class="w"> </span>public-ip<span class="p">:</span><span class="m">6443</span><span class="w">
-</span><span class="w">    </span><span class="k">action</span><span class="p">:</span><span class="w"> </span>replace<span class="w">
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml">- <span class="nt">job_name</span><span class="p">:</span><span class="w"> </span><span class="l">stage-apiservers</span><span class="w">
+</span><span class="w">  </span><span class="nt">honor_timestamps</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w">  </span><span class="nt">scrape_interval</span><span class="p">:</span><span class="w"> </span><span class="l">15s</span><span class="w">
+</span><span class="w">  </span><span class="nt">scrape_timeout</span><span class="p">:</span><span class="w"> </span><span class="l">15s</span><span class="w">
+</span><span class="w">  </span><span class="nt">metrics_path</span><span class="p">:</span><span class="w"> </span><span class="l">/metrics</span><span class="w">
+</span><span class="w">  </span><span class="nt">scheme</span><span class="p">:</span><span class="w"> </span><span class="l">https</span><span class="w">
+</span><span class="w">  </span><span class="nt">kubernetes_sd_configs</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="nt">api_server</span><span class="p">:</span><span class="w"> </span><span class="l">https://public-ip:6443</span><span class="w">
+</span><span class="w">    </span><span class="nt">role</span><span class="p">:</span><span class="w"> </span><span class="l">endpoints</span><span class="w">
+</span><span class="w">    </span><span class="nt">bearer_token_file</span><span class="p">:</span><span class="w"> </span><span class="l">/opt/prometheus/serviceaccount/stage/token</span><span class="w">
+</span><span class="w">    </span><span class="nt">tls_config</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">insecure_skip_verify</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w">  </span><span class="nt">bearer_token_file</span><span class="p">:</span><span class="w"> </span><span class="l">/opt/prometheus/serviceaccount/stage/token</span><span class="w">
+</span><span class="w">  </span><span class="nt">tls_config</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">insecure_skip_verify</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w">  </span><span class="nt">relabel_configs</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="nt">source_labels</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="l">__meta_kubernetes_namespace, __meta_kubernetes_service_name, __meta_kubernetes_endpoint_port_name]</span><span class="w">
+</span><span class="w">    </span><span class="nt">separator</span><span class="p">:</span><span class="w"> </span><span class="l">;</span><span class="w">
+</span><span class="w">    </span><span class="nt">regex</span><span class="p">:</span><span class="w"> </span><span class="l">default;kubernetes;https</span><span class="w">
+</span><span class="w">    </span><span class="nt">replacement</span><span class="p">:</span><span class="w"> </span><span class="l">$1</span><span class="w">
+</span><span class="w">    </span><span class="nt">action</span><span class="p">:</span><span class="w"> </span><span class="l">keep</span><span class="w">
+</span><span class="w">  </span>- <span class="nt">separator</span><span class="p">:</span><span class="w"> </span><span class="l">;</span><span class="w">
+</span><span class="w">    </span><span class="nt">regex</span><span class="p">:</span><span class="w"> </span><span class="l">(.*)</span><span class="w">
+</span><span class="w">    </span><span class="nt">target_label</span><span class="p">:</span><span class="w"> </span><span class="l">__address__</span><span class="w">
+</span><span class="w">    </span><span class="nt">replacement</span><span class="p">:</span><span class="w"> </span><span class="l">public-ip:6443</span><span class="w">
+</span><span class="w">    </span><span class="nt">action</span><span class="p">:</span><span class="w"> </span><span class="l">replace</span><span class="w">
 </span></code></pre></div></li>
 </ul>
 <h4 id="13-使用-api-server-代理访问到自建指标">1.3 使用 API server 代理访问到自建指标<a href="#13-使用-api-server-代理访问到自建指标" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h4>
@@ -376,72 +376,72 @@ kubectl describe secret prometheus-token-cw4pd -n monitoring
 <p>目标为 <code>/api/v1/namespaces/$1/services/$2:$3/proxy$4</code>。</p>
 </li>
 </ol>
-<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml">- <span class="k">job_name</span><span class="p">:</span><span class="w"> </span>stage-node-exporter<span class="w">
-</span><span class="w">  </span><span class="k">honor_timestamps</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
-</span><span class="w">  </span><span class="k">scrape_interval</span><span class="p">:</span><span class="w"> </span>15s<span class="w">
-</span><span class="w">  </span><span class="k">scrape_timeout</span><span class="p">:</span><span class="w"> </span>15s<span class="w">
-</span><span class="w">  </span><span class="k">metrics_path</span><span class="p">:</span><span class="w"> </span>/metrics<span class="w">
-</span><span class="w">  </span><span class="k">scheme</span><span class="p">:</span><span class="w"> </span>https<span class="w">
-</span><span class="w">  </span><span class="k">kubernetes_sd_configs</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span>- <span class="k">api_server</span><span class="p">:</span><span class="w"> </span>https<span class="p">:</span>//public-ip<span class="p">:</span><span class="m">6443</span><span class="w">
-</span><span class="w">    </span><span class="k">role</span><span class="p">:</span><span class="w"> </span>endpoints<span class="w">
-</span><span class="w">    </span><span class="k">bearer_token_file</span><span class="p">:</span><span class="w"> </span>/opt/prometheus/serviceaccount/stage/token<span class="w">
-</span><span class="w">    </span><span class="k">tls_config</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="k">insecure_skip_verify</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
-</span><span class="w">  </span><span class="k">bearer_token_file</span><span class="p">:</span><span class="w"> </span>/opt/prometheus/serviceaccount/stage/token<span class="w">
-</span><span class="w">  </span><span class="k">tls_config</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span><span class="k">insecure_skip_verify</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
-</span><span class="w">  </span><span class="k">relabel_configs</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span>- <span class="k">source_labels</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>__meta_kubernetes_endpoints_name<span class="p">]</span><span class="w">
-</span><span class="w">    </span><span class="k">separator</span><span class="p">:</span><span class="w"> </span>;<span class="w">
-</span><span class="w">    </span><span class="k">regex</span><span class="p">:</span><span class="w"> </span>prometheus-node-exporter<span class="w">
-</span><span class="w">    </span><span class="k">replacement</span><span class="p">:</span><span class="w"> </span>$<span class="m">1</span><span class="w">
-</span><span class="w">    </span><span class="k">action</span><span class="p">:</span><span class="w"> </span>keep<span class="w">
-</span><span class="w">  </span>- <span class="k">source_labels</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>__meta_kubernetes_pod_annotation_prometheus_io_port<span class="p">]</span><span class="w">
-</span><span class="w">    </span><span class="k">separator</span><span class="p">:</span><span class="w"> </span>;<span class="w">
-</span><span class="w">    </span><span class="k">regex</span><span class="p">:</span><span class="w"> </span>(\d+)<span class="w">
-</span><span class="w">    </span><span class="k">target_label</span><span class="p">:</span><span class="w"> </span>__meta_kubernetes_pod_container_port_number<span class="w">
-</span><span class="w">    </span><span class="k">replacement</span><span class="p">:</span><span class="w"> </span>$<span class="m">1</span><span class="w">
-</span><span class="w">    </span><span class="k">action</span><span class="p">:</span><span class="w"> </span>replace<span class="w">
-</span><span class="w">  </span>- <span class="k">source_labels</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>__meta_kubernetes_service_annotation_prometheus_io_path<span class="p">]</span><span class="w">
-</span><span class="w">    </span><span class="k">separator</span><span class="p">:</span><span class="w"> </span>;<span class="w">
-</span><span class="w">    </span><span class="k">regex</span><span class="p">:</span><span class="w"> </span>()<span class="w">
-</span><span class="w">    </span><span class="k">target_label</span><span class="p">:</span><span class="w"> </span>__meta_kubernetes_service_annotation_prometheus_io_path<span class="w">
-</span><span class="w">    </span><span class="k">replacement</span><span class="p">:</span><span class="w"> </span>/metrics<span class="w">
-</span><span class="w">    </span><span class="k">action</span><span class="p">:</span><span class="w"> </span>replace<span class="w">
-</span><span class="w">  </span>- <span class="k">source_labels</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>__meta_kubernetes_namespace<span class="p">,</span><span class="w"> </span>__meta_kubernetes_service_name<span class="p">,</span><span class="w"> </span>__meta_kubernetes_pod_container_port_number<span class="p">,</span><span class="w"> </span>__meta_kubernetes_service_annotation_prometheus_io_path<span class="p">]</span><span class="w">
-</span><span class="w">    </span><span class="k">separator</span><span class="p">:</span><span class="w"> </span>;<span class="w">
-</span><span class="w">    </span><span class="k">regex</span><span class="p">:</span><span class="w"> </span>(.+);(.+);(.+);(.+)<span class="w">
-</span><span class="w">    </span><span class="k">target_label</span><span class="p">:</span><span class="w"> </span>__metrics_path__<span class="w">
-</span><span class="w">    </span><span class="k">replacement</span><span class="p">:</span><span class="w"> </span>/api/v1/namespaces/$<span class="m">1</span>/services/$<span class="m">2</span><span class="p">:</span>$<span class="m">3</span>/proxy$<span class="m">4</span><span class="w">
-</span><span class="w">    </span><span class="k">action</span><span class="p">:</span><span class="w"> </span>replace<span class="w">
-</span><span class="w">  </span>- <span class="k">separator</span><span class="p">:</span><span class="w"> </span>;<span class="w">
-</span><span class="w">    </span><span class="k">regex</span><span class="p">:</span><span class="w"> </span>(.<span class="cp">*)</span><span class="w">
-</span><span class="w">    </span><span class="k">target_label</span><span class="p">:</span><span class="w"> </span>__address__<span class="w">
-</span><span class="w">    </span><span class="k">replacement</span><span class="p">:</span><span class="w"> </span>public-ip<span class="p">:</span><span class="m">6443</span><span class="w">
-</span><span class="w">    </span><span class="k">action</span><span class="p">:</span><span class="w"> </span>replace<span class="w">
-</span><span class="w">  </span>- <span class="k">separator</span><span class="p">:</span><span class="w"> </span>;<span class="w">
-</span><span class="w">    </span><span class="k">regex</span><span class="p">:</span><span class="w"> </span>__meta_kubernetes_service_label_(.+)<span class="w">
-</span><span class="w">    </span><span class="k">replacement</span><span class="p">:</span><span class="w"> </span>$<span class="m">1</span><span class="w">
-</span><span class="w">    </span><span class="k">action</span><span class="p">:</span><span class="w"> </span>labelmap<span class="w">
-</span><span class="w">  </span>- <span class="k">source_labels</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>__meta_kubernetes_namespace<span class="p">]</span><span class="w">
-</span><span class="w">    </span><span class="k">separator</span><span class="p">:</span><span class="w"> </span>;<span class="w">
-</span><span class="w">    </span><span class="k">regex</span><span class="p">:</span><span class="w"> </span>(.<span class="cp">*)</span><span class="w">
-</span><span class="w">    </span><span class="k">target_label</span><span class="p">:</span><span class="w"> </span>kubernetes_namespace<span class="w">
-</span><span class="w">    </span><span class="k">replacement</span><span class="p">:</span><span class="w"> </span>$<span class="m">1</span><span class="w">
-</span><span class="w">    </span><span class="k">action</span><span class="p">:</span><span class="w"> </span>replace<span class="w">
-</span><span class="w">  </span>- <span class="k">source_labels</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>__meta_kubernetes_service_name<span class="p">]</span><span class="w">
-</span><span class="w">    </span><span class="k">separator</span><span class="p">:</span><span class="w"> </span>;<span class="w">
-</span><span class="w">    </span><span class="k">regex</span><span class="p">:</span><span class="w"> </span>(.<span class="cp">*)</span><span class="w">
-</span><span class="w">    </span><span class="k">target_label</span><span class="p">:</span><span class="w"> </span>kubernetes_name<span class="w">
-</span><span class="w">    </span><span class="k">replacement</span><span class="p">:</span><span class="w"> </span>$<span class="m">1</span><span class="w">
-</span><span class="w">    </span><span class="k">action</span><span class="p">:</span><span class="w"> </span>replace<span class="w">
-</span><span class="w">  </span>- <span class="k">source_labels</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>__meta_kubernetes_pod_node_name<span class="p">]</span><span class="w">
-</span><span class="w">    </span><span class="k">separator</span><span class="p">:</span><span class="w"> </span>;<span class="w">
-</span><span class="w">    </span><span class="k">regex</span><span class="p">:</span><span class="w"> </span>(.<span class="cp">*)</span><span class="w">
-</span><span class="w">    </span><span class="k">target_label</span><span class="p">:</span><span class="w"> </span>instance<span class="w">
-</span><span class="w">    </span><span class="k">replacement</span><span class="p">:</span><span class="w"> </span>$<span class="m">1</span><span class="w">
-</span><span class="w">    </span><span class="k">action</span><span class="p">:</span><span class="w"> </span>replace<span class="w">
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml">- <span class="nt">job_name</span><span class="p">:</span><span class="w"> </span><span class="l">stage-node-exporter</span><span class="w">
+</span><span class="w">  </span><span class="nt">honor_timestamps</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w">  </span><span class="nt">scrape_interval</span><span class="p">:</span><span class="w"> </span><span class="l">15s</span><span class="w">
+</span><span class="w">  </span><span class="nt">scrape_timeout</span><span class="p">:</span><span class="w"> </span><span class="l">15s</span><span class="w">
+</span><span class="w">  </span><span class="nt">metrics_path</span><span class="p">:</span><span class="w"> </span><span class="l">/metrics</span><span class="w">
+</span><span class="w">  </span><span class="nt">scheme</span><span class="p">:</span><span class="w"> </span><span class="l">https</span><span class="w">
+</span><span class="w">  </span><span class="nt">kubernetes_sd_configs</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="nt">api_server</span><span class="p">:</span><span class="w"> </span><span class="l">https://public-ip:6443</span><span class="w">
+</span><span class="w">    </span><span class="nt">role</span><span class="p">:</span><span class="w"> </span><span class="l">endpoints</span><span class="w">
+</span><span class="w">    </span><span class="nt">bearer_token_file</span><span class="p">:</span><span class="w"> </span><span class="l">/opt/prometheus/serviceaccount/stage/token</span><span class="w">
+</span><span class="w">    </span><span class="nt">tls_config</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">insecure_skip_verify</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w">  </span><span class="nt">bearer_token_file</span><span class="p">:</span><span class="w"> </span><span class="l">/opt/prometheus/serviceaccount/stage/token</span><span class="w">
+</span><span class="w">  </span><span class="nt">tls_config</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">insecure_skip_verify</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="w">  </span><span class="nt">relabel_configs</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="nt">source_labels</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="l">__meta_kubernetes_endpoints_name]</span><span class="w">
+</span><span class="w">    </span><span class="nt">separator</span><span class="p">:</span><span class="w"> </span><span class="l">;</span><span class="w">
+</span><span class="w">    </span><span class="nt">regex</span><span class="p">:</span><span class="w"> </span><span class="l">prometheus-node-exporter</span><span class="w">
+</span><span class="w">    </span><span class="nt">replacement</span><span class="p">:</span><span class="w"> </span><span class="l">$1</span><span class="w">
+</span><span class="w">    </span><span class="nt">action</span><span class="p">:</span><span class="w"> </span><span class="l">keep</span><span class="w">
+</span><span class="w">  </span>- <span class="nt">source_labels</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="l">__meta_kubernetes_pod_annotation_prometheus_io_port]</span><span class="w">
+</span><span class="w">    </span><span class="nt">separator</span><span class="p">:</span><span class="w"> </span><span class="l">;</span><span class="w">
+</span><span class="w">    </span><span class="nt">regex</span><span class="p">:</span><span class="w"> </span><span class="l">(\d+)</span><span class="w">
+</span><span class="w">    </span><span class="nt">target_label</span><span class="p">:</span><span class="w"> </span><span class="l">__meta_kubernetes_pod_container_port_number</span><span class="w">
+</span><span class="w">    </span><span class="nt">replacement</span><span class="p">:</span><span class="w"> </span><span class="l">$1</span><span class="w">
+</span><span class="w">    </span><span class="nt">action</span><span class="p">:</span><span class="w"> </span><span class="l">replace</span><span class="w">
+</span><span class="w">  </span>- <span class="nt">source_labels</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="l">__meta_kubernetes_service_annotation_prometheus_io_path]</span><span class="w">
+</span><span class="w">    </span><span class="nt">separator</span><span class="p">:</span><span class="w"> </span><span class="l">;</span><span class="w">
+</span><span class="w">    </span><span class="nt">regex</span><span class="p">:</span><span class="w"> </span><span class="l">()</span><span class="w">
+</span><span class="w">    </span><span class="nt">target_label</span><span class="p">:</span><span class="w"> </span><span class="l">__meta_kubernetes_service_annotation_prometheus_io_path</span><span class="w">
+</span><span class="w">    </span><span class="nt">replacement</span><span class="p">:</span><span class="w"> </span><span class="l">/metrics</span><span class="w">
+</span><span class="w">    </span><span class="nt">action</span><span class="p">:</span><span class="w"> </span><span class="l">replace</span><span class="w">
+</span><span class="w">  </span>- <span class="nt">source_labels</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="l">__meta_kubernetes_namespace, __meta_kubernetes_service_name, __meta_kubernetes_pod_container_port_number, __meta_kubernetes_service_annotation_prometheus_io_path]</span><span class="w">
+</span><span class="w">    </span><span class="nt">separator</span><span class="p">:</span><span class="w"> </span><span class="l">;</span><span class="w">
+</span><span class="w">    </span><span class="nt">regex</span><span class="p">:</span><span class="w"> </span><span class="l">(.+);(.+);(.+);(.+)</span><span class="w">
+</span><span class="w">    </span><span class="nt">target_label</span><span class="p">:</span><span class="w"> </span><span class="l">__metrics_path__</span><span class="w">
+</span><span class="w">    </span><span class="nt">replacement</span><span class="p">:</span><span class="w"> </span><span class="l">/api/v1/namespaces/$1/services/$2:$3/proxy$4</span><span class="w">
+</span><span class="w">    </span><span class="nt">action</span><span class="p">:</span><span class="w"> </span><span class="l">replace</span><span class="w">
+</span><span class="w">  </span>- <span class="nt">separator</span><span class="p">:</span><span class="w"> </span><span class="l">;</span><span class="w">
+</span><span class="w">    </span><span class="nt">regex</span><span class="p">:</span><span class="w"> </span><span class="l">(.*)</span><span class="w">
+</span><span class="w">    </span><span class="nt">target_label</span><span class="p">:</span><span class="w"> </span><span class="l">__address__</span><span class="w">
+</span><span class="w">    </span><span class="nt">replacement</span><span class="p">:</span><span class="w"> </span><span class="l">public-ip:6443</span><span class="w">
+</span><span class="w">    </span><span class="nt">action</span><span class="p">:</span><span class="w"> </span><span class="l">replace</span><span class="w">
+</span><span class="w">  </span>- <span class="nt">separator</span><span class="p">:</span><span class="w"> </span><span class="l">;</span><span class="w">
+</span><span class="w">    </span><span class="nt">regex</span><span class="p">:</span><span class="w"> </span><span class="l">__meta_kubernetes_service_label_(.+)</span><span class="w">
+</span><span class="w">    </span><span class="nt">replacement</span><span class="p">:</span><span class="w"> </span><span class="l">$1</span><span class="w">
+</span><span class="w">    </span><span class="nt">action</span><span class="p">:</span><span class="w"> </span><span class="l">labelmap</span><span class="w">
+</span><span class="w">  </span>- <span class="nt">source_labels</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="l">__meta_kubernetes_namespace]</span><span class="w">
+</span><span class="w">    </span><span class="nt">separator</span><span class="p">:</span><span class="w"> </span><span class="l">;</span><span class="w">
+</span><span class="w">    </span><span class="nt">regex</span><span class="p">:</span><span class="w"> </span><span class="l">(.*)</span><span class="w">
+</span><span class="w">    </span><span class="nt">target_label</span><span class="p">:</span><span class="w"> </span><span class="l">kubernetes_namespace</span><span class="w">
+</span><span class="w">    </span><span class="nt">replacement</span><span class="p">:</span><span class="w"> </span><span class="l">$1</span><span class="w">
+</span><span class="w">    </span><span class="nt">action</span><span class="p">:</span><span class="w"> </span><span class="l">replace</span><span class="w">
+</span><span class="w">  </span>- <span class="nt">source_labels</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="l">__meta_kubernetes_service_name]</span><span class="w">
+</span><span class="w">    </span><span class="nt">separator</span><span class="p">:</span><span class="w"> </span><span class="l">;</span><span class="w">
+</span><span class="w">    </span><span class="nt">regex</span><span class="p">:</span><span class="w"> </span><span class="l">(.*)</span><span class="w">
+</span><span class="w">    </span><span class="nt">target_label</span><span class="p">:</span><span class="w"> </span><span class="l">kubernetes_name</span><span class="w">
+</span><span class="w">    </span><span class="nt">replacement</span><span class="p">:</span><span class="w"> </span><span class="l">$1</span><span class="w">
+</span><span class="w">    </span><span class="nt">action</span><span class="p">:</span><span class="w"> </span><span class="l">replace</span><span class="w">
+</span><span class="w">  </span>- <span class="nt">source_labels</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="l">__meta_kubernetes_pod_node_name]</span><span class="w">
+</span><span class="w">    </span><span class="nt">separator</span><span class="p">:</span><span class="w"> </span><span class="l">;</span><span class="w">
+</span><span class="w">    </span><span class="nt">regex</span><span class="p">:</span><span class="w"> </span><span class="l">(.*)</span><span class="w">
+</span><span class="w">    </span><span class="nt">target_label</span><span class="p">:</span><span class="w"> </span><span class="l">instance</span><span class="w">
+</span><span class="w">    </span><span class="nt">replacement</span><span class="p">:</span><span class="w"> </span><span class="l">$1</span><span class="w">
+</span><span class="w">    </span><span class="nt">action</span><span class="p">:</span><span class="w"> </span><span class="l">replace</span><span class="w">
 </span></code></pre></div></li>
 </ul>
 <p>其他的自建指标都与这个类似，使用 label 可以唯一找到目标就行了。</p>
@@ -458,15 +458,15 @@ kubectl describe secret prometheus-token-cw4pd -n monitoring
 <li>
 <p>需要使用 kubernetes_sd_config 的，每个集群新建一个 job，而其他则可以使用 static_configs 并且使用 label 来区分。</p>
 <p>例如：</p>
-<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="k">static_configs</span><span class="p">:</span><span class="w">
-</span><span class="w">  </span>- <span class="k">targets</span><span class="p">:</span><span class="w">
-</span><span class="w">    </span>- stage-ip<span class="p">:</span><span class="m">6443</span><span class="w">
-</span><span class="w">    </span><span class="k">labels</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span><span class="k">cluster</span><span class="p">:</span><span class="w"> </span>stage<span class="w">
-</span><span class="w">  </span>- <span class="k">targets</span><span class="p">:</span><span class="w">
-</span><span class="w">      </span>- product-ip<span class="p">:</span><span class="m">6443</span><span class="w">
-</span><span class="w">      </span><span class="k">labels</span><span class="p">:</span><span class="w">
-</span><span class="w">          </span><span class="k">cluster</span><span class="p">:</span><span class="w"> </span>product<span class="w">
+<div class="highlight"><pre class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">static_configs</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span>- <span class="nt">targets</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- <span class="l">stage-ip:6443</span><span class="w">
+</span><span class="w">    </span><span class="nt">labels</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="nt">cluster</span><span class="p">:</span><span class="w"> </span><span class="l">stage</span><span class="w">
+</span><span class="w">  </span>- <span class="nt">targets</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- <span class="l">product-ip:6443</span><span class="w">
+</span><span class="w">      </span><span class="nt">labels</span><span class="p">:</span><span class="w">
+</span><span class="w">          </span><span class="nt">cluster</span><span class="p">:</span><span class="w"> </span><span class="l">product</span><span class="w">
 </span></code></pre></div></li>
 <li>
 <p>每个集群都新建所有 job，这个比较简单，有了一个模版，改字段就可以了，我上面的 config 就是这样，如果是 product1 集群，这 Crtl+R 替换所有的 stage 为 product1。</p>
@@ -500,7 +500,7 @@ kubectl describe secret prometheus-token-cw4pd -n monitoring
 				<p>
 					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="https://bowser1704.github.io/tags/prometheus">prometheus</a></span><span class="tag"><a href="https://bowser1704.github.io/tags/monitoring">monitoring</a></span><span class="tag"><a href="https://bowser1704.github.io/tags/k3s">k3s</a></span>
 				</p>
-				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>3336 Words</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>3341 Words</p>
 				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2020-07-01 22:21 &#43;0800</p>
 			</footer>
 		</article>

@@ -7,11 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Wed, 13 Nov 2019 21:30:14 +0800</lastBuildDate>
-    
-	<atom:link href="https://bowser1704.github.io/tags/network-programming/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Wed, 13 Nov 2019 21:30:14 +0800</lastBuildDate><atom:link href="https://bowser1704.github.io/tags/network-programming/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>csapp Chapter11 网络编程</title>
       <link>https://bowser1704.github.io/notes/csappchapter11/</link>
