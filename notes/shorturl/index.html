@@ -11,7 +11,7 @@
 <meta itemprop="description" content="短链接服务是怎么实现的...">
 <meta itemprop="datePublished" content="2019-10-31T23:57:33+08:00" />
 <meta itemprop="dateModified" content="2019-10-31T23:57:33+08:00" />
-<meta itemprop="wordCount" content="581">
+<meta itemprop="wordCount" content="579">
 
 
 
@@ -77,7 +77,6 @@
 <p>知乎上有很多回答，典型的错误回答有</p>
 <ul>
 <li>用 MD5 等 hash 直接得出定长字符，没有考虑冲突的情况，在这种情况下冲突是很严重的，不可以忍受的。</li>
-<li>自己</li>
 </ul>
 <p>正确的实现方法是，利用进制转化，也就是低进制转换为高进制，数的长度会变得很小，例如 1000(2) = 8(10)，一下子就去掉了三位。</p>
 <p>所以给每个长 url 一个自增 10 进制 id，然后用 10 进制 id 转换为 62 进制，为什么 62 进制呢？因为 10 个阿拉伯数字 +26×2 个英文字母，共 62 位，这样的话，6 位 62 进制数字也就有了 500 多亿个，也够用了。</p>

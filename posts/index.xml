@@ -111,25 +111,6 @@
 		</item>
 		
 		<item>
-			<title>Time</title>
-			<link>https://bowser1704.github.io/posts/time/</link>
-			<pubDate>Mon, 26 Oct 2020 12:23:46 +0800</pubDate>
-			
-			<guid>https://bowser1704.github.io/posts/time/</guid>
-			<description>时间</description>
-			<content type="html"><![CDATA[<p>偶然想到 V2EX 的虚拟货币系统的设计。</p>
-<blockquote>
-<p>这套系统设计的初衷，是关于时间的隐喻。</p>
-</blockquote>
-<blockquote>
-<p>你在这里所做的每一件事情，都会消耗你的时间。倘若一件事情做完之后，无法得到任何有意义的回应，那么这件事情就像是白做了。如果一个人持续做那些无意义的事情，那么他实际上就是在浪费他的时间。</p>
-</blockquote>
-<p>想想自己每天花费的时间都有什么意义？玩手机，刷视频，这些东西的意义在哪里，自己收获了什么，如果没有，是不是可以不做，或者做一些别的事情。</p>
-<p>对于时间的思考目的不是说抓紧时间，而是说对于时间的耗费都要有意义，你可以花多一些时间，而不能浪费时间，必须要让时间的付出得到有意义的回报。</p>
-]]></content>
-		</item>
-		
-		<item>
 			<title>单机 Prometheus 监控多集群方案</title>
 			<link>https://bowser1704.github.io/posts/cluster-monitoring/</link>
 			<pubDate>Wed, 01 Jul 2020 22:21:01 +0800</pubDate>

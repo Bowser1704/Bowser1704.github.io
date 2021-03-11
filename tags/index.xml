@@ -7,16 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Mon, 26 Oct 2020 12:23:46 +0800</lastBuildDate><atom:link href="https://bowser1704.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>time</title>
-      <link>https://bowser1704.github.io/tags/time/</link>
-      <pubDate>Mon, 26 Oct 2020 12:23:46 +0800</pubDate>
-      
-      <guid>https://bowser1704.github.io/tags/time/</guid>
-      <description></description>
-    </item>
-    
+    <lastBuildDate>Tue, 11 Aug 2020 23:37:44 +0800</lastBuildDate><atom:link href="https://bowser1704.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>net</title>
       <link>https://bowser1704.github.io/tags/net/</link>
@@ -50,6 +41,15 @@
       <pubDate>Wed, 01 Jul 2020 22:21:01 +0800</pubDate>
       
       <guid>https://bowser1704.github.io/tags/prometheus/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>iptables</title>
+      <link>https://bowser1704.github.io/tags/iptables/</link>
+      <pubDate>Mon, 29 Jun 2020 10:18:22 +0800</pubDate>
+      
+      <guid>https://bowser1704.github.io/tags/iptables/</guid>
       <description></description>
     </item>
     
