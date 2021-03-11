@@ -7,16 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
-    <lastBuildDate>Mon, 01 Mar 2021 22:41:24 +0800</lastBuildDate><atom:link href="https://bowser1704.github.io/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Session</title>
-      <link>https://bowser1704.github.io/notes/session/</link>
-      <pubDate>Mon, 01 Mar 2021 22:41:24 +0800</pubDate>
-      
-      <guid>https://bowser1704.github.io/notes/session/</guid>
-      <description>Session 分为两种：server-side-session 和 client-side-session，日常见的基本是 server-side-sessi</description>
-    </item>
-    
+    <lastBuildDate>Sun, 29 Nov 2020 14:31:07 +0800</lastBuildDate><atom:link href="https://bowser1704.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Go 与 Python3 函数传参</title>
       <link>https://bowser1704.github.io/notes/pass-by-what/</link>
@@ -51,6 +42,15 @@
       
       <guid>https://bowser1704.github.io/posts/cluster-monitoring/</guid>
       <description>初始化：安装各种组件 Prometheus 和 Alertmanager 的安装都在官网 下载压缩包，手动下载下来解压。 # -C 指定目的目录 # * 代表版本，需要下载正确的系统版本。 tar xf prometheus-*.*.*.linux-amd64.tar.gz -C /opt/ tar xf alertmanager-*.*.*.linux-amd64.tar.gz</description>
+    </item>
+    
+    <item>
+      <title>iptables 的一些学习总结。</title>
+      <link>https://bowser1704.github.io/notes/iptables/</link>
+      <pubDate>Mon, 29 Jun 2020 10:18:22 +0800</pubDate>
+      
+      <guid>https://bowser1704.github.io/notes/iptables/</guid>
+      <description>iptables 的一些学习笔记。 netfilter 有 几个hook，分别有不同的功能。 PREROUTING: Triggered by the NF_IP_PRE_ROUTING hook. INPUT: Triggered by the NF_IP_LOCAL_IN hook. FORWARD: Triggered by the NF_IP_FORWARD hook. OUTPUT: Triggered by the NF_IP_LOCAL_OUT hook. POSTROUTING: Triggered by the NF_IP_POST_ROUTING hook. Tables↓/Chain</description>
     </item>
     
   </channel>
