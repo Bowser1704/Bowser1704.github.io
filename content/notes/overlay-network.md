@@ -74,6 +74,24 @@ flannel 提供一个 layer 3 network。
 
 > Flannel is responsible for providing a layer 3 IPv4 network between multiple nodes in a cluster. Flannel does not control how containers are networked to the host, only how the traffic is transported between hosts. However, flannel does provide a CNI plugin for Kubernetes and a guidance on integrating with Docker.
 
+![img](https://i.loli.net/2021/03/16/491YoQA3vHZC2Di.png)
+
+#### 4.1 UDP 模式
+
+> 容器封包发给 docker0 bridge, 也就是进入内核，kernel 的 route table 有了变化，根据目标网段发给 flannel0 设备，flannel0 转给了 flanneld 进程，进入用户态，flanneld 查 etcd 找到目标网段对应的 node 的 real ip, 把原来的 IP packet 封装成一个 UDP 包，发送，也就是进入内核，根据 route table 发送到目的 node 的 flanneld 进程上，flanneld 再拆包，进入目的 node 的内核，根据 route table 会进入该主机的 docker0 bridge 也就到了目的 容器内。
+
+![image-20210316164624871](https://i.loli.net/2021/03/16/WpUKFRENCLIP3SB.png)
+
+#### 4.2 VxLAN 模式
+
+flannel.1 作为 VTEP 设备，接管原来的 UDP 模式中 flanneld 进程封装原来的包，转发到目的主机上的功能。需要知道目标 VTEP 设备的 MAC 地址。需要 ARP 请求。有了目的 VTEP 的 MAC 地址，把 IP 包封装为帧，用的是 VTEP 的 MAC 地址和目的容器的 IP 地址。然后加上 VXLAN 的一些数据封装成一个 UDP 包，然后 flannel.1 去 FDB 查找 VTEP MAC 地址对应的 node IP, 封装成一个 IP 包，再走宿主机的路由发到目的主机的 VTEP 设备上。
+
+![image-20210316165710843](https://i.loli.net/2021/03/16/97BojTOMRLulymd.png)
+
+这个过程只切换了一次，就是发给 flannel.1 设备，falnnel.1 作为 VTEP 设备封包，找目的 node 的 IP，全部都是在内核态。
+
+> 最新版本的 Flannel 并不依赖 L3 MISS 事件和 ARP 学习，而会在每台节 点启动时把它的 VTEP 设备对应的 ARP 记录，直接下放到其他每台宿主机上。
+
 假设 Flannel 使用的后端为 VXLAN (*Virtual eXtensible LAN*)  的话，VXLAN 提供二层网络，但是 Flannel 只提供三层网络。这因为 Flannel 对 VXLAN 的实现特殊，只是用了一些需要的 feature。
 
 - Flannel 对于 ARP table 是在每个 node 加入的时候自动添加到每个其他节点的。并没有用到 ARP 查询 MAC 地址。
@@ -102,11 +120,11 @@ flannel 提供一个 layer 3 network。
 
 2. flanneld 封装完一个 VXLAN 数据需要知道目的 IP。
 
-   这个目的 IP 的查询依靠于 flannel.1，flannel.1 还需要扮演一个 bridge 的角色，内部有一个 FDB ，根据已有的目的 VETP (Virtual Tunnel End Point) 设备的 MAC 地址和 FDB，我们可以查出来目的 IP。
+   这个目的 IP 的查询依靠于 flannel.1，flannel.1 还需要扮演一个 bridge 的角色，内部有一个 FDB ，**根据已有的目的 VETP (Virtual Tunnel End Point) 设备的 MAC 地址和 FDB**，我们可以查出来目的 IP。
 
    ```bash
    [root@bowser ~]# bridge fdb show dev flannel.1
-   42:61:6c:fd:6c:23 dst 172.19.64. self permanent
+   42:61:6c:fd:6c:23 dst 172.19.64.1 self permanent
    5a:56:5c:46:d4:55 dst 172.19.64.3 self permanent
    ```
 
