@@ -545,7 +545,7 @@ kubectl describe secret prometheus-token-cw4pd -n monitoring
 			
 			<guid>https://bowser1704.github.io/posts/vxlan-bug/</guid>
 			<description>vxlan as the flannel backend</description>
-			<content type="html"><![CDATA[<p>使用 flanne 作为 cni 插件，并且使用 vxlan 作为后端会有 bug，表现为</p>
+			<content type="html"><![CDATA[<p>使用 flannel 作为 cni 插件，并且使用 vxlan 作为后端会有 bug，表现为</p>
 <ol>
 <li>
 <p>「 node 不能访问 pod 被调度到其他 node 的 service，但是可以通过 pod real IP/ endpoint 访问。」</p>
