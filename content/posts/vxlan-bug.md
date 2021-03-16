@@ -7,7 +7,7 @@ spotlight: true
 date: 2020-06-27T13:21:45+08:00
 ---
 
-使用 flanne 作为 cni 插件，并且使用 vxlan 作为后端会有 bug，表现为
+使用 flannel 作为 cni 插件，并且使用 vxlan 作为后端会有 bug，表现为
 
 1. 「 node 不能访问 pod 被调度到其他 node 的 service，但是可以通过 pod real IP/ endpoint 访问。」
 
@@ -48,7 +48,7 @@ vim /etc/systemd/system/k3s.service
 ```
 
 - 修改的部分
-  
+
   ```bash
   ExecStart=/usr/local/bin/k3s server --flannel-backend host-gw
   ```
@@ -146,7 +146,7 @@ Chain KUBE-POSTROUTING (1 references)
 kubu-proxy 用来实现 DNAT 和 SNAT 「k3s 二进制文件内置了，没有单独起一个进程。」
 
 - 实现 SNAT 是利用 masquerading rules 「与 SNAT rules 有一些区别，SNAT rules 转换的 IP 是给定的，但是这种方式是 动态获取当前 IP 的。」
-  
+
   实现 SNAT 只针对于，pod（in k3s it’s 10.42.0.0/16） 之外的网段访问 svc，具体过程是先用 KUBE-MARK-MASQ 加一个 mark，POSTROUING 阶段检查，如果有这个 mark 就做 SNAT。
 
 - 实现 DNAT 是利用 DNAT rules。
@@ -228,19 +228,19 @@ curl 10.43.105.114:8080/sd/health
 iptables 中的 KUBE-MARK-MASQ 用作标记要不要 SNAT，POSTROUING 会做一次 SNAT，并且 VXLAN 封装之后还会做一次 SNAT。
 
 - flannel issue
-  
+
   [coreos/flannel#1282 (comment)](https://github.com/coreos/flannel/pull/1282#issuecomment-635639567)
-  
+
   [coreos/flannel#1282 (comment)](https://github.com/coreos/flannel/pull/1282#issuecomment-635145841)
-  
+
   [coreos/flannel#1282 (comment)](https://github.com/coreos/flannel/pull/1282#issuecomment-635145841)
-  
+
   有人关于 --random-fully 参数做了详细的测试，这个参数是用于选择 SNAT 的两种算法。
 
 大意是 iptables 和 kube-proxy 对 --random-fully 支持的问题。
 
 - k8s issue https://github.com/kubernetes/kubernetes/issues/88986#issuecomment-640929804
-  
+
   这个 issue 中的 comment 详细讲述的原因和如何去解决这个问题。
 
 上面这些原因是引起使用 VXLAN/VETH 时 incorrect checksum 的原因，并且是一起触发的。
@@ -248,7 +248,7 @@ iptables 中的 KUBE-MARK-MASQ 用作标记要不要 SNAT，POSTROUING 会做一
 1. 由于 packet mark 的方式，当我们在第一次对 packet mark 0x4000/0x4000 并且进行 SNAT 之后，进入 VETH，经过 cni 插件出来之后，POSTROUTING 仍然会识别到这个包的 mark，并且进行二次 SNAT。
 
 2. 并且因为 --random-fully SNAT 方式，source port 会改变，并且因为 kernel bug 不会进行第二次 check sum，所以最后的 checksum is incorrect，解决方案可以是禁止 double SNAT 所以不会有 bad checksum 的情况，或者是升级内核使得他会进行第二次 checksum。
-   
+
    kernel checksum bug [参考链接](https://tech.vijayp.ca/linux-kernel-bug-delivers-corrupt-tcp-ip-data-to-mesos-kubernetes-docker-containers-4986f88f7a19)
 
 ----------------------------------
@@ -256,7 +256,7 @@ iptables 中的 KUBE-MARK-MASQ 用作标记要不要 SNAT，POSTROUING 会做一
 checksum-offload 指定了内核不做校验和，交给网卡 / 硬件去做，但是使用 VXLAN 时，由于上面某些原因校验值是错的。导致 checksum 错误，所以会丢弃，TCP 不得不重传，然后因为 5 次重传耗时 63s「第六次重传取消 checksum」，所以结果是 63s delay。
 
 > https://github.com/projectcalico/calico/issues/3145
-> 
+>
 > Linux’ TCP stack will sometimes/always attempt to send packets with an incorrect checksum, or that are far too large for the network link, with the result that the packet is rejected and TCP has to re-transmit. This slows down network throughput enormously.
 
 如下图，本级 checksum 一直 incorrect。
@@ -266,17 +266,17 @@ checksum-offload 指定了内核不做校验和，交给网卡 / 硬件去做，
 解决办法
 
 1. 关闭 Checksum Offloading
-   
+
    `ethtool -K flannel.1 tx-checksum-ip-generic off`
 
 ## 7. fix this bug
 
 1. https://github.com/kubernetes/kubernetes/pull/92035#issuecomment-644502203
-   
+
    pr 中详细讲述了触发这个 bug 的几要素。他的方法是使得走 flannel 后不会校验失败。
 
 2. 关闭 Checksum Offloading
-   
+
    因为是用的是 flannel 等虚拟网络硬件，做 checksum 等操作会 incorrect，所以关闭其实还是最省心的。
 
 -------------
