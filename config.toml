@@ -1,31 +1,31 @@
 baseURL = "https://bowser1704.github.io/"
-languageCode = "en-us"
-defaultContentLanguage = "en"
+googleAnalytics = "UA-151172261-1"
+languageCode = "zh-hans"
 title = "Bowser's blog"
 theme = "hermit"
-# enableGitInfo = true
+enableGitInfo = true
 pygmentsCodefences  = true
 pygmentsUseClasses  = true
+enableRobotsTXT = true
 hasCJKLanguage = true  # If Chinese/Japanese/Korean is your main content language, enable this to make wordCount works right.
 rssLimit = 5  # Maximum number of items in the RSS feed.
-copyright = "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License." # This message is only used by the RSS template.
 enableEmoji = true  # Shorthand emojis in content files - https://gohugo.io/functions/emojify/
-googleAnalytics = "UA-151172261-1"
-# disqusShortname = "yourdiscussshortname"
+defaultContentDir = "posts"
 
 [author]
   name = "Bowser"
 
-[blackfriday]
-  # hrefTargetBlank = true
-  # noreferrerLinks = true
-  # nofollowLinks = true
+[sitemap]
+  changefreq = "weekly"
+  priority = 0.5
+  filename = "sitemap.xml"
 
 [taxonomies]
   tag = "tags"
-  # Categories are disabled by default.
 
 [params]
+  gitUrl = "https://github.com/Bowser1704/bowser1704.github.io/commit/"
+
   dateform        = "Jan 2, 2006"
   dateformShort   = "Jan 2"
   dateformNum     = "2006-01-02"
