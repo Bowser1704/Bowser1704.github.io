@@ -5,8 +5,7 @@
     <link>https://bowser1704.github.io/tags/nginx/</link>
     <description>Recent content in nginx on Bowser&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <language>zh-hans</language>
     <lastBuildDate>Fri, 01 Nov 2019 14:50:23 +0800</lastBuildDate><atom:link href="https://bowser1704.github.io/tags/nginx/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>利用systemd管理nginx.service</title>
