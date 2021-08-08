@@ -16,15 +16,6 @@
     </item>
     
     <item>
-      <title>初谈云上网络</title>
-      <link>https://bowser1704.github.io/notes/overlay-network/</link>
-      <pubDate>Tue, 11 Aug 2020 23:37:44 +0800</pubDate>
-      
-      <guid>https://bowser1704.github.io/notes/overlay-network/</guid>
-      <description>谈一谈容器网络和云上网络。 Bridge VXLAN Docker default network Flannel 1. Bridge Bridge 也就是网桥「也可以说是二层交换机/switch」，是一个二层设备，对受到的包，Forwardin</description>
-    </item>
-    
-    <item>
       <title>iptables 的一些学习总结。</title>
       <link>https://bowser1704.github.io/notes/iptables/</link>
       <pubDate>Mon, 29 Jun 2020 10:18:22 +0800</pubDate>
@@ -49,6 +40,15 @@
       
       <guid>https://bowser1704.github.io/notes/coc-in-vim/</guid>
       <description>“在 vim 中像 vscode 一样 使用 LSP &amp;quot;</description>
+    </item>
+    
+    <item>
+      <title>在 k3s 内使用 cert-manager 管理证书</title>
+      <link>https://bowser1704.github.io/notes/using-cert-manager-k3s/</link>
+      <pubDate>Thu, 25 Jun 2020 19:30:20 +0800</pubDate>
+      
+      <guid>https://bowser1704.github.io/notes/using-cert-manager-k3s/</guid>
+      <description>云原生使用 acme.sh 有一些无法很好解决的问题，所以使用 cert-manager 管理证书</description>
     </item>
     
   </channel>
