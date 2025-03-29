@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh-hans">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="theme-color" content="#494f5c">
+	<meta name="msapplication-TileColor" content="#494f5c">
+<meta itemprop="name" content="Kubernetes OOM 三兄弟：cgroup OOM、kubelet 驱逐与内核 OOM ">
+<meta itemprop="description" content="引言 最近在微信上看到一些关于 OOM 的文章和评论，发现大家对于 Kubernetes 内的 OOM 有很多混淆，所以想整理一下，写篇博客。 问题场景：在 Kubernetes 中，Pod 因内存问题被终"><meta itemprop="datePublished" content="2025-03-29T14:48:51&#43;08:00" />
+<meta itemprop="dateModified" content="2025-03-29T14:56:48&#43;08:00" />
+<meta itemprop="wordCount" content="1438">
+<meta itemprop="keywords" content="" /><meta property="og:title" content="Kubernetes OOM 三兄弟：cgroup OOM、kubelet 驱逐与内核 OOM " />
+<meta property="og:description" content="引言 最近在微信上看到一些关于 OOM 的文章和评论，发现大家对于 Kubernetes 内的 OOM 有很多混淆，所以想整理一下，写篇博客。 问题场景：在 Kubernetes 中，Pod 因内存问题被终" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://bowser1704.github.io/posts/k8s-oom/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2025-03-29T14:48:51&#43;08:00" />
+<meta property="article:modified_time" content="2025-03-29T14:56:48&#43;08:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Kubernetes OOM 三兄弟：cgroup OOM、kubelet 驱逐与内核 OOM "/>
+<meta name="twitter:description" content="引言 最近在微信上看到一些关于 OOM 的文章和评论，发现大家对于 Kubernetes 内的 OOM 有很多混淆，所以想整理一下，写篇博客。 问题场景：在 Kubernetes 中，Pod 因内存问题被终"/>
+
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
+	<link rel="shortcut icon" href="/favicon.ico">
+
+	<title>Kubernetes OOM 三兄弟：cgroup OOM、kubelet 驱逐与内核 OOM </title>
+	<link rel="stylesheet" href="https://bowser1704.github.io/css/style.min.43ade9343bda1e3f53fcb45dc776c310b369f2a93c03dee67c82401987989309.css">
+	
+</head>
+
+<body id="page">
+	
+	<header id="site-header" class="animated slideInUp faster">
+		<div class="hdr-wrapper section-inner">
+			<div class="hdr-left">
+				<div class="site-branding">
+					<a href="https://bowser1704.github.io/">Bowser&#39;s blog</a>
+				</div>
+				<nav class="site-nav hide-in-mobile">
+					<a href="https://bowser1704.github.io/posts/">Posts</a>
+					<a href="https://bowser1704.github.io/about/">About</a>
+				</nav>
+			</div>
+			<div class="hdr-right hdr-icons">
+				<button id="toc-btn" class="hdr-btn desktop-only-ib" title="Table of Contents"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3" y2="6"></line><line x1="3" y1="12" x2="3" y2="12"></line><line x1="3" y1="18" x2="3" y2="18"></line></svg></button><span class="hdr-social hide-in-mobile"><a href="mailto:bowser1704@gmail.com" target="_blank" rel="noopener me" title="Email"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg></a><a href="https://t.me/bowser1704" target="_blank" rel="noopener me" title="Telegram"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" aria-hidden="true" class="feather"><path d="m 22.05,1.577 c -0.393,-0.016 -0.784,0.08 -1.117,0.235 -0.484,0.186 -4.92,1.902 -9.41,3.64 C 9.263,6.325 7.005,7.198 5.267,7.867 3.53,8.537 2.222,9.035 2.153,9.059 c -0.46,0.16 -1.082,0.362 -1.61,0.984 -0.79581202,1.058365 0.21077405,1.964825 1.004,2.499 1.76,0.564 3.58,1.102 5.087,1.608 0.556,1.96 1.09,3.927 1.618,5.89 0.174,0.394 0.553,0.54 0.944,0.544 l -0.002,0.02 c 0,0 0.307,0.03 0.606,-0.042 0.3,-0.07 0.677,-0.244 1.02,-0.565 0.377,-0.354 1.4,-1.36 1.98,-1.928 l 4.37,3.226 0.035,0.02 c 0,0 0.484,0.34 1.192,0.388 0.354,0.024 0.82,-0.044 1.22,-0.337 0.403,-0.294 0.67,-0.767 0.795,-1.307 0.374,-1.63 2.853,-13.427 3.276,-15.38 L 23.676,4.725 C 23.972,3.625 23.863,2.617 23.18,2.02 22.838,1.723 22.444,1.593 22.05,1.576 Z"></path></svg></a><a href="https://github.com/Bowser1704" target="_blank" rel="noopener me" title="Github"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a></span><button id="menu-btn" class="hdr-btn" title="Menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+			</div>
+		</div>
+	</header>
+	<div id="mobile-menu" class="animated fast">
+		<ul>
+			<li><a href="https://bowser1704.github.io/posts/">Posts</a></li>
+			<li><a href="https://bowser1704.github.io/about/">About</a></li>
+		</ul>
+	</div>
+
+
+	<main class="site-main section-inner animated fadeIn faster">
+		<article class="thin">
+			<header class="post-header">
+				<div class="post-meta"><span>Mar 29, 2025</span></div>
+				<h1>Kubernetes OOM 三兄弟：cgroup OOM、kubelet 驱逐与内核 OOM </h1>
+			</header>
+			<div class="content">
+				<h2 id="引言">引言<a href="#引言" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p>最近在微信上看到一些关于 OOM 的文章和评论，发现大家对于 Kubernetes 内的 OOM 有很多混淆，所以想整理一下，写篇博客。</p>
+<ul>
+<li><strong>问题场景</strong>：在 Kubernetes 中，Pod 因内存问题被终止的现象频繁发生，但具体原因可能不同。</li>
+<li><strong>核心疑问</strong>：同样是内存不足，为何会有不同机制触发？如何区分日志中的 <code>Evicted</code> 和 <code>OOMKilled</code>？</li>
+<li><strong>文章目标</strong>：通过对比三种内存终止机制，帮助读者快速定位问题根源。</li>
+</ul>
+<hr>
+<h2 id="一kubernetes-内存管理基础">一、Kubernetes 内存管理基础<a href="#一kubernetes-内存管理基础" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<h3 id="11-内存资源的两层限制">1.1 内存资源的两层限制<a href="#11-内存资源的两层限制" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
+<ul>
+<li><strong>节点级（Node Level）</strong>：物理内存总量与 <code>kubelet</code> 的资源预留。</li>
+<li><strong>Pod 级（Pod Level）</strong>：通过 <code>resources.limits.memory</code> 设置 cgroup 限制。</li>
+</ul>
+<h3 id="12-内存压力的传递链条">1.2 内存压力的传递链条<a href="#12-内存压力的传递链条" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
+<pre><code class="language-mermaid" data-lang="mermaid">graph LR
+  A[container usage] --&gt; B[cgroup limit]
+  B --&gt; C[kubelet allocatable memory limit]
+  C --&gt; D[hardware/kernel memory]
+</code></pre><h2 id="二三种-oom-机制">二、三种 OOM 机制<a href="#二三种-oom-机制" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<h3 id="21-机制一cgroup-的精确打击">2.1 机制一：cgroup 的精确打击<a href="#21-机制一cgroup-的精确打击" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
+<p>触发条件</p>
+<ul>
+<li>Pod 内存用量超过 limits.memory（usage_in_bytes）</li>
+</ul>
+<p>行为特征</p>
+<ul>
+<li>容器运行时（如 containerd）强制终止</li>
+<li>无差别处决：直接杀死超限 Pod，与 Pod 优先级 / QoSClass / oom_score_adj 都无关</li>
+<li>日志表现：Pod  container status 中会显示 OOMKilled，但节点内存可能充足</li>
+</ul>
+<p>典型场景</p>
+<ul>
+<li>limits 填小了（如 limits = 实际需求 + 30%）</li>
+<li>working_set 可能掩盖真实内存压力</li>
+</ul>
+<p>建议根据 prometheus 监控的数据来判断需要设置多少 memory limit，很多人可能看到 kubelet 用 working_set 来做 evict 就认为所有的 OOM 都与 working set 有关，实际上 cgroup 并不知道有 working_set 这个东西。这是 cAdvisor / kubelet 领域里制造出来的。所以请不要用 working_set 来判断 memory limit 该填多少，使用 usage_in_bytes。</p>
+<p>见：</p>
+<ul>
+<li><a href="https://kubernetes.io/docs/concepts/scheduling-eviction/node-pressure-eviction/#memory-signals">https://kubernetes.io/docs/concepts/scheduling-eviction/node-pressure-eviction/#memory-signals</a></li>
+</ul>
+<h3 id="22-机制二kubelet-node-pressure-eviction">2.2 机制二：kubelet node pressure eviction<a href="#22-机制二kubelet-node-pressure-eviction" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
+<p>触发条件</p>
+<ul>
+<li>硬驱逐（Hard Eviction）：memory.available &lt; 100Mi</li>
+<li>软驱逐（Soft Eviction）：阈值 + graceful period</li>
+</ul>
+<p>行为特征</p>
+<ul>
+<li>驱逐策略：基于 Pod 优先级和 QoS（BestEffort 优先被驱逐）</li>
+<li>资源计算：memory.available := node.status.capacity[memory] - node.stats.memory.workingSet</li>
+<li>日志表现：pod events 中显示 Evicted 事件</li>
+</ul>
+<p>典型场景</p>
+<ul>
+<li>Pod 没设置 limit 并且使用大量内存，节点内存不足</li>
+<li>未正确预留 kube-reserved 导致系统资源争抢</li>
+</ul>
+<p>尽管 kubelet 通过监控内存压力尝试预防 OOM，但其默认轮询机制存在固有延迟。当内存使用量急速上升时（如应用突发内存分配），kubelet 可能未及时感知压力，内核已判定内存耗尽并启动 OOM Killer。</p>
+<p>但 kubelet 有对应参数获取实时的 mem notification。并且由于缓存是可以被回收的，所以 kubelet 通过 working set 来判断已耗尽的内存，而不是直接使用 memory.usage_in_bytes。</p>
+<p>见：</p>
+<ul>
+<li><a href="https://kubernetes.io/docs/concepts/scheduling-eviction/node-pressure-eviction/#kubelet-may-not-observe-memory-pressure-right-away">https://kubernetes.io/docs/concepts/scheduling-eviction/node-pressure-eviction/#kubelet-may-not-observe-memory-pressure-right-away</a></li>
+</ul>
+<h3 id="23-机制三kernel-oom-killer">2.3 机制三：kernel OOM Killer<a href="#23-机制三kernel-oom-killer" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h3>
+<p>触发条件</p>
+<ul>
+<li>节点全局内存耗尽（包括非容器进程）</li>
+</ul>
+<p>行为特征</p>
+<ul>
+<li>评分机制：内核通过 oom_score 选择牺牲者。oom_score_adj 越低，oom_score 越低</li>
+<li>绕过 Kubernetes：可能杀死系统进程或高内存容器，但是 kubelet 会对不同 QoS class pod 设置不同 oom_score_adj</li>
+<li>日志表现：dmesg 或 /var/log/messages 中的 Killed process 记录</li>
+</ul>
+<p>典型场景</p>
+<ul>
+<li>Pod 没设置 limit 并且疯狂使用内存</li>
+</ul>
+<p>见：</p>
+<ul>
+<li><a href="https://kubernetes.io/docs/concepts/scheduling-eviction/node-pressure-eviction/#node-out-of-memory-behavior">https://kubernetes.io/docs/concepts/scheduling-eviction/node-pressure-eviction/#node-out-of-memory-behavior</a></li>
+</ul>
+<h2 id="三memory-qos">三、Memory QoS<a href="#三memory-qos" class="anchor" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line></svg></a></h2>
+<p>在 k8s 世界内，oom 是个很常见的问题，cgroup v2 通过引入 memory.min 参数优化了内存分配机制，与 v1 仅依赖 memory.limit 不同，v2 引入了 <code>mem.min</code>，v2 可确保 Pod 至少获得 request 声明的内存配额，但由于内存不具备类似 CPU 的时间片调度能力，一旦超额使用仍只能依赖 OOM Kill 机制回收资源。这种设计使得在内存紧张时，OOM Kill 可能比 v1 环境下更为频繁。</p>
+<p>尤其是在 sidecar 场景，由于 kubelet 在计算容器的 oom_score_adj（OOM 优先级评分）时，不仅参考 QoS 类型，还与 memory.request 成反比。导致使用 sidecar 时，于 sidecar 容器通常配置极小的 memory.request（或者不配置），其 oom_score_adj 值往往显著高于业务容器。当节点内存不足时，这类低优先级容器会率先成为 OOM Kill 的牺牲品，进而导致 Sidecar 模式的服务稳定性风险。</p>
+<p>有兴趣的读者可以阅读：</p>
+<ul>
+<li><a href="https://kubernetes.io/blog/2023/05/05/qos-memory-resources/">https://kubernetes.io/blog/2023/05/05/qos-memory-resources/</a></li>
+<li><a href="https://github.com/kubernetes/kubernetes/issues/111356">https://github.com/kubernetes/kubernetes/issues/111356</a></li>
+</ul>
+
+			</div>
+			<hr class="post-end">
+			<footer class="post-info">
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>1438 Words</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2025-03-29 14:48 &#43;0800</p>
+				<p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-git-commit"><circle cx="12" cy="12" r="4"></circle><line x1="1.05" y1="12" x2="7" y2="12"></line><line x1="17.01" y1="12" x2="22.96" y2="12"></line></svg><a href="https://github.com/Bowser1704/bowser1704.github.io/commit/2bd4e5b6b78570904187b147cd5a4f3ce40a2eb4" target="_blank" rel="noopener">2bd4e5b</a> @ 2025-03-29</p>
+			</footer>
+		</article>
+		<aside id="toc" class="show-toc">
+			<div class="toc-title">Table of Contents</div>
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#引言">引言</a></li>
+    <li><a href="#一kubernetes-内存管理基础">一、Kubernetes 内存管理基础</a>
+      <ul>
+        <li><a href="#11-内存资源的两层限制">1.1 内存资源的两层限制</a></li>
+        <li><a href="#12-内存压力的传递链条">1.2 内存压力的传递链条</a></li>
+      </ul>
+    </li>
+    <li><a href="#二三种-oom-机制">二、三种 OOM 机制</a>
+      <ul>
+        <li><a href="#21-机制一cgroup-的精确打击">2.1 机制一：cgroup 的精确打击</a></li>
+        <li><a href="#22-机制二kubelet-node-pressure-eviction">2.2 机制二：kubelet node pressure eviction</a></li>
+        <li><a href="#23-机制三kernel-oom-killer">2.3 机制三：kernel OOM Killer</a></li>
+      </ul>
+    </li>
+    <li><a href="#三memory-qos">三、Memory QoS</a></li>
+  </ul>
+</nav>
+		</aside>
+		<div class="post-nav thin">
+			<a class="prev-post" href="https://bowser1704.github.io/posts/k3s-auth/">
+				<span class="post-nav-label">Older&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span><br><span>k3s authentication certificate</span>
+			</a>
+		</div>
+		<div id="comments" class="thin">
+			<script src="https://utteranc.es/client.js"
+							repo="Bowser1704/bowser1704.github.io"
+							issue-term="pathname"
+							theme="github-light"
+							crossorigin="anonymous"
+							async>
+			</script>
+		</div>
+	</main>
+
+	<footer id="site-footer" class="section-inner thin animated fadeIn faster">
+		<p>&copy; 2025 <a href="https://bowser1704.github.io/">Bowser</a> &#183; <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a></p>
+		<p>
+			Made with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> &#183; Theme <a href="https://github.com/Track3/hermit" target="_blank" rel="noopener">Hermit</a> &#183; <a href="https://bowser1704.github.io/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
+		</p>
+	</footer>
+
+
+	<script src="https://bowser1704.github.io/js/main.min.3b8561d63aeee77aa04e677df95581a230b4b43adf7b208b8d671433e446cfc1.js"></script>
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-151172261-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+</body>
+
+</html>

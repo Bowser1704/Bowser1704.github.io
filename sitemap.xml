@@ -1,299 +1,80 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  
   <url>
-    <loc>https://bowser1704.github.io/notes/pass-by-what/</loc>
-    <lastmod>2021-01-08T13:05:30+08:00</lastmod>
+    <loc>https://bowser1704.github.io/posts/k8s-oom/</loc>
+    <lastmod>2025-03-29T14:56:48+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
+  </url><url>
+    <loc>https://bowser1704.github.io/posts/</loc>
+    <lastmod>2025-03-29T14:56:48+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
     <loc>https://bowser1704.github.io/posts/k3s-auth/</loc>
     <lastmod>2020-11-21T00:07:12+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://bowser1704.github.io/posts/</loc>
-    <lastmod>2021-03-16T15:06:04+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://bowser1704.github.io/tags/k3s/</loc>
     <lastmod>2021-03-16T15:06:04+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://bowser1704.github.io/tags/monitoring/</loc>
     <lastmod>2020-10-11T20:58:19+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://bowser1704.github.io/tags/prometheus/</loc>
     <lastmod>2020-10-11T20:58:19+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://bowser1704.github.io/tags/</loc>
     <lastmod>2021-03-16T15:06:04+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://bowser1704.github.io/posts/cluster-monitoring/</loc>
     <lastmod>2020-10-11T20:58:19+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://bowser1704.github.io/tags/iptables/</loc>
-    <lastmod>2020-11-21T10:12:21+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://bowser1704.github.io/notes/iptables/</loc>
-    <lastmod>2020-11-21T10:12:21+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://bowser1704.github.io/tags/linux/</loc>
-    <lastmod>2020-11-21T10:12:21+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://bowser1704.github.io/tags/nuc/</loc>
-    <lastmod>2020-11-21T10:12:21+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://bowser1704.github.io/tags/wi-fi/</loc>
-    <lastmod>2020-11-21T10:12:21+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://bowser1704.github.io/notes/nuc8i5-wifi/</loc>
-    <lastmod>2020-11-21T10:12:21+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://bowser1704.github.io/tags/flannel/</loc>
     <lastmod>2021-03-16T15:06:04+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://bowser1704.github.io/posts/vxlan-bug/</loc>
     <lastmod>2021-03-16T15:06:04+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://bowser1704.github.io/tags/vxlan/</loc>
     <lastmod>2021-03-16T15:06:04+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://bowser1704.github.io/tags/vim/</loc>
-    <lastmod>2020-11-21T10:12:21+08:00</lastmod>
+  </url><url>
+    <loc>https://bowser1704.github.io/tags/linux/</loc>
+    <lastmod>2020-10-11T20:58:19+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://bowser1704.github.io/notes/coc-in-vim/</loc>
-    <lastmod>2020-11-21T10:12:21+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://bowser1704.github.io/tags/cert-manager/</loc>
-    <lastmod>2020-11-24T16:09:09+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://bowser1704.github.io/notes/using-cert-manager-k3s/</loc>
-    <lastmod>2020-11-24T16:09:09+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://bowser1704.github.io/tags/helm/</loc>
-    <lastmod>2020-11-21T10:12:21+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://bowser1704.github.io/notes/helm-in-k3s/</loc>
-    <lastmod>2020-11-21T10:12:21+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://bowser1704.github.io/notes/exec/</loc>
-    <lastmod>2020-11-21T10:12:21+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://bowser1704.github.io/tags/concurrency/</loc>
-    <lastmod>2020-11-21T10:12:21+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://bowser1704.github.io/notes/csappchapter12/</loc>
-    <lastmod>2020-11-21T10:12:21+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://bowser1704.github.io/notes/csappchapter11/</loc>
-    <lastmod>2020-11-21T10:12:21+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://bowser1704.github.io/tags/network-programming/</loc>
-    <lastmod>2020-11-21T10:12:21+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://bowser1704.github.io/notes/csappchapter10/</loc>
-    <lastmod>2020-11-21T10:12:21+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://bowser1704.github.io/tags/io/</loc>
-    <lastmod>2020-11-21T10:12:21+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://bowser1704.github.io/tags/unix/</loc>
-    <lastmod>2020-11-21T10:12:21+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://bowser1704.github.io/tags/nginx/</loc>
-    <lastmod>2020-11-21T10:12:21+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://bowser1704.github.io/notes/systemctlservice/</loc>
-    <lastmod>2020-11-21T10:12:21+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://bowser1704.github.io/tags/methods/</loc>
-    <lastmod>2021-03-11T08:41:47+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://bowser1704.github.io/notes/shorturl/</loc>
-    <lastmod>2021-03-11T08:41:47+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://bowser1704.github.io/posts/system-boot/</loc>
     <lastmod>2020-10-11T20:58:19+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://bowser1704.github.io/draft/anyway/</loc>
-    <lastmod>2020-05-12T19:46:37+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://bowser1704.github.io/draft/malloc/</loc>
-    <lastmod>2020-05-12T19:46:37+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://bowser1704.github.io/draft/</loc>
-    <lastmod>2020-05-12T19:46:37+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://bowser1704.github.io/</loc>
-    <lastmod>2020-06-26T12:04:08+08:00</lastmod>
+    <lastmod>2025-03-29T14:56:48+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://bowser1704.github.io/notes/</loc>
-    <lastmod>2020-11-21T10:12:21+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://bowser1704.github.io/about/</loc>
-    <lastmod>2020-08-12T17:51:50+08:00</lastmod>
+    <lastmod>2025-03-29T14:56:48+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
-  
 </urlset>
