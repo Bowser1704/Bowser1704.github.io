@@ -74,10 +74,10 @@ defaultContentDir = "posts"
     url = "posts/"
     weight = 10
   
-  [[menu.main]]
-    name = "Notes"
-    url = "notes/"
-    weight = 20
+  # [[menu.main]]
+  #   name = "Notes"
+  #   url = "notes/"
+  #   weight = 20
 
   [[menu.main]]
     name = "About"
